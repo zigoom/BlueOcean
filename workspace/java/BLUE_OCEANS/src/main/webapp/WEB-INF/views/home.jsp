@@ -31,7 +31,7 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title fs-5" id="exampleModalLabel">로그인</h5+>
+					<h5 class="modal-title fs-5" id="exampleModalLabel">로그인</h5>
 					<button id="signIn" type="button" class="btn btn-light">로그인</button>
 					<button id="signUp" type="button" class="btn btn-light">회원가입</button>
 					<button id="find-id" type="button" class="btn btn-light">ID찾기</button>
@@ -134,6 +134,13 @@
 	findPwhtml += "</div>"
 	findPwhtml += "</div>"
 	findPwhtml += "</form>"
+	
+	function appendAndShow(title) {
+		$(".modal-body").html("");
+		$(".modal-footer").html("");
+		$(".modal-body").append(title)
+		$(".modal-body").show(title)
+	}
 
 	$("#signIn").click(function() {
 		document.querySelector("#exampleModalLabel").innerHTML = "로그인";
@@ -144,10 +151,7 @@
 		findPwActive = 0;
 		signUpActive = 0;
 		if (signInActive >= 1) {
-			$(".modal-body").html("");
-			$(".modal-footer").html("");
-			$(".modal-body").append(signInhtml)
-			$(".modal-body").show(signInhtml)
+			appendAndShow(signInhtml)
 			
 			$(".modal-footer").append("<button class='btn btn-primary'>로그인</button>")
 			
@@ -164,10 +168,7 @@
 		findIdActive = 0;
 		findPwActive = 0;
 		if (signUpActive >= 1) {
-			$(".modal-body").html("");
-			$(".modal-footer").html("");
-			$(".modal-body").append(signUphtml)
-			$(".modal-body").show(signUphtml)
+			appendAndShow(signUphtml)
 			
 			$(".modal-footer").append("<button class='btn btn-primary'>회원가입</button>")
 		}
@@ -182,10 +183,7 @@
 		findPwActive = 0;
 		findIdActive = findIdActive + 1;
 		if (findIdActive >= 1) {
-			$(".modal-body").html("");
-			$(".modal-footer").html("");
-			$(".modal-body").append(findIdhtml)
-			$(".modal-body").show(findIdhtml)
+			appendAndShow(findIdhtml)
 			
 			$(".modal-footer").append("<button class='btn btn-primary'>ID찾기</button>")
 		}
@@ -201,14 +199,12 @@
 		findIdActive = 0;
 		findPwActive = findPwActive + 1;
 		if (findPwActive >= 1) {
-			$(".modal-body").html("");
-			$(".modal-footer").html("");
-			$(".modal-body").append(findPwhtml)
-			$(".modal-body").show(findPwhtml)
+			appendAndShow(findPwhtml)
 			
 			$(".modal-footer").append("<button class='btn btn-primary'>PW찾기</button>")
 		}
 
 	})
+	
 </script>
 </html>

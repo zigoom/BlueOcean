@@ -1,0 +1,59 @@
+@charset "UTF-8";
+/* -------------------------모달----------------------------- */
+
+.modal-containor div {
+	text-align: center;
+	display: flex;
+	justify-content: space-between;
+	margin: 15px 50px;
+}
+
+.modal-header button {
+	margin-left: 5px;
+}
+
+.modal-containor div input {
+	margin-left: 15px;
+}
+
+.modal-containor div input[type=text] {	
+	width: 70%;
+}
+
+/* ------------------------모달끝---------------------------- */
+#header-box {
+	display: flex;
+	margin: 15px;
+	align-items: center;
+	justify-content: center;
+	overflow-x: auto;
+}
+
+.input-group {
+	max-width: 600px;
+	flex: 1 1 auto;
+}
+
+#logo {
+	margin-right: 150px;
+	font-size: 20px;
+	cursor: pointer;
+}
+
+.header-btn {
+	margin: 0px 10px;
+	padding: 0px 20px;
+	height: 40px;
+	font-size: 14px;
+	white-space: nowrap;
+}
+
+.header-search-btn {
+	font-size: 10px;
+}
+
+@media ( max-width : 600px) {
+	.header-btn {
+		margin: 5px 5px;
+	}
+}

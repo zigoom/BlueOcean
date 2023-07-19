@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">       
+<tiles-definitions>
+  <definition name="base-definition" template="/WEB-INF/views/tiles/layouts/defaultLayout.jsp">
+    <!-- 정적인 부분: header, menu, footer -->
+    <!-- 동적인 부분: body, title -->
+    
+    
+    <!-- 동적인 부분 -->
+    <put-attribute name="title" value=""/>
+    <put-attribute name="body"  value=""/>
+    
+    <!-- 정적인 부분 -->
+    <put-attribute name="header" value="/WEB-INF/views/tiles/template/header.jsp"/>
+    <put-attribute name="menu"   value="/WEB-INF/views/tiles/template/menu.jsp"/>
+    <put-attribute name="footer" value="/WEB-INF/views/tiles/template/footer.jsp"/>
+    
+  </definition>
+  
+
+  <definition name="main/*" extends="base-definition">
+    <put-attribute name="title" value="푸터"/>
+    <put-attribute name="body"  value="/WEB-INF/views/main/{1}.jsp"/>
+    <!-- footer.jsp를 유지하고 싶으면, 아래 put-attribute를 주석 처리하거나 삭제합니다 -->
+    <put-attribute name="footer" value="/WEB-INF/views/tiles/template/footer.jsp"/>
+  </definition>  
+  
+  
+</tiles-definitions>       

@@ -5,8 +5,7 @@
 <%@ page session="false"%>
 <html>
 <title>Home</title>
-<link rel="stylesheet" href="${CP}/resources/css/header.css">
-<body>
+
 	<header>
 		<div id="header-box">
 			<img alt="" src="${CP}/resources/imgs/logo.png" id="logo">
@@ -23,8 +22,7 @@
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title fs-5" id="exampleModalLabel">로그인</h5>
-						<button id="signIn" type="button" class="btn btn-light">로그인</button>
+						<button id="signIn" type="button" class="btn btn-secondary">로그인</button>
 						<button id="signUp" type="button" class="btn btn-light">회원가입</button>
 						<button id="find-id" type="button" class="btn btn-light">ID찾기</button>
 						<button id="find-pw" type="button" class="btn btn-light">PW찾기</button>
@@ -49,8 +47,5 @@
 			</div>
 		</div>
 	</header>
-</body>
-<script src="${CP}/resources/js/header.js">
-	
-</script>
+
 </html>

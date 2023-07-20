@@ -6,6 +6,12 @@ let findIdhtml = "";
 let findIdActive = 0;
 let findPwhtml = "";
 let findPwActive = 0;
+let signIn = document.querySelector("#signIn")
+let signUp = document.querySelector("#signUp")
+let findId = document.querySelector("#find-id")
+let findPw = document.querySelector("#find-pw")
+let modalFooter = $(".modal-footer")
+let modalBody = $(".modal-body")
 
 signInhtml += "<form>";
 signInhtml += "  <div class='modal-containor'>";
@@ -76,64 +82,104 @@ findPwhtml += "  </div>";
 findPwhtml += "</form>";
 
 function appendAndShow(title) {
-  $(".modal-body").html("");
-  $(".modal-footer").html("");
-  $(".modal-body").append(title);
-  $(".modal-body").show(title);
+	modalBody.html("");
+	modalFooter.html("");
+	modalBody.append(title);
+	modalBody.show(title);
 }
 
 $("#signIn").click(function() {
-  document.querySelector("#exampleModalLabel").innerHTML = "로그인";
-  $(".modal-body").hide(findIdhtml);
-  $(".modal-body").hide(signUphtml);
-  signInActive = signInActive + 1;
-  findIdActive = 0;
-  findPwActive = 0;
-  signUpActive = 0;
-  if (signInActive >= 1) {
-    appendAndShow(signInhtml);
-    $(".modal-footer").append("<button class='btn btn-primary'>로그인</button>");
-  }
+	signIn.classList.remove("btn-light")
+	signIn.classList.add("btn-secondary")
+	if (signIn.classList.contains("btn-secondary")) {
+		signUp.classList.remove("btn-secondary")
+		signUp.classList.add("btn-light")
+		findId.classList.remove("btn-secondary")
+		findId.classList.add("btn-light")
+		findPw.classList.remove("btn-secondary")
+		findPw.classList.add("btn-light")
+	}
+
+	modalBody.hide(findIdhtml);
+	modalBody.hide(signUphtml);
+	signInActive = signInActive + 1;
+	findIdActive = 0;
+	findPwActive = 0;
+	signUpActive = 0;
+	if (signInActive >= 1) {
+		appendAndShow(signInhtml);
+		modalFooter.append("<button class='btn btn-primary'>로그인</button>");
+	}
 });
 
 $("#signUp").click(function() {
-  document.querySelector("#exampleModalLabel").innerHTML = "회원가입";
-  $(".modal-body").hide(findIdhtml);
-  $(".modal-body").hide(signInhtml);
-  signUpActive = signUpActive + 1;
-  signInActive = 0;
-  findIdActive = 0;
-  findPwActive = 0;
-  if (signUpActive >= 1) {
-    appendAndShow(signUphtml);
-    $(".modal-footer").append("<button class='btn btn-primary'>회원가입</button>");
-  }
+	signUp.classList.remove("btn-light")
+	signUp.classList.add("btn-secondary")
+	if (signUp.classList.contains("btn-secondary")) {
+		signIn.classList.remove("btn-secondary")
+		signIn.classList.add("btn-light")
+		findId.classList.remove("btn-secondary")
+		findId.classList.add("btn-light")
+		findPw.classList.remove("btn-secondary")
+		findPw.classList.add("btn-light")
+	}
+
+	modalBody.hide(findIdhtml);
+	modalBody.hide(signInhtml);
+	signUpActive = signUpActive + 1;
+	signInActive = 0;
+	findIdActive = 0;
+	findPwActive = 0;
+	if (signUpActive >= 1) {
+		appendAndShow(signUphtml);
+		modalFooter.append("<button class='btn btn-primary'>회원가입</button>");
+	}
 });
 
 $("#find-id").click(function() {
-  document.querySelector("#exampleModalLabel").innerHTML = "ID찾기";
-  $(".modal-body").hide(signInhtml);
-  $(".modal-body").hide(signUphtml);
-  signInActive = 0;
-  signUpActive = 0;
-  findPwActive = 0;
-  findIdActive = findIdActive + 1;
-  if (findIdActive >= 1) {
-    appendAndShow(findIdhtml);
-    $(".modal-footer").append("<button class='btn btn-primary'>ID찾기</button>");
-  }
+	findId.classList.remove("btn-light")
+	findId.classList.add("btn-secondary")
+	if (findId.classList.contains("btn-secondary")) {
+		signUp.classList.remove("btn-secondary")
+		signUp.classList.add("btn-light")
+		signIn.classList.remove("btn-secondary")
+		signIn.classList.add("btn-light")
+		findPw.classList.remove("btn-secondary")
+		findPw.classList.add("btn-light")
+	}
+
+	modalBody.hide(signInhtml);
+	modalBody.hide(signUphtml);
+	signInActive = 0;
+	signUpActive = 0;
+	findPwActive = 0;
+	findIdActive = findIdActive + 1;
+	if (findIdActive >= 1) {
+		appendAndShow(findIdhtml);
+		modalFooter.append("<button class='btn btn-primary'>ID찾기</button>");
+	}
 });
 
 $("#find-pw").click(function() {
-  document.querySelector("#exampleModalLabel").innerHTML = "PW찾기";
-  $(".modal-body").hide(signInhtml);
-  $(".modal-body").hide(signUphtml);
-  signInActive = 0;
-  signUpActive = 0;
-  findIdActive = 0;
-  findPwActive = findPwActive + 1;
-  if (findPwActive >= 1) {
-    appendAndShow(findPwhtml);
-    $(".modal-footer").append("<button class='btn btn-primary'>PW찾기</button>");
-  }
+	findPw.classList.remove("btn-light")
+	findPw.classList.add("btn-secondary")
+	if (findPw.classList.contains("btn-secondary")) {
+		signUp.classList.remove("btn-secondary")
+		signUp.classList.add("btn-light")
+		findId.classList.remove("btn-secondary")
+		findId.classList.add("btn-light")
+		signIn.classList.remove("btn-secondary")
+		signIn.classList.add("btn-light")
+	}
+
+	modalBody.hide(signInhtml);
+	modalBody.hide(signUphtml);
+	signInActive = 0;
+	signUpActive = 0;
+	findIdActive = 0;
+	findPwActive = findPwActive + 1;
+	if (findPwActive >= 1) {
+		appendAndShow(findPwhtml);
+		modalFooter.append("<button class='btn btn-primary'>PW찾기</button>");
+	}
 });

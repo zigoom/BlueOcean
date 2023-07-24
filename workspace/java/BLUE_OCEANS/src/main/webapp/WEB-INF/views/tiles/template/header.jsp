@@ -13,6 +13,7 @@
 				<span class="input-group-text" id="basic-addon1">종목검색</span> <input type="text" class="form-control col-sm-4" placeholder="종목명 또는 종목코드를 입력해주세요." aria-label="Username" aria-describedby="basic-addon1">
 				<button id="header-search-btn" class="btn btn-primary">검색</button>
 			</div>
+			<button class="btn btn-light header-btn">토론게시판</button>
 			<button class="btn btn-light header-btn">관심목록</button>
 			<button class="btn btn-light header-btn">마이페이지</button>
 			<button type="button" id="modal-btn" class="btn btn-light header-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">로그인/회원가입</button>

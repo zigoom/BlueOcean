@@ -1,10 +1,11 @@
-package com.pcwk.ehr.main;
+package com.pcwk.ehr.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pcwk.ehr.cmn.PcwkLogger;
+import com.pcwk.ehr.domain.MainVO;
 
 @Controller("MainController")
 @RequestMapping("main")

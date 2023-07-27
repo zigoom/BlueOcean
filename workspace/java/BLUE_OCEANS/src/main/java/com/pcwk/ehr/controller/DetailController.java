@@ -7,20 +7,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.pcwk.ehr.cmn.PcwkLogger;
 import com.pcwk.ehr.domain.MainVO;
 
-@Controller("MainController")
+@Controller("DetailController")
 @RequestMapping("BLUEOCEAN")
-public class MainController implements PcwkLogger {
+public class DetailController implements PcwkLogger {
 
-	
-	@RequestMapping(value = "/main.do")
+	@RequestMapping(value = "/detail.do")
 	public String mainView(MainVO inVO) {
-		
+
 		LOG.debug("┌────────────────┐");
-		LOG.debug("│mainView        │");
-		LOG.debug("│inVO            │"+inVO);
+		LOG.debug("│detailView      │");
+		LOG.debug("│inVO            │" + inVO);
 		LOG.debug("└────────────────┘");
-		
-		
-		return "main/main";
+
+		return "main/detail";
 	}
 }

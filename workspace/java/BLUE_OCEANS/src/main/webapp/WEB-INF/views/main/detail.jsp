@@ -145,121 +145,143 @@
 
 
 	<script>
-  function formatDate(date) {
-    const dateString = date.toString();
-    const year = dateString.slice(0, 4);
-    const month = dateString.slice(4, 6);
-    const day = dateString.slice(6, 8);
+      function formatDate(date) {
+        const dateString = date.toString();
+        const year = dateString.slice(0, 4);
+        const month = dateString.slice(4, 6);
+        const day = dateString.slice(6, 8);
 
-    return year + "-" + month + "-" + day;
-  }
-
-  function dayButtonClick() {
-    const timeScale = chart.timeScale();
-    timeScale.applyOptions({
-      barSpacing: 100,
-    });
-  }
-
-  function weekButtonClick() {
-    const timeScale = chart.timeScale();
-    timeScale.applyOptions({
-      barSpacing: 18,
-    });
-  }
-
-  function monthButtonClick() {
-    const timeScale = chart.timeScale();
-    timeScale.applyOptions({
-      barSpacing: 5,
-    });
-  }
-
-  function yearButtonClick() {
-    const timeScale = chart.timeScale();
-    timeScale.applyOptions({
-      barSpacing: 1,
-    });
-  }
-
-  function test() {
-    let ticker_data = $("#Ticker").val();
-    let startDate_data = $("#StartDate").val();
-    let endDate_data = $("#EndDate").val();
-
-    let requestData = {
-      ticker: ticker_data, // "005930",
-      startDate: startDate_data, // "2023-01-02",
-      endDate: endDate_data, // "2023-01-31"
-    };
-
-    $.ajax({
-      type: "POST",
-      url: "http://192.168.0.74:5001/blue_oceans/search_ticker",
-      data: JSON.stringify(requestData),
-      contentType: "application/json",
-      mode: "cors",
-      success: function (result) {
-        $("#stock-name").text(result.stock_name + "(" + result.ticker + ")");
-        let parsedData = JSON.parse(result.data);
-        let lastCloseValue;
-        let lastCloseValuePreviousDay;
-
-        parsedData.forEach(function (data, index) {
-          console.log(
-            data.Volume,
-            chartData.push({
-              time: formatDate(data.Date),
-              value: data.Close,
-            })
-          );
-          lastCloseValue = data.Close; // 마지막 Close 값 저장
-
-          if (index === parsedData.length - 2) {
-            lastCloseValuePreviousDay = data.Close; // 마지막 전날 Close 값 저장
-          }
-
-          $(".volume").text(data.Volume.toLocaleString());
-          $(".open").text(data.Open.toLocaleString());
-          $(".high").text(data.High.toLocaleString());
-          $(".low").text(data.Low.toLocaleString());
-        });
-
-        lineSeries.setData(chartData);
-
-        // lastCloseValue와 lastCloseValuePreviousDay 변수를 이용하여 원하는 작업 수행
-        console.log("마지막 Close 값:", lastCloseValue);
-        $(".last-close-value").text(lastCloseValue.toLocaleString());
-        $(".prev-close").text(lastCloseValuePreviousDay.toLocaleString());
-
-        if (lastCloseValuePreviousDay) {
-          console.log("전날 마지막 Close 값:", lastCloseValuePreviousDay);
-          if (lastCloseValue - lastCloseValuePreviousDay >= 0) {
-            $(".price-changes").text("▲" + (lastCloseValue - lastCloseValuePreviousDay).toLocaleString());
-            $(".price-changes-percent").text("▲" + ((lastCloseValue - lastCloseValuePreviousDay) / lastCloseValuePreviousDay * 100).toFixed(2));
-            $(".price-changes").css("color", "red");
-            $(".price-changes-percent").css("color", "red");
-            $(".last-close-value").css("color", "red");
-            $("#price-change-box").css("background-color", "#FCEDEB");
-          } else {
-            $(".price-changes").text("▼" + (lastCloseValue - lastCloseValuePreviousDay).toLocaleString());
-            $(".price-changes-percent").text("▼" + ((lastCloseValue - lastCloseValuePreviousDay) / lastCloseValuePreviousDay * 100).toFixed(2));
-            $(".price-changes").css("color", "blue");
-            $(".price-changes-percent").css("color", "blue");
-            $(".last-close-value").css("color", "blue");
-            $("#price-change-box").css("background-color", "#ECF3FD");
-          }
+        return year+"-"+month+"-"+day;
+      }
+      // 차트 생성
+      const chart = LightweightCharts.createChart(
+        document.getElementById("chart-container"),
+        {
+          layout: {
+            textColor: "black",
+            backgroundColor: "white",
+          },
         }
-        // 다른 함수 호출 등 원하는 처리를 할 수 있습니다.
-      },
-      error: function (xtr, status, error) {
-        alert(xtr + ":" + status + ":" + error);
-      },
-    });
-  }
+      );
 
-  // Remain the rest of the code unchanged
-</script>
+      // 시리즈 생성
+      const lineSeries = chart.addLineSeries();
+
+      // 데이터 설정
+      const chartData = [];
+
+      // 시간 척도 설정
+      const timeScale = chart.timeScale();
+
+      // 버튼 클릭 시 시간 척도 변경
+      const dayButton = document.getElementById("dayButton");
+      const weekButton = document.getElementById("weekButton");
+      const monthButton = document.getElementById("monthButton");
+      const yearButton = document.getElementById("yearButton");
+
+      dayButton.addEventListener("click", function () {
+    	    timeScale.applyOptions({
+    	    	barSpacing : 100
+    	    })
+    	  });
+      weekButton.addEventListener("click", function () {
+  	    timeScale.applyOptions({
+  	    	barSpacing : 18
+  	    })
+  	  });
+      monthButton.addEventListener("click", function () {
+  	    timeScale.applyOptions({
+  	    	barSpacing : 5
+  	    })
+  	  });
+
+      yearButton.addEventListener("click", function(){
+    	  timeScale.applyOptions({
+    		  barSpacing : 1
+    	  })
+      })
+
+    	 
+      
+      function test() {
+        let ticker_data = $("#Ticker").val();
+        let startDate_data = $("#StartDate").val();
+        let endDate_data = $("#EndDate").val();
+
+        let requestData = {
+          ticker: ticker_data, // "005930",
+          startDate: startDate_data, // "2023-01-02",
+          endtDate: endDate_data, // "2023-01-31"
+        };
+
+        $.ajax({
+        	  type: "POST",
+        	  url: "http://192.168.0.74:5001/blue_oceans/search_ticker",
+        	  data: JSON.stringify(requestData),
+        	  contentType: "application/json",
+        	  mode: "cors",
+        	  success: function (result) {  
+        	    $("#stock-name").text(result.stock_name + "(" + result.ticker + ")")
+        	    let parsedData = JSON.parse(result.data);
+        	    let lastCloseValue; 
+        	    let lastCloseValuePreviousDay; 
+
+        	    parsedData.forEach((data, index) => {
+        	      console.log(
+        	        data.Volume,
+       	        	chartData.push({
+        	          time: formatDate(data.Date),
+        	          value: data.Close,
+        	        }) 
+        	      );
+        	      lastCloseValue = data.Close; // 마지막 Close 값 저장
+
+        	      if (index === parsedData.length - 2) {
+        	        lastCloseValuePreviousDay = data.Close; // 마지막 전날 Close 값 저장
+        	      }
+        	       
+        	      $(".volume").text(data.Volume.toLocaleString())
+        	      $(".open").text(data.Open.toLocaleString())
+        	      $(".high").text(data.High.toLocaleString())
+        	      $(".low").text(data.Low.toLocaleString())
+        	    });
+
+        	    lineSeries.setData(chartData);
+
+        	    // lastCloseValue와 lastCloseValuePreviousDay 변수를 이용하여 원하는 작업 수행
+        	    console.log("마지막 Close 값:", lastCloseValue);	
+        	    $(".last-close-value").text(lastCloseValue.toLocaleString());
+        		$(".prev-close").text(lastCloseValuePreviousDay.toLocaleString());
+
+        	    if (lastCloseValuePreviousDay) {
+        	      console.log("전날 마지막 Close 값:", lastCloseValuePreviousDay);
+        	      if(lastCloseValue-lastCloseValuePreviousDay >= 0){
+        	    	  $(".price-changes").text("▲" + (lastCloseValue - lastCloseValuePreviousDay).toLocaleString());
+            	      $(".price-changes-percent").text("▲"+((lastCloseValue - lastCloseValuePreviousDay) / lastCloseValuePreviousDay * 100).toFixed(2));
+            	      $(".price-changes").css("color","red")
+            	      $(".price-changes-percent").css("color","red")
+            	      $(".last-close-value").css("color","red")
+            	      $("#price-change-box").css("background-color", "#FCEDEB")
+        	      }else {
+        	    	  $(".price-changes").text("▼"+(lastCloseValue-lastCloseValuePreviousDay).toLocaleString());
+            	      $(".price-changes-percent").text("▼"+((lastCloseValue - lastCloseValuePreviousDay) / lastCloseValuePreviousDay * 100).toFixed(2));
+            	      $(".price-changes").css("color","blue")
+            	      $(".price-changes-percent").css("color","blue")
+            	      $(".last-close-value").css("color","blue")
+            	      $("#price-change-box").css("background-color", "#ECF3FD")
+        	      }
+        	      
+        	      
+        	    }
+        	    // 다른 함수 호출 등 원하는 처리를 할 수 있습니다.
+        	  },
+        	  error: function (xtr, status, error) {
+        	    alert(xtr + ":" + status + ":" + error);
+        	  },
+        	});
+
+      }
+    </script>
 
 </body>
 <script src="${CP}/resources/js/header.js"></script>

@@ -69,6 +69,24 @@
 #table-container table {
 	width: 35%;
 }
+#news-container{
+	width: 80%;
+	margin: 50px auto;
+}
+#news-container h5{
+	margin-bottom: 15px;
+}
+.news-text-container{
+	border-top: 1px solid black;
+	padding-top: 5px;
+}
+.news-text-container a{
+	font-size: 20px;
+	font-weight: bold;
+	text-decoration: none;
+	color: black;
+}
+
 </style>
 <title>Insert title here</title>
 </head>
@@ -131,6 +149,10 @@
 				<td class="low"></td>
 			</tr>
 		</table>
+		<input id="keyword" type="text" value="이구산업">
+	</div>
+	<div id="news-container">
+		
 	</div>
 
 	<p>하는 주식의 Ticker와 시작/종료 날짜를 입력해 주세요.</p>
@@ -216,7 +238,7 @@
 
         $.ajax({
         	  type: "POST",
-        	  url: "http://192.168.0.74:5001/blue_oceans/search_ticker",
+        	  url: "http://192.168.0.74:5001/blue-oceans/search-tickers",
         	  data: JSON.stringify(requestData),
         	  contentType: "application/json",
         	  mode: "cors",
@@ -226,25 +248,24 @@
         	    let lastCloseValue; 
         	    let lastCloseValuePreviousDay; 
 
-        	    parsedData.forEach((data, index) => {
-        	      console.log(
-        	        data.Volume,
-       	        	chartData.push({
-        	          time: formatDate(data.Date),
-        	          value: data.Close,
-        	        }) 
-        	      );
-        	      lastCloseValue = data.Close; // 마지막 Close 값 저장
+        	    parsedData.forEach(function(data, index) {
+        	    	  console.log(data.Volume);
+        	    	  chartData.push({
+        	    	    time: formatDate(data.Date),
+        	    	    value: data.Close,
+        	    	  });
+        	    	  lastCloseValue = data.Close; // 마지막 Close 값 저장
 
-        	      if (index === parsedData.length - 2) {
-        	        lastCloseValuePreviousDay = data.Close; // 마지막 전날 Close 값 저장
-        	      }
-        	       
-        	      $(".volume").text(data.Volume.toLocaleString())
-        	      $(".open").text(data.Open.toLocaleString())
-        	      $(".high").text(data.High.toLocaleString())
-        	      $(".low").text(data.Low.toLocaleString())
-        	    });
+        	    	  if (index === parsedData.length - 2) {
+        	    	    lastCloseValuePreviousDay = data.Close; // 마지막 전날 Close 값 저장
+        	    	  }
+
+        	    	  $(".volume").text(data.Volume.toLocaleString());
+        	    	  $(".open").text(data.Open.toLocaleString());
+        	    	  $(".high").text(data.High.toLocaleString());
+        	    	  $(".low").text(data.Low.toLocaleString());
+        	    	});
+
 
         	    lineSeries.setData(chartData);
 
@@ -281,6 +302,34 @@
         	});
 
       }
+      
+      $.ajax({
+  		type: "GET",
+  		url:"/ehr/BLUEOCEAN/doNaverSearch.do",
+  		asyn:"true",
+  		dataType:"html",
+  		data:{
+  			keyword : $("#keyword").val()
+  		},
+  		success:function(data){//통신 성공
+      		let parsedJson = JSON.parse(data);
+  		
+  			let parsedItems = (parsedJson.items)
+  			console.log(parsedItems)
+  			let newsHtml = "";
+  			newsHtml += "<h5 style='font-weight:bold;'>"+$("#keyword").val()+" 뉴스</h5>"
+  			newsHtml += "<div class='naver-news'><div class='news-image-container'></div><div class='news-text-container'><a href='" + parsedItems[0].link + "' target='_blank'>" + parsedItems[0].title + "</a><p>" + parsedItems[0].description + "</p></div></div>";
+  			newsHtml += "<div class='naver-news'><div class='news-image-container'></div><div class='news-text-container'><a href='" + parsedItems[1].link + "' target='_blank'>" + parsedItems[1].title + "</a><p>" + parsedItems[1].description + "</p></div></div>";
+  			newsHtml += "<div class='naver-news'><div class='news-image-container'></div><div class='news-text-container'><a href='" + parsedItems[2].link + "' target='_blank'>" + parsedItems[2].title + "</a><p>" + parsedItems[2].description + "</p></div></div>";
+			$("#news-container").append(newsHtml);
+  			
+  			
+  			
+      	},
+      	error:function(data){//실패시 처리
+      		console.log("error:"+data);_
+      	}
+  	});
     </script>
 
 </body>

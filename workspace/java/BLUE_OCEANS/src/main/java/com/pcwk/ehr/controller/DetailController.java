@@ -31,6 +31,7 @@ public class DetailController implements PcwkLogger {
 		return "main/detail";
 	}
 
+	/* keyword 를 파라미터로 받아서 네이버뉴스 api 호출 */
 	@RequestMapping(value = "/doNaverSearch.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String doNaverSearch(String keyword) throws IOException {

@@ -6,7 +6,7 @@ import com.pcwk.ehr.cmn.DTO;
 public interface NaverSearchService {
 
 	/**
-	 * naver: blog/news/책/쇼핑
+	 * naver: news
 	 * @param inVO
 	 * @return 검색결과(JSON)
 	 * @throws IOException

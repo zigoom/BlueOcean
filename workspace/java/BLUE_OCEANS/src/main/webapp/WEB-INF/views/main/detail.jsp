@@ -182,17 +182,9 @@ uri="http://java.sun.com/jsp/jstl/core"%>
         <!--현재 테스트 단계로 하드코딩해둔상태 , 추후 메인페이지나 관심페이지에서 클릭시 그 종목에대한 주식값,시작일,종료일 불러올예정-->
         <p>하는 주식의 Ticker와 시작/종료 날짜를 입력해 주세요.</p>
         <label> 주식값 : <input type="text" name="Ticker" id="Ticker" value="000020" /> </label>
-        <label>
-            시작날짜 :
-            <input type="text" name="StartDate" id="StartDate" value="2000-01-01" />
-        </label>
-        <label>
-            종료날짜 :
-            <input type="text" name="EndDate" id="EndDate" value="2023-07-27" />
-        </label>
-        <label>
-            <input type="button" value="데이터 요청" onclick="test()" />
-        </label>
+        <label> 시작날짜 : <input type="text" name="StartDate" id="StartDate" value="2000-01-01" /> </label>
+        <label> 종료날짜 : <input type="text" name="EndDate" id="EndDate" value="2023-07-27" /> </label>
+        <label> <input type="button" value="데이터 요청" onclick="test()" /> </label>
         <script>
             // #bookmark-button 버튼을 눌렀을때 빈 별일때는 색이 들어간 별로 , 색이 들어간 별일때는 빈 별로 전환, DB에
             // 관심목록 추가 , 제거 기능
@@ -270,7 +262,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                 let requestData = {
                     ticker: ticker_data, // "005930",
                     startDate: startDate_data, // "2023-01-02",
-                    endtDate: endDate_data, // "2023-01-31"
+                    endDate: endDate_data, // "2023-01-31"
                 };
                 // ajax를 활용해 http://192.168.0.74:5001/blue-oceans/search-tickers을 호출하여 불러온 데이터를 파싱
                 $.ajax({
@@ -280,20 +272,21 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                     contentType: 'application/json',
                     mode: 'cors',
                     success: function (result) {
+                        // 서버 응답이 이미 객체로 파싱되었으므로, 문자열 이스케이프 불필요
                         $('#stock-name').text(result.stock_name + '(' + result.ticker + ')');
-                        let parsedData = JSON.parse(result.data);
+
+                        let chartData = [];
                         let lastCloseValue; // 마지막 Close값
                         let lastCloseValuePreviousDay; // 마지막 전날 Close값
 
-                        parsedData.forEach(function (data, index) {
-                            console.log(data.Volume);
+                        result.data.forEach(function (data, index) {
                             chartData.push({
                                 time: formatDate(data.Date),
                                 value: data.Close,
                             });
                             lastCloseValue = data.Close; // 마지막 Close 값 저장
 
-                            if (index === parsedData.length - 2) {
+                            if (index === result.data.length - 2) {
                                 lastCloseValuePreviousDay = data.Close; // 마지막 전날 Close 값 저장
                             }
                             // 거래량 , 시가 , 고가, 저가를 불러오고 해당 html에 toLocaleString 으로 천의 자릿수마다 콤마를 찍어준뒤 출력
@@ -302,7 +295,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                             $('.high').text(data.High.toLocaleString());
                             $('.low').text(data.Low.toLocaleString());
                         });
-                        // 가져온데이터 차트에 등록
+                        // 가져온 데이터 차트에 등록
                         lineSeries.setData(chartData);
 
                         // lastCloseValue와 lastCloseValuePreviousDay 변수를 이용하여 원하는 작업 수행

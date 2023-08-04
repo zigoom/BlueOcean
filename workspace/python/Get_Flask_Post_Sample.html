@@ -1,58 +1,51 @@
 <!DOCTYPE html>
 <html>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <body>
-        <script>
-        function test(){
-                var ticker_data = $('#Ticker').val();
-                var startDate_data = $('#StartDate').val();
-                var endDate_data = $('#EndDate').val();
+<head>
+    <title>AJAX Example</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <button id="searchButton">Search</button>
+    <div id="result"></div>
 
+    <script>
+        $(document).ready(function () {
+            $("#searchButton").click(function () {
                 var requestData = {
-                        "ticker": ticker_data,          // "005930",
-                        "startDate": startDate_data,    // "2023-01-02",
-                        "endtDate": endDate_data        // "2023-01-31"
+                    "ticker": "005930",
+                    "startDate": "2023-01-01",
+                    "endDate": "2023-01-31"
                 };
 
                 $.ajax({
-                        type : 'POST',                                  <!--[GET / POST] 둘중 하나 선택-->
-                        url : 'http://192.168.0.74:5001/blue_oceans/search_ticker',
-                        data: JSON.stringify(requestData),
-                        contentType: 'application/json',
-                        mode: 'cors' ,
-                        success : function(result){
-                                console.log("ticker = " + result.ticker);
-                                console.log("startDate = " + result.startDate);
-                                console.log("endtDate = " + result.endtDate);
-                                console.log("data = " + result.data);
-                                var parsedData = JSON.parse(result.data);       // jsonData를 자바스크립트 객체로 파싱
+                    url: 'http://192.168.0.74:5001/blue-oceans/search-tickers', // Flask API 엔드포인트 주소
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(requestData),
+                    success: function (response) {
+                        // 응답 데이터를 처리합니다.
+                        var resultDiv = $("#result");
+                        resultDiv.empty();
 
-                                console.log(parsedData); // 파싱된 데이터를 확인하기 위해 출력 (개발자 도구에서 확인 가능)
+                        resultDiv.append("<p>Stock Name: " + response.stock_name + "</p>");
+                        resultDiv.append("<p>Ticker: " + response.ticker + "</p>");
+                        resultDiv.append("<p>Start Date: " + response.startDate + "</p>");
+                        resultDiv.append("<p>End Date: " + response.endDate + "</p>");
 
-                                const firstData = parsedData[0]; // 첫 번째 데이터에 접근
-                                console.log(firstData.Date); // 첫 번째 데이터의 Date 필드 값 출력 (날짜)
-                                console.log(firstData.Open); // 첫 번째 데이터의 Open 필드 값 출력 (시가)
-                                console.log(firstData.High); // 첫 번째 데이터의 High 필드 값 출력 (최고가)
-                                console.log(firstData.Low); // 첫 번째 데이터의 Low 필드 값 출력 (최저가)
-                                console.log(firstData.Close); // 첫 번째 데이터의 Close 필드 값 출력 (종가)
-                                console.log(firstData.Volume); // 첫 번째 데이터의 Volume 필드 값 출력 (거래량)
-                                console.log(firstData.Change); // 첫 번째 데이터의 Change 필드 값 출력 (상승률)
-
-                                // 모든 데이터에 대해 반복하여 원하는 작업을 수행할 수 있습니다.
-                                parsedData.forEach(data => {
-                                  console.log(data.Date, data.Open, data.High, data.Low, data.Close, data.Volume, data.Change); // 날짜와 종가를 출력
-                                });
-                        },
-                        error : function(xtr,status,error){
-                                alert(xtr +":"+status+":"+error);
+                        // 'data' 배열의 내용을 처리합니다.
+                        var dataDiv = $("<div></div>");
+                        for (var i = 0; i < response.data.length; i++) {
+                            var dataItem = response.data[i];
+                            dataDiv.append("<p>Date: " + dataItem.Date + ", Open: " + dataItem.Open + "</p>");
                         }
+                        resultDiv.append(dataDiv);
+                    },
+                    error: function (error) {
+                        console.error('Error:', error);
+                    }
                 });
-        }
-        </script>
-                <p> 하는 주식의 Ticker와 시작/종료 날짜를 입력해 주세요.</p>
-                <P>주식값 : <input type = "text" name="Ticker" id="Ticker"/></P>
-                <P>시작날짜 : <input type = "text" name="StartDate" id="StartDate"/></P>
-                <P>종료날짜 : <input type = "text" name="EndDate" id="EndDate"/></P>
-                <P><input type = "button" value = "데이터 요청" onclick="test()"/></P>
-        </body>
+            });
+        });
+    </script>
+</body>
 </html>

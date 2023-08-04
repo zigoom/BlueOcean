@@ -314,8 +314,8 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                             console.log('전날 마지막 Close 값:', lastCloseValuePreviousDay);
                             if (lastCloseValue - lastCloseValuePreviousDay >= 0) {
                                 //  마지막날값에서 마지막 전날값을 뺐을때 0보다 크다면
-                                //  해당 div색을 빨간색으로 바꾸고 ▲ 모양과 함께 마지막날값에서 마지막 전날값을 뺀 금액과
-                                //  %로 계산한것을 해당 html에 출력
+                                //  해당 div색을 상승시 빨간색으로 바꾸고 ▲ 모양과 함께 마지막날값에서 마지막 전날값을 뺀 금액과
+                                //  %로 계산한것을 해당 html에 출력 , 하락시 반대로 적용
                                 $('.price-changes').text(
                                     '▲' + (lastCloseValue - lastCloseValuePreviousDay).toLocaleString()
                                 );

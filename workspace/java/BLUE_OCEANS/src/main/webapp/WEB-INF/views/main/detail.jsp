@@ -391,7 +391,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                 error: function (data) {
                     //실패시 처리
                     console.log('error:' + data);
-                    _;
+                    
                 },
             });
         </script>

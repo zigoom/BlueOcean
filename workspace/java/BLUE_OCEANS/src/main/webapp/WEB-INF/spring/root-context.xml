@@ -71,6 +71,6 @@
       value="${jdbc.removeAbandonedTimeout}" />
 
   </bean>
-
+ 
 </beans>
 

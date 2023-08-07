@@ -174,7 +174,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                     <td class="low"></td>
                 </tr>
             </table>
-            <input id="keyword" type="text" value="이구산업" />
+            <input id="keyword" type="text" value="삼성전자" />
         </div>
         <!--네이버 뉴스 api 정보를 불러오는 영역-->
         <div id="news-container"></div>
@@ -356,6 +356,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                     keyword: $('#keyword').val(),
                 },
                 success: function (data) {
+                	console.log(data)
                     let parsedJson = JSON.parse(data);
                     let parsedItems = parsedJson.items;
                     console.log(parsedItems);
@@ -397,4 +398,5 @@ uri="http://java.sun.com/jsp/jstl/core"%>
         </script>
     </body>
     <script src="${CP}/resources/js/header.js"></script>
+    <script src="${CP}/resources/js/util.js"></script>
 </html>

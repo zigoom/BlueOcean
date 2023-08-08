@@ -56,12 +56,11 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                 <div class="bookmark-container">
                     <div id="chart-container${item}"></div>
                     <div class="text-container">
-                        <p>종목 : 삼성전자</p>
-                        <p>현재가 : 72,000원</p>
-                        <p>고가 : 73,200원</p>
-                        <p>거래량 : 11,257,786</p>
-                        <p>저가 : 72,000원</p>
-                        <p>거래대금 : 815,584백만</p>
+                        <p class="stock-name"></p>
+                        <p class="last-close-value"></p>
+                        <p class="high"></p>
+                        <p class="volume"></p>
+                        <p class="low"></p>
                     </div>
                     <div>
                         <i
@@ -86,7 +85,6 @@ uri="http://java.sun.com/jsp/jstl/core"%>
             </c:forEach>
         </div>
     </body>
-    <script src="${CP}/resources/js/header.js"></script>
     <script>
         // 20200101 등의 값을 2020-01-01 로 변경해주는 함수
         function formatDate(date) {
@@ -133,7 +131,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                     contentType: 'application/json',
                     mode: 'cors',
                     success: function (result) {
-                        $('#stock-name').text(result.stock_name + '(' + result.ticker + ')');
+                        $('.stock-name').eq(i-1).text(result.stock_name + '(' + result.ticker + ')');
 
                         let chartData = [];
                         let lastCloseValue; // 마지막 Close값
@@ -150,10 +148,10 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                                 lastCloseValuePreviousDay = data.Close; // 마지막 전날 Close 값 저장
                             }
                             // 거래량 , 시가 , 고가, 저가를 불러오고 해당 html에 toLocaleString 으로 천의 자릿수마다 콤마를 찍어준뒤 출력
-                            $('.volume').text(data.Volume.toLocaleString());
-                            $('.open').text(data.Open.toLocaleString());
-                            $('.high').text(data.High.toLocaleString());
-                            $('.low').text(data.Low.toLocaleString());
+                            $('.volume').eq(i-1).text("거래량 : "+data.Volume.toLocaleString());
+                            $('.open').eq(i-1).text("시가 : "+data.Open.toLocaleString());
+                            $('.high').eq(i-1).text("고가 : "+data.High.toLocaleString());
+                            $('.low').eq(i-1).text("저가 : "+data.Low.toLocaleString());
                         });
                         // 가져온 데이터 차트에 등록
                         lineSeries.setData(chartData);
@@ -163,7 +161,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
 
                         // lastCloseValue와 lastCloseValuePreviousDay 변수를 이용하여 원하는 작업 수행
                         console.log('마지막 Close 값:', lastCloseValue);
-                        $('.last-close-value').text(lastCloseValue.toLocaleString());
+                        $('.last-close-value').eq(i-1).text("현재가 : "+lastCloseValue.toLocaleString());
                         $('.prev-close').text(lastCloseValuePreviousDay.toLocaleString());
 
                         if (lastCloseValuePreviousDay) {

@@ -22,65 +22,67 @@ import com.pcwk.ehr.service.NaverSearchService;
 @RequestMapping("BLUEOCEAN")
 public class BookmarkController implements PcwkLogger {
 
-	@Autowired
-	NaverSearchService naverSearchService;
+    @Autowired
+    NaverSearchService naverSearchService;
 
-	@Autowired
-	BookmarkService bookmarkService;
+    @Autowired
+    BookmarkService bookmarkService;
 
-	@RequestMapping(value = "/bookmark.do")
-	public String mainView(MainVO inVO) {
+    // 북마크 화면을 보여주는 메소드
+    @RequestMapping(value = "/bookmark.do")
+    public String mainView(MainVO inVO) {
 
-		LOG.debug("┌────────────────┐");
-		LOG.debug("│bookmarkView    │");
-		LOG.debug("│inVO            │" + inVO);
-		LOG.debug("└────────────────┘");
+        LOG.debug("┌────────────────┐");
+        LOG.debug("│bookmarkView    │");
+        LOG.debug("│inVO            │" + inVO);
+        LOG.debug("└────────────────┘");
 
-		return "main/bookmark";
-	}
+        return "main/bookmark";
+    }
 
-	@RequestMapping(value = "/addBookmark.do")
-	@ResponseBody
-	public int addBookmark(BookmarkVO vo, Model model) throws SQLException {
+    // 북마크를 추가하는 메소드
+    @RequestMapping(value = "/addBookmark.do")
+    @ResponseBody
+    public int addBookmark(BookmarkVO vo, Model model) throws SQLException {
 
-		int outVO = bookmarkService.addBookmark(vo);
+        int outVO = bookmarkService.addBookmark(vo);
 
-		LOG.debug("┌────────────────┐");
-		LOG.debug("│addBookmark     │");
-		LOG.debug("│vo              │" + vo);
-		LOG.debug("└────────────────┘");
-		model.addAttribute("bookmarkVO", outVO);
+        LOG.debug("┌────────────────┐");
+        LOG.debug("│addBookmark     │");
+        LOG.debug("│vo              │" + vo);
+        LOG.debug("└────────────────┘");
+        model.addAttribute("bookmarkVO", outVO);
 
-		return outVO;
-	}
+        return outVO;
+    }
 
-	@RequestMapping(value = "/deleteBookmark.do")
-	@ResponseBody
-	public int deleteBookmark(BookmarkVO vo) throws SQLException {
+    // 북마크를 삭제하는 메소드
+    @RequestMapping(value = "/deleteBookmark.do")
+    @ResponseBody
+    public int deleteBookmark(BookmarkVO vo) throws SQLException {
 
-		int outVO = bookmarkService.deleteBookmark(vo);
+        int outVO = bookmarkService.deleteBookmark(vo);
 
-		LOG.debug("┌────────────────┐");
-		LOG.debug("│deleteBookmark  │");
-		LOG.debug("│vo              │" + vo);
-		LOG.debug("└────────────────┘");
+        LOG.debug("┌────────────────┐");
+        LOG.debug("│deleteBookmark  │");
+        LOG.debug("│vo              │" + vo);
+        LOG.debug("└────────────────┘");
 
-		return outVO;
-	}
+        return outVO;
+    }
 
-	@RequestMapping(value = "/checkBookmark.do")
-	@ResponseBody
-	public int checkBookmark(BookmarkVO vo) throws SQLException {
+    // 북마크 여부를 확인하는 메소드
+    @RequestMapping(value = "/checkBookmark.do")
+    @ResponseBody
+    public int checkBookmark(BookmarkVO vo) throws SQLException {
 
-		int outVO = bookmarkService.checkBookmark(vo);
+        int outVO = bookmarkService.checkBookmark(vo);
 
-		LOG.debug("┌────────────────┐");
-		LOG.debug("│checkBookmark   │");
-		LOG.debug("│vo              │" + vo);
-		LOG.debug("└────────────────┘");
+        LOG.debug("┌────────────────┐");
+        LOG.debug("│checkBookmark   │");
+        LOG.debug("│vo              │" + vo);
+        LOG.debug("└────────────────┘");
 
-		return outVO;
-	}
-
-
+        return outVO;
+    }
 }

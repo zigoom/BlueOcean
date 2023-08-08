@@ -1,6 +1,6 @@
 let signInhtml = "";
 let signInActive = 0;
-let signUphtml = "";
+let signUphtml = "";	
 let signUpActive = 0;
 let findIdhtml = "";
 let findIdActive = 0;
@@ -113,7 +113,9 @@ let idEffectiveness = 0;// 아이디 체크 했으면 1 안했으면 0
 let isPasswordValidationDone = 0;
 let isPasswordCheckValidationDone = 0;
 
-$(document).ready(function() {
+$(document)
+		.ready(
+				function() {
 					console.log("테스트중")
 
 					$("#signIn")
@@ -121,13 +123,17 @@ $(document).ready(function() {
 									function() {
 										signIn.classList.remove("btn-light")
 										signIn.classList.add("btn-secondary")
-										if (signIn.classList.contains("btn-secondary")) {
+										if (signIn.classList
+												.contains("btn-secondary")) {
 											signUp.classList.add("btn-light");
-											signUp.classList.remove("btn-secondary");
+											signUp.classList
+													.remove("btn-secondary");
 											findId.classList.add("btn-light");
-											findId.classList.remove("btn-secondary");
+											findId.classList
+													.remove("btn-secondary");
 											findPw.classList.add("btn-light");
-											findPw.classList.remove("btn-secondary");
+											findPw.classList
+													.remove("btn-secondary");
 										}
 
 										modalBody.hide(findIdhtml);
@@ -287,7 +293,7 @@ $(document).ready(function() {
 												|| !/\d/.test(input)) {
 											alert("소문자와 숫자를 조합해서 id를 작성해주세요.");
 											$('#signUp_id').val(""); // 입력 값을
-																		// 비워줍니다.
+											// 비워줍니다.
 											return;
 
 										}
@@ -295,7 +301,7 @@ $(document).ready(function() {
 										else {
 											let id = $('#signUp_id').val();
 											console.log("checkId 실행됨" + id); // 추가한
-																				// 코드
+											// 코드
 											$
 													.ajax({
 														url : "/ehr/user/idCheck.do",
@@ -304,16 +310,16 @@ $(document).ready(function() {
 															"id" : id,
 														},
 														success : function(cnt) { // 컨트롤러
-																					// 에서
-																					// 받은
-																					// cnt
+															// 에서
+															// 받은
+															// cnt
 															// alert("success c
 															// allback");
 															console.log(
 																	"아이디 체크",
 																	cnt)
 															if (cnt != 1) { // 사용가능
-																			// id
+																// id
 																alert("사용가능한 id입니다")
 																idcheck = 1
 																/*
@@ -323,7 +329,7 @@ $(document).ready(function() {
 																 * "none");
 																 */
 															} else { // 중복된
-																		// 아이디
+																// 아이디
 																alert("사용 불가능한 id입니다")
 																/*
 																 * $(".id_already").css("display",
@@ -371,7 +377,7 @@ $(document).ready(function() {
 												.ISEmpty($("#signUp_pw").val()) == true) {
 											alert("비밀번호를 입력하세요.");
 											$("#signUp_pw").focus();
-											return;
+											return; 
 										}
 
 										if (eUtil.ISEmpty($("#signUp_pw_check")
@@ -433,13 +439,13 @@ $(document).ready(function() {
 																.val()
 													},
 													success : function(data) {// 통신
-																				// 성공
+														// 성공
 														console
 																.log("success data:"
 																		+ data);
 													},
 													error : function(data) {// 실패시
-																			// 처리
+														// 처리
 														console.log("error:"
 																+ data);
 													}
@@ -451,7 +457,11 @@ $(document).ready(function() {
 
 					// ------------------------------로그인-----------------------------
 
-					$(document).on(	"click","#login_bt",function() {
+					$(document)
+							.on(
+									"click",
+									"#login_bt",
+									function() {
 										console.log("login_bt");
 
 										if (eUtil.ISEmpty($("#login_id").val()) == true) {
@@ -465,7 +475,8 @@ $(document).ready(function() {
 											$("#login_pw").focus();
 											return;
 										}
-										$.ajax({
+										$
+												.ajax({
 													type : "POST",
 													url : "/ehr/user/Login.do",
 													asyn : "true",
@@ -479,7 +490,7 @@ $(document).ready(function() {
 
 													},
 													success : function(data) {// 통신
-																				// 성공
+														// 성공
 														console.log("data:"
 																+ data);
 														let paredJSON = JSON
@@ -493,11 +504,11 @@ $(document).ready(function() {
 														} else if (paredJSON.megId == 30) {
 															alert("로그인 성공");
 															window.location.href = window.location.href;
-													    }
+														}
 
 													},
 													error : function(data) {// 실패시
-																			// 처리
+														// 처리
 														console.log("error:"
 																+ data);
 													}
@@ -508,8 +519,6 @@ $(document).ready(function() {
 					// end-----------------------------
 
 				});
-
-
 
 // ID 한글 입력값 못 넣게 하는 함수
 

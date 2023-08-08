@@ -24,18 +24,27 @@ public class BookmarkDaoImpl implements BookmarkDao, PcwkLogger {
 	@Override
 	public int addBookmark(BookmarkVO vo) throws SQLException {
 		int flag = 0;
-
-		String statement = NAMESPACE + DOT + "addBookmark";
-		System.out.println("┌──────────────────────────┐");
-		System.out.println("│ 1. statement-            │" + statement);
-		System.out.println("└──────────────────────────┘");
-		System.out.println("┌──────────────────────────┐");
-		System.out.println("│ 2. param=\n              │" + vo.toString());
-		System.out.println("└──────────────────────────┘");
-		flag = this.sqlSessionTemplate.insert(statement, vo);
-		System.out.println("┌──────────────────────────┐");
-		System.out.println("│ 3. idCheck flag  1/0     │" + flag);
-		System.out.println("└──────────────────────────┘");
+		if(countBookmark(vo) < 10) {
+			if(checkBookmark(vo) == 0) {
+				String statement = NAMESPACE + DOT + "addBookmark";
+				LOG.debug("┌──────────────────────────┐");
+				LOG.debug("│ 1. statement-            │" + statement);
+				LOG.debug("└──────────────────────────┘");
+				LOG.debug("┌──────────────────────────┐");
+				LOG.debug("│ 2. param=\n              │" + vo.toString());
+				LOG.debug("└──────────────────────────┘");
+				flag = this.sqlSessionTemplate.insert(statement, vo);
+				LOG.debug("┌──────────────────────────┐");
+				LOG.debug("│ 3. Check flag            │" + flag);
+				LOG.debug("└──────────────────────────┘");
+			}else {
+				LOG.debug("중복되는 종목");
+				flag = 3;
+			}
+		}else {
+			LOG.debug("10개 초과");
+			flag = 2;
+		}
 
 		return flag;
 
@@ -46,16 +55,54 @@ public class BookmarkDaoImpl implements BookmarkDao, PcwkLogger {
 		int flag = 0;
 
 		String statement = NAMESPACE + DOT + "deleteBookmark";
-		System.out.println("┌──────────────────────────┐");
-		System.out.println("│ 1. statement-            │" + statement);
-		System.out.println("└──────────────────────────┘");
-		System.out.println("┌──────────────────────────┐");
-		System.out.println("│ 2. param=\n              │" + vo.toString());
-		System.out.println("└──────────────────────────┘");
+		LOG.debug("┌──────────────────────────┐");
+		LOG.debug("│ 1. statement-            │" + statement);
+		LOG.debug("└──────────────────────────┘");
+		LOG.debug("┌──────────────────────────┐");
+		LOG.debug("│ 2. param=\n              │" + vo.toString());
+		LOG.debug("└──────────────────────────┘");
 		flag = this.sqlSessionTemplate.delete(statement, vo);
-		System.out.println("┌──────────────────────────┐");
-		System.out.println("│ 3. idCheck flag  1/0     │" + flag);
-		System.out.println("└──────────────────────────┘");
+		LOG.debug("┌──────────────────────────┐");
+		LOG.debug("│ 3. Check flag            │" + flag);
+		LOG.debug("└──────────────────────────┘");
+
+		return flag;
+	}
+
+	@Override
+	public int countBookmark(BookmarkVO vo) throws SQLException {
+		int flag = 0;
+
+		String statement = NAMESPACE + DOT + "countBookmark";
+		LOG.debug("┌──────────────────────────┐");
+		LOG.debug("│ 1. statement-            │" + statement);
+		LOG.debug("└──────────────────────────┘");
+		LOG.debug("┌──────────────────────────┐");
+		LOG.debug("│ 2. param=\n              │" + vo.toString());
+		LOG.debug("└──────────────────────────┘");
+		flag = this.sqlSessionTemplate.selectOne(statement, vo);
+		LOG.debug("┌──────────────────────────┐");
+		LOG.debug("│ 3. Check flag            │" + flag);
+		LOG.debug("└──────────────────────────┘");
+
+		return flag;
+	}
+
+	@Override
+	public int checkBookmark(BookmarkVO vo) throws SQLException {
+		int flag = 0;
+
+		String statement = NAMESPACE + DOT + "checkBookmark";
+		LOG.debug("┌──────────────────────────┐");
+		LOG.debug("│ 1. statement-            │" + statement);
+		LOG.debug("└──────────────────────────┘");
+		LOG.debug("┌──────────────────────────┐");
+		LOG.debug("│ 2. param=\n              │" + vo.toString());
+		LOG.debug("└──────────────────────────┘");
+		flag = this.sqlSessionTemplate.selectOne(statement, vo);
+		LOG.debug("┌──────────────────────────┐");
+		LOG.debug("│ 3. Check flag            │" + flag);
+		LOG.debug("└──────────────────────────┘");
 
 		return flag;
 	}

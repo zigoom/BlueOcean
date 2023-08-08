@@ -9,4 +9,8 @@ public interface BookmarkDao {
 	int addBookmark(BookmarkVO vo)throws SQLException;
 	
 	int deleteBookmark(BookmarkVO vo)throws SQLException;
+	
+	int countBookmark(BookmarkVO vo)throws SQLException;
+	
+	int checkBookmark(BookmarkVO vo)throws SQLException;
 }

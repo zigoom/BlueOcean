@@ -31,10 +31,10 @@ public class BookmarkController implements PcwkLogger {
 	@RequestMapping(value = "/bookmark.do")
 	public String mainView(MainVO inVO) {
 
-		System.out.println("┌────────────────┐");
-		System.out.println("│bookmarkView    │");
-		System.out.println("│inVO            │" + inVO);
-		System.out.println("└────────────────┘");
+		LOG.debug("┌────────────────┐");
+		LOG.debug("│bookmarkView    │");
+		LOG.debug("│inVO            │" + inVO);
+		LOG.debug("└────────────────┘");
 
 		return "main/bookmark";
 	}
@@ -43,28 +43,44 @@ public class BookmarkController implements PcwkLogger {
 	@ResponseBody
 	public int addBookmark(BookmarkVO vo, Model model) throws SQLException {
 
-	    int outVO = bookmarkService.addBookmark(vo);
+		int outVO = bookmarkService.addBookmark(vo);
 
-	    System.out.println("┌────────────────┐");
-	    System.out.println("│addBookmark     │");
-	    System.out.println("│vo              │" + vo);
-	    System.out.println("└────────────────┘");
-	    model.addAttribute("bookmarkVO", outVO);
+		LOG.debug("┌────────────────┐");
+		LOG.debug("│addBookmark     │");
+		LOG.debug("│vo              │" + vo);
+		LOG.debug("└────────────────┘");
+		model.addAttribute("bookmarkVO", outVO);
 
-	    return outVO;
+		return outVO;
 	}
+
 	@RequestMapping(value = "/deleteBookmark.do")
 	@ResponseBody
 	public int deleteBookmark(BookmarkVO vo) throws SQLException {
 
-	    int outVO = bookmarkService.deleteBookmark(vo);
+		int outVO = bookmarkService.deleteBookmark(vo);
 
-	    System.out.println("┌────────────────┐");
-	    System.out.println("│deleteBookmark  │");
-	    System.out.println("│vo              │" + vo);
-	    System.out.println("└────────────────┘");
+		LOG.debug("┌────────────────┐");
+		LOG.debug("│deleteBookmark  │");
+		LOG.debug("│vo              │" + vo);
+		LOG.debug("└────────────────┘");
 
-	    return outVO;
+		return outVO;
 	}
+
+	@RequestMapping(value = "/checkBookmark.do")
+	@ResponseBody
+	public int checkBookmark(BookmarkVO vo) throws SQLException {
+
+		int outVO = bookmarkService.checkBookmark(vo);
+
+		LOG.debug("┌────────────────┐");
+		LOG.debug("│checkBookmark   │");
+		LOG.debug("│vo              │" + vo);
+		LOG.debug("└────────────────┘");
+
+		return outVO;
+	}
+
 
 }

@@ -27,4 +27,14 @@ public class BookmarkServiceImpl implements BookmarkService, PcwkLogger {
 		return bookmarkDao.deleteBookmark(vo);
 	}
 
+	@Override
+	public int countBookmark(BookmarkVO vo) throws SQLException {
+		return bookmarkDao.countBookmark(vo);
+	}
+
+	@Override
+	public int checkBookmark(BookmarkVO vo) throws SQLException {
+		return bookmarkDao.checkBookmark(vo);
+	}
+
 }

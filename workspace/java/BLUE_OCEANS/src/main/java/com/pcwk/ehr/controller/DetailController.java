@@ -4,10 +4,12 @@ import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.pcwk.ehr.cmn.BookmarkVO;
 import com.pcwk.ehr.cmn.DTO;
 import com.pcwk.ehr.cmn.PcwkLogger;
 import com.pcwk.ehr.domain.MainVO;
@@ -20,13 +22,14 @@ public class DetailController implements PcwkLogger {
 	@Autowired
 	NaverSearchService naverSearchService;
 
-	@RequestMapping(value = "/detail.do")
-	public String mainView(MainVO inVO) {
+	@RequestMapping(value = "/detail.do", method = RequestMethod.GET)
+	public String mainView(BookmarkVO inVO, Model model) {
 
 		LOG.debug("┌────────────────┐");
 		LOG.debug("│detailView      │");
 		LOG.debug("│inVO            │" + inVO);
 		LOG.debug("└────────────────┘");
+		model.addAttribute("inVO",inVO);
 
 		return "main/detail";
 	}

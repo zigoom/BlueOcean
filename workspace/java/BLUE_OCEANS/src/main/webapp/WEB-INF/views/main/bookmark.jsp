@@ -44,19 +44,35 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                 margin: 15px;
             }
 
-            .text-container p {
-                font-size: 12px;
+            .text-container p, .text-container a {
+                font-size: 15px;
                 font-weight: bold;
+            }
+            .last-close-value{
+            	margin-top: 15px;
+            }
+            .text-container a {
+            	text-decoration: none;
+            	cursor: pointer;
+            	color: black;
+            	font-size: 21px;
+            }
+            .fa-solid{
+            	color:gold;
             }
         </style>
     </head>
     <body>
         <div class="container">
             <c:forEach var="item" begin="1" end="5">
+	            <form method="get" action="/ehr/BLUEOCEAN/detail.do" class="detail-form">
+		        <!-- 주식종목코드 값 담아두는 인풋 -->
                 <div class="bookmark-container">
                     <div id="chart-container${item}"></div>
                     <div class="text-container">
-                        <p class="stock-name"></p>
+                        <a class="stock-name"></a>
+                        <input type="hidden" class="stock-code-input" name="stockCode">
+                        <input type="hidden" class="stock-name-input" name="stockName">
                         <p class="last-close-value"></p>
                         <p class="high"></p>
                         <p class="volume"></p>
@@ -65,21 +81,26 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                     <div>
                         <i
                             style="margin-left: 50px; margin-top: 25px"
-                            id="bookmark-button"
-                            class="fa-regular fa-star fa-2xl"
+                            class="fa-regular fa-star fa-2xl bookmark-button"
                         ></i>
                     </div>
                 </div>
+                </form>
 
                 <p>하는 주식의 Ticker와 시작/종료 날짜를 입력해 주세요.</p>
+                <input type="text" class="ui" value="${sessionScope.user}" />
+		        <!-- 유저아이디 값 담아두는 인풋 -->
+		        <input type="text" class="sn" />
+		        <!-- 주식종목이름 값 담아두는 인풋 -->
+		        <input type="text" class="sc" />
 
                 <label> 주식값 : <input type="text" name="Ticker" id="Ticker" value="000020" class="Ticker" /> </label>
                 <label>
                     시작날짜 :
-                    <input type="text" name="StartDate" id="StartDate" class="StartDate" value="2000-01-01" />
+                    <input type="text" name="StartDate" id="StartDate" class="StartDate" value="1900-01-01" />
                 </label>
                 <label>
-                    종료날짜 : <input type="text" name="EndDate" id="EndDate" class="EndDate" value="2023-07-27" />
+                    종료날짜 : <input type="text" name="EndDate" id="EndDate" class="EndDate"/>
                 </label>
                 <label> <input class="submit-button" type="button" value="데이터 요청" /> </label>
             </c:forEach>
@@ -101,6 +122,130 @@ uri="http://java.sun.com/jsp/jstl/core"%>
             let ticker_data = document.querySelectorAll('.Ticker'); // 주식종목 코드
             let startDate_data = document.querySelectorAll('.StartDate'); // 시작일
             let endDate_data = document.querySelectorAll('.EndDate'); // 종료일
+            
+         // 북마크에 이미 등록되어있는지 체크하는 함수
+            function checkBookmark() {
+                $.ajax({
+                    type: 'GET',
+                    url: '/ehr/BLUEOCEAN/checkBookmark.do',
+                    async: true,
+                    dataType: 'html',
+                    data: {
+                        userId: $('.ui').eq(i-1).val(),
+                        stockName: $('.sn').eq(i-1).val(),
+                        stockCode: $('.sc').eq(i-1).val(),
+                    },
+                    success: function (data) {
+                        if (data == 1) {
+                            bookmarkButton[i-1].classList.remove('fa-regular'); // 체크했을경우 이미 등록되어있을때 색깔있는 별 모양
+                            bookmarkButton[i-1].classList.add('fa-solid');
+                        } else {
+                            bookmarkButton[i-1].classList.remove('fa-solid'); // 체크했을경우 등록되어있지 않을때 색깔없는 별 모양
+                            bookmarkButton[i-1].classList.add('fa-regular');
+                        }
+                    },
+                    error: function (data) {
+                        console.log('Error check bookmark:', data);
+                    },
+                });
+            }
+
+            // 북마크 버튼 요소 선택
+            let bookmarkButton = document.querySelectorAll('.bookmark-button');
+
+            // 북마크 버튼 클릭 이벤트 핸들러 함수
+            function handleBookmarkClick() {
+                let userId = $('.ui').eq(i-1).val();
+                let stockName = $('.sn').eq(i-1).val();
+                let stockCode = $('.sc').eq(i-1).val();
+                $.ajax({
+                    type: 'GET',
+                    url: '/ehr/BLUEOCEAN/checkBookmark.do',
+                    async: true,
+                    dataType: 'html',
+                    data: {
+                        userId: userId,
+                        stockName: stockName,
+                        stockCode: stockCode,
+                    },
+                    success: function (data) {
+                        if (data == 1) {
+                            bookmarkButton[i-1].classList.add('fa-regular');
+                            bookmarkButton[i-1].classList.remove('fa-solid');
+                            deleteBookmark(userId, stockName, stockCode);
+                        } else {
+                            bookmarkButton[i-1].classList.add('fa-solid');
+                            bookmarkButton[i-1].classList.remove('fa-regular');
+                            addBookmark(userId, stockName, stockCode);
+                        }
+                    },
+                    error: function (data) {
+                        console.log('Error check bookmark:', data);
+                    },
+                });
+            }
+
+            // 북마크 추가 함수
+            function addBookmark(userId, stockName, stockCode) {
+                $.ajax({
+                    type: 'GET',
+                    url: '/ehr/BLUEOCEAN/addBookmark.do',
+                    async: true,
+                    dataType: 'html',
+                    data: {
+                        userId: userId,
+                        stockName: stockName,
+                        stockCode: stockCode,
+                    },
+                    success: function (data) {
+                    	if (data == 1){
+                    		alert("관심목록에 추가되었습니다.")
+                    	}
+                    	else if (data == 2) {
+                            alert("최대 등록 가능갯수를 초과했습니다.")
+                            bookmarkButton[i-1].classList.add('fa-regular');
+                            bookmarkButton[i-1].classList.remove('fa-solid');
+                        }
+                    	else if (data == 3) {
+                            console.log("이미 관심종목에 등록되어 있습니다.")
+                        }
+                    },
+                    error: function (data) {
+                        console.log('Error adding bookmark:', data);
+                    },
+                });
+            }
+
+            // 북마크 삭제 함수
+            function deleteBookmark(userId, stockName, stockCode) {
+                $.ajax({
+                    type: 'GET',
+                    url: '/ehr/BLUEOCEAN/deleteBookmark.do',
+                    async: true,
+                    dataType: 'html',
+                    data: {
+                        userId: userId,
+                        stockName: stockName,
+                        stockCode: stockCode,
+                    },
+                    success: function (data) {
+                        alert("관심목록에서 삭제되었습니다.")
+                    },
+                    error: function (data) {
+                        console.log('Error deleting bookmark:', data);
+                    },
+                });
+            }
+
+            // 북마크 버튼 클릭 이벤트 리스너 등록
+            bookmarkButton[i-1].addEventListener('click', function () {
+                if ($('.ui').val() == null || $('.ui').val() == '') {
+                    alert('로그인 후 이용해주세요.');
+                } else {
+                    handleBookmarkClick();
+                }
+            });
+            
 
             // 차트 생성
             const chartContainer = document.getElementById('chart-container' + i);
@@ -132,11 +277,19 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                     mode: 'cors',
                     success: function (result) {
                         $('.stock-name').eq(i-1).text(result.stock_name + '(' + result.ticker + ')');
-
+                        $(".Ticker").eq(i-1).val(result.ticker);
+                        $(".stock-code-input").eq(i-1).val(result.ticker)
+                        $(".stock-name-input").eq(i-1).val(result.stock_name)
+                        $('.sn').eq(i-1).val(result.stock_name);
+                        $('.sc').eq(i-1).val(result.ticker);
                         let chartData = [];
                         let lastCloseValue; // 마지막 Close값
                         let lastCloseValuePreviousDay; // 마지막 전날 Close값
-
+                        $(".stock-name").eq(i-1).on("click",function(){
+                        	$(".detail-form").eq(i-1).submit()
+                        })
+                        
+						
                         result.data.forEach(function (data, index) {
                             chartData.push({
                                 time: formatDate(data.Date),
@@ -200,14 +353,25 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                                 $('.last-close-value').css('color', 'blue');
                                 $('#price-change-box').css('background-color', '#ECF3FD');
                             }
-                        }
+                        }checkBookmark()
                     },
                     error: function (xtr, status, error) {
                         alert(xtr + ':' + status + ':' + error);
                     },
                 });
             }
+            function formatDateToCustomFormat() {
+            	  const currentDate = new Date();
+            	  const year = currentDate.getFullYear();
+            	  const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+            	  const day = String(currentDate.getDate()).padStart(2, '0');
 
+            	  return `${year}-${month}-${day}`;
+            	}
+
+            	const formattedDate = formatDateToCustomFormat();
+
+			endDate_data[i-1].value = formattedDate
             submitButton[i - 1].addEventListener('click', function () {
                 test(ticker_data[i - 1].value, startDate_data[i - 1].value, endDate_data[i - 1].value);
             });

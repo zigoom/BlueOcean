@@ -14,6 +14,7 @@
   <typeAliases>
     <typeAlias type="com.pcwk.ehr.domain.UserVO" alias="UserVO"/>
     <typeAlias type="com.pcwk.ehr.cmn.BookmarkVO" alias="BookmarkVO"/>
+    <typeAlias type="com.pcwk.ehr.domain.BoardVO" alias="BoardVO"/>
    </typeAliases>
 
   

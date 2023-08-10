@@ -1,6 +1,7 @@
 package com.pcwk.ehr.service;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,11 @@ public class BookmarkServiceImpl implements BookmarkService, PcwkLogger {
 	@Override
 	public int checkBookmark(BookmarkVO vo) throws SQLException {
 		return bookmarkDao.checkBookmark(vo);
+	}
+
+	@Override
+	public List<BookmarkVO> loadBookmark(BookmarkVO vo) throws SQLException {
+		return bookmarkDao.loadBookmark(vo);
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.pcwk.ehr.dao;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import com.pcwk.ehr.cmn.BookmarkVO;
 import com.pcwk.ehr.domain.UserVO;
@@ -42,4 +43,12 @@ public interface BookmarkDao {
      * @throws SQLException 데이터베이스 관련 예외 발생 시
      */
     int checkBookmark(BookmarkVO vo) throws SQLException;
+    
+    /**
+     * 관심목록에 등록되어있는 주식종목코드를 불러오는 메소드
+     * @param vo 사용자 정보 객체
+     * @return 사용자가 가지고있는 관심목록
+     * @throws SQLException
+     */
+    List<BookmarkVO> loadBookmark(BookmarkVO vo) throws SQLException;
 }

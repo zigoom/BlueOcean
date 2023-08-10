@@ -30,6 +30,9 @@
 		favorites
 		WHERE stock_code = #{stockCode} AND user_id = #{userId}
 	</select>
+	<select id="loadBookmark" resultType="String">
+		SELECT stock_code FROM favorites WHERE user_id = #{userId}
+	</select>
 </mapper>
 
 

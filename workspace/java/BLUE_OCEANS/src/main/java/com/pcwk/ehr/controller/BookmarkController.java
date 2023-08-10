@@ -1,6 +1,7 @@
 package com.pcwk.ehr.controller;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -30,15 +31,20 @@ public class BookmarkController implements PcwkLogger {
 
     // 북마크 화면을 보여주는 메소드
     @RequestMapping(value = "/bookmark.do")
-    public String mainView(MainVO inVO) {
-
+    public String mainView(BookmarkVO vo, Model model, HttpSession session) throws SQLException {
         LOG.debug("┌────────────────┐");
         LOG.debug("│bookmarkView    │");
-        LOG.debug("│inVO            │" + inVO);
+        LOG.debug("│vo              │" + vo);
         LOG.debug("└────────────────┘");
+
+        vo.setUserId((String) session.getAttribute("user")); 
+        
+        List<BookmarkVO> bookmarkList = bookmarkService.loadBookmark(vo); 
+        model.addAttribute("bookmarkList", bookmarkList);
 
         return "main/bookmark";
     }
+
 
     // 북마크를 추가하는 메소드
     @RequestMapping(value = "/addBookmark.do")
@@ -84,5 +90,19 @@ public class BookmarkController implements PcwkLogger {
         LOG.debug("└────────────────┘");
 
         return outVO;
+    }
+    
+    @RequestMapping(value = "/loadBookmark.do")
+    @ResponseBody
+    public List<BookmarkVO> loadBookmark(BookmarkVO vo , Model model)throws SQLException{
+    	List<BookmarkVO> outVO = bookmarkService.loadBookmark(vo);
+    	
+    	LOG.debug("┌────────────────┐");
+        LOG.debug("│checkBookmark   │");
+        LOG.debug("│vo              │" + vo);
+        LOG.debug("└────────────────┘");
+    	model.addAttribute("stockCode", outVO);
+		return outVO;
+    	
     }
 }

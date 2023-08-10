@@ -1,6 +1,8 @@
 package com.pcwk.ehr.dao;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -112,4 +114,25 @@ public class BookmarkDaoImpl implements BookmarkDao, PcwkLogger {
 
         return flag;
     }
+
+	
+    
+    // 사용자의 관심목록을 불러오는 메소드
+    @Override
+	public List<BookmarkVO> loadBookmark(BookmarkVO vo) throws SQLException {
+    	List<BookmarkVO> outVO = new ArrayList<BookmarkVO>();
+    	String statement = NAMESPACE + DOT + "loadBookmark";
+        // 로그 출력
+    	LOG.debug("┌──────────────────────────┐");
+        LOG.debug("│ 1. statement-            │" + statement);
+        LOG.debug("└──────────────────────────┘");
+        LOG.debug("┌──────────────────────────┐");
+        LOG.debug("│ 2. param=\n              │" + vo.toString());
+        LOG.debug("└──────────────────────────┘");
+        outVO = this.sqlSessionTemplate.selectList(statement, vo);
+        LOG.debug("┌──────────────────────────┐");
+        LOG.debug("│ 3. Check outVO           │" + outVO);
+        LOG.debug("└──────────────────────────┘");
+		return outVO;
+	}
 }

@@ -63,52 +63,63 @@ uri="http://java.sun.com/jsp/jstl/core"%>
         </style>
     </head>
     <body>
-    ${bookmarkList}
-        <div class="container">
-            <c:forEach var="item" items="${bookmarkList}" varStatus="loop">
-            <div class="list-container">
-	            <form method="get" action="/ehr/BLUEOCEAN/detail.do" class="detail-form">
-		        <!-- 주식종목코드 값 담아두는 인풋 -->
-                <div class="bookmark-container">
-                    <div id="chart-container${loop.index+1}"></div>
-                    <div class="text-container">
-                        <a class="stock-name"></a>
-                        <input type="hidden" class="stock-code-input" name="stockCode" value="${item}">
-                        <input type="hidden" class="stock-name-input" name="stockName">
-                        <p class="last-close-value"></p>
-                        <p class="high"></p>
-                        <p class="volume"></p>
-                        <p class="low"></p>
-                    </div>
-                    <div>
-                        <i
-                            style="margin-left: 50px; margin-top: 25px"
-                            class="fa-regular fa-star fa-2xl bookmark-button"
-                        ></i>
-                    </div>
-                </div>
-                </form>
+    <div class="container">
+        <c:choose>
+            <c:when test="${empty sessionScope.user}">
+                <!-- 로그인 후 이용해주세요 메시지 표시 -->
+                <p>로그인 후 이용해주세요.</p>
+            </c:when>
+            <c:otherwise>
+                <!-- 로그인 된 경우에만 루프 내용을 표시 -->
+                ${bookmarkList}
+                <c:forEach var="item" items="${bookmarkList}" varStatus="loop">
+                    <div class="list-container">
+                        <form method="get" action="/ehr/BLUEOCEAN/detail.do" class="detail-form">
+                            <!-- 주식종목코드 값 담아두는 인풋 -->
+                            <div class="bookmark-container">
+                                <div id="chart-container${loop.index+1}"></div>
+                                <div class="text-container">
+                                    <a class="stock-name"></a>
+                                    <input type="hidden" class="stock-code-input" name="stockCode" value="${item}">
+                                    <input type="hidden" class="stock-name-input" name="stockName">
+                                    <p class="last-close-value"></p>
+                                    <p class="high"></p>
+                                    <p class="volume"></p>
+                                    <p class="low"></p>
+                                </div>
+                                <div>
+                                    <i
+                                        style="margin-left: 50px; margin-top: 25px"
+                                        class="fa-regular fa-star fa-2xl bookmark-button"
+                                    ></i>
+                                </div>
+                            </div>
+                        </form>
 
-                <p>하는 주식의 Ticker와 시작/종료 날짜를 입력해 주세요.</p>
-                <input type="text" class="ui" value="${sessionScope.user}" />
-		        <!-- 유저아이디 값 담아두는 인풋 -->
-		        <input type="text" class="sn" />
-		        <!-- 주식종목이름 값 담아두는 인풋 -->
-		        <input type="text" class="sc" />
+                        <p>하는 주식의 Ticker와 시작/종료 날짜를 입력해 주세요.</p>
+                        <input type="text" class="ui" value="${sessionScope.user}" />
+                        <!-- 유저아이디 값 담아두는 인풋 -->
+                        <input type="text" class="sn" />
+                        <!-- 주식종목이름 값 담아두는 인풋 -->
+                        <input type="text" class="sc" />
 
-                <label> 주식값 : <input type="text" name="Ticker" id="Ticker" value="${item}" class="Ticker" /> </label>
-                <label>
-                    시작날짜 :
-                    <input type="text" name="StartDate" id="StartDate" class="StartDate" value="1900-01-01" />
-                </label>
-                <label>
-                    종료날짜 : <input type="text" name="EndDate" id="EndDate" class="EndDate"/>
-                </label>
-                <label> <input class="submit-button" type="button" value="데이터 요청" /> </label>
-                </div>
-            </c:forEach>
-        </div>
-    </body>
+                        <label> 주식값 : <input type="text" name="Ticker" id="Ticker" value="${item}" class="Ticker" /> </label>
+                        <label>
+                            시작날짜 :
+                            <input type="text" name="StartDate" id="StartDate" class="StartDate" value="1900-01-01" />
+                        </label>
+                        <label>
+                            종료날짜 : <input type="text" name="EndDate" id="EndDate" class="EndDate"/>
+                        </label>
+                        <label> <input class="submit-button" type="button" value="데이터 요청" /> </label>
+                    </div>
+                </c:forEach>
+            </c:otherwise>
+        </c:choose>
+    </div>
+</body>
+
+
     <script>
     // 20200101 등의 값을 2020-01-01 로 변경해주는 함수
     function formatDate(date) {

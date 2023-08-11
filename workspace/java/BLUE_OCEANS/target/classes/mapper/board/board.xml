@@ -34,14 +34,14 @@
 SELECT A.*,B.*
     FROM (
         SELECT TT1.rnum as num,
-        	   TT1.reg_dt as regDt,
+        	   TT1.mod_dt as modDt,
                TT1.title,
-               TT1.read_cnt,                 
+               TT1.read_cnt as readCnt,                 
                <!--당일 등록이면 : 16:26 그렇치 않으면 2023/06/28 -->
 				DECODE( TO_CHAR(TT1.mod_dt,'YYYYMMDD'),TO_CHAR(sysdate,'YYYYMMDD')
                       ,TO_CHAR(TT1.mod_dt,'HH24:MI')
                       ,TO_CHAR(TT1.mod_dt,'YYYY/MM/DD') )mod_dt,
-               TT1.user_id,
+               TT1.user_id as userId,
                TT1.post_no
         FROM (
             SELECT ROWNUM as rnum, t1.*

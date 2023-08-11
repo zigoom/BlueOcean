@@ -7,7 +7,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+            href="https://cdn.jsdelivr.net/npm	/bootstrap@5.2.3/dist/css/bootstrap.min.css"
             rel="stylesheet"
             integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
             crossorigin="anonymous"
@@ -66,6 +66,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
     ${bookmarkList}
         <div class="container">
             <c:forEach var="item" items="${bookmarkList}" varStatus="loop">
+            <div class="list-container">
 	            <form method="get" action="/ehr/BLUEOCEAN/detail.do" class="detail-form">
 		        <!-- 주식종목코드 값 담아두는 인풋 -->
                 <div class="bookmark-container">
@@ -104,6 +105,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                     종료날짜 : <input type="text" name="EndDate" id="EndDate" class="EndDate"/>
                 </label>
                 <label> <input class="submit-button" type="button" value="데이터 요청" /> </label>
+                </div>
             </c:forEach>
         </div>
     </body>
@@ -125,7 +127,10 @@ uri="http://java.sun.com/jsp/jstl/core"%>
         let endDate_data = document.querySelectorAll('.EndDate'); // 종료일
         
         // 북마크에 이미 등록되어있는지 체크하는 함수
-        function checkBookmark() {
+         function checkStar() {
+        	let userId = $('.ui').eq(i - 1).val();
+            let stockName = $('.sn').eq(i - 1).val();
+            let stockCode = $('.sc').eq(i - 1).val();
             $.ajax({
                 type: 'GET',
                 url: '/ehr/BLUEOCEAN/checkBookmark.do',
@@ -140,22 +145,24 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                     if (data == 1) {
                         bookmarkButton[i - 1].classList.remove('fa-regular');
                         bookmarkButton[i - 1].classList.add('fa-solid');
+
                     } else {
                         bookmarkButton[i - 1].classList.remove('fa-solid');
-                        bookmarkButton[i - 1].classList.add('fa-regular');
+                        bookmarkButton[i - 1].classList.add('f	a-regular');
+
                     }
                 },
                 error: function (data) {
-                    console.log('Error check bookmark:', data);
+                    console.log('Error check star:', data);
                 },
             });
-        }
+        } 
 
         // 북마크 버튼 요소 선택
         let bookmarkButton = document.querySelectorAll('.bookmark-button');
 
         // 북마크 버튼 클릭 이벤트 핸들러 함수
-        function handleBookmarkClick() {
+        function checkBookmark() {
             let userId = $('.ui').eq(i - 1).val();
             let stockName = $('.sn').eq(i - 1).val();
             let stockCode = $('.sc').eq(i - 1).val();
@@ -184,8 +191,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                     console.log('Error check bookmark:', data);
                 },
             });
-        }
-
+        } 
         // 북마크 추가 함수
         function addBookmark(userId, stockName, stockCode) {
             $.ajax({
@@ -229,6 +235,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                 },
                 success: function (data) {
                     alert("관심목록에서 삭제되었습니다.");
+                    $(".list-container").eq(i-1).hide();
                 },
                 error: function (data) {
                     console.log('Error deleting bookmark:', data);
@@ -241,7 +248,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
             if ($('.ui').val() == null || $('.ui').val() == '') {
                 alert('로그인 후 이용해주세요.');
             } else {
-                handleBookmarkClick();
+            	checkBookmark();
             }
         });
 
@@ -346,7 +353,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                         }
                     }
 
-                    checkBookmark();
+                    checkStar();
                 },
                 error: function (xtr, status, error) {
                     alert(xtr + ':' + status + ':' + error);

@@ -412,7 +412,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                             lastCloseValue = data.Close; // 마지막 Close 값 저장
 
                             if (index === result.data.length - 2) {
-                                lastCloseValuePreviousDay = data.Close; // 마지막 전날 Close 값 저장
+                                lastCloseValuePreviousDay = data.Close; // 마지막 전날 Close 값 저장	
                             }
                             // 거래량 , 시가 , 고가, 저가를 불러오고 해당 html에 toLocaleString 으로 천의 자릿수마다 콤마를 찍어준뒤 출력
                             $('.volume').text(data.Volume.toLocaleString());

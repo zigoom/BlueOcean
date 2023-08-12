@@ -145,6 +145,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                 <button class="btn btn-light" id="weekButton">1주</button>
                 <button class="btn btn-light" id="monthButton">1달</button>
                 <button class="btn btn-light" id="yearButton">1년</button>
+                <button class="btn btn-light" id="minButton">1분</button>
             </div>
         </div>
         <!--해당 종목에 대한 정보를 담은 영역 (현재가, 전일대비, 등락률, 거래량. 전일가, 시가, 고가, 저가)-->
@@ -199,6 +200,14 @@ uri="http://java.sun.com/jsp/jstl/core"%>
         <input type="hidden" value="데이터 요청" onclick="test()" />
 
         <script>
+     // 시간대 변환 함수
+	        function convertToTimeZone(originalDate, timeZone) {
+			    const convertedDate = new Date(originalDate.toLocaleString('en-US', { timeZone: timeZone }));
+			    return convertedDate.toISOString();
+			}
+
+
+        
             // 북마크에 이미 등록되어있는지 체크하는 함수
             function checkBookmark() {
                 $.ajax({
@@ -341,7 +350,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
             const lineSeries = chart.addLineSeries();
 
             // 데이터 설정
-            const chartData = [];
+            let chartData = [];
 
             // 시간 척도 설정
             const timeScale = chart.timeScale();
@@ -351,6 +360,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
             const weekButton = document.getElementById('weekButton'); // 주 버튼
             const monthButton = document.getElementById('monthButton'); // 월 버튼
             const yearButton = document.getElementById('yearButton'); // 년 버튼
+            const minButton = document.getElementById('minButton'); // 분 버튼
 
             // 일 버튼을 눌렀을시 barSpacing(차트 간격) 을 100 으로 설정
             dayButton.addEventListener('click', function () {
@@ -378,100 +388,147 @@ uri="http://java.sun.com/jsp/jstl/core"%>
             });
             // 주식 종목에 대한 데이터를 불러오는 함수
             function test() {
-                $('#Ticker').val($('#frombookmark-stockcode').val());
-                let ticker_data = $('#Ticker').val(); // 주식종목 코드
-                let startDate_data = $('#StartDate').val(); // 시작일
-                let endDate_data = $('#EndDate').val(); // 종료일
+    $('#Ticker').val($('#frombookmark-stockcode').val());
+    let ticker_data = $('#Ticker').val(); // 주식종목 코드
+    let startDate_data = $('#StartDate').val(); // 시작일
+    let endDate_data = $('#EndDate').val(); // 종료일
 
-                let requestData = {
-                    ticker: ticker_data, // "005930",
-                    startDate: startDate_data, // "2023-01-02",
-                    endDate: endDate_data, // "2023-01-31"
-                };
-                // ajax를 활용해 http://192.168.0.74:5001/blue-oceans/search-tickers을 호출하여 불러온 데이터를 파싱
-                $.ajax({
-                    type: 'POST',
-                    url: 'http://192.168.0.74:5001/blue-oceans/search-tickers',
-                    data: JSON.stringify(requestData),
-                    contentType: 'application/json',
-                    mode: 'cors',
-                    success: function (result) {
-                        // 서버 응답이 이미 객체로 파싱되었으므로, 문자열 이스케이프 불필요
-                        $('#stock-name').text(result.stock_name + '(' + result.ticker + ')');
-                        $('#sn').val(result.stock_name);
-                        $('#sc').val(result.ticker);
-                        let chartData = [];
-                        let lastCloseValue; // 마지막 Close값
-                        let lastCloseValuePreviousDay; // 마지막 전날 Close값
+    let requestData = {
+        ticker: ticker_data, // "005930",
+        startDate: startDate_data, // "2023-01-02",
+        endDate: endDate_data, // "2023-01-31"
+    };
+    
+    let requestMinData = {
+    		  "ticker": "005930",
+    		  "date": "2023-08-11",
+    		  "interval": "10"
+    		}
+    // ajax를 활용해 http://192.168.0.74:5001/blue-oceans/search-tickers을 호출하여 불러온 데이터를 파싱
+    $.ajax({
+        type: 'POST',
+        url: 'http://192.168.0.74:5001/blue-oceans/search-tickers',
+        data: JSON.stringify(requestData),
+        contentType: 'application/json',
+        mode: 'cors',
+        success: function (result) {
+            // 서버 응답이 이미 객체로 파싱되었으므로, 문자열 이스케이프 불필요
+            $('#stock-name').text(result.stock_name + '(' + result.ticker + ')');
+            $('#sn').val(result.stock_name);
+            $('#sc').val(result.ticker);
+            let chartData = [];
+            let lastCloseValue; // 마지막 Close값
+            let lastCloseValuePreviousDay; // 마지막 전날 Close값
 
-                        result.data.forEach(function (data, index) {
-                            chartData.push({
-                                time: formatDate(data.Date),
-                                value: data.Close,
-                            });
-                            lastCloseValue = data.Close; // 마지막 Close 값 저장
-
-                            if (index === result.data.length - 2) {
-                                lastCloseValuePreviousDay = data.Close; // 마지막 전날 Close 값 저장	
-                            }
-                            // 거래량 , 시가 , 고가, 저가를 불러오고 해당 html에 toLocaleString 으로 천의 자릿수마다 콤마를 찍어준뒤 출력
-                            $('.volume').text(data.Volume.toLocaleString());
-                            $('.open').text(data.Open.toLocaleString());
-                            $('.high').text(data.High.toLocaleString());
-                            $('.low').text(data.Low.toLocaleString());
-                        });
-                        // 가져온 데이터 차트에 등록
-                        lineSeries.setData(chartData);
-
-                        // lastCloseValue와 lastCloseValuePreviousDay 변수를 이용하여 원하는 작업 수행
-                        console.log('마지막 Close 값:', lastCloseValue);
-                        $('.last-close-value').text(lastCloseValue.toLocaleString());
-                        $('.prev-close').text(lastCloseValuePreviousDay.toLocaleString());
-
-                        if (lastCloseValuePreviousDay) {
-                            console.log('전날 마지막 Close 값:', lastCloseValuePreviousDay);
-                            if (lastCloseValue - lastCloseValuePreviousDay >= 0) {
-                                //  마지막날값에서 마지막 전날값을 뺐을때 0보다 크다면
-                                //  해당 div색을 상승시 빨간색으로 바꾸고 ▲ 모양과 함께 마지막날값에서 마지막 전날값을 뺀 금액과
-                                //  %로 계산한것을 해당 html에 출력 , 하락시 반대로 적용
-                                $('.price-changes').text(
-                                    '▲' + (lastCloseValue - lastCloseValuePreviousDay).toLocaleString()
-                                );
-                                $('.price-changes-percent').text(
-                                    '▲' +
-                                        (
-                                            ((lastCloseValue - lastCloseValuePreviousDay) / lastCloseValuePreviousDay) *
-                                            100
-                                        ).toFixed(2)
-                                );
-                                $('.price-changes').css('color', 'red');
-                                $('.price-changes-percent').css('color', 'red');
-                                $('.last-close-value').css('color', 'red');
-                                $('#price-change-box').css('background-color', '#FCEDEB');
-                            } else {
-                                $('.price-changes').text(
-                                    '▼' + (lastCloseValue - lastCloseValuePreviousDay).toLocaleString()
-                                );
-                                $('.price-changes-percent').text(
-                                    '▼' +
-                                        (
-                                            ((lastCloseValue - lastCloseValuePreviousDay) / lastCloseValuePreviousDay) *
-                                            100
-                                        ).toFixed(2)
-                                );
-                                $('.price-changes').css('color', 'blue');
-                                $('.price-changes-percent').css('color', 'blue');
-                                $('.last-close-value').css('color', 'blue');
-                                $('#price-change-box').css('background-color', '#ECF3FD');
-                            }
-                        }
-                        checkBookmark();
-                    },
-                    error: function (xtr, status, error) {
-                        alert(xtr + ':' + status + ':' + error);
-                    },
+            result.data.forEach(function (data, index) {
+                chartData.push({
+                    time: formatDate(data.Date),
+                    value: data.Close,
                 });
+                lastCloseValue = data.Close; // 마지막 Close 값 저장
+
+                if (index === result.data.length - 2) {
+                    lastCloseValuePreviousDay = data.Close; // 마지막 전날 Close 값 저장	
+                }
+                // 거래량 , 시가 , 고가, 저가를 불러오고 해당 html에 toLocaleString 으로 천의 자릿수마다 콤마를 찍어준뒤 출력
+                $('.volume').text(data.Volume.toLocaleString());
+                $('.open').text(data.Open.toLocaleString());
+                $('.high').text(data.High.toLocaleString());
+                $('.low').text(data.Low.toLocaleString());
+            });
+            // 가져온 데이터 차트에 등록
+            lineSeries.setData(chartData);
+
+            // lastCloseValue와 lastCloseValuePreviousDay 변수를 이용하여 원하는 작업 수행
+            console.log('마지막 Close 값:', lastCloseValue);
+            $('.last-close-value').text(lastCloseValue.toLocaleString());
+            $('.prev-close').text(lastCloseValuePreviousDay.toLocaleString());
+
+            if (lastCloseValuePreviousDay) {
+                console.log('전날 마지막 Close 값:', lastCloseValuePreviousDay);
+                if (lastCloseValue - lastCloseValuePreviousDay >= 0) {
+                    //  마지막날값에서 마지막 전날값을 뺐을때 0보다 크다면
+                    //  해당 div색을 상승시 빨간색으로 바꾸고 ▲ 모양과 함께 마지막날값에서 마지막 전날값을 뺀 금액과
+                    //  %로 계산한것을 해당 html에 출력 , 하락시 반대로 적용
+                    $('.price-changes').text(
+                        '▲' + (lastCloseValue - lastCloseValuePreviousDay).toLocaleString()
+                    );
+                    $('.price-changes-percent').text(
+                        '▲' +
+                            (
+                                ((lastCloseValue - lastCloseValuePreviousDay) / lastCloseValuePreviousDay) *
+                                100
+                            ).toFixed(2)
+                    );
+                    $('.price-changes').css('color', 'red');
+                    $('.price-changes-percent').css('color', 'red');
+                    $('.last-close-value').css('color', 'red');
+                    $('#price-change-box').css('background-color', '#FCEDEB');
+                } else {
+                    $('.price-changes').text(
+                        '▼' + (lastCloseValue - lastCloseValuePreviousDay).toLocaleString()
+                    );
+                    $('.price-changes-percent').text(
+                        '▼' +
+                            (
+                                ((lastCloseValue - lastCloseValuePreviousDay) / lastCloseValuePreviousDay) *
+                                100
+                            ).toFixed(2)
+                    );
+                    $('.price-changes').css('color', 'blue');
+                    $('.price-changes-percent').css('color', 'blue');
+                    $('.last-close-value').css('color', 'blue');
+                    $('#price-change-box').css('background-color', '#ECF3FD');
+                }
             }
+            checkBookmark();
+        },
+        error: function (xtr, status, error) {
+            alert(xtr + ':' + status + ':' + error);
+        },
+    });
+    if (minButton.addEventListener("click", function () {
+        $.ajax({
+            type: 'POST',
+            url: 'http://192.168.0.74:5001/blue-oceans/search-tickers-getinterval',
+            data: JSON.stringify(requestMinData),
+            contentType: 'application/json',
+            mode: 'cors',
+            success: function (result) {
+                let data = result.data['10min'];
+                chartData = [];
+
+                // 데이터 변환 작업
+                const timeZone = 'Asia/Seoul'; // 한국 시간대
+                for (let minTime in data) {
+                    const [hours, minutes] = minTime.split(":"); f
+                    const originalDate = new Date(); // 현재 날짜를 기반으로 시간 생성
+                    originalDate.setUTCHours(hours);
+                    originalDate.setUTCMinutes(minutes);
+
+                    // 시간대 변환
+                    const convertedTime = convertToTimeZone(originalDate, timeZone);
+
+                    chartData.push({
+                        time: convertedTime, // 변환된 시간 사용
+                        value: data[minTime],
+                    });
+                    console.log(convertedTime);
+                    
+                    console.log(data[minTime]);
+                }
+
+                // 가져온 데이터 차트에 등록
+                lineSeries.setData(chartData);
+            },
+            error: function (xtr, status, error) {
+                alert(xtr + ':' + status + ':' + error);
+            }
+        });
+    }))
+ {}
+}
+
             // 네이버 뉴스 api 호출
             $.ajax({
                 type: 'GET',

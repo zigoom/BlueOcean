@@ -145,7 +145,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                 <button class="btn btn-light" id="weekButton">1주</button>
                 <button class="btn btn-light" id="monthButton">1달</button>
                 <button class="btn btn-light" id="yearButton">1년</button>
-                <button class="btn btn-light" id="minButton">1분</button>
+                <button class="btn btn-light" id="minButton">10분</button>
             </div>
         </div>
         <!--해당 종목에 대한 정보를 담은 영역 (현재가, 전일대비, 등락률, 거래량. 전일가, 시가, 고가, 저가)-->
@@ -364,24 +364,28 @@ uri="http://java.sun.com/jsp/jstl/core"%>
 
             // 일 버튼을 눌렀을시 barSpacing(차트 간격) 을 100 으로 설정
             dayButton.addEventListener('click', function () {
+            	test();
                 timeScale.applyOptions({
                     barSpacing: 100,
                 });
             });
             // 주 버튼을 눌렀을시 barSpacing(차트 간격) 을 18 으로 설정
             weekButton.addEventListener('click', function () {
+            	test();
                 timeScale.applyOptions({
                     barSpacing: 18,
                 });
             });
             // 월 버튼을 눌렀을시 barSpacing(차트 간격) 을 5 으로 설정
             monthButton.addEventListener('click', function () {
+            	test();
                 timeScale.applyOptions({
                     barSpacing: 5,
                 });
             });
             // 년 버튼을 눌렀을시 barSpacing(차트 간격) 을 1 으로 설정
             yearButton.addEventListener('click', function () {
+            	test();
                 timeScale.applyOptions({
                     barSpacing: 1,
                 });
@@ -440,12 +444,12 @@ uri="http://java.sun.com/jsp/jstl/core"%>
             lineSeries.setData(chartData);
 
             // lastCloseValue와 lastCloseValuePreviousDay 변수를 이용하여 원하는 작업 수행
-            console.log('마지막 Close 값:', lastCloseValue);
+            //console.log('마지막 Close 값:', lastCloseValue);
             $('.last-close-value').text(lastCloseValue.toLocaleString());
             $('.prev-close').text(lastCloseValuePreviousDay.toLocaleString());
 
             if (lastCloseValuePreviousDay) {
-                console.log('전날 마지막 Close 값:', lastCloseValuePreviousDay);
+                //console.log('전날 마지막 Close 값:', lastCloseValuePreviousDay);
                 if (lastCloseValue - lastCloseValuePreviousDay >= 0) {
                     //  마지막날값에서 마지막 전날값을 뺐을때 0보다 크다면
                     //  해당 div색을 상승시 빨간색으로 바꾸고 ▲ 모양과 함께 마지막날값에서 마지막 전날값을 뺀 금액과
@@ -487,6 +491,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
             alert(xtr + ':' + status + ':' + error);
         },
     });
+    //분단위 데이터를 불러오기 위해서는 차트에서 호환되지않기때문에 불러온값의 날짜에 1씩 더하며 차트에 적용시킨다.
     if (minButton.addEventListener("click", function () {
         $.ajax({
             type: 'POST',
@@ -500,9 +505,13 @@ uri="http://java.sun.com/jsp/jstl/core"%>
 
                 // 데이터 변환 작업
                 const timeZone = 'Asia/Seoul'; // 한국 시간대
+                timeScale.applyOptions({
+                    barSpacing: 20,
+                });
+                
+                const originalDate = new Date(); // 현재 날짜를 기반으로 시간 생성
                 for (let minTime in data) {
-                    const [hours, minutes] = minTime.split(":"); f
-                    const originalDate = new Date(); // 현재 날짜를 기반으로 시간 생성
+                    const [hours, minutes] = minTime.split(":");
                     originalDate.setUTCHours(hours);
                     originalDate.setUTCMinutes(minutes);
 
@@ -513,9 +522,8 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                         time: convertedTime, // 변환된 시간 사용
                         value: data[minTime],
                     });
-                    console.log(convertedTime);
                     
-                    console.log(data[minTime]);
+                    originalDate.setUTCDate(originalDate.getUTCDate() + 1); // 날짜를 하루 뒤로 설정
                 }
 
                 // 가져온 데이터 차트에 등록
@@ -526,6 +534,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
             }
         });
     }))
+
  {}
 }
 

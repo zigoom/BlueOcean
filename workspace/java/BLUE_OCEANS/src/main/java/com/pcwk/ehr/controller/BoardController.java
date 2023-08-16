@@ -35,7 +35,7 @@ public class BoardController implements PcwkLogger {
 
 	@RequestMapping("/doSelectOne.do")
 	public String doSelectOne(BoardVO inVO, Model model, HttpSession httpSession)throws SQLException{
-		String view = "board/board_mng";
+		String view = "main/board_mng";
 		
 		LOG.debug("=================");
 		LOG.debug("== doSelectOne ==");
@@ -69,7 +69,7 @@ public class BoardController implements PcwkLogger {
 	 */
 	@RequestMapping("/boardView.do")
 	public String boardView(BoardVO inVO, Model model)throws SQLException{
-		String viewPage = "board/board";
+		String viewPage = "main/board";
 		System.out.println("boardView 컨트롤러");	
 		System.out.println("no   : " + inVO.getPageNo());	
 		System.out.println("word : " +  inVO.getSearchWord());
@@ -120,7 +120,7 @@ public class BoardController implements PcwkLogger {
 	
 	@RequestMapping("/doMoveToReg.do")
 	public String doMoveToReg(BoardVO inVO, Model model)throws SQLException{
-		String view = "board/board_reg";
+		String view = "main/board_reg";
 		LOG.debug("=================");
 		LOG.debug("== doMoveToReg ==");
 		LOG.debug("== inVO         =="+inVO);

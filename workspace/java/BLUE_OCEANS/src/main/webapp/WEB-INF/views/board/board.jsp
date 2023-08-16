@@ -113,13 +113,13 @@
 		<nav aria-label="Page navigation example">
 		  <ul class="pagination">
 		    <li class="page-item">
-		      <a class="page-link" href="/board/boardView.do?pageNo=<%= pageNo - 1 %>" aria-label="Previous">
+		      <a class="page-link" href="/BLUEOCEAN/boardView.do?pageNo=<%= pageNo - 1 %>" aria-label="Previous">
 		        <span aria-hidden="true">&laquo;</span>
 		      </a>
 		    </li>
 				<%=StringUtil.renderPaging(totalCnt, pageNo, pageSize, bottomCount, "/board/boardView.do", "do_Retrieve")%> 
 		    <li class="page-item">
-		      <a class="page-link" href="/board/boardView.do?pageNo=<%= pageNo + 1 %>" aria-label="Next">
+		      <a class="page-link" href="/BLUEOCEAN/boardView.do?pageNo=<%= pageNo + 1 %>" aria-label="Next">
 		        <span aria-hidden="true">&raquo;</span>
 		      </a>
 		    </li>
@@ -131,7 +131,7 @@
 	
 	
    <!-- 검색 form -->
-	<form class="d-flex justify-content-center" action="${CP}/board/boardView.do" method="get" name="boardFrm">
+	<form class="d-flex justify-content-center" action="${CP}/BLUEOCEAN/boardView.do" method="get" name="boardFrm">
       <input type="hidden" name="pageNo" id="pageNo">
       <input type="hidden" name="div"    id="div" value='${inVO.getDiv()}'>
        <div class="row g-1 d-flex justify-content-end">
@@ -192,7 +192,7 @@
      console.log("frm.div.value"+frm.div.value);
      //frm.div.value = pageNo; //javascript
      frm.pageNo.value = 1;
-     frm.action = "${CP}/board/doMoveToReg.do";
+     frm.action = "${CP}/BLUEOCEAN/doMoveToReg.do";
      frm.submit(); //controller call
 	  }
    
@@ -223,7 +223,7 @@
      //$("pageNo").val(1); //jquery
      //frm.div.value=pageNo; //javascript
      frm.pageNo.value=1;
-     frm.action = "${CP}/board/doMoveToReg.do"
+     frm.action = "${CP}/BLUEOCEAN/doMoveToReg.do"
      frm.submit(); //controller call
    });
     

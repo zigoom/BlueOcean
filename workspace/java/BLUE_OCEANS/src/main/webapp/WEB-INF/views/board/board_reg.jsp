@@ -63,7 +63,7 @@
   
 <script>
    function moveToListView(){
-       window.location.href="${CP}/board/boardView.do?div="+$("#div").val();
+       window.location.href="${CP}/BLUEOCEAN/boardView.do?div="+$("#div").val();
    }
    
    $("#moveToList").on("click",function(){
@@ -106,7 +106,7 @@
        
        $.ajax({
           type: "POST",
-          url:"/board/doSave.do",
+          url:"/BLUEOCEAN/doSave.do",
           asyn:"true",
           dataType:"html",
           data:{

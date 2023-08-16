@@ -10,9 +10,9 @@ import com.pcwk.ehr.cmn.WorkDiv;
 
 public interface BoardDao extends WorkDiv<BoardVO>  {
 
-	int doRetrieveCount(BoardVO inVO) throws SQLException;
+	public int doRetrieveCount(BoardVO inVO) throws SQLException;
 
-
+	public int doUpdateReadCnt(BoardVO inVO) throws SQLException;
 
 	
 }

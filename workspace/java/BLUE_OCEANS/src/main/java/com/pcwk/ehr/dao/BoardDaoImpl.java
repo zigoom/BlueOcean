@@ -18,9 +18,10 @@ import com.pcwk.ehr.domain.BoardVO;
  * 1.doSave
  * 2.doDelete
  * 3.doUpdate
- * 4.doUpdate
- * 5.doSelectOne
+ * 4.doSelectOne
+ * 5.doRetrieveCount
  * 6.doRetrieve
+ * 7.doUpdateReadCnt
  * 
  * @author user
  *
@@ -36,11 +37,8 @@ public class BoardDaoImpl implements BoardDao, PcwkLogger {
 
     @Override
     public int doSave(BoardVO inVO) throws SQLException {
-        // Board 테이블에 데이터를 저장하는 로직을 구현하세요.
-        // 예를 들어, sqlSessionTemplate.insert(NAMESPACE + DOT + "doSave", inVO); 등
-        // 적절한 MyBatis 메서드를 사용하여 데이터를 저장할 수 있습니다.
-        // 구현이 완료되면 저장된 데이터의 개수를 반환합니다.
-        return 0;
+    	System.out.println("doSave DAOIMPL구역");
+		return sqlSessionTemplate.insert(NAMESPACE+DOT+"doSave", inVO);
     }
 
     @Override
@@ -63,25 +61,40 @@ public class BoardDaoImpl implements BoardDao, PcwkLogger {
 
     @Override
     public BoardVO doSelectOne(BoardVO inVO) throws SQLException {
-        // Board 테이블에서 하나의 데이터를 조회하는 로직을 구현하세요.
-        // 예를 들어, sqlSessionTemplate.selectOne(NAMESPACE + DOT + "doSelectOne", inVO); 등
-        // 적절한 MyBatis 메서드를 사용하여 데이터를 조회할 수 있습니다.
-        // 조회된 데이터를 BoardVO 객체로 변환하여 반환합니다.
-        return null;
+		LOG.debug("┌──────────────────────────────┐");
+		LOG.debug("│doSelectOne                   │");
+		LOG.debug("│inVO                          │"+inVO);
+		LOG.debug("│statement                     │"+NAMESPACE+DOT+"doSelectOne");
+		LOG.debug("└──────────────────────────────┘");	
+		return sqlSessionTemplate.selectOne(NAMESPACE+DOT+"doSelectOne", inVO);
     }
 
+    
     @Override
     public int doRetrieveCount(BoardVO inVO) throws SQLException {
         return sqlSessionTemplate.selectOne(NAMESPACE + DOT + "doRetrieveCount", inVO);
     }
 
+    
     @Override
     public List<BoardVO> doRetrieve(BoardVO inVO) throws SQLException {
-    	System.out.println("DAOIMPL구역");
+    	System.out.println("do Retrieve DAOIMPL구역");
 		System.out.println("no   : " + inVO.getPageNo());	
 		System.out.println("word : " +  inVO.getSearchWord());
         return sqlSessionTemplate.selectList(NAMESPACE + DOT + "doRetrieve", inVO);
     }
+
+    
+	@Override
+	public int doUpdateReadCnt(BoardVO inVO) throws SQLException {
+		LOG.debug("┌──────────────────────────────┐");
+		LOG.debug("│doSave                        │");
+		LOG.debug("│inVO                          │"+inVO);
+		LOG.debug("│statement                     │"+NAMESPACE+DOT+"doUpdateReadCnt");
+		LOG.debug("└──────────────────────────────┘");			
+		
+		return sqlSessionTemplate.update(NAMESPACE+DOT+"doUpdateReadCnt", inVO);
+	}
 
 
     

@@ -19,6 +19,7 @@ public class BoardServiceImpl implements BoardService {
     public int doSave(BoardVO inVO) throws SQLException {
         // BoardDao의 doSave 메서드를 호출하여 데이터를 저장합니다.
         // 구현이 완료되면 저장된 데이터의 개수를 반환합니다.
+    	System.out.println("doSave 서비스");
         return boardDao.doSave(inVO);
     }
 
@@ -38,9 +39,15 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public BoardVO doSelectOne(BoardVO inVO) throws SQLException {
-        // BoardDao의 doSelectOne 메서드를 호출하여 하나의 데이터를 조회합니다.
-        // 조회된 데이터를 반환합니다.
-        return boardDao.doSelectOne(inVO);
+		//1. 단건조회
+		//2. 조회 count증가
+		BoardVO vo = boardDao.doSelectOne(inVO);
+		
+		if(null !=vo ) {
+			boardDao.doUpdateReadCnt(inVO);
+		}
+		System.out.println("Service doSelectOne 구역");
+		return vo;
     }
 
     @Override
@@ -48,7 +55,7 @@ public class BoardServiceImpl implements BoardService {
         // BoardDao의 doRetrieve 메서드를 호출하여 데이터 리스트를 조회합니다.
         // 조회된 데이터 리스트를 반환합니다.
     	
-    	System.out.println("Service구역");
+    	System.out.println("Service doRetrieve 구역");
 		System.out.println("no   : " + inVO.getPageNo());	
 		System.out.println("word : " +  inVO.getSearchWord());
     	

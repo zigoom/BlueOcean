@@ -77,7 +77,6 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                     </c:when>
                     <c:otherwise>
                         <!-- 로그인 된 경우에만 루프 내용을 표시 -->
-                        ${bookmarkList}
                         <c:forEach var="item" items="${bookmarkList}" varStatus="loop">
                             <div class="list-container">
                                 <form method="get" action="/ehr/BLUEOCEAN/detail.do" class="detail-form">
@@ -101,21 +100,20 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                                         </div>
                                     </div>
                                 </form>
-                                <p>하는 주식의 Ticker와 시작/종료 날짜를 입력해 주세요.</p>
-                                <input type="text" class="ui" value="${sessionScope.user}" />
+                                
+                                <input type="hidden" class="ui" value="${sessionScope.user}" />
                                 <!-- 유저아이디 값 담아두는 인풋 -->
-                                <input type="text" class="sn" />
+                                <input type="hidden" class="sn" />
                                 <!-- 주식종목이름 값 담아두는 인풋 -->
-                                <input type="text" class="sc" />
-                                <label> 주식값 : <input type="text" name="Ticker" id="Ticker" value="${item}" class="Ticker" /> </label>
-                                <label>
-                                    시작날짜 :
-                                    <input type="text" name="StartDate" id="StartDate" class="StartDate" value="1900-01-01" />
-                                </label>
-                                <label>
-                                    종료날짜 : <input type="text" name="EndDate" id="EndDate" class="EndDate"/>
-                                </label>
-                                <label> <input class="submit-button" type="button" value="데이터 요청" /> </label>
+                                <input type="hidden" class="sc" />
+                                 <input type="hidden" name="Ticker" id="Ticker" value="${item}" class="Ticker" /> 
+                                
+                                    
+                                    <input type="hidden" name="StartDate" id="StartDate" class="StartDate" value="1900-01-01" />
+                                
+                                     <input type="hidden" name="EndDate" id="EndDate" class="EndDate"/>
+                                
+                                <label> <input class="submit-button" type="hidden" value="데이터 요청" /> </label>
                             </div>
                         </c:forEach>
                     </c:otherwise>
@@ -390,9 +388,11 @@ uri="http://java.sun.com/jsp/jstl/core"%>
         const formattedDate = formatDateToCustomFormat();
         endDate_data[i - 1].value = formattedDate;
 
-        submitButton[i - 1].addEventListener('click', function () {
-            test(ticker_data[i - 1].value, startDate_data[i - 1].value, endDate_data[i - 1].value);
-        });
+        $(document).ready(function(){
+        	test(ticker_data[i - 1].value, startDate_data[i - 1].value, endDate_data[i - 1].value);
+        })
+            
+  
     }
 </script>
 

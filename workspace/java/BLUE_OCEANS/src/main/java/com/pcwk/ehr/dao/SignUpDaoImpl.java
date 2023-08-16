@@ -26,19 +26,42 @@ public class SignUpDaoImpl implements SignUpDao, PcwkLogger {
 	public int add(UserVO userVO) throws SQLException, ClassNotFoundException {
 		
 		int flag = 0;
+		int flag1 = 0;
+		int flag2 = 0;
 		
 		
 		
-		String statement = this.NAMESPACE+DOT+"add";
+		String member = this.NAMESPACE+DOT+"add";
+		
 		
 		LOG.debug("┌─────────────────┐");
-		LOG.debug("│DaoImpl구역                 │"+statement);
+		LOG.debug("│DaoImpl구역                 │"+member);
 		LOG.debug("└─────────────────┘");
 		LOG.debug("SignUpVO 값 ==" + userVO.toString());
 		
-		flag = this.sqlSessionTemplate.insert(statement, userVO); 
+		flag1 = this.sqlSessionTemplate.insert(member, userVO); 
+		
+		
+		String otp = this.NAMESPACE+DOT+"otp";
+		LOG.debug("┌─────────────────┐");
+		LOG.debug("│DaoImpl구역                 │"+otp);
+		LOG.debug("└─────────────────┘");
+		LOG.debug("SignUpVO 값 ==" + userVO.toString());
+		
+		flag2 = this.sqlSessionTemplate.insert(otp, userVO); 
+		
+		LOG.debug("DaoImple flag 값 = " + flag1);
+		LOG.debug("DaoImple flag 값 = " + flag2);
+		
+		if (flag1 == 1 && flag2 == 1) {
+			flag = 1;
+		}
+		else {
+			flag = 0;
+		}
 		
 		LOG.debug("DaoImple flag 값 = " + flag);
+		
 		
 		return flag;
 

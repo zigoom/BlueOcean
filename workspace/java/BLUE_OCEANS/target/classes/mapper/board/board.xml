@@ -13,7 +13,7 @@
      </choose>
   </sql>
   
- <!-- private String    userId       ;//고유한 식별자
+	<!-- private String    userId       ;//고유한 식별자
 	private int    seq      ;//순번 
 	private String title    ;//제목
 	private String contents ;//내용
@@ -22,8 +22,8 @@
 	private String regDt    ;//등록일
 	private String regId    ;//등록자
 	private String modDt    ;//수정일
-	private String modId    ;//수정자 -->
-	 	 
+	private String modId    ;//수정자
+	private int    postno   ;//postno -->
 	 
 
      
@@ -34,9 +34,9 @@
 SELECT A.*,B.*
     FROM (
         SELECT TT1.rnum as num,
-        	   TT1.mod_dt as modDt,
+        	   TT1.reg_dt as regDt,
                TT1.title,
-               TT1.read_cnt as readCnt,                 
+               TT1.read_cnt,                 
                <!--당일 등록이면 : 16:26 그렇치 않으면 2023/06/28 -->
 				DECODE( TO_CHAR(TT1.mod_dt,'YYYYMMDD'),TO_CHAR(sysdate,'YYYYMMDD')
                       ,TO_CHAR(TT1.mod_dt,'HH24:MI')
@@ -70,8 +70,46 @@ SELECT A.*,B.*
 </select>  
      
      
-     
+<insert id="doSave" parameterType="BoardVO">
+<!-- <selectKey keyProperty="postno" resultType="int" order="BEFORE">
+      SELECT BOARD_post_no.NEXTVAL FROM DUAL      
+</selectKey>  -->
+    INSERT INTO board (
+    	post_no,
+		user_id,
+        title,
+        contents,
+        read_cnt,
+        reg_dt,
+        mod_dt
+    ) VALUES (
+    	post_seq.NEXTVAL,
+		'asdf',
+        #{title},
+        #{contents},
+        0,
+        SYSDATE,                   
+        SYSDATE
+    )
+</insert>
 
+
+<select id="doSelectOne" parameterType="BoardVO"
+   resultType="BoardVO">
+   SELECT
+       seq,
+       title,
+       contents,
+       div,
+       read_cnt,
+       TO_CHAR(reg_dt,'YYYY-MM-DD HH24:MI:SS')  reg_dt,
+       reg_id,
+       TO_CHAR(mod_dt,'YYYY-MM-DD HH24:MI:SS')  mod_dt,
+       mod_id
+   FROM board
+   WHERE seq = #{seq}
+</select>
+ 
   
  <!--  
   <update id="doUpdateReadCnt" parameterType="BoardVO">
@@ -101,30 +139,7 @@ SELECT A.*,B.*
   </delete>
   
   
-  <insert id="doSave" parameterType="BoardVO">
-    <selectKey keyProperty="seq" resultType="int" order="BEFORE">
-      SELECT BOARD_SEQ.NEXTVAL FROM DUAL      
-    </selectKey>
-    
-      INSERT INTO board (
-          seq,
-          title,
-          contents,
-          div,
-          read_cnt,
-          reg_id,
-          mod_id
-      ) VALUES (
-          #{seq},
-          #{title},
-          #{contents},
-          #{div},
-          0,
-          #{regId},                   
-          #{regId}
-      )
-    
-  </insert>
+
 	-->
   	
   	

@@ -20,7 +20,7 @@ import com.pcwk.ehr.service.LoginService;
 
 
 @Controller("LoginController")
-@RequestMapping("user")
+@RequestMapping("BLUEOCEAN")
 public class LoginController implements PcwkLogger{
 	
 	@Autowired
@@ -106,4 +106,5 @@ public class LoginController implements PcwkLogger{
 		
 		return jsonString;
 	}
+	
 }

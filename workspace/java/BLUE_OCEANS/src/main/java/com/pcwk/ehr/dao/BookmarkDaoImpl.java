@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.pcwk.ehr.cmn.PcwkLogger;
 import com.pcwk.ehr.cmn.BookmarkVO;
 
-@Repository
+@Repository("BookmarkDao")
 public class BookmarkDaoImpl implements BookmarkDao, PcwkLogger {
     private static final String NAMESPACE = "com.pcwk.ehr.bookmark";
     final String DOT = ".";

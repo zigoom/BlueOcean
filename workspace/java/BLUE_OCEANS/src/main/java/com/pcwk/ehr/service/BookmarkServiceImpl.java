@@ -12,7 +12,7 @@ import com.pcwk.ehr.cmn.PcwkLogger;
 import com.pcwk.ehr.dao.BookmarkDao;
 import com.pcwk.ehr.domain.UserVO;
 
-@Service
+@Service("BookmarkService")
 public class BookmarkServiceImpl implements BookmarkService, PcwkLogger {
 
 	@Autowired

@@ -49,6 +49,8 @@
 	rel="stylesheet"
 	integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
 	crossorigin="anonymous">
+<link rel="stylesheet" href="${CP}/resources/css/header.css"/>
+<link rel="stylesheet" href="${CP}/resources/css/footer.css"/>
 <script src="${CP}/resources/js/jquery-3.7.0.js"></script>
 
 <title>토론 게시판</title>
@@ -111,13 +113,13 @@
 		<nav aria-label="Page navigation example">
 		  <ul class="pagination">
 		    <li class="page-item">
-		      <a class="page-link" href="#" aria-label="Previous">
+		      <a class="page-link" href="/board/boardView.do?pageNo=<%= pageNo - 1 %>" aria-label="Previous">
 		        <span aria-hidden="true">&laquo;</span>
 		      </a>
 		    </li>
-				<%=StringUtil.renderPaging(totalCnt, pageNo, pageSize, bottomCount, "/ehr/board/boardView.do", "do_Retrieve")%> 
+				<%=StringUtil.renderPaging(totalCnt, pageNo, pageSize, bottomCount, "/board/boardView.do", "do_Retrieve")%> 
 		    <li class="page-item">
-		      <a class="page-link" href="#" aria-label="Next">
+		      <a class="page-link" href="/board/boardView.do?pageNo=<%= pageNo + 1 %>" aria-label="Next">
 		        <span aria-hidden="true">&raquo;</span>
 		      </a>
 		    </li>

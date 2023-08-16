@@ -231,6 +231,7 @@
    });
     
 </script> 
-
+<script src="${CP}/resources/js/header-main.js"></script>
+<script src="${CP}/resources/js/util.js"></script>
 </body>
 </html>

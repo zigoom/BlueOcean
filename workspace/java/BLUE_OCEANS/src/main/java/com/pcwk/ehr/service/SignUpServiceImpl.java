@@ -27,7 +27,7 @@ public class SignUpServiceImpl implements SignUpService, PcwkLogger {
 		
 		userVO.setUserLevel(1);
 		userVO.setWithdrawl(1);
-		userVO.setAgree(1);
+//		userVO.setAgree(1);
 		
 		
 		int flag = 0;

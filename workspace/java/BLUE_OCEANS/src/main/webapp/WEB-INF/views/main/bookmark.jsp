@@ -36,12 +36,14 @@ uri="http://java.sun.com/jsp/jstl/core"%>
             .bookmark-container {
                 border: 1px solid black;
                 display: flex;
-                justify-content: flex-start;
+                justify-content: space-between;
                 align-content: center;
             }
 
             .text-container {
-                margin: 15px;
+                margin-top: 15px;
+                margin-bottom: 15px;	
+                margin-right: 150px;
             }
 
             .text-container p, .text-container a {
@@ -92,7 +94,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                                             <p class="volume"></p>
                                             <p class="low"></p>
                                         </div>
-                                        <div>
+                                        <div style="margin-right: 15px;">
                                             <i
                                                 style="margin-left: 50px; margin-top: 25px"
                                                 class="fa-regular fa-star fa-2xl bookmark-button"

@@ -18,21 +18,19 @@
 		    email,
 		    user_level,
 		    keyword,
-		    withdrawal,
-		    agree
+		    withdrawal
 		) VALUES (
 		    user_seq.nextval,
 		    #{userId},
 		    #{passwd},
 		    #{name},
-		    #{brithday},
+		    #{birthday},
 		    #{gender},
 		    #{phone},
 		    #{email},
         #{userLevel},		    
 		    #{keyword},
-		    #{withdrawl},
-		    #{agree}
+		    #{withdrawl}
 		)     
   </insert>	
   <!-- SignUp 회원가입  -->

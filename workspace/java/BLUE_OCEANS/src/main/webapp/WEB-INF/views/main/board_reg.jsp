@@ -105,49 +105,46 @@
        
        //confirm
        if(confirm('글을 등록 하시겠습니까')==false) return;
-       
        $.ajax({
           type: "POST",
-          url:"/BLUEOCEAN/doSave.do",
+          url:"/ehr/BLUEOCEAN/doSave.do",
           asyn:"true",
           dataType:"html",
           data:{
             title: $("#title").val(),
-            //userId: $("#userId").val(),
+            userId: $("#userId").val(),
             contents: $("#contents").val(),
             
           },
+          
           success:function(data){//통신 성공
             console.log("success data:"+data);
             let parsedJson = JSON.parse(data);
+            
             //title 미 입력
-            if("10" ==parsedJson.msgId){
+            if("10" == parsedJson.msgId){
               alert(parsedJson.msgContents);
                 $("#title").focus();
                 return;
             }
-           
-     /*        //등록자 미 입력
-             if("10" ==parsedJson.msgId){
-               alert(parsedJson.msgContents);
-                 $("#userId").focus();
-                 return;
-             } */
-             
              //내용 미 입력
-             if("10" ==parsedJson.msgId){
+             if("10" == parsedJson.msgId){
                alert(parsedJson.msgContents);
                  $("#contents").focus();
                  return;
              }
-             if("1"==parsedJson.msgId){
+             
+             
+             if("1"== parsedJson.msgId){
                  alert(parsedJson.msgContents);
                  //javascript
                  //window.location.href="${CP}/board/boardView.do?div="+$("#div").val();
+                 
                  moveToListView();
-                 }else {
+             }else {
                  alert(parsedJson.msgContents);
              }
+             
             },
             error:function(data){//실패시 처리
               console.log("error:"+data);

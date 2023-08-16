@@ -94,7 +94,7 @@
 				</tbody>
 			</table>
 			<div class="d-flex justify-content-end">
-				<a href="#" class="btn btn-sm btn-success" onclick="doMoveToReg();">글쓰기</a> <!--  -->
+				<a href="#" class="btn btn-sm btn-success" onclick="doMoveToReg();">글쓰기</a>
 			</div>
 		</div>
 	</div>
@@ -116,13 +116,13 @@
 		<nav aria-label="Page navigation example">
 		  <ul class="pagination">
 		    <li class="page-item">
-		      <a class="page-link" href="/BLUEOCEAN/boardView.do?pageNo=<%= pageNo - 1 %>" aria-label="Previous">
+		      <a class="page-link" href="/ehr/BLUEOCEAN/boardView.do?pageNo=<%= pageNo - 1 %>" aria-label="Previous">
 		        <span aria-hidden="true">&laquo;</span>
 		      </a>
 		    </li>
-				<%=StringUtil.renderPaging(totalCnt, pageNo, pageSize, bottomCount, "/board/boardView.do", "do_Retrieve")%> 
+				<%=StringUtil.renderPaging(totalCnt, pageNo, pageSize, bottomCount, "/ehr/BLUEOCEAN/boardView.do", "do_Retrieve")%> 
 		    <li class="page-item">
-		      <a class="page-link" href="/BLUEOCEAN/boardView.do?pageNo=<%= pageNo + 1 %>" aria-label="Next">
+		      <a class="page-link" href="/ehr/BLUEOCEAN/boardView.do?pageNo=<%= pageNo + 1 %>" aria-label="Next">
 		        <span aria-hidden="true">&raquo;</span>
 		      </a>
 		    </li>
@@ -231,7 +231,6 @@
    });
     
 </script> 
-<script src="${CP}/resources/js/header-main.js"></script>
-<script src="${CP}/resources/js/util.js"></script>
+
 </body>
 </html>

@@ -56,8 +56,6 @@ public class BoardServiceImpl implements BoardService {
         // 조회된 데이터 리스트를 반환합니다.
     	
     	System.out.println("Service doRetrieve 구역");
-		System.out.println("no   : " + inVO.getPageNo());	
-		System.out.println("word : " +  inVO.getSearchWord());
     	
         return boardDao.doRetrieve(inVO);
     }

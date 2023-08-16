@@ -38,6 +38,7 @@ public class BoardDaoImpl implements BoardDao, PcwkLogger {
     @Override
     public int doSave(BoardVO inVO) throws SQLException {
     	System.out.println("doSave DAOIMPL구역");
+    	System.out.println("DAOIMPL에서 inVO 값은 : "+inVO);
 		return sqlSessionTemplate.insert(NAMESPACE+DOT+"doSave", inVO);
     }
 
@@ -79,8 +80,7 @@ public class BoardDaoImpl implements BoardDao, PcwkLogger {
     @Override
     public List<BoardVO> doRetrieve(BoardVO inVO) throws SQLException {
     	System.out.println("do Retrieve DAOIMPL구역");
-		System.out.println("no   : " + inVO.getPageNo());	
-		System.out.println("word : " +  inVO.getSearchWord());
+
         return sqlSessionTemplate.selectList(NAMESPACE + DOT + "doRetrieve", inVO);
     }
 

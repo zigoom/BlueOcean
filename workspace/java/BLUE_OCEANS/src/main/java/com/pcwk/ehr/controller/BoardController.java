@@ -71,9 +71,7 @@ public class BoardController implements PcwkLogger {
 	public String boardView(BoardVO inVO, Model model)throws SQLException{
 		String viewPage = "main/board";
 		System.out.println("boardView 컨트롤러");	
-		System.out.println("no   : " + inVO.getPageNo());	
-		System.out.println("word : " +  inVO.getSearchWord());
-		
+
 		
 		//page 번호
 		if(null != inVO && inVO.getPageNo()==0) {
@@ -93,11 +91,7 @@ public class BoardController implements PcwkLogger {
 
 		List<BoardVO> list = this.boardService.doRetrieve(inVO);
 		model.addAttribute("boardList", list); 
-		model.addAttribute("inVO",inVO);	
-
-		System.out.println("boardList   : " + list);	
-		System.out.println("inVO : " +  inVO);
-		
+		model.addAttribute("inVO",inVO);			
 		
 		//총글수
 		int totalCnt = 0;
@@ -107,9 +101,6 @@ public class BoardController implements PcwkLogger {
 		}
 			
 		model.addAttribute("totalCnt", totalCnt);
-		System.out.println("no   : " + inVO.getPageNo());
-		System.out.println("현재 no는!!!   : " + inVO.getPageNo());
-		System.out.println("//코드조회 아래");
 		
 		return viewPage;
 		
@@ -121,6 +112,8 @@ public class BoardController implements PcwkLogger {
 	@RequestMapping("/doMoveToReg.do")
 	public String doMoveToReg(BoardVO inVO, Model model)throws SQLException{
 		String view = "main/board_reg";
+		LOG.debug(" 글쓰기 버튼 클릭했습니다!! ");
+		
 		LOG.debug("=================");
 		LOG.debug("== doMoveToReg ==");
 		LOG.debug("== inVO         =="+inVO);
@@ -138,8 +131,17 @@ public class BoardController implements PcwkLogger {
 	@RequestMapping(value = "/doSave.do", method = RequestMethod.POST
 			,produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String doSave(BoardVO inVO)throws SQLException{
+	public String doSave(BoardVO inVO, HttpSession session)throws SQLException{
 		String jsonString = "";
+		
+		System.out.println("doSave 컨트롤러");
+		
+		String  userId = (String) session.getAttribute("user");
+		
+		System.out.println("userId : "+userId);
+		
+		inVO.setUserId(userId);
+		
 		LOG.debug("=================");
 		LOG.debug("== doSave ==");
 		LOG.debug("== inVO         =="+inVO);
@@ -171,7 +173,9 @@ public class BoardController implements PcwkLogger {
 		}
 		
 		jsonString = StringUtil.validMessageToJson(flag+"", message);
+		
 		LOG.debug("|jsonString|"+jsonString);
+		
 		return jsonString;
 		
 	}

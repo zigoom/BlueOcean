@@ -188,7 +188,7 @@
               if(logout){
                 $.ajax({
                               type : "POST",
-                              url : "/ehr/user/logout.do",
+                              url : "/ehr/BLUEOCEAN/logout.do",
                               asyn : "true",
                               dataType : "html",
                               data : {},

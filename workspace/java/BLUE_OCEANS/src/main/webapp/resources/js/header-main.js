@@ -123,11 +123,11 @@ function classListRepair(btn){
 $(document).ready(function () {
     console.log('테스트중');
     signIn.classList.remove("btn-light");
-	signIn.classList.add("btn-secondary");
-	classListRepair(signUp);
-	classListRepair(findId);
-	classListRepair(findPw);
-	
+    signIn.classList.add("btn-secondary");
+    classListRepair(signUp);
+    classListRepair(findId);
+    classListRepair(findPw);
+
     signInActive = signInActive + 1;
     findIdActive = 0;
     findPwActive = 0;
@@ -389,10 +389,10 @@ $(document).ready(function () {
                 // 성공
                 console.log('data:' + data);
                 let paredJSON = JSON.parse(data);
-                console.log('paredJSON.msgId:' + paredJSON.megId);
-                if (paredJSON.megId == 10 || paredJSON.megId == 20) {
+                console.log('paredJSON.msgId:' + paredJSON.msgId);
+                if (paredJSON.msgId == 10 || paredJSON.msgId == 20) {
                     alert('아이디나 비밀번호가 다릅니다.');
-                } else if (paredJSON.megId == 30) {
+                } else if (paredJSON.msgId == 30) {
                     alert('로그인 성공');
                     window.location.href = window.location.href;
                 }

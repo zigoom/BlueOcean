@@ -131,8 +131,7 @@
             
             let requestData = {
                 ticker: ui.item.code,
-                <%-- date: '<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>', --%>
-                date: '2023-08-15',
+                date: '<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>',
                 interval: '10'
             };            
             

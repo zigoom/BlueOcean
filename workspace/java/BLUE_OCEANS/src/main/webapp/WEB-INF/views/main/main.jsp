@@ -5,8 +5,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-
- 
 <meta charset="${encoding}">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- CSS only -->
@@ -19,6 +17,7 @@
 <link rel="stylesheet" href="${CP}/resources/css/footer.css">
 <title>Insert title here</title>
 </head> 
+
 <body>
 
 </body>

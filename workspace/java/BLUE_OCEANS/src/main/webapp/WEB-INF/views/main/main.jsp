@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="${CP}/resources/css/header.css">
 <link rel="stylesheet" href="${CP}/resources/css/footer.css">
 <title>Insert title here</title>
-</head>
+</head> 
 <body>
 
 </body>

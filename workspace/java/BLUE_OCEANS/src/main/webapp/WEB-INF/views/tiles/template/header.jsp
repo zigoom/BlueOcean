@@ -20,9 +20,9 @@
                 <input id="word" type="text" class="form-control col-sm-4" placeholder="종목명 또는 종목코드를 입력해주세요." aria-label="Username" aria-describedby="basic-addon1">
                 <button id="header-search-btn" style="" class="btn btn-primary">검색</button>
             </div>
-            <button class="btn btn-light header-btn">토론게시판</button>
-            <button class="btn btn-light header-btn">관심목록</button>
-            <button class="btn btn-light header-btn">마이페이지</button>
+            <button class="btn btn-light header-btn" id="boardBtn">토론게시판</button>
+            <button class="btn btn-light header-btn" id="favoriteBtn">관심목록</button>
+            <button class="btn btn-light header-btn" id="mypageBtn">마이페이지</button>
 
           <c:choose>
           <c:when test="${not empty sessionScope.user}">

@@ -26,6 +26,8 @@ uri="http://java.sun.com/jsp/jstl/core"%>
         <script src="https://kit.fontawesome.com/649b25c1cf.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="${CP}/resources/css/header.css" />
         <link rel="stylesheet" href="${CP}/resources/css/footer.css" />
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <style>
             #chart-container {
                 width: 90%;
@@ -200,7 +202,19 @@ uri="http://java.sun.com/jsp/jstl/core"%>
         <input type="hidden" value="데이터 요청" onclick="test()" />
 
         <script>
-     // 시간대 변환 함수
+       	let today = new Date();
+
+       	let year = today.getFullYear();
+       	let month = ('0' + (today.getMonth() + 1)).slice(-2);
+       	let day = ('0' + today.getDate()).slice(-2);
+
+       	let dateString = year + '-' + month  + '-' + day;
+
+        console.log(dateString);
+
+
+        
+        	// 시간대 변환 함수
 	        function convertToTimeZone(originalDate, timeZone) {
 			    const convertedDate = new Date(originalDate.toLocaleString('en-US', { timeZone: timeZone }));
 			    return convertedDate.toISOString();
@@ -402,10 +416,9 @@ uri="http://java.sun.com/jsp/jstl/core"%>
         startDate: startDate_data, // "2023-01-02",
         endDate: endDate_data, // "2023-01-31"
     };
-    
     let requestMinData = {
-    		  "ticker": "005930",
-    		  "date": "2023-08-11",
+    		  "ticker": ticker_data,
+    		  "date": dateString,
     		  "interval": "10"
     		}
     // ajax를 활용해 http://192.168.0.74:5001/blue-oceans/search-tickers을 호출하여 불러온 데이터를 파싱
@@ -506,7 +519,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                 // 데이터 변환 작업
                 const timeZone = 'Asia/Seoul'; // 한국 시간대
                 timeScale.applyOptions({
-                    barSpacing: 20,
+                    barSpacing: 50,
                 });
                 
                 const originalDate = new Date(); // 현재 날짜를 기반으로 시간 생성
@@ -522,6 +535,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                         time: convertedTime, // 변환된 시간 사용
                         value: data[minTime],
                     });
+                   	console.log(data[minTime])
                     
                     originalDate.setUTCDate(originalDate.getUTCDate() + 1); // 날짜를 하루 뒤로 설정
                 }

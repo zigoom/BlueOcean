@@ -22,6 +22,6 @@
 <body>
 
 </body>
-<script src="${CP}/resources/js/header.js"></script>
+<script src="${CP}/resources/js/header-main.js"></script>
 <script src="${CP}/resources/js/util.js"></script>
 </html>

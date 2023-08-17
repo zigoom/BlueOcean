@@ -37,10 +37,10 @@ public class BookmarkTest {
 
 	// 북마크 추가 테스트코드
 	@Test
-	@Ignore
+	//@Ignore
 	public void testAddBookmark() throws SQLException {
 		BookmarkVO bookmarkVO = new BookmarkVO();
-		bookmarkVO.setUserId("test");
+		bookmarkVO.setUserId("test1231");
 		bookmarkVO.setStockCode("005930");
 		bookmarkVO.setStockName("삼성전자");
 
@@ -53,7 +53,7 @@ public class BookmarkTest {
 	@Ignore
 	public void testDeleteBookmark() throws SQLException {
 		BookmarkVO bookmarkVO = new BookmarkVO();
-		bookmarkVO.setUserId("test");
+		bookmarkVO.setUserId("test1231");
 		bookmarkVO.setStockCode("005930");
 		bookmarkVO.setStockName("삼성전자");
 
@@ -96,7 +96,7 @@ public class BookmarkTest {
 	}
 
 	@Test
-	// @Ignore
+	@Ignore
 	// 네이버 API 테스트코드
 	public void testDoNaverSearch() throws SQLException, IOException {
 		String result = naverSearchService.doNaverSearch("삼성");

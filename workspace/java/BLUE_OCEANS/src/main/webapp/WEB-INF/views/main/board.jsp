@@ -112,23 +112,24 @@
 
 	<!-- paging  -->
 
-    <div class="d-flex justify-content-center">
-		<nav aria-label="Page navigation example">
-		  <ul class="pagination">
-		    <li class="page-item">
-		      <a class="page-link" href="/ehr/BLUEOCEAN/boardView.do?pageNo=<%= pageNo - 1 %>" aria-label="Previous">
-		        <span aria-hidden="true">&laquo;</span>
-		      </a>
-		    </li>
-				<%=StringUtil.renderPaging(totalCnt, pageNo, pageSize, bottomCount, "/ehr/BLUEOCEAN/boardView.do", "do_Retrieve")%> 
-		    <li class="page-item">
-		      <a class="page-link" href="/ehr/BLUEOCEAN/boardView.do?pageNo=<%= pageNo + 1 %>" aria-label="Next">
-		        <span aria-hidden="true">&raquo;</span>
-		      </a>
-		    </li>
-		  </ul>
-		</nav>    
-    </div>
+	<div class="d-flex justify-content-center">
+	    <nav aria-label="Page navigation example">
+	        <ul class="pagination">
+	            <li class="page-item">
+	                <a class="page-link" href="/ehr/BLUEOCEAN/boardView.do?pageNo=<%= pageNo - 1 %>" aria-label="Previous">
+	                    <span aria-hidden="true">&laquo;</span>
+	                </a>
+	            </li>
+	            <%=StringUtil.renderPaging(totalCnt, pageNo, pageSize, bottomCount, "/ehr/BLUEOCEAN/boardView.do", "do_Retrieve")%> 
+	            <li class="page-item <% if (pageNo * pageSize >= totalCnt) { %>disabled<% } %>">
+	                <a class="page-link" href="<% if (pageNo * pageSize < totalCnt) { %>/ehr/BLUEOCEAN/boardView.do?pageNo=<%= pageNo + 1 %><% } else { %>#<% } %>" aria-label="Next">
+	                    <span aria-hidden="true">&raquo;</span>
+	                </a>
+	            </li>
+	        </ul>
+	    </nav>    
+	</div>
+
 
 	<!--// paging --------------------------------------------------------------->
 	

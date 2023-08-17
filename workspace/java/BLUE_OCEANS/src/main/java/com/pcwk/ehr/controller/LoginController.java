@@ -63,27 +63,27 @@ public class LoginController implements PcwkLogger{
 		// 20 : 비번 오류
 		// 30 : 성공
 		if (null == user.getUserId() || "".equals(user.getUserId())) {
-			message.setMegId("1");
+			message.setMsgId("1");
 			message.setMsgContents("아이디를 입력 하세요");
 
 			return new Gson().toJson(message);
 		}
 
 		if (null == user.getPasswd() || "".equals(user.getPasswd())) {
-			message.setMegId("2");
+			message.setMsgId("2");
 			message.setMsgContents("비밀번호를 입력 하세요");
 			return new Gson().toJson(message);
 		}
 
 		int status = loginService.doLogin(user);
 		if (10 == status) {
-			message.setMegId("10");
+			message.setMsgId("10");
 			message.setMsgContents("아이디를 확인 하세요");
 		} else if (20 == status) {
-			message.setMegId("20");
+			message.setMsgId("20");
 			message.setMsgContents("비밀번호를 확인 하세요");
 		} else if (30 == status) {
-			message.setMegId("30");
+			message.setMsgId("30");
 			message.setMsgContents(user.getUserId() + "로그인 되었습니다");
 
 			// --------------------------------------------------
@@ -95,7 +95,7 @@ public class LoginController implements PcwkLogger{
 				httpsession.setAttribute("user", userinfo.getUserId());
 				LOG.debug("-------------userinfo------------"+userinfo.getUserId());
 			} else {
-				message.setMegId("99");
+				message.setMsgId("99");
 				message.setMsgContents("알수 없는 오류");
 			}
 		}

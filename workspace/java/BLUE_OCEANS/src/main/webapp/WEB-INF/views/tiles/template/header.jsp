@@ -121,7 +121,7 @@
                     else {
                     response([]);
                     }
-              },
+              }, 
             
             minLength: 2, // 최소 입력 길이
             select: function(event, ui) {

@@ -54,6 +54,8 @@
 <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="${CP}/resources/css/header.css">
 <link rel="stylesheet" href="${CP}/resources/css/footer.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="${CP}/resources/js/jquery-3.7.0.js"></script>
 
 <title>토론 게시판</title>

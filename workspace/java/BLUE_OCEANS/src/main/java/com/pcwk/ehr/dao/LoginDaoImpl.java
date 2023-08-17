@@ -20,7 +20,7 @@ public class LoginDaoImpl implements LoginDao, PcwkLogger {
 	
 	public LoginDaoImpl() {
 	}
-
+ 
 	@Override
 	public int idCheck(UserVO user) throws SQLException {
 

@@ -11,6 +11,6 @@ public interface FindService  {
 	int reSetPasswd(UserVO user) throws SQLException, ClassNotFoundException;
 
 	int userCheck(UserVO user) throws SQLException, ClassNotFoundException;
-
+ 
 	
 }

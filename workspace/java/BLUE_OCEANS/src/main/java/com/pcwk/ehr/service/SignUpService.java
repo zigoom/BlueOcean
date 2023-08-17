@@ -7,7 +7,7 @@ import com.pcwk.ehr.domain.UserVO;
 
 @Service
 public interface SignUpService {
-	
+	 
 	/**
 	 * 신규회원가입
 	 * 

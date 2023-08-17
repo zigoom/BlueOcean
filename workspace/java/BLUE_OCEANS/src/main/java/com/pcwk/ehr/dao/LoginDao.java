@@ -9,7 +9,7 @@ public interface LoginDao {
 	int idCheck(UserVO user) throws SQLException;
 
 	int passCheck(UserVO user) throws SQLException;
-
+ 
 	UserVO get(UserVO user) throws ClassCastException, SQLException;
 
 }

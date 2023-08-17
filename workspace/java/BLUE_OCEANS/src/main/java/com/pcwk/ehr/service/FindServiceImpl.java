@@ -19,7 +19,7 @@ public class FindServiceImpl implements FindService, PcwkLogger{
 
 	public FindServiceImpl() {
 	}
-
+ 
 	@Override
 	public String findId(UserVO user) throws SQLException, ClassNotFoundException {
 		// 1. 아이디 check

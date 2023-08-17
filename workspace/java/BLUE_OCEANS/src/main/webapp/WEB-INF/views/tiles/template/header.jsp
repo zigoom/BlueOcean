@@ -82,6 +82,8 @@
 		$("#mypageBtn").on("click",function(){
 			window.location.href = "${CP}/BLUEOCEAN/mypage.do";
 		})
+		
+		
 		$(document).ready(function() {
         
             $("#word").autocomplete({

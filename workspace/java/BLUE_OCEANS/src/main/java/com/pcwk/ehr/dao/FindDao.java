@@ -11,5 +11,5 @@ public interface FindDao {
 	int userCheck(UserVO user) throws SQLException, ClassNotFoundException;
 	
 	int updateOTP(UserVO user) throws SQLException, ClassNotFoundException;
-	
+	 
 }

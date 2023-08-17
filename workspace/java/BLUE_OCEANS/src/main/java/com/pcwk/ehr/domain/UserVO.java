@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UserVO {
-	
+	 
 	private int userNo  ;//회원id
 	private String userId  ;//회원id
 	private String passwd  ;//비번

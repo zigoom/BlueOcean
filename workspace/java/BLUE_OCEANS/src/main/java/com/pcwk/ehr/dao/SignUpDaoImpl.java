@@ -30,7 +30,7 @@ public class SignUpDaoImpl implements SignUpDao, PcwkLogger {
 		int flag2 = 0;
 		
 		
-		
+		 
 		String member = this.NAMESPACE+DOT+"add";
 		
 		

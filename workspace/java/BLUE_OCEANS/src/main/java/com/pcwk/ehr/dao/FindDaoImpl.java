@@ -22,7 +22,7 @@ public class FindDaoImpl implements FindDao, PcwkLogger {
 	public FindDaoImpl() {
 	}
 
-
+ 
 	@Override
 	public String findId(UserVO user) throws SQLException, ClassNotFoundException {
 		String userid = "";

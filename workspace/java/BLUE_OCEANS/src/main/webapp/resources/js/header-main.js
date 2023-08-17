@@ -239,7 +239,7 @@ $(document).ready(function () {
             console.log('checkId 실행됨' + id); // 추가한
             // 코드
             $.ajax({
-                url: '/ehr/user/idCheck.do',
+                url: '/ehr/BLUEOCEAN/idCheck.do',
                 type: 'POST',
                 data: {
                     id: id,
@@ -331,7 +331,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: 'POST',
-            url: '/ehr/user/siginUp.do',
+            url: '/ehr/BLUEOCEAN/siginUp.do',
             asyn: 'true',
             dataType: 'html',
             data: {
@@ -377,7 +377,7 @@ $(document).ready(function () {
         }
         $.ajax({
             type: 'POST',
-            url: '/ehr/user/Login.do',
+            url: '/ehr/BLUEOCEAN/Login.do',
             asyn: 'true',
             dataType: 'html',
             data: {

@@ -34,7 +34,7 @@ public class SearchListController implements PcwkLogger {
         // 원하는 데이터 처리 및 Model에 추가
         model.addAttribute("searchData", decodedData);
 		
-		
+		 
 		return "main/searchlist";
 	}
 }

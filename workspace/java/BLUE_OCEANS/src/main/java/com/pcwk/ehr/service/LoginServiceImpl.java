@@ -12,7 +12,7 @@ import com.pcwk.ehr.domain.UserVO;
 
 @Service
 public class LoginServiceImpl implements LoginService, PcwkLogger{
-	
+	 
 	@Autowired
 	LoginDao loginDao;
 

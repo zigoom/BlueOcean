@@ -18,36 +18,34 @@ import com.pcwk.ehr.cmn.PcwkLogger;
 import com.pcwk.ehr.domain.UserVO;
 import com.pcwk.ehr.service.LoginService;
 
-
 @Controller("LoginController")
 @RequestMapping("BLUEOCEAN")
-public class LoginController implements PcwkLogger{
-	
+public class LoginController implements PcwkLogger {
+
 	@Autowired
 	LoginService loginService;
-	
+
 	public LoginController() {
 		LOG.debug("┌──────────────────────────────┐");
 		LOG.debug("│LoginContoller                │");
 		LOG.debug("└──────────────────────────────┘");
 	}
-	
+
 	@RequestMapping(value = "/logout.do")
-    public String logout(HttpSession session) {
-        LOG.debug("┌───────────────┐");
-        LOG.debug("│logout()       │");
-        LOG.debug("└───────────────┘");
+	public String logout(HttpSession session) {
+		LOG.debug("┌───────────────┐");
+		LOG.debug("│logout()       │");
+		LOG.debug("└───────────────┘");
 
+		if (null != session.getAttribute("user")) {
+			session.removeAttribute("user");
+			session.invalidate();
+			LOG.debug("=session.getAttribute(user)");
+		}
+		return "main/main";
 
-        if(null!=session.getAttribute("user")) {
-            session.removeAttribute("user");
-            session.invalidate();
-            LOG.debug("=session.getAttribute(user)");
-        }
-        return "main/main";
+	}
 
-    }
-	
 	@RequestMapping(value = "/Login.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String doLogin(UserVO user, HttpSession httpsession) throws SQLException, ClassNotFoundException {
@@ -90,21 +88,21 @@ public class LoginController implements PcwkLogger{
 			// 사용자 정보 조회 : seesion처리
 			// --------------------------------------------------
 			UserVO userinfo = loginService.get(user);
-			LOG.debug("sessthion"+userinfo);
+			LOG.debug("sessthion" + userinfo);
 			if (null != userinfo) {
 				httpsession.setAttribute("user", userinfo.getUserId());
-				LOG.debug("-------------userinfo------------"+userinfo.getUserId());
+				LOG.debug("-------------userinfo------------" + userinfo.getUserId());
 			} else {
 				message.setMsgId("99");
 				message.setMsgContents("알수 없는 오류");
 			}
 		}
-		
+
 		jsonString = new Gson().toJson(message);
 		LOG.debug("│jsonSting                     │" + jsonString);
 		LOG.debug("└──────────────────────────────┘");
-		
+
 		return jsonString;
 	}
-	
+
 }

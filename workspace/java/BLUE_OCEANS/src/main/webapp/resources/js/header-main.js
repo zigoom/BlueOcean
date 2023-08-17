@@ -21,7 +21,7 @@ signInhtml += "      <input id='login_id' type='text' class='form-control'>";
 signInhtml += '    </div>';
 signInhtml += '    <div>';
 signInhtml += '      <label>비밀번호</label>';
-signInhtml += "      <input id='login_pw' type='text' class='form-control'>";
+signInhtml += "      <input id='login_pw' type='password' class='form-control'>";
 signInhtml += '    </div>';
 signInhtml += '  </div>';
 signInhtml += '</form>';

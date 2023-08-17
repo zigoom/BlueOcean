@@ -44,6 +44,38 @@
        where user_id = #{userId}
   	</select>
   <!-- 아이디 중복검사 -->
+
+
+	<insert id="agree" parameterType="UserVO">
+		DECLARE
+		v_no NUMBER;
+		v_total_count NUMBER;
+		BEGIN
+		-- TERMSOFUSE 테이블의 레코드 개수를 가져옵니다.
+		SELECT COUNT("NO") INTO v_total_count FROM "BLUE"."TERMSOFUSE";
+
+		DBMS_OUTPUT.PUT_LINE('Total Count: ' || v_total_count);
+
+		FOR v_no IN 1..v_total_count -- 1부터 TERMSOFUSE 테이블의 레코드 개수까지 순차적으로 반복
+		LOOP
+		-- INSERT 문을 실행하여 데이터를 termsofuse_agree 테이블에 추가합니다.
+		INSERT INTO termsofuse_agree (
+		agree_no,
+		user_id,
+		termsofuse_no,
+		agree
+		) VALUES (
+		agree_seq.NEXTVAL,
+		#{userId},
+		v_no, -- 현재 루프의 번호를 termsofuse_no 열에 삽입
+		0
+		);
+		END LOOP;
+
+		COMMIT; -- 모든 삽입이 완료되었으므로 커밋
+		END;
+		/
+	</insert>
   
   
 </mapper>

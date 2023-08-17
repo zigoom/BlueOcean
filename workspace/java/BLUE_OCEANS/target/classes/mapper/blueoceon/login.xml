@@ -29,8 +29,6 @@
 	</select>
 
 
-
-
 	<resultMap type="UserVO" id="userMap">
 		<result column="user_id" property="userId" />
 	</resultMap>

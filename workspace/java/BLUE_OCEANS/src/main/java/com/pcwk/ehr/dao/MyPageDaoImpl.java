@@ -1,5 +1,8 @@
 package com.pcwk.ehr.dao;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -21,23 +24,38 @@ public class MyPageDaoImpl implements MyPageDao {
 	public MyPageDaoImpl() {
 		
 	}
-		
+	@Override	
 	public MyPageVO getMemberById(String userId) {
+		System.out.println("│ MyPageDaoImpl-getMemberById│");
+		
         return sqlSessionTemplate.selectOne(NAMESPACE + DOT + "getMemberById", userId);
     }
-		
-	public void updateUser(MyPageVO user) {		
-		 sqlSessionTemplate.update(NAMESPACE + DOT + "updateUser", user);
+	@Override	
+	public int userUpdate(MyPageVO user) {		
+		System.out.println("│ MyPageDaoImpl-userUpdate│");
+		System.out.println("user"+user.toString());
+
+        
+		 int flag = 0;
+		 flag = sqlSessionTemplate.update(NAMESPACE + DOT + "userUpdate", user);
+
+	     
+	     System.out.println("flag : "+flag);
+		 return flag;
 	
 	}
 	
-	public int deleteUser(UserVO user) {
-		int flag = 0;
-		
-		return flag;
-	}
-	
-	
+ 	@Override
+    public int withdraw(MyPageVO user) {
+ 		System.out.println("│ MyPageDaoImpl-withdraw│");
+ 		
+ 		int flag = 0;
+ 		flag = sqlSessionTemplate.update(NAMESPACE + DOT + "withdraw", user);
+ 		
+ 		System.out.println("flag : "+flag);
+ 		return flag;
+ 		
+    }
 	
 
 }

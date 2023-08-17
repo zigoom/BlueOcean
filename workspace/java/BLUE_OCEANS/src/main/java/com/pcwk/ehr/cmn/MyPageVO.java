@@ -1,19 +1,22 @@
 package com.pcwk.ehr.cmn;
 
 public class MyPageVO {
-	private int    userNo;
+	private int userNo;
 	private String userId;
     private String passwd;
     private String name;
     private int birthday;
     private String gender;
-    private String keyword;
+    private String phoneNo;
     private String email;
-    private String phone;
+    private String userLV;
+    private String keyword;
+    private int del;
     
     
-
-
+	public MyPageVO() {
+		super();
+	}
 	
 	public int getUserNo() {
 		return userNo;
@@ -51,11 +54,11 @@ public class MyPageVO {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	public String getKeyword() {
-		return keyword;
+	public String getPhoneNo() {
+		return phoneNo;
 	}
-	public void setKeyword(String keyword) {
-		this.keyword = keyword;
+	public void setPhoneNo(String phoneNo) {
+		this.phoneNo = phoneNo;
 	}
 	public String getEmail() {
 		return email;
@@ -63,15 +66,26 @@ public class MyPageVO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getPhone() {
-		return phone;
+	public String getUserLV() {
+		return userLV;
 	}
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public void setUserLV(String userLV) {
+		this.userLV = userLV;
 	}
-	
-	public MyPageVO(int userNo, String userId, String passwd, String name, int birthday, String gender, String keyword,
-			String email, String phone) {
+	public String getKeyword() {
+		return keyword;
+	}
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+	public int getDel() {
+		return del;
+	}
+	public void setDel(int del) {
+		this.del = del;
+	}
+	public MyPageVO(int userNo, String userId, String passwd, String name, int birthday, String gender, String phoneNo,
+			String email, String userLV, String keyword, int del) {
 		super();
 		this.userNo = userNo;
 		this.userId = userId;
@@ -79,20 +93,20 @@ public class MyPageVO {
 		this.name = name;
 		this.birthday = birthday;
 		this.gender = gender;
-		this.keyword = keyword;
+		this.phoneNo = phoneNo;
 		this.email = email;
-		this.phone = phone;
+		this.userLV = userLV;
+		this.keyword = keyword;
+		this.del = del;
 	}
-    
-	
 	@Override
 	public String toString() {
 		return "MyPageVO [userNo=" + userNo + ", userId=" + userId + ", passwd=" + passwd + ", name=" + name
-				+ ", birthday=" + birthday + ", gender=" + gender + ", keyword=" + keyword + ", email=" + email
-				+ ", phone=" + phone + ", toString()=" + super.toString() + "]";
+				+ ", birthday=" + birthday + ", gender=" + gender + ", phoneNo=" + phoneNo + ", email=" + email
+				+ ", userLV=" + userLV + ", keyword=" + keyword + ", del=" + del + ", toString()=" + super.toString()
+				+ "]";
 	}
-    
-    
-
+	
+	
    
 }

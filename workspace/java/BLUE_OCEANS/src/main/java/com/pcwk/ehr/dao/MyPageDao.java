@@ -6,6 +6,10 @@ public interface MyPageDao {
 	
     MyPageVO getMemberById(String userId);
     
-    void updateUser(MyPageVO user);
+    int userUpdate(MyPageVO user);
+    
+    int withdraw(MyPageVO user);
+    
+
 	
 }

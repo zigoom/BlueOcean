@@ -5,6 +5,8 @@ import com.pcwk.ehr.cmn.MyPageVO;
 public interface MyPageService {
 	
 	MyPageVO getMemberById(String userId);
-    void updateUser(MyPageVO user);
+    int userUpdate(MyPageVO user);
+    int withdraw(MyPageVO user);
+
 
 }

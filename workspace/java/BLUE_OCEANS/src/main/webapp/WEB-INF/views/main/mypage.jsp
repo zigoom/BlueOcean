@@ -33,8 +33,8 @@ uri="http://java.sun.com/jsp/jstl/core"%>
 
               
               <form>
-              console.log("${CP}")
-                <input type="text" name="userNo" value="${userinfo.userNo}">
+              
+                <input type="hidden" name="userNo" value="${userinfo.userNo}">
                 
                 <div class="form-floating mb-5">
                   <input type="name" class="form-control" id="name" name="name" value="${userinfo.name}" required readonly="true" >
@@ -103,62 +103,76 @@ uri="http://java.sun.com/jsp/jstl/core"%>
 	                         keyword: keyword
 	                     };
 	                    
+	                     // 확인 메시지 출력
+	                     var confirmResult = confirm("정말로 수정하시겠습니까?");
+	                     if (confirmResult) {
 	
-	                     $.ajax({
-	                         type: 'POST', // POST 메서드 사용
-	                         url: "/ehr/BLUEOCEAN/userUpdate.do",
-	                         dataType: 'json', // 예상 응답 데이터 타입
-	                         contentType: 'application/json; charset=utf-8',
-	                         data: JSON.stringify(updateData),
-	                         success: function(response) {
-	                        	 console.log(response);
-	                             if (response.result === "success") {
-	                                 alert("수정완료");
-	                                 location.reload(); // 페이지를 새로고침하여 변경 내용을 반영
-	                             } else {
-	                                 alert("수정실패");
-	                             }
-	                         },
-	                         error: function() {
-	                             alert("사용자 정보 업데이트 중 오류가 발생했습니다.");
-	                         }
-	                     });
-						        });
-						
-						        // 취소 버튼 클릭 시 메인 페이지로 이동
-						        $("#cancelButton").click(function() {
-						            location.href = "${CP}/BLUEOCEAN/main.do"; // 메인 페이지의 URL로 이동
-						        });
-						
-						          // 탈퇴 버튼 클릭 시 처리
-						        $("#withdrawButton").click(function() {
-						            var userId = $("#userId").val();
-						            console.log("userId :"+userId)
-						
-						            var withdrawData = {
-						                userId: userId,
-						            };
-						
-						            // 탈퇴 버튼 클릭 이벤트 코드
-						            $.ajax({
-						                type: 'POST',
-						                url: "/ehr/BLUEOCEAN/withdraw.do",
-						                contentType: 'application/json; charset=utf-8',
-						                data: JSON.stringify(withdrawData),
-						                success: function(response) {
-						                    if (response.result === "success") {
-						                        alert("탈퇴가 정상적으로 처리되었습니다.");
-						                        location.href = "${CP}/BLUEOCEAN/main.do";
-						                    } else {
-						                        alert("탈퇴 처리에 실패했습니다.");
-						                    }
-						                },
-						                error: function() {
-						                    alert("탈퇴 처리 중 오류가 발생했습니다.");
-						                }
-						            });
-						        });
-						    });
+		                     $.ajax({
+		                         type: 'POST', // POST 메서드 사용
+		                         url: "/ehr/BLUEOCEAN/userUpdate.do",
+		                         dataType: 'json', // 예상 응답 데이터 타입
+		                         contentType: 'application/json; charset=utf-8',
+		                         data: JSON.stringify(updateData),
+		                         success: function(response) {
+		                        	 console.log(response);
+		                             if (response.result === "success") {
+		                                 alert("수정완료");
+		                                 location.reload(); // 페이지를 새로고침하여 변경 내용을 반영
+		                             } else {
+		                                 alert("수정실패");
+		                             }
+		                         },
+		                         error: function() {
+		                             alert("사용자 정보 업데이트 중 오류가 발생했습니다.");
+		                         }
+		                     });
+	                     }else {
+	                    	  alert("수정이 취소 되었습니다.");
+	                       }
+							        });
+	                 
+							
+							        // 취소 버튼 클릭 시 메인 페이지로 이동
+							        $("#cancelButton").click(function() {
+							            location.href = "${CP}/BLUEOCEAN/main.do"; // 메인 페이지의 URL로 이동
+							        });
+							
+							          // 탈퇴 버튼 클릭 시 처리
+							        $("#withdrawButton").click(function() {
+							            var userId = $("#userId").val();
+							            console.log("userId :"+userId)
+							
+							            var withdrawData = {
+							                userId: userId,
+							            };
+							            // 확인 메시지 출력
+							            var confirmResult = confirm("정말로 탈퇴하시겠습니까?");
+							            if (confirmResult) {
+							                // 탈퇴 버튼 클릭 이벤트 코드
+							                $.ajax({
+							                    type: 'POST',
+							                    url: "/ehr/BLUEOCEAN/withdraw.do",
+							                    contentType: 'application/json; charset=utf-8',
+							                    data: JSON.stringify(withdrawData),
+							                    success: function(response) {
+							                        if (response.result === "success") {
+							                            alert("탈퇴가 정상적으로 처리되었습니다.");
+							                            location.href = "${CP}/BLUEOCEAN/main.do";
+							                        } else {
+							                            alert("탈퇴 처리에 실패했습니다.");
+							                        }
+							                    },
+							                    error: function() {
+							                        alert("탈퇴 처리 중 오류가 발생했습니다.");
+							                    }
+							                });
+							            } else {
+							                // 사용자가 취소한 경우
+							                alert("탈퇴가 취소되었습니다.");
+							            }
+							            
+							        });
+							    });
 	             </script>
               </div>
             </div>

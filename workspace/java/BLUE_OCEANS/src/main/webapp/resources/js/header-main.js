@@ -31,7 +31,7 @@ signUphtml += "  <div class='modal-containor'>";
 signUphtml += '    <div>';
 signUphtml += '      <label>아이디</label>';
 signUphtml += "      <input type='text' id='signUp_id' name='signUp_id' maxlength='15' class='form-control'>";
-signUphtml += "    	 <button type='button' class='btn btn-outline-primary' id='sigup_idcheck'>아이디체크</button>";
+signUphtml += "     <button type='button' class='btn btn-outline-primary' id='signup_idcheck' disabled>아이디체크</button>";
 signUphtml += '    </div>';
 signUphtml += '    <div>';
 signUphtml += '      <label>이름</label>';
@@ -170,6 +170,18 @@ $(document).ready(function () {
             appendAndShow(signUphtml);
             modalFooter.append("<button class='btn btn-primary' id='signUp_bt'>회원가입</button>");
         }
+
+        document.querySelector('#signUp_id').addEventListener('input', function () {
+		    const signUpButton = document.querySelector('#signup_idcheck');
+		    const inputVal = this.value.trim(); // 입력 값을 얻어와서 공백 제거
+		
+		    if (inputVal.length > 0) { // 입력 값이 있는 경우
+		        signUpButton.removeAttribute('disabled');
+		    } else { // 입력 값이 없는 경우
+		        signUpButton.setAttribute('disabled', 'disabled');
+		    }
+		});
+
         // 아이디 입력 필드에서 포커스를 잃었을 때 유효성 검사 수행
         document.querySelector('#signUp_id').addEventListener('keyup', function (event) {
             const inputValue = event.target.value;
@@ -221,8 +233,14 @@ $(document).ready(function () {
     });
 
     // ------------------------------회원가입----------------------------
+   
+
+    
+    
+    
     // 아이디 중복검사
-    $(document).on('click', '#sigup_idcheck', function () {
+    
+    $(document).on('click', '#signup_idcheck', function () {
         let input = $('#signUp_id').val();
         let regex = /^[a-z0-9]+$/;
         if (eUtil.ISEmpty($('#signUp_id').val()) == true) {
@@ -263,6 +281,7 @@ $(document).ready(function () {
                          * $(".id_already").css("display",
                          * "none");
                          */
+                        document.querySelector('#signup_idcheck').setAttribute('disabled', 'disabled');
                     } else {
                         // 중복된
                         // 아이디
@@ -348,6 +367,10 @@ $(document).ready(function () {
                 // 통신
                 // 성공
                 console.log('success data:' + data);
+                if (data == 1){
+                    alert("회원가입이 완료되었습니다.")
+                    window.location.href = window.location.href;
+                }
             },
             error: function (data) {
                 // 실패시

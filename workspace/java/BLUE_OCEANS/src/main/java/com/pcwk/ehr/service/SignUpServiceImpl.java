@@ -26,8 +26,6 @@ public class SignUpServiceImpl implements SignUpService, PcwkLogger {
 		LOG.debug("└──────────────────────────────┘");
 		
 		userVO.setUserLevel(1);
-		userVO.setAgree(0);
-		userVO.setOtpUse(0);
 		
 		
 		int flag = 0;
@@ -47,6 +45,7 @@ public class SignUpServiceImpl implements SignUpService, PcwkLogger {
 
 		return cnt;
 	}
+
 
 
 }

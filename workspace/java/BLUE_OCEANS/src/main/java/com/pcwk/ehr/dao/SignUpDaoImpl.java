@@ -11,81 +11,103 @@ import com.pcwk.ehr.domain.UserVO;
 
 @Repository
 public class SignUpDaoImpl implements SignUpDao, PcwkLogger {
-	
-	private static final String NAMESPACE = "com.pcwk.ehr.signup";
-	private static final String DOT       = ".";
-	
-	@Autowired
-	SqlSessionTemplate sqlSessionTemplate; //DB연결 객체
 
-	
+	private static final String NAMESPACE = "com.pcwk.ehr.signup";
+	private static final String DOT = ".";
+
+	@Autowired
+	SqlSessionTemplate sqlSessionTemplate; // DB연결 객체
+
 	// **** default 생성
-	public SignUpDaoImpl () {}
-	
+	public SignUpDaoImpl() {
+	}
+
 	@Override
 	public int add(UserVO userVO) throws SQLException, ClassNotFoundException {
-		
+
 		int flag = 0;
-		int add_flag = 0;
-		int otp_flag = 0;
-		int agree_flag = 0;
-		
-		
-		 
-		String member = this.NAMESPACE+DOT+"add";
+
+		String member = this.NAMESPACE + DOT + "add";
 		LOG.debug("┌─────────────────┐");
-		LOG.debug("│DaoImpl구역       │"+member);
+		LOG.debug("│DaoImpl구역       │" + member);
 		LOG.debug("└─────────────────┘");
 		LOG.debug("SignUpVO 값 ==" + userVO.toString());
 
-		add_flag = this.sqlSessionTemplate.insert(member, userVO);
-		
-		
-		String otp = this.NAMESPACE+DOT+"otp";
-		LOG.debug("┌─────────────────┐");
-		LOG.debug("│DaoImpl구역       │"+otp);
-		LOG.debug("└─────────────────┘");
-		LOG.debug("otp 값 ==" + userVO.toString());
-		
-		otp_flag = this.sqlSessionTemplate.insert(otp, userVO);
+		flag = this.sqlSessionTemplate.insert(member, userVO);
 
-		String agree = this.NAMESPACE+DOT+"agree";
-		LOG.debug("┌─────────────────┐");
-		LOG.debug("│DaoImpl구역       │"+agree);
-		LOG.debug("└─────────────────┘");
-		LOG.debug("agree 값 ==" + userVO.toString());
+		// otp 함수 호출
+		int otp_flag = otp(userVO);
 
-		agree_flag = this.sqlSessionTemplate.insert(agree, userVO);
+		// agree 함수 호출
+		//int agree_flag = agree(userVO);
 
-		LOG.debug("DaoImple flag 값 = " + add_flag);
-		LOG.debug("DaoImple flag 값 = " + otp_flag);
-		LOG.debug("DaoImple flag 값 = " + agree_flag);
-		
-		if (add_flag == 1 && otp_flag == 1 && agree_flag == 1) {
-			flag = 1;
-		}
-		else {
-			flag = 0;
-		}
-		
+		/*
+		 * LOG.debug("DaoImple flag 값 = " + add_flag); LOG.debug("DaoImple flag 값 = " +
+		 * otp_flag); LOG.debug("DaoImple flag 값 = " + agree_flag);
+		 * 
+		 * if (add_flag == 1 && otp_flag == 1 && agree_flag == -1) { flag = 1; } else {
+		 * flag = 0; }
+		 */
+
 		LOG.debug("DaoImple flag 값 = " + flag);
-		
-		
+
 		return flag;
 
 	}
-	
-	
-	
+
 	// 아이디 중복 검사
 	public int idCheck(String userId) throws Exception {
-		
-		String statementtwo = this.NAMESPACE+DOT+"idCheck";
-		
+
+		String statementtwo = this.NAMESPACE + DOT + "idCheck";
+
 		int cnt = sqlSessionTemplate.selectOne(statementtwo, userId);
-		
+
 		return cnt;
-		
+
+	}
+
+	@Override
+	public int otp(UserVO userVO) {
+
+		String otp = this.NAMESPACE + DOT + "otp";
+
+		LOG.debug("┌─────────────────┐");
+		LOG.debug("│DaoImpl구역       │" + otp);
+		LOG.debug("└─────────────────┘");
+		LOG.debug("otp 값 ==" + userVO.toString());
+
+		int otp_flag = this.sqlSessionTemplate.insert(otp, userVO);
+
+		return otp_flag;
+	}
+
+	@Override
+	public int agree(UserVO userVO) {
+		String agree = this.NAMESPACE + DOT + "agree";
+
+		LOG.debug("┌─────────────────┐");
+		LOG.debug("│DaoImpl구역                 │" + agree);
+		LOG.debug("└─────────────────┘");
+		LOG.debug("agree 값 ==" + userVO.toString());
+
+		int agree_cnt = this.sqlSessionTemplate.insert(agree, userVO);
+
+		return agree_cnt;
+	}
+
+	@Override
+	public int getTotalTermsOfUseCount() {
+
+		String count = this.NAMESPACE + DOT + "count";
+
+		LOG.debug("┌─────────────────┐");
+		LOG.debug("│DaoImpl구역                 │" + count);
+		LOG.debug("└─────────────────┘");
+		LOG.debug("getTotalTermsOfUseCount 값 ==" + count.toString());
+
+		int cnt = sqlSessionTemplate.selectOne(count);
+
+		return cnt;
 	}
 
 }

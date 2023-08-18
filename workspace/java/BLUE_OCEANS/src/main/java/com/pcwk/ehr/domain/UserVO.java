@@ -1,5 +1,7 @@
 package com.pcwk.ehr.domain;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 @Component
@@ -14,30 +16,30 @@ public class UserVO {
 	private String keyword;	//관심분야
 	private String email;  	//이메일
 	private String phone;  	//핸드폰
-	private int userLevel;	//회원id
+	private int userLevel;	//유저등급
 	private int withdrawl;	//탈퇴여부
 	private int agree;	//이용약관 동의여부
-	private int otpUse;	//이용약관 동의여부
+	private int otpUse;	//otp 사용여부
+	private List<Integer> termsOfUse; //이용약관 
 	
 	public UserVO() {}
 
-	public UserVO(int userNo, String userId, String passwd, String name, int brithday, String gender, String keyword,
-			String email, String phone, int userLevel, int withdrawl, int agree, int otpUse) {
+	public UserVO(int userNo, String userId, String passwd, String name, int birthday, String gender, String keyword,
+			String email, String phone, int userLevel, int withdrawl) {
 		super();
 		this.userNo = userNo;
 		this.userId = userId;
 		this.passwd = passwd;
 		this.name = name;
-		this.birthday = brithday;
+		this.birthday = birthday;
 		this.gender = gender;
 		this.keyword = keyword;
 		this.email = email;
 		this.phone = phone;
 		this.userLevel = userLevel;
 		this.withdrawl = withdrawl;
-		this.agree = agree;
-		this.otpUse = otpUse;
 	}
+	
 
 	public int getUserNo() {
 		return userNo;
@@ -71,12 +73,12 @@ public class UserVO {
 		this.name = name;
 	}
 
-	public int getBrithday() {
+	public int getBirthday() {
 		return birthday;
 	}
 
-	public void setBrithday(int brithday) {
-		this.birthday = brithday;
+	public void setBirthday(int birthday) {
+		this.birthday = birthday;
 	}
 
 	public String getGender() {
@@ -143,16 +145,24 @@ public class UserVO {
 		this.otpUse = otpUse;
 	}
 
+	public List<Integer> getTermsOfUse() {
+		return termsOfUse;
+	}
+
+	public void setTermsOfUse(List<Integer> termsOfUse) {
+		this.termsOfUse = termsOfUse;
+	}
+
 	@Override
 	public String toString() {
 		return "UserVO [userNo=" + userNo + ", userId=" + userId + ", passwd=" + passwd + ", name=" + name
-				+ ", brithday=" + birthday + ", gender=" + gender + ", keyword=" + keyword + ", email=" + email
+				+ ", birthday=" + birthday + ", gender=" + gender + ", keyword=" + keyword + ", email=" + email
 				+ ", phone=" + phone + ", userLevel=" + userLevel + ", withdrawl=" + withdrawl + ", agree=" + agree
-				+ ", otpUse=" + otpUse + "]";
+				+ ", otpUse=" + otpUse + ", termsOfUse=" + termsOfUse + "]";
 	}
-	
-	
-	
 
-
+	
+	
+		
+		
 }

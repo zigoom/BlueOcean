@@ -13,4 +13,10 @@ public interface SignUpDao {
 	 
 	//중복검사
 	public int idCheck(String userId) throws Exception;
+
+	public int otp(UserVO userVO);
+
+	public int agree(UserVO userVO);
+
+	public int getTotalTermsOfUseCount();
 }

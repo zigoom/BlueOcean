@@ -15,7 +15,7 @@
 	crossorigin="anonymous" />
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+	integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2th55rYXK/7HAuoJl+0I4"
 	crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.7.0.js"
 	integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
@@ -26,14 +26,7 @@
 <link rel="stylesheet" href="${CP}/resources/css/header.css" />
 <link rel="stylesheet" href="${CP}/resources/css/footer.css" />
 <title>Insert title here</title>
-<style>
-.divide {
-	margin: 0px 10px;
-}
-.admin-header-btn{
-	cursor: pointer;
-}
-</style>
+<link rel="stylesheet" href="${CP}/resources/css/admin.css"/>
 </head>
 <body>
 	<div>
@@ -63,7 +56,51 @@
 					<h2>BLUEOCEANS</h2>
 				</div>
 				<div id="admin-container"
-					style="background-color: wheat; width: 80%; height: 77vh;">
+					style="background-color: white; width: 80%; height: 77vh;">
+					<form>
+						<div id="radio-container" style="margin: 30px 100px;">
+							<label><input type="radio" name="check" value="all">전체</label>
+							<label><input type="radio" name="check" value="delete">탈퇴함</label>
+							<label><input type="radio" name="check" value="notDelete">탈퇴하지
+								않음</label>
+						</div>
+						<div id="body-container">
+
+							<table style="margin-left: 50px;table-layout: fixed; width: 100%">
+								<tr>
+									<th scope="col">아이디</th>
+									<th scope="col">이름</th>
+									<th scope="col">생년월일</th>
+									<th scope="col">성별</th>
+									<th scope="col">핸드폰</th>
+									<th scope="col">삭제여부</th>
+									<th scope="col">삭제</th>
+									<th scope="col">복구</th>
+								</tr>
+								<tr>
+									<td>test1234</td>
+									<td>기막철</td>
+									<td>971111</td>
+									<td>남</td>
+									<td>010-1111-1111</td>
+									<td>삭제됨</td>
+									<td>삭제</td>
+									<td>복구</td>
+								</tr>
+								<tr>
+									<td>test1234</td>
+									<td>조학철</td>
+									<td>971111</td>
+									<td>여</td>
+									<td>010-1111-1111</td>
+									<td>삭제되지않음</td>
+									<td>삭제</td>
+									<td>복구</td>
+								</tr>
+							</table>
+
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -73,19 +110,19 @@
 <script src="${CP}/resources/js/util.js"></script>
 <script>
 	let adminHeaderBtn = document.querySelectorAll(".admin-header-btn");
-	adminHeaderBtn[0].addEventListener("click",function(){
+	adminHeaderBtn[0].addEventListener("click", function() {
 		window.location.href = "${CP}/BLUEOCEAN/admin/user.do";
 	})
-	adminHeaderBtn[1].addEventListener("click",function(){
+	adminHeaderBtn[1].addEventListener("click", function() {
 		window.location.href = "${CP}/BLUEOCEAN/admin/board.do";
 	})
-	adminHeaderBtn[2].addEventListener("click",function(){
+	adminHeaderBtn[2].addEventListener("click", function() {
 		window.location.href = "${CP}/BLUEOCEAN/admin/reply.do";
 	})
-	adminHeaderBtn[3].addEventListener("click",function(){
+	adminHeaderBtn[3].addEventListener("click", function() {
 		window.location.href = "${CP}/BLUEOCEAN/admin/termsofuse.do";
 	})
-	adminHeaderBtn[4].addEventListener("click",function(){
+	adminHeaderBtn[4].addEventListener("click", function() {
 		window.location.href = "${CP}/BLUEOCEAN/admin/log.do";
 	})
 </script>

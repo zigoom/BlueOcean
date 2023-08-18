@@ -15,7 +15,7 @@
 	crossorigin="anonymous" />
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+	integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2th55rYXK/7HAuoJl+0I4"
 	crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.7.0.js"
 	integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
@@ -26,14 +26,7 @@
 <link rel="stylesheet" href="${CP}/resources/css/header.css" />
 <link rel="stylesheet" href="${CP}/resources/css/footer.css" />
 <title>Insert title here</title>
-<style>
-.divide {
-	margin: 0px 10px;
-}
-.admin-header-btn{
-	cursor: pointer;
-}
-</style>
+<link rel="stylesheet" href="${CP}/resources/css/admin.css"/>
 </head>
 <body>
 	<div>
@@ -42,7 +35,7 @@
 			<div id="header-container"
 				style="background-color: #f1f1f1; height: 200px; border: 1px solid black; display: flex; justify-content: space-between; align-items: center;">
 				<div style="margin: 0px 130px;">
-					<h1>회원관리</h1>
+					<h1>약관관리</h1>
 				</div>
 				<div
 					style="display: flex; justify-content: center; margin: 0px 70px;">
@@ -63,7 +56,32 @@
 					<h2>BLUEOCEANS</h2>
 				</div>
 				<div id="admin-container"
-					style="background-color: wheat; width: 80%; height: 77vh;">
+					style="background-color: white; width: 80%; height: 77vh;">
+					<form>
+						<div id="radio-container" style="margin: 30px 100px;">
+						</div>
+						<div id="body-container">
+
+							<table style="margin-left: 50px;table-layout: fixed; width: 100%">
+								<tr>
+									<th scope="col">이용약관명</th>
+									<th scope="col">이용약관내용</th>
+									<th scope="col">등록일자</th>
+								</tr>
+								<tr>
+									<td>A-팀 프로젝트</td>
+									<td>이약관내용ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ333333333333333333333333333333333333333333333333333333333</td>
+									<td>2023-08-18</td>
+								</tr>
+
+								<tr>
+									<td>B-팀 프로젝트</td>
+									<td>이약관내용ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</td>
+									<td>2023-08-18</td>
+								</tr>
+							</table>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -73,19 +91,19 @@
 <script src="${CP}/resources/js/util.js"></script>
 <script>
 	let adminHeaderBtn = document.querySelectorAll(".admin-header-btn");
-	adminHeaderBtn[0].addEventListener("click",function(){
+	adminHeaderBtn[0].addEventListener("click", function() {
 		window.location.href = "${CP}/BLUEOCEAN/admin/user.do";
 	})
-	adminHeaderBtn[1].addEventListener("click",function(){
+	adminHeaderBtn[1].addEventListener("click", function() {
 		window.location.href = "${CP}/BLUEOCEAN/admin/board.do";
 	})
-	adminHeaderBtn[2].addEventListener("click",function(){
+	adminHeaderBtn[2].addEventListener("click", function() {
 		window.location.href = "${CP}/BLUEOCEAN/admin/reply.do";
 	})
-	adminHeaderBtn[3].addEventListener("click",function(){
+	adminHeaderBtn[3].addEventListener("click", function() {
 		window.location.href = "${CP}/BLUEOCEAN/admin/termsofuse.do";
 	})
-	adminHeaderBtn[4].addEventListener("click",function(){
+	adminHeaderBtn[4].addEventListener("click", function() {
 		window.location.href = "${CP}/BLUEOCEAN/admin/log.do";
 	})
 </script>

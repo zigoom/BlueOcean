@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pcwk.ehr.adminpage">
+
+	<resultMap id="adminPageMap"
+		type="com.pcwk.ehr.cmn.AdminPageVO">
+		<result property="userNo" column="user_no" />
+		<result property="userId" column="user_id" />
+		<result property="passwd" column="passwd" />
+		<result property="userName" column="user_name" />
+		<result property="birthday" column="birthday" />
+		<result property="gender" column="gender" />
+		<result property="keyword" column="keyword" />
+		<result property="email" column="email" />
+		<result property="phoneNo" column="phone_no" />
+		<result property="userLevel" column="user_level" />
+		<result property="withdrawal" column="withdrawal" />
+		<result property="agree" column="agree" />
+		<result property="otpUse" column="otp_use" />
+		<result property="seq" column="seq" />
+		<result property="title" column="title" />
+		<result property="contents" column="contents" />
+		<result property="div" column="div" />
+		<result property="readCnt" column="read_cnt" />
+		<result property="regDt" column="reg_dt" />
+		<result property="regId" column="reg_id" />
+		<result property="modDt" column="mod_dt" />
+		<result property="modId" column="mod_id" />
+		<result property="commentNo" column="comment_no" />
+		<result property="postNo" column="post_no" />
+		<result property="replyDelete" column="reply_delete" />
+		<result property="boardDelete" column="board_delete" />
+		<result property="no" column="no" />
+		<result property="identifier" column="identifier" />
+		<result property="subject" column="subject" />
+		<result property="context" column="context" />
+	</resultMap>
+
+	<!-- 회원목록 로드 -->
+	<select id="loadMember" resultMap="adminPageMap"
+		resultType="com.pcwk.ehr.cmn.AdminPageVO">
+		SELECT * FROM MEMBER
+	</select>
+
+	<!-- 회원목록 로드 (탈퇴한유저 또는 탈퇴하지 않은 유저) -->
+	<select id="loadMemberOption" resultMap="adminPageMap"
+		resultType="com.pcwk.ehr.cmn.AdminPageVO">
+		SELECT * FROM MEMBER
+		WHERE withdrawal = #{withdrawal}
+	</select>
+
+	<!-- 회원목록 카운트 -->
+	<select id="loadMemberCount" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM MEMBER
+	</select>
+
+
+	<!-- 회원목록 카운트 (탈퇴한유저 또는 탈퇴하지 않은 유저) -->
+	<select id="loadMemberCountOption" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE withdrawal = #{withdrawal}
+	</select>
+
+	<!-- 회원 탈퇴 -->
+	<update id="deleteMember" parameterType="AdminPageVO">
+		UPDATE MEMBER
+		SET
+		withdrawal = 1
+		WHERE user_id = #{userId}
+	</update>
+
+	<!-- 회원 복구 -->
+	<update id="notdeleteMember" parameterType="AdminPageVO">
+		UPDATE MEMBER
+		SET
+		withdrawal = 0
+		WHERE user_id = #{userId}
+	</update>
+</mapper>
+

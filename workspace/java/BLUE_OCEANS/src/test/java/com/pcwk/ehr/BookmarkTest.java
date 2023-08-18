@@ -1,5 +1,7 @@
 package com.pcwk.ehr;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -37,7 +39,7 @@ public class BookmarkTest {
 
 	// 북마크 추가 테스트코드
 	@Test
-	//@Ignore
+	@Ignore
 	public void testAddBookmark() throws SQLException {
 		BookmarkVO bookmarkVO = new BookmarkVO();
 		bookmarkVO.setUserId("test1231");
@@ -46,6 +48,11 @@ public class BookmarkTest {
 
 		int result = bookmarkService.addBookmark(bookmarkVO);
 		LOG.debug("===result===:" + result);
+		if(result == 1) {
+			LOG.debug("등록성공");
+		}else if(result == 3) {
+			LOG.debug("중복되는종목");
+		}
 	}
 
 	// 북마크 삭제 테스트코드
@@ -59,6 +66,10 @@ public class BookmarkTest {
 
 		int result = bookmarkService.deleteBookmark(bookmarkVO);
 		LOG.debug("===result===:" + result);
+		assertEquals(result, 1);
+		if(result == 0) {
+			LOG.debug("해당 종목이 없습니다");
+		}
 	}
 
 	// 북마크 카운트 테스트코드
@@ -66,7 +77,7 @@ public class BookmarkTest {
 	@Ignore
 	public void testCountBookmark() throws SQLException {
 		BookmarkVO bookmarkVO = new BookmarkVO();
-		bookmarkVO.setUserId("test");
+		bookmarkVO.setUserId("test1231");
 
 		int result = bookmarkService.countBookmark(bookmarkVO);
 		LOG.debug("===result===:" + result);
@@ -77,11 +88,15 @@ public class BookmarkTest {
 	// 북마크 체크 테스트코드 (현재 이 북마크를 가지고 있는지 확인)
 	public void testCheckBookmark() throws SQLException {
 		BookmarkVO bookmarkVO = new BookmarkVO();
-		bookmarkVO.setUserId("test");
+		bookmarkVO.setUserId("test1231");
 		bookmarkVO.setStockCode("005930");
 
 		int result = bookmarkService.checkBookmark(bookmarkVO);
 		LOG.debug("===result===:" + result);
+		assertEquals(result, 1);
+		if(result == 0) {
+			LOG.debug("해당 종목이 없습니다");
+		}
 	}
 
 	@Test
@@ -89,7 +104,7 @@ public class BookmarkTest {
 	// 가지고있는 북마크 불러오는 테스트코드
 	public void testLoadBookmark() throws SQLException {
 		BookmarkVO bookmarkVO = new BookmarkVO();
-		bookmarkVO.setUserId("test");
+		bookmarkVO.setUserId("test1231");
 
 		List<BookmarkVO> result = bookmarkService.loadBookmark(bookmarkVO);
 		LOG.debug("===result===:" + result);

@@ -20,6 +20,7 @@ public class UserVO {
 	private int withdrawl;	//탈퇴여부
 	private int agree;	//이용약관 동의여부
 	private int otpUse;	//otp 사용여부
+	private int otp;	//otp 사용여부
 	private List<Integer> termsOfUse; //이용약관 
 	
 	public UserVO() {}
@@ -39,7 +40,6 @@ public class UserVO {
 		this.userLevel = userLevel;
 		this.withdrawl = withdrawl;
 	}
-	
 
 	public int getUserNo() {
 		return userNo;
@@ -145,6 +145,14 @@ public class UserVO {
 		this.otpUse = otpUse;
 	}
 
+	public int getOtp() {
+		return otp;
+	}
+
+	public void setOtp(int otp) {
+		this.otp = otp;
+	}
+
 	public List<Integer> getTermsOfUse() {
 		return termsOfUse;
 	}
@@ -158,8 +166,12 @@ public class UserVO {
 		return "UserVO [userNo=" + userNo + ", userId=" + userId + ", passwd=" + passwd + ", name=" + name
 				+ ", birthday=" + birthday + ", gender=" + gender + ", keyword=" + keyword + ", email=" + email
 				+ ", phone=" + phone + ", userLevel=" + userLevel + ", withdrawl=" + withdrawl + ", agree=" + agree
-				+ ", otpUse=" + otpUse + ", termsOfUse=" + termsOfUse + "]";
+				+ ", otpUse=" + otpUse + ", otp=" + otp + ", termsOfUse=" + termsOfUse + "]";
 	}
+	
+
+	
+	
 
 	
 	

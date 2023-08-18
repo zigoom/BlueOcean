@@ -11,12 +11,22 @@ public interface SignUpService {
 	/**
 	 * 신규회원가입
 	 * 
-	 * @param inVO
+	 * @param userVO
 	 * @return
 	 * @throws SQLException
 	 */
 	public int add(UserVO userVO) throws ClassNotFoundException, SQLException;
 
 	// 아이디 중복 검사
+	/**
+	 * 
+	 * @param userID
+	 * @return
+	 * @throws Exception
+	 */
 	public int idCheck(String userID) throws Exception;
+	
+	public int agree(UserVO userVO);
+
+	public int getTotalTermsOfUseCount();
 }

@@ -1,6 +1,8 @@
 package com.pcwk.ehr.service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +34,8 @@ public class SignUpServiceImpl implements SignUpService, PcwkLogger {
 		
 
 		flag = this.signUpDaoImpl.add(userVO);
+		
+		
 
 		// return flag = this.signUpDaoImpl.add(signUpVO);
 
@@ -44,6 +48,29 @@ public class SignUpServiceImpl implements SignUpService, PcwkLogger {
 		int cnt = signUpDaoImpl.idCheck(userId);
 
 		return cnt;
+	}
+
+	@Override
+	public int agree(UserVO userVO) {
+		int totalCount = signUpDaoImpl.getTotalTermsOfUseCount();
+		LOG.debug("totalCount : "+totalCount);
+		int result = 0;
+	    for (int i = 1; i <= totalCount; i++) {
+	        List<Integer> termsOfUseNos = new ArrayList<Integer>();
+	        termsOfUseNos.add(i);
+	        LOG.debug("totalCount : "+termsOfUseNos);
+	        userVO.setTermsOfUse(termsOfUseNos);
+	        LOG.debug("totalCount : "+termsOfUseNos);
+	        result += signUpDaoImpl.agree(userVO);
+	    }
+
+		return result;
+	}
+
+	@Override
+	public int getTotalTermsOfUseCount() {
+		
+		return 0;
 	}
 
 

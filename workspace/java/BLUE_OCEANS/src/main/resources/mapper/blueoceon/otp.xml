@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pcwk.ehr.otp">
+
+ <update id="resetotp">
+  UPDATE otp
+  SET
+      identifier = 0,
+      otp_num = ''
+  WHERE
+          user_id = #{userId}
+ </update>
+
+ <update id="setotp">
+  UPDATE otp
+	SET
+	    identifier = 1,
+	    otp_num = #{otp}
+	WHERE
+	        user_id = #{userId}
+ </update>
+ 
+ <select id="selectotp" resultType="int">
+  SELECT
+	    otp_num
+	FROM
+	    otp
+	where user_id = #{userId}
+ </select>
+
+</mapper>

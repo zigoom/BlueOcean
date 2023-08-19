@@ -1,207 +1,213 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <%@ taglib prefix="c"
-uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="CP" value="${pageContext.request.contextPath }" />
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
-            crossorigin="anonymous"
-        />
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-            crossorigin="anonymous"
-        ></script>
-        <script
-            src="https://code.jquery.com/jquery-3.7.0.js"
-            integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
-            crossorigin="anonymous"
-        ></script>
-        <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
-        <script src="https://kit.fontawesome.com/649b25c1cf.js" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="${CP}/resources/css/header.css" />
-        <link rel="stylesheet" href="${CP}/resources/css/footer.css" />
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-        <style>
-            #chart-container {
-                width: 90%;
-                height: 400px;
-            }
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+	crossorigin="anonymous" />
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+	crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.js"
+	integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+	crossorigin="anonymous"></script>
+<script
+	src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+<script src="https://kit.fontawesome.com/649b25c1cf.js"
+	crossorigin="anonymous"></script>
+<link rel="stylesheet" href="${CP}/resources/css/header.css" />
+<link rel="stylesheet" href="${CP}/resources/css/footer.css" />
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<style>
 
-            #stock-name {
-                font-weight: bold;
-            }
+.container {
+  width: 80%;
+}
 
-            #price-box {
-                display: flex;
-                margin-left: 20px;
-            }
+#chart-container {
+	width: 90%;
+	height: 400px;
+}
 
-            #price-change-box {
-                display: flex;
-                align-items: center;
-                border-radius: 5px;
-                margin-left: 15px;
-                padding: 0px 15px;
-            }
+#stock-name {
+	font-weight: bold;
+}
 
-            #chart-container-main {
-                display: flex;
-                justify-content: center;
-            }
+#price-box {
+	display: flex;
+	margin-left: 20px;
+}
 
-            #chart-button-container {
-                display: flex;
-                justify-content: center;
-            }
+#price-change-box {
+	display: flex;
+	align-items: center;
+	border-radius: 5px;
+	margin-left: 15px;
+	padding: 0px 15px;
+}
 
-            #chart-button-container button {
-                width: 23%;
-                margin: 10px;
-                border: 1px solid black;
-            }
+#chart-container-main {
+	display: flex;
+	justify-content: center;
+}
 
-            #table-container {
-                display: flex;
-                justify-content: center;
-            }
+#chart-button-container {
+	display: flex;
+	justify-content: center;
+}
 
-            #table-container table tr th {
-                border-bottom: 1px solid black;
-                background-color: #fafafa;
-            }
+#chart-button-container button {
+	width: 23%;
+	margin: 10px;
+	border: 1px solid black;
+}
 
-            #table-container table tr td {
-                text-align: right;
-            }
+#table-container {
+	display: flex;
+	justify-content: center;
+}
 
-            #table-container table {
-                width: 35%;
-            }
+#table-container table tr th {
+	border-bottom: 1px solid black;
+	background-color: #fafafa;
+}
 
-            #news-container {
-                width: 80%;
-                margin: 50px auto;
-            }
+#table-container table tr td {
+	text-align: right;
+}
 
-            #news-container h5 {
-                margin-bottom: 15px;
-            }
+#table-container table {
+	width: 35%;
+}
 
-            .news-text-container {
-                border-top: 1px solid black;
-                padding-top: 5px;
-            }
+#news-container {
+	width: 80%;
+	margin: 50px auto;
+}
 
-            .news-text-container a {
-                font-size: 20px;
-                font-weight: bold;
-                text-decoration: none;
-                color: black;
-            }
+#news-container h5 {
+	margin-bottom: 15px;
+}
 
-            .fa-solid {
-                color: gold;
-            }
-        </style>
-        <title>Insert title here</title>
-    </head>
-    <body>
-        <input type="hidden" id="frombookmark-stockcode" value="${inVO.stockCode}" />
-        <input type="hidden" id="ui" value="${sessionScope.user}" />
-        <!-- 유저아이디 값 담아두는 인풋 -->
-        <input type="hidden" id="sn" />
-        <!-- 주식종목이름 값 담아두는 인풋 -->
-        <input type="hidden" id="sc" />
-        <!-- 주식종목코드 값 담아두는 인풋 -->
-        <!--종목 이름 , 종목코드 , 전일대비 영역-->
-        <div style="display: flex">
-            <h1 id="stock-name"></h1>
-            <div id="price-box">
-                <h1 class="last-close-value"></h1>
-                <div id="price-change-box">
-                    <h2 class="price-changes"></h2>
-                    <h2 class="price-changes-percent"></h2>
-                </div>
-                <!-- 즐겨찾기 추가 영역 -->
-                <i
-                    style="margin-left: 50px; margin-top: 25px"
-                    id="bookmark-button"
-                    class="fa-regular fa-star fa-2xl"
-                ></i>
-            </div>
-        </div>
-        <!--차트 , 차트 버튼 영역-->
-        <div id="chart-and-button-container">
-            <div id="chart-container-main">
-                <div id="chart-container"></div>
-            </div>
-            <div id="chart-button-container">
-                <button class="btn btn-light" id="dayButton">1일</button>
-                <button class="btn btn-light" id="weekButton">1주</button>
-                <button class="btn btn-light" id="monthButton">1달</button>
-                <button class="btn btn-light" id="yearButton">1년</button>
-                <button class="btn btn-light" id="minButton">10분</button>
-            </div>
-        </div>
-        <!--해당 종목에 대한 정보를 담은 영역 (현재가, 전일대비, 등락률, 거래량. 전일가, 시가, 고가, 저가)-->
-        <div id="table-container">
-            <table style="border-bottom: 1px solid black; border-top: 1px solid black">
-                <tr>
-                    <th>현재가</th>
-                    <td class="last-close-value"></td>
-                </tr>
-                <tr>
-                    <th>전일대비</th>
-                    <td class="price-changes"></td>
-                </tr>
-                <tr>
-                    <th>등락률</th>
-                    <td class="price-changes-percent"></td>
-                </tr>
-                <tr>
-                    <th style="border-bottom: 2px solid black">거래량</th>
-                    <td class="volume"></td>
-                </tr>
-            </table>
-            <table style="border-bottom: 1px solid black; border-top: 1px solid black">
-                <tr>
-                    <th>전일가</th>
-                    <td class="prev-close"></td>
-                </tr>
-                <tr>
-                    <th>시가</th>
-                    <td class="open"></td>
-                </tr>
-                <tr>
-                    <th>고가</th>
-                    <td class="high"></td>
-                </tr>
-                <tr>
-                    <th style="border-bottom: 2px solid black">저가</th>
-                    <td class="low"></td>
-                </tr>
-            </table>
-            <input id="keyword" type="hidden" value="${inVO.stockName}" />
-        </div>
-        <!--네이버 뉴스 api 정보를 불러오는 영역-->
-        <div id="news-container"></div>
+.news-text-container {
+	border-top: 1px solid black;
+	padding-top: 5px;
+}
 
-        <input type="hidden" name="Ticker" id="Ticker" value="" />
+.news-text-container a {
+	font-size: 20px;
+	font-weight: bold;
+	text-decoration: none;
+	color: black;
+}
 
-        <input type="hidden" name="StartDate" id="StartDate" value="2000-01-01" />
+.fa-solid {
+	color: gold;
+}
+</style>
+<title>Insert title here</title>
+</head>
+<body>
+	<div class="container">
+		<input type="hidden" id="frombookmark-stockcode"
+			value="${inVO.stockCode}" /> <input type="hidden" id="ui"
+			value="${sessionScope.user}" />
+		<!-- 유저아이디 값 담아두는 인풋 -->
+		<input type="hidden" id="sn" />
+		<!-- 주식종목이름 값 담아두는 인풋 -->
+		<input type="hidden" id="sc" />
+		<!-- 주식종목코드 값 담아두는 인풋 -->
+		<!--종목 이름 , 종목코드 , 전일대비 영역-->
+		<div style="display: flex">
+			<h1 id="stock-name"></h1>
+			<div id="price-box">
+				<h1 class="last-close-value"></h1>
+				<div id="price-change-box">
+					<h2 class="price-changes"></h2>
+					<h2 class="price-changes-percent"></h2>
+				</div>
+				<!-- 즐겨찾기 추가 영역 -->
+				<i style="margin-left: 50px; margin-top: 25px" id="bookmark-button"
+					class="fa-regular fa-star fa-2xl"></i>
+			</div>
+		</div>
+		<!--차트 , 차트 버튼 영역-->
+		<div id="chart-and-button-container">
+			<div id="chart-container-main">
+				<div id="chart-container"></div>
+			</div>
+			<div id="chart-button-container">
+				<button class="btn btn-light" id="dayButton">1일</button>
+				<button class="btn btn-light" id="weekButton">1주</button>
+				<button class="btn btn-light" id="monthButton">1달</button>
+				<button class="btn btn-light" id="yearButton">1년</button>
+				<button class="btn btn-light" id="minButton">10분</button>
+			</div>
+		</div>
+		<!--해당 종목에 대한 정보를 담은 영역 (현재가, 전일대비, 등락률, 거래량. 전일가, 시가, 고가, 저가)-->
+		<div id="table-container">
+			<table
+				style="border-bottom: 1px solid black; border-top: 1px solid black">
+				<tr>
+					<th>현재가</th>
+					<td class="last-close-value"></td>
+				</tr>
+				<tr>
+					<th>전일대비</th>
+					<td class="price-changes"></td>
+				</tr>
+				<tr>
+					<th>등락률</th>
+					<td class="price-changes-percent"></td>
+				</tr>
+				<tr>
+					<th style="border-bottom: 2px solid black">거래량</th>
+					<td class="volume"></td>
+				</tr>
+			</table>
+			<table
+				style="border-bottom: 1px solid black; border-top: 1px solid black">
+				<tr>
+					<th>전일가</th>
+					<td class="prev-close"></td>
+				</tr>
+				<tr>
+					<th>시가</th>
+					<td class="open"></td>
+				</tr>
+				<tr>
+					<th>고가</th>
+					<td class="high"></td>
+				</tr>
+				<tr>
+					<th style="border-bottom: 2px solid black">저가</th>
+					<td class="low"></td>
+				</tr>
+			</table>
+			<input id="keyword" type="hidden" value="${inVO.stockName}" />
+		</div>
+		<!--네이버 뉴스 api 정보를 불러오는 영역-->
+		<div id="news-container"></div>
 
-        <input type="hidden" name="EndDate" id="EndDate" value="2023-07-27" />
+		<input type="hidden" name="Ticker" id="Ticker" value="" /> <input
+			type="hidden" name="StartDate" id="StartDate" value="2000-01-01" />
 
-        <input type="hidden" value="데이터 요청" onclick="test()" />
+		<input type="hidden" name="EndDate" id="EndDate" value="2023-07-27" />
 
-        <script>
+		<input type="hidden" value="데이터 요청" onclick="test()" />
+	</div>
+</body>
+<script>
        	let today = new Date();
 
        	let year = today.getFullYear();
@@ -421,14 +427,15 @@ uri="http://java.sun.com/jsp/jstl/core"%>
     		  "date": dateString,
     		  "interval": "10"
     		}
-    // ajax를 활용해 http://192.168.0.74:5001/blue-oceans/search-tickers을 호출하여 불러온 데이터를 파싱
+    // ajax를 활용해 http://125.142.47.191:5001/blue-oceans/search-tickers을 호출하여 불러온 데이터를 파싱
     $.ajax({
         type: 'POST',
-        url: 'http://192.168.0.74:5001/blue-oceans/search-tickers',
+        url: 'http://125.142.47.191:5001/blue-oceans/search-tickers',
         data: JSON.stringify(requestData),
         contentType: 'application/json',
         mode: 'cors',
         success: function (result) {
+        	console.log(result)
             // 서버 응답이 이미 객체로 파싱되었으므로, 문자열 이스케이프 불필요
             $('#stock-name').text(result.stock_name + '(' + result.ticker + ')');
             $('#sn').val(result.stock_name);
@@ -508,7 +515,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
     if (minButton.addEventListener("click", function () {
         $.ajax({
             type: 'POST',
-            url: 'http://192.168.0.74:5001/blue-oceans/search-tickers-getinterval',
+            url: 'http://125.142.47.191:5001/blue-oceans/search-tickers-getinterval',
             data: JSON.stringify(requestMinData),
             contentType: 'application/json',
             mode: 'cors',
@@ -600,7 +607,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
             });
             test();
         </script>
-    </body>
-    <script src="${CP}/resources/js/header-main.js"></script>
-    <script src="${CP}/resources/js/util.js"></script>
+
+<script src="${CP}/resources/js/header-main.js"></script>
+<script src="${CP}/resources/js/util.js"></script>
 </html>

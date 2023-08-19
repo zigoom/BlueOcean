@@ -29,6 +29,9 @@ uri="http://java.sun.com/jsp/jstl/core"%>
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <style>
+        	.container{
+        		width: 60%;
+        	}
             #chart-container {
                 width: 200px;
                 height: 200px;
@@ -48,8 +51,8 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                 margin-right: 150px;
             }
 
-            .text-container p, .text-container a {
-                font-size: 15px;
+            .text-container p {
+                font-size: 20px;
                 font-weight: bold;
             }
             .last-close-value{
@@ -59,7 +62,8 @@ uri="http://java.sun.com/jsp/jstl/core"%>
             	text-decoration: none;
             	cursor: pointer;
             	color: black;
-            	font-size: 21px;
+            	font-size: 30px;
+            	font-weight: bold;
             }
             .fa-solid{
             	color:gold;
@@ -293,10 +297,10 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                 endDate: ed,
             };
 
-            // ajax를 활용해 http://192.168.0.74:5001/blue-oceans/search-tickers을 호출하여 불러온 데이터를 파싱
+            // ajax를 활용해 http://125.142.47.191:5001//blue-oceans/search-tickers을 호출하여 불러온 데이터를 파싱
             $.ajax({
                 type: 'POST',
-                url: 'http://192.168.0.74:5001/blue-oceans/search-tickers',
+                url: 'http://125.142.47.191:5001//blue-oceans/search-tickers',
                 data: JSON.stringify(requestData),
                 contentType: 'application/json',
                 mode: 'cors',

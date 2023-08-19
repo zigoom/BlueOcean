@@ -86,7 +86,7 @@
 		
 		$(document).ready(function() {
         
-            $("#word").autocomplete({
+             $("#word").autocomplete({
               source: function(request, response) {
                   let keyword = request.term; // 입력된 검색어 가져오기
                   if (keyword.trim() !== "") {
@@ -123,7 +123,7 @@
                     else {
                     response([]);
                     }
-              }, 
+              },
             
             minLength: 2, // 최소 입력 길이
             select: function(event, ui) {
@@ -133,7 +133,8 @@
             
             let requestData = {
                 ticker: ui.item.code,
-                date: '<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>',
+                <%-- date: '<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>', --%>
+                date: '2023-08-16',
                 interval: '10'
             };            
             
@@ -188,7 +189,7 @@
               if(logout){
                 $.ajax({
                               type : "POST",
-                              url : "/ehr/BLUEOCEAN/logout.do",
+                              url : "/ehr/user/logout.do",
                               asyn : "true",
                               dataType : "html",
                               data : {},

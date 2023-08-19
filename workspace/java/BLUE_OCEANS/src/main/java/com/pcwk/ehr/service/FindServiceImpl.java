@@ -35,39 +35,6 @@ public class FindServiceImpl implements FindService, PcwkLogger{
 		return foundId;
 	}
 
-	@Override
-	public int userCheck(UserVO user)throws SQLException, ClassNotFoundException {
-		int flag = 0;
-		
-		int status = this.findIdDao.userCheck(user);
-		
-		if (status == 1) {
-			reSetPasswd(user);
-			flag = 1;
-		}
-		
-		
-		return flag;
-	}
-	
-	@Override
-	public int reSetPasswd(UserVO user) throws SQLException, ClassNotFoundException {
-        int min = 100000;
-        int max = 999999;
-		
-		Random random = new Random();
-		
-		int otp = random.nextInt(max - min + 1) + min;
-		
-		user.setPasswd(String.valueOf(otp));
-		
-		
-		return otp;
-	}
-	
-
-	
-
 
 	
 	

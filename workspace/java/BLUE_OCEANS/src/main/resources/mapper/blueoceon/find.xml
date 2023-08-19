@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pcwk.ehr.find">
+
+
+	<select id="findid" parameterType="UserVO" resultType="String">
+			SELECT
+			    user_id,
+			    email,
+			    user_name
+			FROM
+			    member
+			WHERE user_name = #{name}
+			  AND email = #{email}
+
+	</select>
+	
+  <select id="usercheck" parameterType="UserVO" resultType="int">
+		SELECT count(*)
+		
+		FROM
+		    member
+		WHERE user_id = #{userId}
+		AND email = #{email}
+
+  </select>	
+  
+  
+  <update id="updateOTP" parameterType="UserVO">
+  
+  </update>
+
+
+
+</mapper>

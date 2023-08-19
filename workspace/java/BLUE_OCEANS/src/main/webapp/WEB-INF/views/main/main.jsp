@@ -18,10 +18,88 @@
 	</head>
 	
 	<body>
+		<!-- 거래량 상위 10개 종목  -->
+	    <div id="table-container">
+	        <table style="border-bottom: 1px solid black; border-top: 1px solid black">
+	            <tr>
+	                <th>종목</th>
+	                <th>현재가</th>
+	                <th>고가</th>
+	                <th>저가</th>
+	                <th>전일비</th>
+	                <th>등락률</th>
+	                <th>거래량</th>
+	            </tr>
+	         
+	            <tr>
+		            <td class="name"></td>
+		            <td class="close"></td>
+		            <td class="high"></td>
+		            <td class="low"></td>
+		            <td class="changes"></td>
+		            <td class="chagesRatio"></td> 
+		            <td class="volume"></td>
+	            </tr>
+	            <tr>
+		            <td class="name"></td>
+		            <td class="close"></td>
+		            <td class="high"></td>
+		            <td class="low"></td>
+		            <td class="changes"></td>
+		            <td class="chagesRatio"></td> 
+		            <td class="volume"></td>
+	            </tr>
+	            <tr>
+		            <td class="name"></td>
+		            <td class="close"></td>
+		            <td class="high"></td>
+		            <td class="low"></td>
+		            <td class="changes"></td>
+		            <td class="chagesRatio"></td> 
+		            <td class="volume"></td>
+	            </tr>
+	            <tr>
+		            <td class="name"></td>
+		            <td class="close"></td>
+		            <td class="high"></td>
+		            <td class="low"></td>
+		            <td class="changes"></td>
+		            <td class="chagesRatio"></td> 
+		            <td class="volume"></td>
+	            </tr>
+	            
+	        </table>
+	    </div>
+	    
 		<!--네이버 뉴스 api 정보를 불러오는 영역-->
 	        <div id="news-container"></div>
         
         <script>
+		     // ajax를 활용해  http://192.168.0.74:5001/blue-oceans/search-top10-stock에서 거래량 TOP10 확인
+		        $.ajax({
+		            type: 'POST',
+		            url: 'http://192.168.0.74:5001/blue-oceans/search-top10-stock',  // 수정된 URL
+		            headers: {
+		                'accept': 'application/json',
+		                'Content-Type': 'application/json',
+		            },
+		            data: JSON.stringify({}),
+		            mode: 'cors',
+		            success: function(result) {
+		        	    $('.name').text(result.data[0].Name);
+		        	    $('.close').text(result.data[0].Close);
+		        	    $('.high').text(result.data[0].High);
+		        	    $('.low').text(result.data[0].Low);
+		        	    $('.changes').text(result.data[0].Changes);
+		        	    $('.chagesRatio').text(result.data[0].ChagesRatio);
+		        	    $('.volume').text(result.data[0].Volume);
+		            	
+		            },
+		            error: function(xtr, status, error) {
+		                alert(status + ':' + error);
+		            },
+		        });
+        	
 	     	// 네이버 뉴스 api 호출
 	        $.ajax({
 	            type: 'GET',

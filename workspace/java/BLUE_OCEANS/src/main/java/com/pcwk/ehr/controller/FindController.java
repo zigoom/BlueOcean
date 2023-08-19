@@ -48,36 +48,5 @@ public class FindController implements PcwkLogger{
 
 	}
 	
-	
-	@RequestMapping(value = "/userCheck.do", method = RequestMethod.POST ,produces = "application/json;charset=UTF-8")
-	@ResponseBody
-	public int userCheck(UserVO user)throws SQLException, ClassNotFoundException {
 		
-		int flag = findService.reSetPasswd(user);
-		
-		LOG.debug("┌──────────────────────────────┐");
-		LOG.debug("│FindController                │");
-		LOG.debug("└──────────────────────────────┘");
-		
-		
-		
-		return flag;
-		
-	}	
-	
-	@RequestMapping(value = "/reSet.do", method = RequestMethod.POST ,produces = "application/json;charset=UTF-8")
-	@ResponseBody
-	public int reSetPasswd(UserVO user)throws SQLException, ClassNotFoundException {
-		
-		int flag = findService.reSetPasswd(user);
-		
-		LOG.debug("┌──────────────────────────────┐");
-		LOG.debug("│FindController                │");
-		LOG.debug("└──────────────────────────────┘");
-		
-		
-		
-		return flag;
-		
-	}		
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.pcwk.ehr.cmn.PcwkLogger;
 import com.pcwk.ehr.domain.UserVO;
+import com.pcwk.ehr.service.SignUpService;
 
 @Repository
 public class SignUpDaoImpl implements SignUpDao, PcwkLogger {
@@ -17,6 +18,9 @@ public class SignUpDaoImpl implements SignUpDao, PcwkLogger {
 
 	@Autowired
 	SqlSessionTemplate sqlSessionTemplate; // DB연결 객체
+	
+	@Autowired
+	SignUpService signUpService;
 
 	// **** default 생성
 	public SignUpDaoImpl() {
@@ -26,6 +30,8 @@ public class SignUpDaoImpl implements SignUpDao, PcwkLogger {
 	public int add(UserVO userVO) throws SQLException, ClassNotFoundException {
 
 		int flag = 0;
+		int add_flag = 0;
+		
 
 		String member = this.NAMESPACE + DOT + "add";
 		LOG.debug("┌─────────────────┐");
@@ -33,21 +39,28 @@ public class SignUpDaoImpl implements SignUpDao, PcwkLogger {
 		LOG.debug("└─────────────────┘");
 		LOG.debug("SignUpVO 값 ==" + userVO.toString());
 
-		flag = this.sqlSessionTemplate.insert(member, userVO);
+		add_flag = this.sqlSessionTemplate.insert(member, userVO);
 
 		// otp 함수 호출
 		int otp_flag = otp(userVO);
 
 		// agree 함수 호출
-		//int agree_flag = agree(userVO);
+		int agree_flag = signUpService.agree(userVO);
+		
+		int totalCount = getTotalTermsOfUseCount();
+				
 
-		/*
-		 * LOG.debug("DaoImple flag 값 = " + add_flag); LOG.debug("DaoImple flag 값 = " +
-		 * otp_flag); LOG.debug("DaoImple flag 값 = " + agree_flag);
-		 * 
-		 * if (add_flag == 1 && otp_flag == 1 && agree_flag == -1) { flag = 1; } else {
-		 * flag = 0; }
-		 */
+		 LOG.debug("add flag 값 = " + add_flag); 
+		 LOG.debug("otp flag 값 = " + otp_flag);
+		 LOG.debug("agree flag 값 = " + agree_flag);
+		 LOG.debug("totalCount 값 = " + totalCount);
+
+			if (add_flag == 1 && otp_flag == 1 && agree_flag == totalCount) {
+				flag = 1;
+			} else {
+				flag = 0;
+			}
+		 
 
 		LOG.debug("DaoImple flag 값 = " + flag);
 

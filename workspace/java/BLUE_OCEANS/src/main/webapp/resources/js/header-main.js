@@ -6,10 +6,13 @@ let findIdhtml = '';
 let findIdActive = 0;
 let findPwhtml = '';
 let findPwActive = 0;
+let agreehtml = '';
+let agreeActive = 0;
 let signIn = document.querySelector('#signIn');
 let signUp = document.querySelector('#signUp');
 let findId = document.querySelector('#find-id');
 let findPw = document.querySelector('#find-pw');
+let agree = document.querySelector('#agree');
 let modalFooter = $('.modal-footer');
 let modalBody = $('.modal-body');
  
@@ -25,6 +28,26 @@ signInhtml += "      <input id='login_pw' type='password' class='form-control'>"
 signInhtml += '    </div>';
 signInhtml += '  </div>';
 signInhtml += '</form>';
+
+agreehtml += '	<div class="form-check">																												';
+agreehtml += '		<label class="form-check-label">개인정보호 동의</label>                                                                                       ';
+agreehtml += '		<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">                                                         ';
+agreehtml += '			<div class="form-floating">                                                                                                             ';
+agreehtml += '				<textarea class="form-control" readonly="readonly" id="floatingTextarea2" style="height: 100px" rows="15" cols="40" height: 100px; resize: none;></textarea>         ';
+agreehtml += '				<label for="floatingTextarea2"></label>                                                                                                 ';
+agreehtml += '			</div>                                                                                                                                  ';
+agreehtml += '		</div>                                                                                                                                  ';
+agreehtml += '		<p>                                                                                                                                     ';
+agreehtml += '		<div class="form-check">                                                                                                                ';
+agreehtml += '			<label class="form-check-label">회원가입 동의</label>                                                                                        ';
+agreehtml += '			<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">                                                         ';
+agreehtml += '			<div class="form-floating">                                                                                                             ';
+agreehtml += '				<textarea class="form-control" readonly="readonly" id="floatingTextarea2" style="height: 100px" rows="15" cols="40" height: 100px; resize: none;></textarea>         ';
+agreehtml += '				<label for="floatingTextarea2"></label>                                                                                             ';
+agreehtml += '		</div>                                                                                                                                  ';
+agreehtml += '                                                                                                                                          ';
+agreehtml += '	</div>                                                                                                                                  ';
+
 
 signUphtml += '<form>';
 signUphtml += "  <div class='modal-containor'>";
@@ -77,11 +100,11 @@ findIdhtml += '<form>';
 findIdhtml += "  <div class='modal-containor'>";
 findIdhtml += '    <div>';
 findIdhtml += '      <label>이름</label>';
-findIdhtml += "      <input type='text' class='form-control'>";
+findIdhtml += "      <input type='text' id='findid_name' class='form-control'>";
 findIdhtml += '    </div>';
 findIdhtml += '    <div>';
 findIdhtml += '      <label>이메일</label>';
-findIdhtml += "      <input type='text' class='form-control'>";
+findIdhtml += "      <input type='text' id='findid_email' class='form-control'>";
 findIdhtml += '    </div>';
 findIdhtml += '  </div>';
 findIdhtml += '</form>';
@@ -98,7 +121,12 @@ findPwhtml += "      <input type='text' class='form-control'>";
 findPwhtml += '    </div>';
 findPwhtml += '    <div>';
 findPwhtml += '      <label>이메일</label>';
-findPwhtml += "      <input type='text' class=''>";
+findPwhtml += "      <input type='text' class='form-control'>";
+findPwhtml += "      <button id='otp_send'>otp전송";
+findPwhtml += '    </div>';
+findPwhtml += '    <div>';
+findPwhtml += '      <label>otp입력</label>';
+findPwhtml += "      <input type='text' class='form-control'>";
 findPwhtml += '    </div>';
 findPwhtml += '  </div>';
 findPwhtml += '</form>';
@@ -149,23 +177,25 @@ $(document).ready(function () {
         findIdActive = 0;
         findPwActive = 0;
         signUpActive = 0;
+        agreeActive = 0;
         if (signInActive >= 1) {
             appendAndShow(signInhtml);
             modalFooter.append("<button class='btn btn-primary' id='login_bt'>로그인</button>");
         }
     });
 
-    $('#signUp').click(function () {
+    $('#agree_').click(function () {
     	signUp.classList.remove("btn-light");
     	signUp.classList.add("btn-secondary");
     	classListRepair(signIn);
     	classListRepair(findId);
     	classListRepair(findPw);
     	
-        signUpActive = signUpActive + 1;
+        signUpActive = agreeActive + 1;
         signInActive = 0;
         findIdActive = 0;
         findPwActive = 0;
+        agreeActive = 0;
         if (signUpActive >= 1) {
             appendAndShow(signUphtml);
             modalFooter.append("<button class='btn btn-primary' id='signUp_bt'>회원가입</button>");
@@ -208,10 +238,11 @@ $(document).ready(function () {
         signInActive = 0;
         signUpActive = 0;
         findPwActive = 0;
+        agreeActive = 0;
         findIdActive = findIdActive + 1;
         if (findIdActive >= 1) {
             appendAndShow(findIdhtml);
-            modalFooter.append("<button class='btn btn-primary' id='login_bt'>ID찾기</button>");
+            modalFooter.append("<button class='btn btn-primary' id='findid_bt'>ID찾기</button>");
         }
     });
 
@@ -225,17 +256,39 @@ $(document).ready(function () {
         signInActive = 0;
         signUpActive = 0;
         findIdActive = 0;
+        agreeActive = 0;
         findPwActive = findPwActive + 1;
         if (findPwActive >= 1) {
             appendAndShow(findPwhtml);
             modalFooter.append("<button class='btn btn-primary' id='login_bt'>PW찾기</button>");
         }
     });
+    
+        $('#signUp').click(function () {
+    	signUp.classList.remove("btn-light");
+        signUp.classList.add("btn-secondary");
+        classListRepair(signIn);
+        classListRepair(signUp);
+        classListRepair(findId);
+
+        signInActive = 0;
+        findIdActive = 0;
+        findPwActive = 0;
+        agreeActive = agreeActive + 1;
+
+        // agreehtml 내용을 화면에 표시
+        appendAndShow(agreehtml);
+        modalFooter.append("<button class='btn btn-primary' id='agree_N'>아니요</button>");
+        modalFooter.append("<button class='btn btn-primary' id='agree_Y'>예</button>");
+
+            $('#agree_Y').click(function () {
+                console.log("agree");
+            });
+    });
 
     // ------------------------------회원가입----------------------------
    
 
-    
     
     
     // 아이디 중복검사
@@ -371,6 +424,9 @@ $(document).ready(function () {
                     alert("회원가입이 완료되었습니다.")
                     window.location.href = window.location.href;
                 }
+                else{
+                	alert("관리자에게 문의하십시오.")
+                }
             },
             error: function (data) {
                 // 실패시
@@ -379,9 +435,63 @@ $(document).ready(function () {
             },
         });
     });
-    // ------------------------------회원가입
-    // end----------------------------
+    // ------------------------------회원가입 end----------------------------
 
+	// ------------------------------아이디 찾기------------------------------					
+					$(document).on("click","#findid_bt",function() {
+					console.log("findid_bt");
+	
+					if (eUtil.ISEmpty($("#findid_name").val()) == true) {
+						alert("이름을 입력하세요.");
+						$("#findid_name").focus();
+						return true;
+					}
+					else if (eUtil.ISEmpty($("#findid_email").val()) == true) {
+						alert("이메일을 입력하세요.");
+						$("#findid_email").focus();
+						return true;
+					}
+					else{
+					console.log($("#findid_name").val());
+					console.log($("#findid_email").val());
+					$.ajax({
+								type : "POST",
+								url : "/ehr/BLUEOCEAN/findId.do",
+								asyn : "true",
+								dataType : "html", 
+								data : {
+	
+									name : $("#findid_name")
+											.val(),
+									email : $("#findid_email")
+											.val()
+	
+								},
+								success : function(data) {// 통신 성공
+									
+									console.log("data:" + data);
+									if (data != null){
+									alert("회원님의 아이디는 "+data+"입니다");
+									$("#findid_name").val("");
+									$("#findid_email").val("");
+									}
+									else{
+										alert("일치하는 아이디가 없습니다");
+									};
+								},
+								error : function(data) {// 실패시
+														// 처리
+									console.log("error:"
+											+ data);
+									alert("입니다");
+								}
+							});
+					}
+	
+				});					
+	// ------------------------------아이디 찾기 end---------------------------
+    
+    
     // ------------------------------로그인-----------------------------
 
     $(document).on('click', '#login_bt', function () {

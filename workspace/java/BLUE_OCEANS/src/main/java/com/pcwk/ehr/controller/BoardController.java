@@ -32,10 +32,34 @@ public class BoardController implements PcwkLogger {
     CodeService codeService;
 
     
+    public BoardController() {}
+    
+    
+//    @RequestMapping("/boardDetail.do")
+//    public String boardDetail(BoardVO inVO, Model model, HttpSession httpSession)throws SQLException{
+//    	String viewPage = "main/board_detail";
+//    	
+//    	System.out.println("boardDetail 컨트롤러 구역");
+//    	System.out.println("inVO 값은 : "+inVO.toString());
+//    	System.out.println("inVO 값은 : "+inVO);
+//    	
+//    	//등록자 ID를 Session에서 추출
+//    	//UserVO userVO = (UserVO) httpSession.getAttribute("user");
+//    	
+//    	//inVO.setUserId(userVO.getUserId());
+//    
+//    	//BoardVO outVO = boardService.boardDetail(inVO);
+//    	
+//		return viewPage;
+//    	
+//    }
+    
 
 	@RequestMapping("/doSelectOne.do")
 	public String doSelectOne(BoardVO inVO, Model model, HttpSession httpSession)throws SQLException{
-		String view = "main/board_mng";
+		String view = "main/board_detail";
+		
+		LOG.debug("doSelectOne 컨트롤 구역");
 		
 		LOG.debug("=================");
 		LOG.debug("== doSelectOne ==");
@@ -44,13 +68,13 @@ public class BoardController implements PcwkLogger {
 		
 		
 		//등록자 ID를 Session에서 추출
+		//UserVO userVO = (UserVO) httpSession.getAttribute("user");
 		
-		UserVO userVO = (UserVO) httpSession.getAttribute("user");
-		
-		System.out.println("doSelectOne 컨트롤러");	
-		inVO.setModId(userVO.getUserId());
+		System.out.println("doSelectOne 컨트롤러 구역 중간");	
+		//inVO.setUserId(userVO.getUserId());
 		
 		BoardVO outVO = boardService.doSelectOne(inVO);
+		
 		model.addAttribute("outVO", outVO);
 		model.addAttribute("inVO", inVO);
 
@@ -61,7 +85,7 @@ public class BoardController implements PcwkLogger {
     
 
     
-    //게시판 출력, 검색 기능, 페이징
+    //게시판 출력, 검색 기능, 페이징   doRetrieve
 	/**
 	 * 게시목록(board_list.jsp) 데이터 전달
 	 * @return
@@ -90,7 +114,9 @@ public class BoardController implements PcwkLogger {
 
 
 		List<BoardVO> list = this.boardService.doRetrieve(inVO);
+		
 		model.addAttribute("boardList", list); 
+		
 		model.addAttribute("inVO",inVO);			
 		
 		//총글수
@@ -108,7 +134,7 @@ public class BoardController implements PcwkLogger {
 
 	
 	
-	
+	// 글쓰기 버튼 
 	@RequestMapping("/doMoveToReg.do")
 	public String doMoveToReg(BoardVO inVO, Model model)throws SQLException{
 		String view = "main/board_reg";
@@ -127,7 +153,7 @@ public class BoardController implements PcwkLogger {
 	
 	
 	
-	
+	// 글쓰기 저장 기능
 	@RequestMapping(value = "/doSave.do", method = RequestMethod.POST
 			,produces = "application/json;charset=UTF-8")
 	@ResponseBody

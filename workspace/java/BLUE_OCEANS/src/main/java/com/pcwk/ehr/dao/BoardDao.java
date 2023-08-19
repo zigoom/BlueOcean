@@ -14,5 +14,7 @@ public interface BoardDao extends WorkDiv<BoardVO>  {
 
 	public int doUpdateReadCnt(BoardVO inVO) throws SQLException;
 
+	//public boardDetail(BoardVO inVO) throws SQLException;;
+
 	
 }

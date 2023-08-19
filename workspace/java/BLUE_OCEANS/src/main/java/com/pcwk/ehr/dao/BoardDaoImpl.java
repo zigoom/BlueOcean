@@ -35,13 +35,31 @@ public class BoardDaoImpl implements BoardDao, PcwkLogger {
     @Autowired
     SqlSessionTemplate sqlSessionTemplate;  //DB 객체 생성
 
+    
+    
+    //게시물 클릭 
+//	@Override
+//	public BoardVO boardDetail(BoardVO inVO) throws SQLException {
+//		// TODO Auto-generated method stub
+//		return 0;
+//	}
+    
+    
+    
     @Override
     public int doSave(BoardVO inVO) throws SQLException {
+    	
     	System.out.println("doSave DAOIMPL구역");
     	System.out.println("DAOIMPL에서 inVO 값은 : "+inVO);
+    	
 		return sqlSessionTemplate.insert(NAMESPACE+DOT+"doSave", inVO);
     }
 
+    
+    
+    
+    
+    
     @Override
     public int doDelete(BoardVO inVO) throws SQLException {
         // Board 테이블에서 데이터를 삭제하는 로직을 구현하세요.
@@ -51,6 +69,10 @@ public class BoardDaoImpl implements BoardDao, PcwkLogger {
         return 0;
     }
 
+    
+    
+    
+    
     @Override
     public int doUpdate(BoardVO inVO) throws SQLException {
         // Board 테이블의 데이터를 수정하는 로직을 구현하세요.
@@ -60,6 +82,10 @@ public class BoardDaoImpl implements BoardDao, PcwkLogger {
         return 0;
     }
 
+    
+    
+    
+    
     @Override
     public BoardVO doSelectOne(BoardVO inVO) throws SQLException {
 		LOG.debug("┌──────────────────────────────┐");
@@ -67,9 +93,14 @@ public class BoardDaoImpl implements BoardDao, PcwkLogger {
 		LOG.debug("│inVO                          │"+inVO);
 		LOG.debug("│statement                     │"+NAMESPACE+DOT+"doSelectOne");
 		LOG.debug("└──────────────────────────────┘");	
+		
 		return sqlSessionTemplate.selectOne(NAMESPACE+DOT+"doSelectOne", inVO);
     }
 
+    
+    
+    
+    
     
     @Override
     public int doRetrieveCount(BoardVO inVO) throws SQLException {
@@ -77,9 +108,13 @@ public class BoardDaoImpl implements BoardDao, PcwkLogger {
     }
 
     
+    
+    
+    
+    
     @Override
     public List<BoardVO> doRetrieve(BoardVO inVO) throws SQLException {
-    	System.out.println("do Retrieve DAOIMPL구역");
+    	System.out.println("doRetrieve DAOIMPL구역");
 
         return sqlSessionTemplate.selectList(NAMESPACE + DOT + "doRetrieve", inVO);
     }
@@ -88,13 +123,20 @@ public class BoardDaoImpl implements BoardDao, PcwkLogger {
 	@Override
 	public int doUpdateReadCnt(BoardVO inVO) throws SQLException {
 		LOG.debug("┌──────────────────────────────┐");
-		LOG.debug("│doSave                        │");
+		LOG.debug("│doUpdateReadCnt               │");
 		LOG.debug("│inVO                          │"+inVO);
 		LOG.debug("│statement                     │"+NAMESPACE+DOT+"doUpdateReadCnt");
 		LOG.debug("└──────────────────────────────┘");			
 		
 		return sqlSessionTemplate.update(NAMESPACE+DOT+"doUpdateReadCnt", inVO);
 	}
+
+
+
+
+
+
+
 
 
     

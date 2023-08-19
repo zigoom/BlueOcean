@@ -38,7 +38,9 @@ public class boardTest {
 	@Autowired
 	CodeService codeService;
 
-	// 게시판 글조회 테스트
+	
+	
+	// 게시판 글 조회 테스트
 	@Test
 	@Ignore
 	public void testAddBoard() throws SQLException {
@@ -59,7 +61,7 @@ public class boardTest {
 	
 	
 	
-	
+	// 글 등록 테스트
 	@Test
 	@Ignore
 	public void testInsertBoard() throws SQLException {

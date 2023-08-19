@@ -2,37 +2,48 @@ package com.pcwk.ehr.domain;
 
 import com.pcwk.ehr.cmn.DTO;
 
-public class BoardVO extends DTO {   
-	private String    userId       ;//고유한 식별자
-	private int    seq      ;//순번 
+public class BoardVO extends DTO {
+	private int    num      ;//화면 출력 번호 post_no?
+	private int    seq      ;//board테이블 고유 넘버
+	private String userId   ;//아이디
 	private String title    ;//제목
 	private String contents ;//내용
-	private String div      ;//구분
 	private int    readCnt  ;//조회수
 	private String regDt    ;//등록일
-	private String regId    ;//등록자
 	private String modDt    ;//수정일
-	private String modId    ;//수정자
+	private String boardDelete ; //삭제여부
+	private String div      ;//구분
 	
-    
-    
-	public BoardVO () {}
 	
-
-
-	
-	public String getUserId() {
-		return userId;
+	public BoardVO() {
+		super();
 	}
 
 
-
-
-	public void setUserId(String userId) {
+	public BoardVO(int num, int seq, String userId, String title, String contents, int readCnt, String regDt,
+			String modDt, String boardDelete, String div) {
+		super();
+		this.num = num;
+		this.seq = seq;
 		this.userId = userId;
+		this.title = title;
+		this.contents = contents;
+		this.readCnt = readCnt;
+		this.regDt = regDt;
+		this.modDt = modDt;
+		this.boardDelete = boardDelete;
+		this.div = div;
 	}
 
 
+	public int getRowNum() {
+		return num;
+	}
+
+
+	public void setRowNum(int rowNum) {
+		this.num = rowNum;
+	}
 
 
 	public int getSeq() {
@@ -40,13 +51,19 @@ public class BoardVO extends DTO {
 	}
 
 
-
-
 	public void setSeq(int seq) {
 		this.seq = seq;
 	}
 
 
+	public String getUserId() {
+		return userId;
+	}
+
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 
 
 	public String getTitle() {
@@ -54,13 +71,9 @@ public class BoardVO extends DTO {
 	}
 
 
-
-
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
-
 
 
 	public String getContents() {
@@ -68,27 +81,9 @@ public class BoardVO extends DTO {
 	}
 
 
-
-
 	public void setContents(String contents) {
 		this.contents = contents;
 	}
-
-
-
-
-	public String getDiv() {
-		return div;
-	}
-
-
-
-
-	public void setDiv(String div) {
-		this.div = div;
-	}
-
-
 
 
 	public int getReadCnt() {
@@ -96,13 +91,9 @@ public class BoardVO extends DTO {
 	}
 
 
-
-
 	public void setReadCnt(int readCnt) {
 		this.readCnt = readCnt;
 	}
-
-
 
 
 	public String getRegDt() {
@@ -110,27 +101,9 @@ public class BoardVO extends DTO {
 	}
 
 
-
-
 	public void setRegDt(String regDt) {
 		this.regDt = regDt;
 	}
-
-
-
-
-	public String getRegId() {
-		return regId;
-	}
-
-
-
-
-	public void setRegId(String regId) {
-		this.regId = regId;
-	}
-
-
 
 
 	public String getModDt() {
@@ -138,64 +111,38 @@ public class BoardVO extends DTO {
 	}
 
 
-
-
 	public void setModDt(String modDt) {
 		this.modDt = modDt;
 	}
 
 
-
-
-	public String getModId() {
-		return modId;
+	public String getBoardDelete() {
+		return boardDelete;
 	}
 
 
-
-
-	public void setModId(String modId) {
-		this.modId = modId;
+	public void setBoardDelete(String boardDelete) {
+		this.boardDelete = boardDelete;
 	}
 
 
+	public String getDiv() {
+		return div;
+	}
+
+
+	public void setDiv(String div) {
+		this.div = div;
+	}
 
 
 	@Override
 	public String toString() {
-		return "BoardVO [userId=" + userId + ", seq=" + seq + ", title=" + title + ", contents=" + contents + ", div="
-				+ div + ", readCnt=" + readCnt + ", regDt=" + regDt + ", regId=" + regId + ", modDt=" + modDt
-				+ ", modId=" + modId + "]";
+		return "BoardVO [num=" + num + ", seq=" + seq + ", userId=" + userId + ", title=" + title + ", contents="
+				+ contents + ", readCnt=" + readCnt + ", regDt=" + regDt + ", modDt=" + modDt + ", boardDelete="
+				+ boardDelete + ", div=" + div + "]";
 	}
-
-
-
-
-	public BoardVO(String userId, int seq, String title, String contents, String div, int readCnt, String regDt,
-			String regId, String modDt, String modId) {
-		super();
-		this.userId = userId;
-		this.seq = seq;
-		this.title = title;
-		this.contents = contents;
-		this.div = div;
-		this.readCnt = readCnt;
-		this.regDt = regDt;
-		this.regId = regId;
-		this.modDt = modDt;
-		this.modId = modId;
-	}
-
-
-
-
-	public void setOffset(int i) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
 
 	
-
+	
 }

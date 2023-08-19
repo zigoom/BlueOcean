@@ -27,6 +27,7 @@ public class FindDaoImpl implements FindDao, PcwkLogger {
 	public String findId(UserVO user) throws SQLException, ClassNotFoundException {
 		String userid = "";
 
+		
 		String statement = NAMESPACE + DOT + "findid";
 		LOG.debug("┌──────────────────────────┐");
 		LOG.debug("│ 1. statement-            │" + statement);
@@ -64,24 +65,7 @@ public class FindDaoImpl implements FindDao, PcwkLogger {
 	}
 
 
-	@Override
-	public int updateOTP(UserVO user) throws SQLException, ClassNotFoundException {
-		String statement = NAMESPACE + DOT + "updateOTP";
-	    LOG.debug("┌──────────────────────────┐");
-	    LOG.debug("│ 1. statement-            │" + statement);
-	    LOG.debug("└──────────────────────────┘");
-	    LOG.debug("┌──────────────────────────┐");
-	    LOG.debug("│ 2. param=\n              │" + user.toString());
-	    LOG.debug("└──────────────────────────┘");
-	    
-	    int flag = this.sqlSessionTemplate.update(statement, user);
-	    
-	    LOG.debug("┌──────────────────────────┐");
-	    LOG.debug("│ 3. updateUserOTP flag    │" + flag);
-	    LOG.debug("└──────────────────────────┘");
-	    
-	    return flag;
-	}
+
 	
 
 

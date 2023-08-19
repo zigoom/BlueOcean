@@ -8,8 +8,9 @@ public interface FindDao {
 
 	String findId(UserVO user) throws SQLException, ClassNotFoundException;
 
+
 	int userCheck(UserVO user) throws SQLException, ClassNotFoundException;
+
 	
-	int updateOTP(UserVO user) throws SQLException, ClassNotFoundException;
 	 
 }

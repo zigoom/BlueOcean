@@ -63,7 +63,8 @@
 						<div id="body-container">
 
 							<table
-								style="margin-left: 50px; table-layout: fixed; width: 100%">
+								style="margin-left: 50px; table-layout: fixed; width: 100%"
+								id="data-table">
 								<thead>
 									<tr>
 										<th scope="col">아이디</th>
@@ -81,6 +82,10 @@
 								</tbody>
 							</table>
 
+						</div>
+						<div id="pagination"
+							style="display: flex; justify-content: center;">
+							<!-- 페이지 번호를 동적으로 생성할 영역 -->
 						</div>
 					</form>
 				</div>
@@ -108,7 +113,10 @@
 		window.location.href = "${CP}/BLUEOCEAN/admin/log.do";
 	})
 
-	// 회원 전체 로드 함수 
+	let totalData = null;
+	const dataPerPage = 10; // 페이지당 보여줄 데이터 수
+	let currentPage = 1; // 현재 페이지
+
 	function allLoad() {
 		$.ajax({
 			type : "POST",
@@ -116,18 +124,62 @@
 			async : true,
 			dataType : "json",
 			data : {},
-			success : function(data) {//통신 성공
-				updateTableWithData(data);
+			success : function(data) {
+				totalData = data;
+				updateTableWithData(data.slice(0, dataPerPage)); // 첫 페이지 데이터 표시
+				createPagination(data.length);
 			},
-			error : function(data) {//실패시 처리
+			error : function(data) {
 				console.log("error:" + data);
 			}
 		});
 	}
-	// 처음 접근할때 회원 전체 불러오기
-	allLoad()
-	// 전체 버튼누를시 회원 전체 불러오기
-	$("#all-load").on("click", allLoad);
+
+	// 페이지 번호를 클릭했을 때 해당 페이지의 데이터를 표시하는 함수
+	function showDataForPage(page) {
+		currentPage = page;
+		const startIndex = (page - 1) * dataPerPage;
+		const endIndex = startIndex + dataPerPage;
+		updateTableWithData(totalData.slice(startIndex, endIndex));
+	}
+
+	// 데이터 테이블 업데이트 함수
+	function updateTableWithData(data) {
+		// 데이터를 이용해 테이블 업데이트하는 로직을 여기에 작성
+	}
+
+	// 페이지 번호를 동적으로 생성하는 함수
+	function createPagination(totalDataCount) {
+		const totalPages = Math.ceil(totalDataCount / dataPerPage);
+		const pagination = document.getElementById("pagination");
+		pagination.innerHTML = "";
+
+		for (let i = 1; i <= totalPages; i++) {
+			const button = document.createElement("button");
+			button.textContent = i;
+			button.type = "button";
+			button.classList.add("page_nation"); // 클래스 추가
+
+			button.addEventListener("click", function() {
+				showDataForPage(i);
+			});
+
+			pagination.appendChild(button);
+		}
+
+		// 처음 페이지 설정
+		showDataForPage(1);
+	}
+
+	// 모든 요소가 로드된 후에 실행
+	$(document).ready(function() {
+		allLoad();
+
+		// 전체 버튼 클릭 시 다시 데이터 로드
+		$("#all-load").on("click", function() {
+			allLoad();
+		});
+	});
 
 	// 탈퇴한 회원만 불러오는 함수 
 	function deleteOptionLoad() {
@@ -140,7 +192,9 @@
 				withdrawal : 1
 			},
 			success : function(data) {
-				updateTableWithData(data);
+				totalData = data;
+				updateTableWithData(data.slice(0, dataPerPage)); // 첫 페이지 데이터 표시
+				createPagination(data.length);
 			},
 			error : function(data) {
 				console.log("error:", data);
@@ -161,7 +215,9 @@
 				withdrawal : 0
 			},
 			success : function(data) {//통신 성공
-				updateTableWithData(data);
+				totalData = data;
+				updateTableWithData(data.slice(0, dataPerPage)); // 첫 페이지 데이터 표시
+				createPagination(data.length);
 			},
 			error : function(data) {//실패시 처리
 				console.log("error:" + data);
@@ -217,14 +273,14 @@
 			},
 			success : function(data) {
 				console.log("data:" + data);
-				if ($("#all-load").is(":checked")) {				//라디오버튼이 전체로 되어있는경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
+				if ($("#all-load").is(":checked")) { //라디오버튼이 전체로 되어있는경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
 					allLoad();
-				} else if ($("#delete-load").is(":checked")) {		//라디오버튼이 탈퇴함으로 되어있는경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
+				} else if ($("#delete-load").is(":checked")) { //라디오버튼이 탈퇴함으로 되어있는경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
 					deleteOptionLoad();
-				} else if ($("#notDelete-load").is(":checked")) {	//라디오버튼이 탈퇴하지않음으로 되어있는경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
+				} else if ($("#notDelete-load").is(":checked")) { //라디오버튼이 탈퇴하지않음으로 되어있는경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
 					notDeleteOptionLoad();
 				} else {
-					allLoad();										//라디오버튼이 아무것도 체크되어있지않은경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
+					allLoad(); //라디오버튼이 아무것도 체크되어있지않은경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
 				}
 			},
 			error : function(data) {
@@ -251,14 +307,14 @@
 			},
 			success : function(data) {
 				console.log("data:" + data);
-				if ($("#all-load").is(":checked")) {				//라디오버튼이 전체로 되어있는경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
+				if ($("#all-load").is(":checked")) { //라디오버튼이 전체로 되어있는경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
 					allLoad();
-				} else if ($("#delete-load").is(":checked")) {		//라디오버튼이 탈퇴함으로 되어있는경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
+				} else if ($("#delete-load").is(":checked")) { //라디오버튼이 탈퇴함으로 되어있는경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
 					deleteOptionLoad();
-				} else if ($("#notDelete-load").is(":checked")) {	//라디오버튼이 탈퇴하지않음으로 되어있는경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
+				} else if ($("#notDelete-load").is(":checked")) { //라디오버튼이 탈퇴하지않음으로 되어있는경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
 					notDeleteOptionLoad();
 				} else {
-					allLoad();										//라디오버튼이 아무것도 체크되어있지않은경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
+					allLoad(); //라디오버튼이 아무것도 체크되어있지않은경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
 				}
 			},
 			error : function(data) {

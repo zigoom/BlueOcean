@@ -62,5 +62,13 @@ public class AdminMemberController implements PcwkLogger {
 		return flag;
 	}
 	
+	@RequestMapping(value = "/loadMemberCount.do", method = RequestMethod.POST)
+	@ResponseBody
+	public int adminLoadMemberCount() throws SQLException {
+		int flag = adminMemberService.loadMemberCount();
+
+		return flag;
+	}
+	
 
 }

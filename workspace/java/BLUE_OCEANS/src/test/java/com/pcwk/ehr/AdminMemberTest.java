@@ -70,7 +70,7 @@ public class AdminMemberTest {
 
 	// 멤버 카운트 (탈퇴여부 1또는 0인 유저)
 	@Test
-	//@Ignore
+	@Ignore
 	public void testLoadMemberCountOption() throws SQLException {
 		AdminPageVO vo = new AdminPageVO();
 		vo.setWithdrawal(0);

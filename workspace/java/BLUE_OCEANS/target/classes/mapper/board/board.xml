@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pcwk.ehr.dao.BoardDao">
+
+  <resultMap id="BoardMap" type="com.pcwk.ehr.domain.BoardVO">
+  		<result column="num"           property="num"       	 />
+        <result column="POST_NO"        property="seq"        	 />
+        <result column="userId"      	property="userId"        />
+        <result column="TITLE"       	property="title"     	 />
+        <result column="CONTENTS"       property="contents"      />
+        <result column="READ_CNT"       property="readCnt"       />
+        <result column="regDt"         property="regDt"     	 />
+        <result column="modDt"   		property="modDt" 		 />
+        <result column="BOARD_DELETE"   property="boardDelete"   />
+  </resultMap>
+
   <!-- 검색조건 -->
   <sql id="searchCondition">
      <choose>
@@ -13,24 +26,12 @@
      </choose>
   </sql>
   
-	<!-- private String    userId       ;//고유한 식별자
-	private int    seq      ;//순번 
-	private String title    ;//제목
-	private String contents ;//내용
-	private String div      ;//구분
-	private int    readCnt  ;//조회수
-	private String regDt    ;//등록일
-	private String regId    ;//등록자
-	private String modDt    ;//수정일
-	private String modId    ;//수정자
-	private int    postno   ;//postno -->
-	 
 
      
 
 
 <!-- 게시물 목록 조회 -->
-<select id="doRetrieve" parameterType="BoardVO" resultType="BoardVO">
+<select id="doRetrieve" parameterType="BoardVO" resultMap="BoardMap">
 SELECT A.*,B.*
     FROM (
         SELECT TT1.rnum as num,
@@ -70,6 +71,7 @@ SELECT A.*,B.*
 </select>  
      
      
+<!-- 게시물 글쓰기 저장 -->     
 <insert id="doSave" parameterType="BoardVO">
 <!-- <selectKey keyProperty="postno" resultType="int" order="BEFORE">
       SELECT BOARD_post_no.NEXTVAL FROM DUAL      
@@ -94,21 +96,21 @@ SELECT A.*,B.*
 </insert>
 
 
-<select id="doSelectOne" parameterType="BoardVO"
-   resultType="BoardVO">
-   SELECT
-       seq,
+<!-- 게시글 상세 조회 -->
+<select id="doSelectOne" parameterType="BoardVO" resultType="BoardVO">
+      SELECT
+       post_no,
        title,
        contents,
-       div,
        read_cnt,
        TO_CHAR(reg_dt,'YYYY-MM-DD HH24:MI:SS')  reg_dt,
-       reg_id,
-       TO_CHAR(mod_dt,'YYYY-MM-DD HH24:MI:SS')  mod_dt,
-       mod_id
+       TO_CHAR(mod_dt,'YYYY-MM-DD HH24:MI:SS')  mod_dt
    FROM board
-   WHERE seq = #{seq}
+   WHERE post_no = #{seq}
 </select>
+ 
+ 
+ 
  
   
  <!--  

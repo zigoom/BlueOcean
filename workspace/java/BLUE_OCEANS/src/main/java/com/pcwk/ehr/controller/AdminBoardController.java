@@ -13,7 +13,6 @@ public class AdminBoardController implements PcwkLogger {
 
 	@RequestMapping(value = "/board.do", method = RequestMethod.GET)
 	public String adminBoardView() {
-
 		return "main/admin_board";
 
 	}

@@ -6,17 +6,12 @@
 <html>
 <head>
 <meta charset="${encoding}" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
 <!-- CSS only -->
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
 	rel="stylesheet"
 	integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
 	crossorigin="anonymous" />
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2th55rYXK/7HAuoJl+0I4"
-	crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.7.0.js"
 	integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
 	crossorigin="anonymous"></script>
@@ -26,7 +21,7 @@
 <link rel="stylesheet" href="${CP}/resources/css/header.css" />
 <link rel="stylesheet" href="${CP}/resources/css/footer.css" />
 <title>Insert title here</title>
-<link rel="stylesheet" href="${CP}/resources/css/admin.css"/>
+<link rel="stylesheet" href="${CP}/resources/css/admin.css" />
 </head>
 <body>
 	<div>
@@ -59,44 +54,31 @@
 					style="background-color: white; width: 80%; height: 77vh;">
 					<form>
 						<div id="radio-container" style="margin: 30px 100px;">
-							<label><input type="radio" name="check" value="all">전체</label>
-							<label><input type="radio" name="check" value="delete">탈퇴함</label>
-							<label><input type="radio" name="check" value="notDelete">탈퇴하지
+							<label><input type="radio" name="check" value="all"
+								id="all-load">전체</label> <label><input type="radio"
+								name="check" value="delete" id="delete-load">탈퇴함</label> <label><input
+								type="radio" name="check" value="notDelete" id="notDelete-load">탈퇴하지
 								않음</label>
 						</div>
 						<div id="body-container">
 
-							<table style="margin-left: 50px;table-layout: fixed; width: 100%">
-								<tr>
-									<th scope="col">아이디</th>
-									<th scope="col">이름</th>
-									<th scope="col">생년월일</th>
-									<th scope="col">성별</th>
-									<th scope="col">핸드폰</th>
-									<th scope="col">삭제여부</th>
-									<th scope="col">삭제</th>
-									<th scope="col">복구</th>
-								</tr>
-								<tr>
-									<td>test1234</td>
-									<td>기막철</td>
-									<td>971111</td>
-									<td>남</td>
-									<td>010-1111-1111</td>
-									<td>삭제됨</td>
-									<td>삭제</td>
-									<td>복구</td>
-								</tr>
-								<tr>
-									<td>test1234</td>
-									<td>조학철</td>
-									<td>971111</td>
-									<td>여</td>
-									<td>010-1111-1111</td>
-									<td>삭제되지않음</td>
-									<td>삭제</td>
-									<td>복구</td>
-								</tr>
+							<table
+								style="margin-left: 50px; table-layout: fixed; width: 100%">
+								<thead>
+									<tr>
+										<th scope="col">아이디</th>
+										<th scope="col">이름</th>
+										<th scope="col">생년월일</th>
+										<th scope="col">성별</th>
+										<th scope="col">핸드폰</th>
+										<th scope="col">삭제여부</th>
+										<th class="delete" scope="col">삭제</th>
+										<th class="notDelete" scope="col">복구</th>
+									</tr>
+								</thead>
+								<tbody class="data-tbody">
+
+								</tbody>
 							</table>
 
 						</div>
@@ -125,5 +107,164 @@
 	adminHeaderBtn[4].addEventListener("click", function() {
 		window.location.href = "${CP}/BLUEOCEAN/admin/log.do";
 	})
+
+	// 회원 전체 로드 함수 
+	function allLoad() {
+		$.ajax({
+			type : "POST",
+			url : "/ehr/BLUEOCEAN/admin/loadMember.do",
+			async : true,
+			dataType : "json",
+			data : {},
+			success : function(data) {//통신 성공
+				updateTableWithData(data);
+			},
+			error : function(data) {//실패시 처리
+				console.log("error:" + data);
+			}
+		});
+	}
+	// 처음 접근할때 회원 전체 불러오기
+	allLoad()
+	// 전체 버튼누를시 회원 전체 불러오기
+	$("#all-load").on("click", allLoad);
+
+	// 탈퇴한 회원만 불러오는 함수 
+	function deleteOptionLoad() {
+		$.ajax({
+			type : "POST",
+			url : "/ehr/BLUEOCEAN/admin/loadMemberOption.do",
+			async : true,
+			dataType : "json",
+			data : {
+				withdrawal : 1
+			},
+			success : function(data) {
+				updateTableWithData(data);
+			},
+			error : function(data) {
+				console.log("error:", data);
+			}
+		});
+	}
+	// 	탈퇴함 버튼누를시 탈퇴한 회원 전체 불러오기
+	$("#delete-load").on("click", deleteOptionLoad)
+
+	//탈퇴하지 않은 회원만 불러오는 함수
+	function notDeleteOptionLoad() {
+		$.ajax({
+			type : "POST",
+			url : "/ehr/BLUEOCEAN/admin/loadMemberOption.do",
+			async : true,
+			dataType : "json",
+			data : {
+				withdrawal : 0
+			},
+			success : function(data) {//통신 성공
+				updateTableWithData(data);
+			},
+			error : function(data) {//실패시 처리
+				console.log("error:" + data);
+			}
+		});
+	}
+	$("#notDelete-load").on("click", notDeleteOptionLoad)
+
+	// 테이블 업데이트 함수
+	function updateTableWithData(data) { // userList로 수정
+		var tbody = $(".data-tbody");
+		tbody.empty();
+		data
+				.forEach(function(user, i) {
+
+					var tr = $("<tr class='data-tr'></tr>");
+					tr
+							.append("<td class='user-id'>" + data[i].userId
+									+ "</td>");
+					tr.append("<td class='user-name'>" + data[i].userName
+							+ "</td>");
+					tr.append("<td class='birthday'>" + data[i].birthday
+							+ "</td>");
+					tr.append("<td class='gender'>" + data[i].gender + "</td>");
+					tr.append("<td class='phone-no'>" + data[i].phoneNo
+							+ "</td>");
+					tr.append("<td class='withdrawal'>" + data[i].withdrawal
+							+ "</td>");
+					tr
+							.append("<td><button type='button' class='delete-btn'>삭제</button></td>");
+					tr
+							.append("<td><button type='button' class='recover-btn'>복구</button></td>");
+
+					tbody.append(tr);
+				});
+	}
+
+	//선택한 회원 삭제
+	$(".data-tbody").on("click", ".delete-btn", function() {
+		// 클릭한 버튼의 가장 가까운 상위 <tr> 요소를 찾음
+		const trElement = $(this).closest("tr");
+
+		// 해당 <tr> 요소 내의 .user-id 요소의 텍스트를 가져옴
+		const userId = trElement.find(".user-id").text();
+
+		$.ajax({
+			type : "POST",
+			url : "/ehr/BLUEOCEAN/admin/deleteMember.do",
+			async : true,
+			dataType : "html",
+			data : {
+				userId : userId
+			},
+			success : function(data) {
+				console.log("data:" + data);
+				if ($("#all-load").is(":checked")) {				//라디오버튼이 전체로 되어있는경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
+					allLoad();
+				} else if ($("#delete-load").is(":checked")) {		//라디오버튼이 탈퇴함으로 되어있는경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
+					deleteOptionLoad();
+				} else if ($("#notDelete-load").is(":checked")) {	//라디오버튼이 탈퇴하지않음으로 되어있는경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
+					notDeleteOptionLoad();
+				} else {
+					allLoad();										//라디오버튼이 아무것도 체크되어있지않은경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
+				}
+			},
+			error : function(data) {
+				console.log("error:" + data);
+			}
+		});
+	});
+
+	//선택한 회원 복구
+	$(".data-tbody").on("click", ".recover-btn", function() {
+		// 클릭한 버튼의 가장 가까운 상위 <tr> 요소를 찾음
+		const trElement = $(this).closest("tr");
+
+		// 해당 <tr> 요소 내의 .user-id 요소의 텍스트를 가져옴
+		const userId = trElement.find(".user-id").text();
+
+		$.ajax({
+			type : "POST",
+			url : "/ehr/BLUEOCEAN/admin/notDeleteMember.do",
+			async : true,
+			dataType : "html",
+			data : {
+				userId : userId
+			},
+			success : function(data) {
+				console.log("data:" + data);
+				if ($("#all-load").is(":checked")) {				//라디오버튼이 전체로 되어있는경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
+					allLoad();
+				} else if ($("#delete-load").is(":checked")) {		//라디오버튼이 탈퇴함으로 되어있는경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
+					deleteOptionLoad();
+				} else if ($("#notDelete-load").is(":checked")) {	//라디오버튼이 탈퇴하지않음으로 되어있는경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
+					notDeleteOptionLoad();
+				} else {
+					allLoad();										//라디오버튼이 아무것도 체크되어있지않은경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
+				}
+			},
+			error : function(data) {
+				console.log("error:" + data);
+			}
+		});
+	});
 </script>
 </html>

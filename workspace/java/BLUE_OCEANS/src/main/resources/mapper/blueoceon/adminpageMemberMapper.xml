@@ -78,17 +78,5 @@
 		WHERE user_id = #{userId}
 	</update>
 	
-	<!-- 게시글 목록 로드 -->
-	<select id="loadBoard" resultMap="adminPageMap"
-		resultType="com.pcwk.ehr.cmn.AdminPageVO">
-		SELECT * FROM BOARD
-	</select>
-	
-	<!-- 회원목록 로드 (탈퇴한유저 또는 탈퇴하지 않은 유저) -->
-	<select id="loadBoardOption" resultMap="adminPageMap"
-		resultType="com.pcwk.ehr.cmn.AdminPageVO">
-		SELECT * FROM MEMBER
-		WHERE boardDelete = #{boardDelete}
-	</select>
 </mapper>
 

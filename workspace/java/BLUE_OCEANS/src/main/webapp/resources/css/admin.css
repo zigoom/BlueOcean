@@ -21,7 +21,8 @@ td {
 	text-align: center;
 	word-wrap: break-word;
 }
+
 input[type="date"],
-#id-input{
+#id-input {
 	margin-left: 15px;
 }

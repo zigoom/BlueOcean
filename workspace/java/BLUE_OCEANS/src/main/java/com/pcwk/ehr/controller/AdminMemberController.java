@@ -46,6 +46,14 @@ public class AdminMemberController implements PcwkLogger {
 		return userList;
 	}
 	
+	@RequestMapping(value = "/loadMemberFromId.do", method = RequestMethod.POST)
+	@ResponseBody
+	public List<AdminPageVO> adminLoadMemberFromId(AdminPageVO vo) throws SQLException {
+		List<AdminPageVO> idList = adminMemberService.loadMemberFromId(vo);
+
+		return idList;
+	}
+	
 	@RequestMapping(value = "/deleteMember.do", method = RequestMethod.POST)
 	@ResponseBody
 	public int adminDeleteMember(AdminPageVO vo) throws SQLException {

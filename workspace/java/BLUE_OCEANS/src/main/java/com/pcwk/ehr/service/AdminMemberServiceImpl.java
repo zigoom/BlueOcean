@@ -26,6 +26,11 @@ public class AdminMemberServiceImpl implements AdminMemberService, PcwkLogger {
 	}
 	
 	@Override
+	public List<AdminPageVO> loadMemberFromId(AdminPageVO vo) throws SQLException {
+		return adminDao.loadMemberFromId(vo);
+	}
+	
+	@Override
 	public int loadMemberCount() throws SQLException {
 		return adminDao.loadMemberCount();
 	}
@@ -44,6 +49,8 @@ public class AdminMemberServiceImpl implements AdminMemberService, PcwkLogger {
 	public int notdeleteMember(AdminPageVO vo) throws SQLException {
 		return adminDao.notdeleteMember(vo);
 	}
+
+	
 
 	
 

@@ -22,6 +22,43 @@
 <link rel="stylesheet" href="${CP}/resources/css/footer.css" />
 <title>Insert title here</title>
 <link rel="stylesheet" href="${CP}/resources/css/admin.css" />
+<style>
+#body-container {
+	max-width: 100%; /* 최대 너비 설정 */
+	max-height: 70vh; /* 최대 높이 설정 */
+	overflow-y: auto; /* 스크롤 활성화 */
+	overflow-x: hidden; /* 가로스크롤 비활성화 */
+}
+
+#data-table {
+	margin-left: 50px;
+	table-layout: fixed;
+	width: 100%;
+}
+
+/* 미디어 쿼리를 사용하여 화면 너비에 따라 스타일 변경 */
+@media screen and (max-width: 768px) {
+	#data-table {
+		margin-left: 0; /* 작은 화면에서는 왼쪽 마진 제거 */
+	}
+}
+
+#pagination {
+	margin-left: 120px;
+}
+
+#button-container {
+	display: flex;
+	justify-content: center;
+	margin-left: 120px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	align-items: center;
+}
+#button-container > * {
+  margin-left: 7px;
+}
+</style>
 </head>
 <body>
 	<div>
@@ -34,7 +71,8 @@
 				</div>
 				<div
 					style="display: flex; justify-content: center; margin: 0px 70px;">
-					<h2 class="admin-header-btn">회원관리</h2>
+					<h2 class="admin-header-btn"
+						style="border-bottom: 3px solid black;">회원관리</h2>
 					<h2 class="divide">|</h2>
 					<h2 class="admin-header-btn">게시글관리</h2>
 					<h2 class="divide">|</h2>
@@ -52,43 +90,45 @@
 				</div>
 				<div id="admin-container"
 					style="background-color: white; width: 80%; height: 77vh;">
-					<form>
-						<div id="radio-container" style="margin: 30px 100px;">
-							<label><input type="radio" name="check" value="all"
-								id="all-load">전체</label> <label><input type="radio"
-								name="check" value="delete" id="delete-load">탈퇴함</label> <label><input
-								type="radio" name="check" value="notDelete" id="notDelete-load">탈퇴하지
-								않음</label>
-						</div>
-						<div id="body-container">
+					<div id="radio-container" style="margin: 30px 100px;">
+						<label><input type="radio" name="check" value="all"
+							id="all-load">전체</label> <label><input type="radio"
+							name="check" value="delete" id="delete-load">탈퇴함</label> <label><input
+							type="radio" name="check" value="notDelete" id="notDelete-load">탈퇴하지
+							않음</label>
+					</div>
+					<div id="body-container">
 
-							<table
-								style="margin-left: 50px; table-layout: fixed; width: 100%"
-								id="data-table">
-								<thead>
-									<tr>
-										<th scope="col">아이디</th>
-										<th scope="col">이름</th>
-										<th scope="col">생년월일</th>
-										<th scope="col">성별</th>
-										<th scope="col">핸드폰</th>
-										<th scope="col">삭제여부</th>
-										<th class="delete" scope="col">삭제</th>
-										<th class="notDelete" scope="col">복구</th>
-									</tr>
-								</thead>
-								<tbody class="data-tbody">
+						<table style="margin-left: 50px; table-layout: fixed; width: 100%"
+							id="data-table">
+							<thead>
+								<tr>
+									<th scope="col">아이디</th>
+									<th scope="col">이름</th>
+									<th scope="col">생년월일</th>
+									<th scope="col">성별</th>
+									<th scope="col">핸드폰</th>
+									<th scope="col">삭제여부</th>
+									<th class="delete" scope="col">삭제</th>
+									<th class="notDelete" scope="col">복구</th>
+								</tr>
+							</thead>
+							<tbody class="data-tbody">
 
-								</tbody>
-							</table>
+							</tbody>
+						</table>
 
-						</div>
-						<div id="pagination"
-							style="display: flex; justify-content: center;">
-							<!-- 페이지 번호를 동적으로 생성할 영역 -->
-						</div>
-					</form>
+					</div>
+
 				</div>
+
+			</div>
+			<div id="pagination" style="display: flex; justify-content: center;">
+				<!-- 페이지 번호를 동적으로 생성할 영역 -->
+			</div>
+			<div id="button-container">
+				<label>아이디<input type="text" class="search-id"></label>
+				<button class="btn btn-primary search-id-btn">검색</button>
 			</div>
 		</div>
 	</div>
@@ -158,8 +198,8 @@
 			const button = document.createElement("button");
 			button.textContent = i;
 			button.type = "button";
-			button.classList.add("page_nation"); // 클래스 추가
-
+			button.classList.add("page_nation", "btn", "btn-primary"); // 클래스 추가
+			button.style.margin = "5px";
 			button.addEventListener("click", function() {
 				showDataForPage(i);
 			});
@@ -228,12 +268,12 @@
 
 	// 테이블 업데이트 함수
 	function updateTableWithData(data) { // userList로 수정
-		var tbody = $(".data-tbody");
+		let tbody = $(".data-tbody");
 		tbody.empty();
 		data
 				.forEach(function(user, i) {
 
-					var tr = $("<tr class='data-tr'></tr>");
+					let tr = $("<tr class='data-tr'></tr>");
 					tr
 							.append("<td class='user-id'>" + data[i].userId
 									+ "</td>");
@@ -246,10 +286,17 @@
 							+ "</td>");
 					tr.append("<td class='withdrawal'>" + data[i].withdrawal
 							+ "</td>");
-					tr
-							.append("<td><button type='button' class='delete-btn'>삭제</button></td>");
-					tr
-							.append("<td><button type='button' class='recover-btn'>복구</button></td>");
+					if (data[i].withdrawal == 0) {
+						tr
+								.append("<td><button type='button' class='btn btn-primary delete-btn'>삭제</button></td>");
+						tr
+								.append("<td><button type='button' class='btn btn-secondary recover-btn'>복구</button></td>");
+					} else if (data[i].withdrawal == 1) {
+						tr
+								.append("<td><button type='button' class='btn btn-secondary delete-btn'>삭제</button></td>");
+						tr
+								.append("<td><button type='button' class='btn btn-primary recover-btn'>복구</button></td>");
+					}
 
 					tbody.append(tr);
 				});
@@ -257,70 +304,131 @@
 
 	//선택한 회원 삭제
 	$(".data-tbody").on("click", ".delete-btn", function() {
-		// 클릭한 버튼의 가장 가까운 상위 <tr> 요소를 찾음
-		const trElement = $(this).closest("tr");
-
-		// 해당 <tr> 요소 내의 .user-id 요소의 텍스트를 가져옴
-		const userId = trElement.find(".user-id").text();
-
-		$.ajax({
-			type : "POST",
-			url : "/ehr/BLUEOCEAN/admin/deleteMember.do",
-			async : true,
-			dataType : "html",
-			data : {
-				userId : userId
-			},
-			success : function(data) {
-				console.log("data:" + data);
-				if ($("#all-load").is(":checked")) { //라디오버튼이 전체로 되어있는경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
-					allLoad();
-				} else if ($("#delete-load").is(":checked")) { //라디오버튼이 탈퇴함으로 되어있는경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
-					deleteOptionLoad();
-				} else if ($("#notDelete-load").is(":checked")) { //라디오버튼이 탈퇴하지않음으로 되어있는경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
-					notDeleteOptionLoad();
-				} else {
-					allLoad(); //라디오버튼이 아무것도 체크되어있지않은경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
-				}
-			},
-			error : function(data) {
-				console.log("error:" + data);
+		if ($(this).hasClass("btn-primary")) {
+			let confirmDelete = confirm("정말로 데이터를 삭제하시겠습니까?");
+			if (confirmDelete) {
+				// 사용자가 확인을 눌렀을 때의 동작
+				deleteData();
+			} else {
+				alert("데이터 삭제가 취소되었습니다.");
+				return;
 			}
-		});
+			// 데이터 삭제 함수
+			function deleteData() {
+				// 실제 데이터 삭제 작업 수행
+				alert("데이터가 삭제되었습니다.");
+			}
+			// 클릭한 버튼의 가장 가까운 상위 <tr> 요소를 찾음
+			const trElement = $(this).closest("tr");
+
+			// 해당 <tr> 요소 내의 .user-id 요소의 텍스트를 가져옴
+			const userId = trElement.find(".user-id").text();
+
+			$.ajax({
+				type : "POST",
+				url : "/ehr/BLUEOCEAN/admin/deleteMember.do",
+				async : true,
+				dataType : "html",
+				data : {
+					userId : userId
+				},
+				success : function(data) {
+					console.log("data:" + data);
+					if ($("#all-load").is(":checked")) { //라디오버튼이 전체로 되어있는경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
+						allLoad();
+					} else if ($("#delete-load").is(":checked")) { //라디오버튼이 탈퇴함으로 되어있는경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
+						deleteOptionLoad();
+					} else if ($("#notDelete-load").is(":checked")) { //라디오버튼이 탈퇴하지않음으로 되어있는경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
+						notDeleteOptionLoad();
+					} else {
+						allLoad(); //라디오버튼이 아무것도 체크되어있지않은경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
+					}
+				},
+				error : function(data) {
+					console.log("error:" + data);
+				}
+			});
+		} else {
+			alert("이미 탈퇴한 회원입니다.")
+		}
+
 	});
 
 	//선택한 회원 복구
 	$(".data-tbody").on("click", ".recover-btn", function() {
-		// 클릭한 버튼의 가장 가까운 상위 <tr> 요소를 찾음
-		const trElement = $(this).closest("tr");
+		if ($(this).hasClass("btn-primary")) {
+			let confirmDelete = confirm("정말로 데이터를 복구하시겠습니까?");
+			if (confirmDelete) {
+				// 사용자가 확인을 눌렀을 때의 동작
+				notDeleteData();
+			} else {
+				alert("데이터 복구가 취소되었습니다.");
+				return;
+			}
+			// 데이터 삭제 함수
+			function notDeleteData() {
+				// 실제 데이터 삭제 작업 수행
+				alert("데이터가 복구되었습니다.");
+			}
+			// 클릭한 버튼의 가장 가까운 상위 <tr> 요소를 찾음
+			const trElement = $(this).closest("tr");
 
-		// 해당 <tr> 요소 내의 .user-id 요소의 텍스트를 가져옴
-		const userId = trElement.find(".user-id").text();
+			// 해당 <tr> 요소 내의 .user-id 요소의 텍스트를 가져옴
+			const userId = trElement.find(".user-id").text();
 
+			$.ajax({
+				type : "POST",
+				url : "/ehr/BLUEOCEAN/admin/notDeleteMember.do",
+				async : true,
+				dataType : "html",
+				data : {
+					userId : userId
+				},
+				success : function(data) {
+					console.log("data:" + data);
+					if ($("#all-load").is(":checked")) { //라디오버튼이 전체로 되어있는경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
+						allLoad();
+					} else if ($("#delete-load").is(":checked")) { //라디오버튼이 탈퇴함으로 되어있는경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
+						deleteOptionLoad();
+					} else if ($("#notDelete-load").is(":checked")) { //라디오버튼이 탈퇴하지않음으로 되어있는경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
+						notDeleteOptionLoad();
+					} else {
+						allLoad(); //라디오버튼이 아무것도 체크되어있지않은경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
+					}
+				},
+				error : function(data) {
+					console.log("error:" + data);
+				}
+			});
+		} else {
+			alert("이미 탈퇴하지않은 회원입니다.")
+		}
+	});
+
+	$(".search-id-btn").on("click", function() {
 		$.ajax({
 			type : "POST",
-			url : "/ehr/BLUEOCEAN/admin/notDeleteMember.do",
+			url : "/ehr/BLUEOCEAN/admin/loadMemberFromId.do",
 			async : true,
-			dataType : "html",
+			dataType : "json",
 			data : {
-				userId : userId
+				userId : $(".search-id").val()
 			},
 			success : function(data) {
-				console.log("data:" + data);
-				if ($("#all-load").is(":checked")) { //라디오버튼이 전체로 되어있는경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
-					allLoad();
-				} else if ($("#delete-load").is(":checked")) { //라디오버튼이 탈퇴함으로 되어있는경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
-					deleteOptionLoad();
-				} else if ($("#notDelete-load").is(":checked")) { //라디오버튼이 탈퇴하지않음으로 되어있는경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
-					notDeleteOptionLoad();
-				} else {
-					allLoad(); //라디오버튼이 아무것도 체크되어있지않은경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
+				totalData = data;
+				updateTableWithData(data.slice(0, dataPerPage)); // 첫 페이지 데이터 표시
+				createPagination(data.length);
+				radioGroup = document.getElementsByName("check");
+				for (let i = 0; i < radioGroup.length; i++) {
+					radioGroup[i].checked = false;
 				}
+
 			},
 			error : function(data) {
 				console.log("error:" + data);
 			}
-		});
-	});
+
+		})
+	})
 </script>
 </html>

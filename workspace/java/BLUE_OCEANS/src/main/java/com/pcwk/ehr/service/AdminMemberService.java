@@ -23,6 +23,14 @@ public interface AdminMemberService {
 	 * @throws SQLException
 	 */
 	List<AdminPageVO> loadMemberOption(AdminPageVO vo) throws SQLException;
+	
+	/**
+	 * 멤버목록 불러오기(유저아이디를 통해서)
+	 * @param vo
+	 * @return
+	 * @throws SQLException
+	 */
+	List<AdminPageVO> loadMemberFromId(AdminPageVO vo) throws SQLException;
 
 	/**
 	 * 멤버 카운트

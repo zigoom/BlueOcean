@@ -54,6 +54,25 @@ public class AdminMemeberDaoImpl implements AdminMemberDao, PcwkLogger {
 
 		return outVO;
 	}
+	
+	@Override
+	public List<AdminPageVO> loadMemberFromId(AdminPageVO vo) throws SQLException {
+		List<AdminPageVO> outVO = new ArrayList<AdminPageVO>();
+		String statement = NAMESPACE + DOT + "loadMemberFromId";
+		LOG.debug("┌──────────────────────────┐");
+		LOG.debug("│ 1. statement-            │" + statement);
+		LOG.debug("└──────────────────────────┘");
+		LOG.debug("┌──────────────────────────┐");
+		LOG.debug("│ 2. param=\n              │" + vo.toString());
+		LOG.debug("└──────────────────────────┘");
+		outVO = this.sqlSessionTemplate.selectList(statement, vo);
+		LOG.debug("┌──────────────────────────┐");
+		LOG.debug("│ 3. Check outVO           │" + outVO);
+		LOG.debug("└──────────────────────────┘");
+
+		return outVO;
+	}
+
 
 	@Override
 	public int loadMemberCount() throws SQLException {
@@ -128,4 +147,5 @@ public class AdminMemeberDaoImpl implements AdminMemberDao, PcwkLogger {
 		return flag;
 	}
 
+	
 }

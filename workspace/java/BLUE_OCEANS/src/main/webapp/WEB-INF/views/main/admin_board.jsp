@@ -41,7 +41,7 @@
 					style="display: flex; justify-content: center; margin: 0px 70px;">
 					<h2 class="admin-header-btn">회원관리</h2>
 					<h2 class="divide">|</h2>
-					<h2 class="admin-header-btn">게시글관리</h2>
+					<h2 class="admin-header-btn" style="border-bottom: 3px solid black;">게시글관리</h2>
 					<h2 class="divide">|</h2>
 					<h2 class="admin-header-btn">댓글관리</h2>
 					<h2 class="divide">|</h2>

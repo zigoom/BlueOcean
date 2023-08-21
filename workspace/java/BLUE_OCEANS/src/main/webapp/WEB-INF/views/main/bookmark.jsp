@@ -68,6 +68,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
             .fa-solid{
             	color:gold;
             }
+
         </style>
     </head>
    <body>
@@ -297,10 +298,10 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                 endDate: ed,
             };
 
-            // ajax를 활용해 http://125.142.47.191:5001//blue-oceans/search-tickers을 호출하여 불러온 데이터를 파싱
+            // ajax를 활용해 http://192.168.0.74:5001//blue-oceans/search-tickers을 호출하여 불러온 데이터를 파싱
             $.ajax({
                 type: 'POST',
-                url: 'http://125.142.47.191:5001//blue-oceans/search-tickers',
+                url: 'http://192.168.0.74:5001//blue-oceans/search-tickers',
                 data: JSON.stringify(requestData),
                 contentType: 'application/json',
                 mode: 'cors',

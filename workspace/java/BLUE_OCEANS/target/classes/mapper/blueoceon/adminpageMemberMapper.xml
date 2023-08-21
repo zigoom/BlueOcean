@@ -48,6 +48,13 @@
 		SELECT * FROM MEMBER
 		WHERE withdrawal = #{withdrawal}
 	</select>
+	
+	<!-- 회원목록 로드 -->
+	<select id="loadMemberFromId" resultMap="adminPageMap"
+		resultType="com.pcwk.ehr.cmn.AdminPageVO">
+		SELECT * FROM MEMBER
+		WHERE user_id LIKE  '%' ||  #{userId} || '%'
+	</select>
 
 	<!-- 회원목록 카운트 -->
 	<select id="loadMemberCount" resultType="java.lang.Integer">

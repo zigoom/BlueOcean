@@ -1,11 +1,16 @@
+<%@ page import="com.pcwk.ehr.cmn.StringUtil"%>
+<%@ page import="com.pcwk.ehr.domain.BoardVO"%>
+<%@ page import="com.pcwk.ehr.cmn.BookmarkVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="CP" value="${pageContext.request.contextPath }"/>  
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<c:set var="CP" value="${pageContext.request.contextPath }" />
+
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="${encoding}">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
 	<!-- CSS only -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
@@ -63,7 +68,9 @@
                     mode: 'cors',
                     success: function(result) {
                         // Create table and append it to the container
-                        var table = '<table border="1" class="table table-sm">' +
+                        var table = "<h5 style='font-size: 26px; font-weight:bold; margin-bottom: 20px;'>" + '거래량 상위 10개 종목</h5>';
+                        
+                        table += '<table border="1" class="table table-sm">' +
                             '<thead>' +
                                 '<tr class="table-primary">' +
                                     '<th class="text-center font-weight-bold">No.</th>' +
@@ -119,161 +126,420 @@
 </head>
 <body>	
   <div class="container">
-    <div class="row" >    
-    
-      <!-- 증권시장  -->
-      <div id="cards" style="margin-top: 20px; margin-bottom: 20px; display: flex;">
-        <div class="card" style="width: 18rem; flex: 1; margin-right: 20px;">        
-            <div id="chart1" class="card-img-top"></div>
-            <div class="card-body">
-                <p class="card-text">Some quickfghf example text for card 1.</p>
-            </div>
-        </div>
-        <div class="card" style="width: 18rem; flex: 1; margin-right: 20px;">        
-            <div id="chart2" class="card-img-top"></div>
-            <div class="card-body">
-                <p class="card-text">Some quiffffck example text for card 2.</p>
-            </div>
-        </div>
-        <div class="card" style="width: 18rem; flex: 1; margin-right: 20px;">        
-            <div id="chart2" class="card-img-top"></div>
-            <div class="card-body">
-                <p class="card-text">Some quiffffck example text for card 2.</p>
-            </div>
-        </div>
-        <div class="card" style="width: 18rem; flex: 1;">        
-            <div id="chart3" class="card-img-top"></div>
-            <div class="card-body">
-                <p class="card-text">Some quick example text for card 3.</p>
-            </div>
-        </div>
-      </div>
-	
+    <div class="row" >   
+	    <c:choose>
+	        <c:when test="${empty sessionScope.user}">
+	        <!-- 로그인 후 이용해주세요 메시지 표시 -->
+	        </c:when>
+	        <c:otherwise>
+	            <c:choose>
+	                <c:when test="${empty bookmarkList}">
+	                    <!-- 관심목록이 없는 경우 메시지 표시 -->
+	                    <p>관심목록이 없습니다.</p>
+	                </c:when>
+	                <c:otherwise>
+                        <h5 style='font-size: 26px; font-weight:bold;'>관심목록</h5>
+	                    <!-- <table border="1" class="table table-sm">
+	                      <thead>
+	                        <tr class="table-primary">
+                              <th class="text-center font-weight-bold">종목</th>
+                              <th class="text-center font-weight-bold">현재가</th>
+                              <th class="text-center font-weight-bold">고가</th>
+                              <th class="text-center font-weight-bold">저가</th>
+                              <th class="text-center font-weight-bold">등락률</th>
+                              <th class="text-center font-weight-bold">거래량</th>
+	                        </tr>
+	                      </thead>
+	                      <tbody> -->
+	                      <!-- 로그인 된 경우에만 루프 내용을 표시 -->
+	                        <c:forEach var="item" items="${bookmarkList}" varStatus="loop">
+
+    <div class="table-container" data-ticker="${item}"></div>
+</c:forEach>
+
 <script>
-$(document).ready(function() {
-    // 차트를 생성합니다.
-    const chart = LightweightCharts.createChart(document.getElementById('chart1'), {
-      /* width: 800, */
-      height: 100,
-      handleScroll: false, // 스크롤로 확대 비활성화
-      layout: {
-          backgroundColor: 'transparent', // 캔버스의 배경색을 투명으로 설정
-      },
-      priceScale: {
-          borderColor: 'transparent', // 가격 축의 테두리 색상을 투명으로 설정
-      },
-      timeScale: {
-          borderColor: 'transparent', // 시간 축의 테두리 색상을 투명으로 설정
-      },
-      grid: {
-          vertLines: {
-              color: 'transparent', // 수직 라인의 색상을 투명으로 설정
-          },
-          horzLines: {
-              color: 'transparent', // 수평 라인의 색상을 투명으로 설정
-          },
-      },
-      crosshair: {
-          vertLine: {
-              width: 0, // 교차선의 수직 선 두께를 0으로 설정하여 제거
-              color: 'transparent', // 교차선의 수직 선 색상을 투명으로 설정
-          },
-          horzLine: {
-              width: 0, // 교차선의 수직 선 두께를 0으로 설정하여 제거
-              color: 'transparent', // 교차선의 수평 선 색상을 투명으로 설정
-          },
-      },
-    });
+    $(document).ready(function() {
+        $(".table-container").each(function(index) {
+        	console.log("!!!!!");
+            const td = $(this).data("ticker");
+            const sd = "2023-07-31";
+            const ed = "2023-07-31";
 
-    // 시간대를 설정합니다.
-    const timeScale = chart.timeScale();
+            const requestData = {
+            	"ticker": td,
+                "startDate": sd,
+                "endtDate": ed,
+            };
 
-    const requestData = {
-      "symbol": "KS11",
-      "date": "2023-08-17",
-      "interval": "10"
-    };
+            const tableContainer = $(this);
+            
+            $.ajax({
+                type: 'POST',
+                url: 'http://192.168.0.74:5001/blue-oceans/search-tickers',
+                data: JSON.stringify(requestData),
+                contentType: 'application/json',
+                mode: 'cors',
+                success: function (result) {
+                    const jsonData = result;
+                    const table = $("<table>").addClass("table table-bordered");
+                    const thead = $("<thead>");
+                    const tbody = $("<tbody>");
 
-    // 데이터를 받아옵니다.
-    $.ajax({
-      type: 'POST',
-      url: 'http://192.168.0.74:5001/blue-oceans/search-stock-market-getinterval',
-      data: JSON.stringify(requestData),
-      contentType: 'application/json',
-      success: function(response) {
-        // 받아온 데이터를 가공하여 시간과 값을 분리합니다.
-        const data = response.data['10min'];
-        const timeSeriesData = [];
-        for (const timeKey in data) {
-          if (data.hasOwnProperty(timeKey)) {
-            const [hours, minutes] = timeKey.split(':');
-            const timestamp = new Date(requestData.date);
-            timestamp.setHours(parseInt(hours));
-            timestamp.setMinutes(parseInt(minutes));
-            timeSeriesData.push({ time: timestamp.getTime(), value: data[timeKey] });
-          }
-        }
+                    const headerLabels = ["Date", "Open", "High", "Low", "Close", "Volume", "Change"];
+                    const headerRow = $("<tr>").addClass("table-primary");
 
 
-	     // 받아온 데이터 중에서 15:30 이후의 데이터를 제거합니다.
-	     const cutoffTime = new Date(requestData.date);
-	     cutoffTime.setHours(15);
-	     cutoffTime.setMinutes(30);
-	
-	     const filteredTimeSeriesData = timeSeriesData.filter(entry => entry.time <= cutoffTime);
+                    /* const headerLabels = ["종목", "현재가", "고가", "저가", "등락률", "거래량", "Change"]; */
+                    
+                    headerLabels.forEach(label => {
+                        const th = $("<th>").addClass("text-center font-weight-bold").text(label);
+                        headerRow.append(th);
+                    });
 
+                    thead.append(headerRow);
+                    table.append(thead);
+                    jsonData.data
+                    
+                    /* jsonData.data.forEach(itemData => {
+                        const row = $("<tr>");
 
-        // 데이터를 차트에 추가합니다.
-        const lineSeries = chart.addLineSeries();
-        lineSeries.setData(filteredTimeSeriesData);
-        
-        // 그래프의 외곽선을 없애기 위해 선의 두께를 0으로 설정합니다.
-        lineSeries.applyOptions({
-            lineWidth: 0,
+                        // 원하는 순서대로 항목 키 값을 나열
+                        const keysInDesiredOrder = ["Volume", "High", "Low", "Close", "Open", "Change", "Date"];
+                        
+                        keysInDesiredOrder.forEach(key => {
+                            const cell = $("<td>").text(itemData[key]);
+                            row.append(cell);
+                        });
+
+                        tbody.append(row);
+                    }); */
+                    
+                    /* jsonData.data.forEach(itemData => {
+                        const row = $("<tr>");
+                        for (const key in itemData) {
+                            const cell = $("<td>").text(itemData[key]);
+                            row.append(cell);
+                        }
+                        tbody.append(row);
+                    }); */
+
+                    table.append(tbody);
+                    tableContainer.append(table);
+                },
+                error: function (error) {
+                    console.log('Error fetching data:', error);
+                }
+            });
         });
-
-        // 선 그래프의 색상을 빨간색으로 변경합니다.
-        /* lineSeries.applyOptions({
-            color: 'red',
-        }); */
-
-        // 시간 단위를 분으로 설정합니다.
-        timeScale.setVisibleRange({ from: timeSeriesData[0].time, to: timeSeriesData[timeSeriesData.length - 1].time });
-
-        // x축 눈금에 아무런 텍스트도 표시하지 않도록 설정합니다.
-        timeScale.applyOptions({
-        	  visible: false,
-        });
-        
-        // 데이터를 순회하면서 색상을 결정하여 설정합니다.
-        for (let i = 0; i < filteredTimeSeriesData.length; i++) {
-          const dataPoint = filteredTimeSeriesData[i];
-          const nextDataPoint = filteredTimeSeriesData[i + 1];
-
-          if (nextDataPoint && dataPoint.value > nextDataPoint.value) {
-        	  lineSeries.applyOptions({
-                  color: 'blue',
-              }); 
-          } else if (nextDataPoint && dataPoint.value < nextDataPoint.value) {
-        	  lineSeries.applyOptions({
-	                 color: 'red',
-	          }); 
-          }
-        }
-
-        // 차트를 렌더링합니다.
-        chart.timeScale().fitContent();
-      },
-      error: function(xhr, status, error) {
-        console.error(error);
-      },
     });
-  }); 
+</script>               
+	                      <!-- </tbody>
+	                    </table> -->
+	                </c:otherwise>
+	            </c:choose>
+	        </c:otherwise>
+	    </c:choose>
+                
+                
+                
+        <!-- 증권시장  -->
+        <h5 style='font-size: 26px; font-weight:bold;'>증권시장</h5>
+        <div class="card-group">
+		  <div class="card" style="margin-right: 10px">
+            <div id="chart1" class="card-img-top" ></div>
+		    <div class="card-body" style="border: 1px; outline: 1px solid; outline-width:2px; margin: 2px">
+		      <h5 id="chart1-1" class="card-title" style='font-weight:bold; font-size: 22px;'></h5>
+		      <p class="card-text" id="chart1-2" style="font-weight:bold; margin-bottom: 0px; font-size: 16px;"></p>
+              <p class="card-text" id="chart1-3" style="font-weight:bold; margin-bottom: 0px; font-size: 16px;"></p>
+              <p class="card-text"><small class="text-body-secondary" id="chart1-4" style='font-size: 8px;'></small></p>
+		    </div>
+		  </div>
+          <div class="card" style="margin-right: 10px">
+            <div id="chart2" class="card-img-top" ></div>
+            <div class="card-body" style="border: 1px; outline: 1px solid; outline-width:2px; margin: 2px">
+              <h5 id="chart2-1" class="card-title" style='font-weight:bold; font-size: 22px;'></h5>
+              <p class="card-text" id="chart2-2" style="font-weight:bold; margin-bottom: 0px; font-size: 16px;"></p>
+              <p class="card-text" id="chart2-3" style="font-weight:bold; margin-bottom: 0px; font-size: 16px;"></p>
+              <p class="card-text"><small class="text-body-secondary" id="chart2-4" style='font-size: 8px;'></small></p>
+            </div>
+          </div>
+          <div class="card" style="margin-right: 10px">
+            <div id="chart3" class="card-img-top" ></div>
+            <div class="card-body" style="border: 1px; outline: 1px solid; outline-width:2px; margin: 2px">
+              <h5 id="chart3-1" class="card-title" style='font-weight:bold; font-size: 22px;'></h5>
+              <p class="card-text" id="chart3-2" style="font-weight:bold; margin-bottom: 0px; font-size: 18px;"></p>
+              <p class="card-text" id="chart3-3" style="font-weight:bold; margin-bottom: 0px; font-size: 18px;"></p>
+              <p class="card-text"><small class="text-body-secondary" id="chart3-4" style='font-size: 8px;'></small></p>
+            </div>
+          </div>
+          <div class="card" style="margin-right: 10px">
+            <div id="chart4" class="card-img-top" ></div>
+            <div class="card-body" style="border: 1px; outline: 1px solid; outline-width:2px; margin: 2px">
+              <h5 id="chart4-1" class="card-title" style='font-weight:bold; font-size: 22px;'></h5>
+              <p class="card-text" id="chart4-2" style="font-weight:bold; margin-bottom: 0px; font-size: 18px;"></p>
+              <p class="card-text" id="chart4-3" style="font-weight:bold; margin-bottom: 0px; font-size: 18px;"></p>
+              <p class="card-text"><small class="text-body-secondary" id="chart4-4" style='font-size: 8px;'></small></p>
+            </div>
+          </div>
+          <div class="card">
+            <div id="chart5" class="card-img-top" ></div>
+            <div class="card-body" style="border: 1px; outline: 1px solid; outline-width:2px; margin: 2px">
+              <h5 id="chart5-1" class="card-title" style='font-weight:bold; font-size: 22px;'></h5>
+              <p class="card-text" id="chart5-2" style="font-weight:bold; margin-bottom: 0px; font-size: 18px;"></p>
+              <p class="card-text" id="chart5-3" style="font-weight:bold; margin-bottom: 0px; font-size: 18px;"></p>
+              <p class="card-text"><small class="text-body-secondary" id="chart5-4" style='font-size: 8px;'></small></p>
+            </div>
+          </div>
+		</div>   
+		<script>
+		function formatDateToYYYYMMDD(date) {
+			  const year = date.getFullYear();
+			  const month = String(date.getMonth() + 1).padStart(2, '0');
+			  const day = String(date.getDate()).padStart(2, '0');
+			  return year+"-"+month+"-"+day;
+			}
+		
+		//공휴일 정보 가져오기 함수
+		function getHolidays(year, countryCode, callback) {
+		  $.ajax({
+		    type: 'GET',
+		    url: "https://date.nager.at/Api/v2/PublicHolidays/"+year+"/"+countryCode,
+		    success: function(response) {
+		      callback(response);
+		    },
+		    error: function(xhr, status, error) {
+		      console.error(error);
+		      callback([]);
+		    }
+		  });
+		}
+		// 주말 여부 확인 함수 (0: 일요일, 6: 토요일)
+		function isWeekend(day) {
+		  return day === 0 || day === 6;
+		}
+		//오늘부터 이전 날짜 탐색 함수
+		function findPreviousValidDate(holidays, currentDate) {
+		  const oneDay = 24 * 60 * 60 * 1000; // 1일의 밀리초
+		  let previousDate = new Date(currentDate);
+		
+		  while (true) {
+		    previousDate.setTime(previousDate.getTime() - oneDay); // 하루를 뺌
+		    const previousDay = previousDate.getDay();
+		
+		    if (!holidays.some(holiday => holiday.date === previousDate.toISOString()) && !isWeekend(previousDay)) {
+		      return previousDate;
+		    }
+		  }
+		}
+		//오늘이 공휴일이나 주말이 아니라면 오늘 날짜 반환, 아니면 이전 날짜 반환
+		function getValidDate(holidays) {
+			//주말일때 어떻게 처리하는지 확인용
+			/* const today = new Date();
+		    const yesterday = new Date(today);
+		    yesterday.setDate(today.getDate() - 1); */
+		  const currentDate = new Date();
+		  const currentDay = currentDate.getDay();
+		
+		  if (!holidays.some(holiday => holiday.date === currentDate.toISOString()) && !isWeekend(currentDay)) {
+		    return currentDate;
+		  } else {
+		    let previousValidDate = findPreviousValidDate(holidays, currentDate);
+		
+		    // 이전 날짜도 휴일이나 주말이면 다시 이전 날짜 찾기
+		    while (holidays.some(holiday => holiday.date === previousValidDate.toISOString()) || isWeekend(previousValidDate.getDay())) {
+		      previousValidDate = findPreviousValidDate(holidays, new Date(previousValidDate.getTime() - 1));
+		    }
+		
+		    return previousValidDate;
+		  }
+		}
+		
+		$(document).ready(function() {
+		  const countryCode = 'KR';
+		  const currentYear = new Date().getFullYear();
+		  
+		  let formattedDate = ""; // 전역 변수로 선언
+		
+		  getHolidays(currentYear, countryCode, function(holidays) {
+			    const validDate = getValidDate(holidays);
+			    formattedDate = formatDateToYYYYMMDD(validDate);
+			    console.log('Valid Date:', formattedDate);
+			    
+			    // 차트 생성 및 데이터 요청
+			    for(let i=0;i<5;i++){
+			        createChartAndFetchData(formattedDate,i);
+			    }
+			  });
+		  }); 
+		
+		function createChartAndFetchData(formattedDate, no) {
+			// 차트를 생성합니다.
+			no = no+1;
+			
+		    const chart = LightweightCharts.createChart(document.getElementById('chart'+no), {
+		      /* width: 800, */
+		      height: 160,
+		      borderVisible: false,
+		      layout: {
+		        backgroundColor: 'transparent',
+		      },
+		      priceScale: {
+		        borderColor: 'transparent',
+		      },
+		      timeScale: {
+		        borderColor: 'transparent',
+		        timeVisible: false,
+		      },
+		      grid: {
+		        vertLines: {
+		          color: 'transparent',
+		        },
+		        horzLines: {
+		          color: 'transparent',
+		        },
+		      },
+		      crosshair: {
+		        vertLine: {
+		          width: 0,
+		          color: 'transparent',
+		        },
+		        horzLine: {
+		          width: 0,
+		          color: 'transparent',
+		        },
+		      },
+		      handleScroll: false,
+		    });
+		
+		    // 시간대를 설정합니다.
+		    const timeScale = chart.timeScale();
+		    let requestData = {
+              "symbol": "KS11",
+              "date": formattedDate,
+              "interval": "10"
+            };
+		    switch (no) {
+		    case 1:
+		    	requestData.symbol = "KS11";
+		        break;
+		    case 2:
+                requestData.symbol = "KQ11";
+		        break;
+            case 3:
+                requestData.symbol = "KS200";
+                break;
+            case 4:
+                requestData.symbol = "USD/KRW";
+                break;
+            case 5:
+                requestData.symbol = "JPY/KRW";
+                break;
+		    default:
+		  }
+		    
+		    
+		        
+		
+		    // 데이터를 받아옵니다.
+		    $.ajax({
+		      type: 'POST',
+		      url: 'http://192.168.0.74:5001/blue-oceans/search-stock-market-getinterval',
+		      data: JSON.stringify(requestData),
+		      contentType: 'application/json',
+		      success: function(response) {
+		        // 받아온 데이터를 가공하여 시간과 값을 분리합니다.
+		        let startData = response.startData;
+		
+		        var chart1_1Element = document.getElementById("chart"+no+"-1");
+		        chart1_1Element.textContent = response.symbol_name;
+		        var chart1_2Element = document.getElementById("chart"+no+"-2");
+		        var chart1_3Element = document.getElementById("chart"+no+"-3");
+		        var chart1_4Element = document.getElementById("chart"+no+"-4");
+		        
+		        const data = response.data['10min'];
+		        const timeSeriesData = [];
+		        for (const timeKey in data) {
+		          if (data.hasOwnProperty(timeKey)) {
+		            const [hours, minutes] = timeKey.split(':');
+		            const timestamp = new Date(requestData.date);
+		            timestamp.setHours(parseInt(hours));
+		            timestamp.setMinutes(parseInt(minutes));
+		            timeSeriesData.push({ time: timestamp.getTime(), value: data[timeKey] });
+		          }
+		        }
+		
+		        let date = response.date;
+		        // 데이터의 마지막 시간과 값을 찾기
+		        let lastTime = null;
+		        let lastValue = null;
+		        for (const timeKey in data) {
+		       	  if (data.hasOwnProperty(timeKey)) {
+		       		lastTime = timeKey;
+		       		lastValue = data[timeKey];
+		       	  }
+		       	}
+		        chart1_2Element.textContent = "시작가: "+startData.toFixed(1);
+		        chart1_3Element.textContent = "현재가: "+lastValue.toFixed(1) + "("+(lastValue.toFixed(1)-startData.toFixed(1)).toFixed(1)+")";
+		        chart1_4Element.textContent = "( last update: "+date +" "+lastTime+" )";
+		
+		        
+		        // 받아온 데이터 중에서 15:30 이후의 데이터를 제거합니다.
+		        const cutoffTime = new Date(requestData.date);
+		        cutoffTime.setHours(15);
+		        cutoffTime.setMinutes(30);
+		    
+		        const filteredTimeSeriesData = timeSeriesData.filter(entry => entry.time <= cutoffTime);
+		
+		        // 데이터를 차트에 추가합니다.
+		        const lineSeries = chart.addLineSeries();
+		        lineSeries.setData(filteredTimeSeriesData);
+		        
+		        // 그래프의 외곽선을 없애기 위해 선의 두께를 0으로 설정합니다.
+		        lineSeries.applyOptions({
+		            lineWidth: 0,
+		        });
+		        
+		        // 시간 단위를 분으로 설정합니다.
+		        timeScale.setVisibleRange({ from: timeSeriesData[0].time, to: timeSeriesData[timeSeriesData.length - 1].time });
+		
+		        // x축 눈금에 아무런 텍스트도 표시하지 않도록 설정합니다.
+		        timeScale.applyOptions({
+		              visible: false,
+		        });
+		        
+		        // 데이터를 순회하면서 색상을 결정하여 설정합니다.
+		        for (let i = 0; i < filteredTimeSeriesData.length; i++) {
+		          const dataPoint = filteredTimeSeriesData[i];
+		          const nextDataPoint = filteredTimeSeriesData[i + 1];
+		
+		          if (nextDataPoint && startData > nextDataPoint.value) {
+		              lineSeries.applyOptions({
+		                  color: 'blue',
+		              }); 
+		          } else if (nextDataPoint && startData < nextDataPoint.value) {
+		              lineSeries.applyOptions({
+		                  color: 'red',
+		              }); 
+		          }
+		        }
+		
+		        // subscribeCrosshairMove 이벤트를 사용하여 마우스 휠 스크롤을 무시합니다.
+		        chart.subscribeCrosshairMove((param) => {
+		          // 아무 작업도 하지 않음 (마우스 휠 동작을 무시)
+		          // 빈 함수이므로 아무런 동작도 발생하지 않습니다.
+		        });
+		
+		        // 차트를 렌더링합니다.
+		        chart.timeScale().fitContent();        
+		      },
+		      error: function(xhr, status, error) {
+		        console.error(error);
+		      },
+		    });
+		}		
+		</script>
 
 
-</script>
-
-     
       <!-- 거래량 상위 10개 종목  -->
       <div id="tableContainer" style="margin-top: 20px; margin-bottom: 20px;"> </div>        
       <!--네이버 뉴스 api 정보를 불러오는 영역-->
@@ -293,7 +559,7 @@ $(document).ready(function() {
               let parsedItems = parsedJson.items;
               // keyword로 불러온 데이터에서 3개 항목에 대해서만 html에 출력
               let newsHtml = '';
-              newsHtml += "<h5 style='font-weight:bold;'>" /*  $('#keyword').val() */ + '오늘의 주식 뉴스</h5>';
+              newsHtml += "<h5 style='font-size: 26px; font-weight:bold; margin-bottom: 20px;'>" /*  $('#keyword').val() */ + '오늘의 뉴스</h5>';
               newsHtml +=
                   "<div class='naver-news'><div class='news-image-container'></div><div class='news-text-container'><a href='" +
                   parsedItems[0].link +

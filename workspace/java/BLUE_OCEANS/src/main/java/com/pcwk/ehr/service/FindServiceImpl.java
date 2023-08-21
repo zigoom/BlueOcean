@@ -24,16 +24,26 @@ public class FindServiceImpl implements FindService, PcwkLogger{
 	public String findId(UserVO user) throws SQLException, ClassNotFoundException {
 		// 1. 아이디 check
 		// 2. 비번 check
+		String foundId = "";
 
-		String foundId = findIdDao.findId(user);
-
+		int flag = findIdDao.userCheck(user);
+		LOG.debug("┌──────────────────────────┐");
+		LOG.debug("│ flag                     │" + flag);
+		LOG.debug("└──────────────────────────┘");
+		if (flag == 1) {
+			foundId = findIdDao.findId(user);
+		}
+		else {
+			foundId = "0";
+		}
 
 		LOG.debug("┌──────────────────────────┐");
-		LOG.debug("│ findId                   │" + foundId);
+		LOG.debug("│ foundId                  │" + foundId);
 		LOG.debug("└──────────────────────────┘");
 
 		return foundId;
 	}
+
 
 
 	

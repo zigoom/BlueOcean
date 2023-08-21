@@ -74,13 +74,7 @@ public class LoginController implements PcwkLogger {
 		}
 
 		int status = loginService.doLogin(user);
-		if (10 == status) {
-			message.setMsgId("10");
-			message.setMsgContents("아이디를 확인 하세요");
-		} else if (20 == status) {
-			message.setMsgId("20");
-			message.setMsgContents("비밀번호를 확인 하세요");
-		} else if (30 == status) {
+		if (30 == status) {
 			message.setMsgId("30");
 			message.setMsgContents(user.getUserId() + "로그인 되었습니다");
 
@@ -91,11 +85,15 @@ public class LoginController implements PcwkLogger {
 			LOG.debug("sessthion" + userinfo);
 			if (null != userinfo) {
 				httpsession.setAttribute("user", userinfo.getUserId());
+				httpsession.setAttribute("level", userinfo.getUserLevel());
 				LOG.debug("-------------userinfo------------" + userinfo.getUserId());
+				LOG.debug("-------------userinfo------------" + userinfo.getUserLevel());
 			} else {
 				message.setMsgId("99");
 				message.setMsgContents("알수 없는 오류");
 			}
+		} else 	if (10 == status || 20 == status) {
+			message.setMsgContents("아이디를 또는 비밀번호를 확인 하세요");
 		}
 
 		jsonString = new Gson().toJson(message);

@@ -22,11 +22,17 @@ ul {
 		</div>
 		<button class="btn btn-light header-btn" id="boardBtn">토론게시판</button>
 		<button class="btn btn-light header-btn" id="favoriteBtn">관심목록</button>
-		<button class="btn btn-light header-btn" id="mypageBtn">마이페이지</button>
-
+        
 		<c:choose>
 			<c:when test="${not empty sessionScope.user}">
+			  <button class="btn btn-light header-btn" id="mypageBtn">마이페이지</button>
+			  <span class="input-group-text" id="basic-addon1">${sessionScope.user}님</span>
 				<button class="btn btn-light header-btn" type="button" id="logout">로그아웃</button>
+        <c:choose>
+            <c:when test="${sessionScope.level == 0}">
+                <button class="btn btn-light header-btn" id="adminBtn">관리자 페이지</button>
+            </c:when>
+        </c:choose>
 			</c:when>
 			<c:otherwise>
 				<button type="button" id="modal-btn" class="btn btn-light header-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">로그인/회원가입</button>
@@ -87,9 +93,16 @@ ul {
 			window.location.href = "${CP}/BLUEOCEAN/mypage.do";
 		})
 		
+
+
 		
 		$(document).ready(function() {
-        
+			
+					   $("#adminBtn").on("click", function() {
+		            console.log('어드민');
+		              window.location.href = "${CP}/BLUEOCEAN/admin/user.do"; // 여기에 실제 관리자 페이지의 URL을 넣어주세요 
+		          });
+			     
              $("#word").autocomplete({
               source: function(request, response) {
                   let keyword = request.term; // 입력된 검색어 가져오기
@@ -201,7 +214,7 @@ ul {
                                 // 성공
                                 console.log("data:"+ data);
                               alert("로그아웃 됨");
-                              location.reload();
+                              window.location.href = "${CP}/BLUEOCEAN/main.do"; 
                               },
                               error : function(data) {// 실패시 처리
                                 console.log("error:"+ data);
@@ -212,5 +225,7 @@ ul {
            
             });
  });
+		
+		
 		</script>
 </html>

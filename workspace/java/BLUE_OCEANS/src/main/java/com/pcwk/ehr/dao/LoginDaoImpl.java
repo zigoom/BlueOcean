@@ -62,7 +62,7 @@ public class LoginDaoImpl implements LoginDao, PcwkLogger {
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public UserVO get(UserVO user )throws SQLException{
+	public UserVO get(UserVO user)throws SQLException{
 		UserVO outVO = null;
 		
         String statement = this.NAMESPACE+DOT+"get";

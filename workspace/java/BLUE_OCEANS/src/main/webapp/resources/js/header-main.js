@@ -31,7 +31,7 @@ signInhtml += '</form>';
 
 agreehtml += '	<div class="form-check">																												';
 agreehtml += '		<label class="form-check-label">개인정보호 동의</label>                                                                                       ';
-agreehtml += '		<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">                                                         ';
+agreehtml += '		<input class="form-check-input" type="checkbox" value="" id="agree1">                                                         ';
 agreehtml += '			<div class="form-floating">                                                                                                             ';
 agreehtml += '				<textarea class="form-control" readonly="readonly" id="floatingTextarea2" style="height: 100px" rows="15" cols="40" height: 100px; resize: none;></textarea>         ';
 agreehtml += '				<label for="floatingTextarea2"></label>                                                                                                 ';
@@ -40,7 +40,7 @@ agreehtml += '		</div>                                                          
 agreehtml += '		<p>                                                                                                                                     ';
 agreehtml += '		<div class="form-check">                                                                                                                ';
 agreehtml += '			<label class="form-check-label">회원가입 동의</label>                                                                                        ';
-agreehtml += '			<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">                                                         ';
+agreehtml += '			<input class="form-check-input" type="checkbox" value="" id="agree2">                                                         ';
 agreehtml += '			<div class="form-floating">                                                                                                             ';
 agreehtml += '				<textarea class="form-control" readonly="readonly" id="floatingTextarea2" style="height: 100px" rows="15" cols="40" height: 100px; resize: none;></textarea>         ';
 agreehtml += '				<label for="floatingTextarea2"></label>                                                                                             ';
@@ -52,20 +52,20 @@ agreehtml += '	</div>                                                           
 signUphtml += '<form>';
 signUphtml += "  <div class='modal-containor'>";
 signUphtml += '    <div>';
-signUphtml += '      <label>아이디</label>';
+signUphtml += '      <label>ID</label>';
 signUphtml += "      <input type='text' id='signUp_id' name='signUp_id' maxlength='15' class='form-control'>";
-signUphtml += "     <button type='button' class='btn btn-outline-primary' id='signup_idcheck' disabled>아이디체크</button>";
+signUphtml += "     <button type='button' style='font-size: 5px' class='btn btn-outline-primary' id='signup_idcheck' disabled>중복확인</button>";
 signUphtml += '    </div>';
 signUphtml += '    <div>';
 signUphtml += '      <label>이름</label>';
 signUphtml += "      <input type='text' id='signUp_name' name='signUp_name' class='form-control'>";
 signUphtml += '    </div>';
 signUphtml += '    <div>';
-signUphtml += '      <label>비밀번호</label>';
+signUphtml += '      <label>PW</label>';
 signUphtml += "      <input type='password' id='signUp_pw' name='signUp_pw' class='form-control'>";
 signUphtml += '    </div>';
 signUphtml += '    <div>';
-signUphtml += '      <label>비밀번호 확인</label>';
+signUphtml += '      <label>PW확인</label>';
 signUphtml += "      <input type='password' id='signUp_pw_check' name='signUp_pw_check' class='form-control'>";
 signUphtml += '    </div>';
 signUphtml += '    <div>';
@@ -80,10 +80,28 @@ signUphtml += "  	 <input type='radio' name='gender' value='M' id='signUp_M' sty
 signUphtml += "  	 <label for='genderF' style='margin-left: 10px;'>여</label>";
 signUphtml += "  	 <input type='radio' name='gender' value='F' id='signUp_F' style='margin-right: 10px;'>";
 signUphtml += '	   </div>';
-signUphtml += '    <div>';
+/*signUphtml += '    <div>';
 signUphtml += '      <label>핸드폰</label>';
 signUphtml += "      <input type='text' id='signUp_phone' name='signUp_phone' class='form-control'>";
-signUphtml += '    </div>';
+signUphtml += '    </div>';*/
+
+/*signUphtml += ' <div> ';
+signUphtml += '   <input type="text" id="phone1" class="form-control" maxlength="3" placeholder="010" aria-label="Phone number first part">';
+signUphtml += '   <span class="input-group-text">-</span>';
+signUphtml += '   <input type="text" id="phone2" class="form-control" maxlength="4" placeholder="1234" aria-label="Phone number second part">';
+signUphtml += '   <span class="input-group-text">-</span>';
+signUphtml += '   <input type="text" id="phone3" class="form-control" maxlength="4" placeholder="5678" aria-label="Phone number third part">';
+signUphtml += ' </div>';*/
+signUphtml += '	<div class = "container"> ';
+signUphtml += '   <label>핸드폰</label>';
+signUphtml += '		<div class = "row"> ';
+signUphtml += '			<div class = "col-md-8"> ';
+signUphtml += '	 			<input type="text" maxlength="3" class="form-control" maxlength="3" placeholder="3자리">';
+signUphtml += '	  			<input type="text" maxlength="4" class="form-control" maxlength="4" placeholder="4자리">';
+signUphtml += '	  			<input type="text" maxlength="4" class="form-control" maxlength="4" placeholder="4자리">';
+signUphtml += '			</div>';
+signUphtml += '		</div>';
+signUphtml += '	</div>';
 signUphtml += '    <div>';
 signUphtml += '      <label>이메일</label>';
 signUphtml += "      <input type='text' id='signUp_email' name='signUp_email' class='form-control'>";
@@ -140,21 +158,27 @@ function appendAndShow(title) {
     modalFooter.show();
 }
 
+
 let idcheck = 0; // 아이디 체크 했으면 1 안했으면 0
 let idEffectiveness = 0; // 아이디 체크 했으면 1 안했으면 0
-let isPasswordValidationDone = 0;
-let isPasswordCheckValidationDone = 0;
-function classListRepair(btn){
-	btn.classList.remove("btn-secondary");
-	btn.classList.add("btn-light");
-}
+let agree_check1 = 0;
+let agree_check2 = 0;
+	function classListRepair(btn){
+		btn.classList.remove("btn-secondary");
+		btn.classList.add("btn-light");
+	}
+	
 $(document).ready(function () {
+	
+
+	
     console.log('테스트중');
     signIn.classList.remove("btn-light");
     signIn.classList.add("btn-secondary");
     classListRepair(signUp);
     classListRepair(findId);
     classListRepair(findPw);
+    ////classListRepair(agree);
 
     signInActive = signInActive + 1;
     findIdActive = 0;
@@ -166,125 +190,7 @@ $(document).ready(function () {
     }
 
 
-    $('#signIn').click(function () {
-    	signIn.classList.remove("btn-light");
-    	signIn.classList.add("btn-secondary");
-    	classListRepair(signUp);
-    	classListRepair(findId);
-    	classListRepair(findPw);
-    	
-        signInActive = signInActive + 1;
-        findIdActive = 0;
-        findPwActive = 0;
-        signUpActive = 0;
-        agreeActive = 0;
-        if (signInActive >= 1) {
-            appendAndShow(signInhtml);
-            modalFooter.append("<button class='btn btn-primary' id='login_bt'>로그인</button>");
-        }
-    });
-
-    $('#agree_').click(function () {
-    	signUp.classList.remove("btn-light");
-    	signUp.classList.add("btn-secondary");
-    	classListRepair(signIn);
-    	classListRepair(findId);
-    	classListRepair(findPw);
-    	
-        signUpActive = agreeActive + 1;
-        signInActive = 0;
-        findIdActive = 0;
-        findPwActive = 0;
-        agreeActive = 0;
-        if (signUpActive >= 1) {
-            appendAndShow(signUphtml);
-            modalFooter.append("<button class='btn btn-primary' id='signUp_bt'>회원가입</button>");
-        }
-
-        document.querySelector('#signUp_id').addEventListener('input', function () {
-		    const signUpButton = document.querySelector('#signup_idcheck');
-		    const inputVal = this.value.trim(); // 입력 값을 얻어와서 공백 제거
-		
-		    if (inputVal.length > 0) { // 입력 값이 있는 경우
-		        signUpButton.removeAttribute('disabled');
-		    } else { // 입력 값이 없는 경우
-		        signUpButton.setAttribute('disabled', 'disabled');
-		    }
-		});
-
-        // 아이디 입력 필드에서 포커스를 잃었을 때 유효성 검사 수행
-        document.querySelector('#signUp_id').addEventListener('keyup', function (event) {
-            const inputValue = event.target.value;
-            const englishOnlyValue = inputValue.replace(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g, '');
-            event.target.value = englishOnlyValue;
-        });
-
-        document.querySelector('#signUp_pw').addEventListener('blur', function () {
-            validatePassword();
-        });
-
-        document.querySelector('#signUp_pw_check').addEventListener('blur', function () {
-            passwordSameCheck();
-        });
-    });
-
-    $('#find-id').click(function () {
-    	findId.classList.remove("btn-light");
-    	findId.classList.add("btn-secondary");
-    	classListRepair(signIn);
-    	classListRepair(signUp);
-    	classListRepair(findPw);
-        
-        signInActive = 0;
-        signUpActive = 0;
-        findPwActive = 0;
-        agreeActive = 0;
-        findIdActive = findIdActive + 1;
-        if (findIdActive >= 1) {
-            appendAndShow(findIdhtml);
-            modalFooter.append("<button class='btn btn-primary' id='findid_bt'>ID찾기</button>");
-        }
-    });
-
-    $('#find-pw').click(function () {
-    	findPw.classList.remove("btn-light");
-    	findPw.classList.add("btn-secondary");
-    	classListRepair(signIn);
-    	classListRepair(signUp);
-    	classListRepair(findId);
-        
-        signInActive = 0;
-        signUpActive = 0;
-        findIdActive = 0;
-        agreeActive = 0;
-        findPwActive = findPwActive + 1;
-        if (findPwActive >= 1) {
-            appendAndShow(findPwhtml);
-            modalFooter.append("<button class='btn btn-primary' id='login_bt'>PW찾기</button>");
-        }
-    });
     
-        $('#signUp').click(function () {
-    	signUp.classList.remove("btn-light");
-        signUp.classList.add("btn-secondary");
-        classListRepair(signIn);
-        classListRepair(signUp);
-        classListRepair(findId);
-
-        signInActive = 0;
-        findIdActive = 0;
-        findPwActive = 0;
-        agreeActive = agreeActive + 1;
-
-        // agreehtml 내용을 화면에 표시
-        appendAndShow(agreehtml);
-        modalFooter.append("<button class='btn btn-primary' id='agree_N'>아니요</button>");
-        modalFooter.append("<button class='btn btn-primary' id='agree_Y'>예</button>");
-
-            $('#agree_Y').click(function () {
-                console.log("agree");
-            });
-    });
 
     // ------------------------------회원가입----------------------------
    
@@ -338,7 +244,7 @@ $(document).ready(function () {
                     } else {
                         // 중복된
                         // 아이디
-                        alert('사용 불가능한 id입니다');
+                        alert('중복된 id입니다');
                         /*
                          * $(".id_already").css("display",
                          * "inline-block");
@@ -356,6 +262,14 @@ $(document).ready(function () {
         }
     });
 
+	    function formatPhoneNumber() {
+	    const phone1 = document.getElementById("phone1").value;
+	    const phone2 = document.getElementById("phone2").value;
+	    const phone3 = document.getElementById("phone3").value;
+	
+	    return `${phone1}-${phone2}-${phone3}`;
+	  }
+    
     $(document).on('click', '#signUp_bt', function () {
         console.log('signUp_bt');
 
@@ -401,6 +315,8 @@ $(document).ready(function () {
             return;
         }
 
+
+        const formattedPhoneNumber = formatPhoneNumber();
         $.ajax({
             type: 'POST',
             url: '/ehr/BLUEOCEAN/siginUp.do',
@@ -412,7 +328,8 @@ $(document).ready(function () {
                 passwd: $('#signUp_pw').val(),
                 birthday: $('#signUp_birthday').val(),
                 gender: $("input[name='gender']:checked").val(),
-                phone: $('#signUp_phone').val(),
+                phone: formattedPhoneNumber,
+                //phone: $('#signUp_phone').val(),
                 email: $('#signUp_email').val(),
                 keyword: $('#signUp_keyword').val(),
             },
@@ -437,7 +354,8 @@ $(document).ready(function () {
     });
     // ------------------------------회원가입 end----------------------------
 
-	// ------------------------------아이디 찾기------------------------------					
+	// ------------------------------아이디 찾기------------------------------	
+
 					$(document).on("click","#findid_bt",function() {
 					console.log("findid_bt");
 	
@@ -467,24 +385,14 @@ $(document).ready(function () {
 											.val()
 	
 								},
-								success : function(data) {// 통신 성공
-									
-									console.log("data:" + data);
-									if (data != null){
-									alert("회원님의 아이디는 "+data+"입니다");
-									$("#findid_name").val("");
-									$("#findid_email").val("");
-									}
-									else{
-										alert("일치하는 아이디가 없습니다");
-									};
+								success: function(data) {
+								    console.log("data:" + data);
+								    if (data == "0") {
+                                        alert("일치하는 회원정보    가 없습니다.");
+								    } else {
+                                        alert("회원님의 아이디는 " + data + "입니다");
+								    }
 								},
-								error : function(data) {// 실패시
-														// 처리
-									console.log("error:"
-											+ data);
-									alert("입니다");
-								}
 							});
 					}
 	
@@ -518,22 +426,24 @@ $(document).ready(function () {
                 passwd: $('#login_pw').val(),
             },
             success: function (data) {
-                // 통신
-                // 성공
+                // 통신성공
                 console.log('data:' + data);
                 let paredJSON = JSON.parse(data);
                 console.log('paredJSON.msgId:' + paredJSON.msgId);
                 if (paredJSON.msgId == 10 || paredJSON.msgId == 20) {
                     alert('아이디나 비밀번호가 다릅니다.');
-                } else if (paredJSON.msgId == 30) {
-                    alert('로그인 성공');
-                    window.location.href = window.location.href;
+                } 
+                else if (paredJSON.msgId == 30) {
+                	    alert('로그인이 완료되었습니다.');  	
+                		window.location.href = window.location.href; 
+
                 }
             },
             error: function (data) {
                 // 실패시
                 // 처리
                 console.log('error:' + data);
+                alert('관리자에게 문의하십시오');
             },
         });
     });
@@ -542,6 +452,166 @@ $(document).ready(function () {
 });
 
 // ID 한글 입력값 못 넣게 하는 함수
+	$(document).on('change', '#agree1', function () {
+	    if (this.checked) {
+	        agree_check1 = 1;
+	        console.log(agree_check1);
+	    }
+	    else{
+	    	agree_check1 = 0;
+	    	console.log(agree_check1);
+	    }
+	});
+	
+	$(document).on('change', '#agree2', function () {
+	    if (this.checked) {
+	        agree_check2 = 1;
+	        console.log(agree_check1);
+	    }
+	    else{
+	    	agree_check2gkem = 0;
+	    	console.log(agree_check1);
+	    }
+	});
+
+	$('#signIn').click(function () {
+    	signIn.classList.remove("btn-light");
+    	signIn.classList.add("btn-secondary");
+    	classListRepair(signUp);
+    	classListRepair(findId);
+    	classListRepair(findPw);
+    	classListRepair(agree);
+    	
+        signInActive = signInActive + 1;
+        findIdActive = 0;
+        findPwActive = 0;
+        signUpActive = 0;
+        agreeActive = 0;
+        if (signInActive >= 1) {
+            appendAndShow(signInhtml);
+            modalFooter.append("<button class='btn btn-primary' id='login_bt'>로그인</button>");
+        }
+    });
+
+	$(document).on('click', '#agree_Y', function () {
+		
+	        if(agree_check1 == 1 && agree_check2 == 1){
+	        	  console.log("agree");
+    	agree.classList.remove("btn-light");
+    	agree.classList.add("btn-secondary");
+    	classListRepair(signIn);
+    	classListRepair(findId);
+    	classListRepair(findPw);
+    	
+    	
+        signUpActive = signUpActive + 1;
+        signInActive = 0;
+        findIdActive = 0;
+        findPwActive = 0;
+        agreeActive  = 0;
+        if (signUpActive >= 1) {
+            appendAndShow(signUphtml);
+            modalFooter.append("<button class='btn btn-primary' id='signUp_bt'>회원가입</button>");
+        }
+
+        document.querySelector('#signUp_id').addEventListener('input', function () {
+		    const signUpButton = document.querySelector('#signup_idcheck');
+		    const inputVal = this.value.trim(); // 입력 값을 얻어와서 공백 제거
+		
+		    if (inputVal.length > 0) { // 입력 값이 있는 경우
+		        signUpButton.removeAttribute('disabled');
+		    } else { // 입력 값이 없는 경우
+		        signUpButton.setAttribute('disabled', 'disabled');
+		    }
+		});
+
+        // 아이디 입력 필드에서 포커스를 잃었을 때 유효성 검사 수행
+        document.querySelector('#signUp_id').addEventListener('keyup', function (event) {
+            const inputValue = event.target.value;
+            const englishOnlyValue = inputValue.replace(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g, '');
+            event.target.value = englishOnlyValue;
+        });
+
+        document.querySelector('#signUp_pw').addEventListener('blur', function () {
+            validatePassword();
+        });
+
+        document.querySelector('#signUp_pw_check').addEventListener('blur', function () {
+            passwordSameCheck();
+        });      	
+	        }
+	        else{
+	        	alert("동의를 눌러주세요");
+	        }
+		
+    	
+    });
+
+    $('#find-id').click(function () {
+    	findId.classList.remove("btn-light");
+    	findId.classList.add("btn-secondary");
+    	classListRepair(signIn);
+    	classListRepair(signUp);
+    	classListRepair(findPw);
+    	classListRepair(agree);
+    	
+        
+        signInActive = 0;
+        signUpActive = 0;
+        findPwActive = 0;
+        agreeActive = 0;
+        findIdActive = findIdActive + 1;
+        if (findIdActive >= 1) {
+            appendAndShow(findIdhtml);
+            modalFooter.append("<button class='btn btn-primary' id='findid_bt'>ID찾기</button>");
+        }
+    });
+
+    $('#find-pw').click(function () {
+    	findPw.classList.remove("btn-light");
+    	findPw.classList.add("btn-secondary");
+    	classListRepair(signIn);
+    	classListRepair(signUp);
+    	classListRepair(findId);
+    	classListRepair(agree);
+        
+        signInActive = 0;
+        signUpActive = 0;
+        findIdActive = 0;
+        agreeActive = 0;
+        findPwActive = findPwActive + 1;
+        if (findPwActive >= 1) {
+            appendAndShow(findPwhtml);
+            modalFooter.append("<button class='btn btn-primary' id='login_bt'>PW찾기</button>");
+        }
+    });
+    
+        $('#signUp').click(function () {
+       
+    	signUp.classList.remove("btn-light");
+        signUp.classList.add("btn-secondary");
+        classListRepair(signIn);
+        classListRepair(signUp);
+        classListRepair(findId);
+        classListRepair(agree);
+
+        signUpActive = 0;
+        signInActive = 0;
+        findIdActive = 0;
+        findPwActive = 0;
+        agreeActive = agreeActive + 1;
+        
+
+
+        // agreehtml 내용을 화면에 표시
+        if (agreeActive >= 1) {
+	        appendAndShow(agreehtml);
+	        modalFooter.append("<button class='btn btn-primary' id='agree_N' >아니요</button>");
+	        modalFooter.append("<button class='btn btn-primary' id='agree_Y' >예</button>");	
+        }
+
+    });
+
 
 // 비밀번호 유효성 검사 함수
 function validatePassword() {
@@ -560,7 +630,6 @@ function validatePassword() {
 function passwordSameCheck() {
     let password = $('#signUp_pw').val();
     let confirmPw = $('#signUp_pw_check').val();
-    isPasswordCheckValidationDone = 0;
     if (confirmPw != password) {
         alert('비밀번호가 다릅니다.');
         $('#signUp_pw_check').val('');

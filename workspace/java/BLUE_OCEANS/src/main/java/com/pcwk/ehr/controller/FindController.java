@@ -41,7 +41,6 @@ public class FindController implements PcwkLogger{
 		LOG.debug("│FindController                │");
 		LOG.debug("└──────────────────────────────┘");
 		
-		 
 		String foundId = findService.findId(user);
 		return foundId; 
 	

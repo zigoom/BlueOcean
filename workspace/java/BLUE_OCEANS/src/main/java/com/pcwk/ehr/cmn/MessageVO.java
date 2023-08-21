@@ -2,7 +2,7 @@ package com.pcwk.ehr.cmn;
 
 public class MessageVO {
 	private String msgId;//메시지 id
-	private String msgContents; //세미지
+	private String msgContents; //메시지 내용
 	
 	public MessageVO() {}
 
@@ -28,10 +28,13 @@ public class MessageVO {
 		this.msgContents = msgContents;
 	}
 
+
 	@Override
 	public String toString() {
-		return "MessageVO [msgId=" + msgId + ", msgContents=" + msgContents + "]";
+		return "MessageVO [msgId=" + msgId + ", msgContents=" + msgContents + ", msgLevel=" + "]";
 	}
+
+	
 	
 	
 }

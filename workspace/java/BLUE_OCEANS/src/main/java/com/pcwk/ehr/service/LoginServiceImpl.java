@@ -50,7 +50,7 @@ public class LoginServiceImpl implements LoginService, PcwkLogger{
 		
 		@Override
 		public UserVO get(UserVO user) throws SQLException, ClassNotFoundException {
-			// TODO Auto-generated method stub
+			LOG.debug("3.user:"+user);
 			return loginDao.get(user);
 		}
 	

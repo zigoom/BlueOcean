@@ -295,10 +295,10 @@
 	          tr
 	              .append("<td><button type='button' class='btn btn-primary delete-btn'>삭제</button></td>");
 	          tr
-	              .append("<td><button type='button' class='btn btn-secondary recover-btn'>복구</button></td>");
+	              .append("<td><button type='button' class='btn btn-secondary recover-btn'disabled>복구</button></td>");
           }else if (data[i].replyDelete ==1){
         	  tr
-              .append("<td><button type='button' class='btn btn-secondary delete-btn'>삭제</button></td>");
+              .append("<td><button type='button' class='btn btn-secondary delete-btn'disabled>삭제</button></td>");
           tr
               .append("<td><button type='button' class='btn btn-primary recover-btn'>복구</button></td>");
           }

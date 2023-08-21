@@ -8,6 +8,8 @@ uri="http://java.sun.com/jsp/jstl/core"%>
     <link rel="stylesheet" href="${CP}/resources/css/header.css" />
     <link rel="stylesheet" href="${CP}/resources/css/footer.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <style>
   /* Custom CSS */
   .centered-form {
@@ -27,7 +29,6 @@ uri="http://java.sun.com/jsp/jstl/core"%>
       <div class="login d-flex py-5">
         <div class="container">
           <div class="row">
-            <div class="row g-2">
               <div class="col-md-6 col-lg-12">
                <h1 class="login-heading mb-4">마이페이지</h1>
 
@@ -36,50 +37,56 @@ uri="http://java.sun.com/jsp/jstl/core"%>
               
                 <input type="hidden" name="userNo" value="${userinfo.userNo}">
                 
-                <div class="form-floating mb-5">
+                <div class="form-floating mb-1" >
                   <input type="name" class="form-control" id="name" name="name" value="${userinfo.name}" required readonly="true" >
                   <label for="name">이름</label>
                 </div>
                 
-                <div class="form-floating mb-5">
+                <div class="form-floating mb-1">
                   <input type="id" class="form-control" id="userId" name="userId" value="${userinfo.userId}" readonly="true">
                   <label for="userId">아이디</label>
                 </div>
                 
-                <div class="form-floating mb-5">
+                <div class="form-floating mb-1">
                   <input type="text" class="form-control" id="phoneNo" name="phoneNo" value="${userinfo.phoneNo}" required >
                   <label for="phoneNo">전화번호</label>
                 </div>
            
-                <div class="form-floating mb-5">
-                  <input type="text" class="form-control" id="birthday" name="birthday" value="${userinfo.birthday}" >
+                <div class="form-floating mb-1">
+                  <input type="text" class="form-control" id="birthday" name="birthday" value="${userinfo.birthday}"required readonly="readonly">
                   <label for="birthday">생년월일</label>
                 </div>
                 <!-- 성별 라디오버튼 -->
-                <div class="form-floating mb-5">
-                  <input type="text" class="form-control" id="gender" name="gender" value="${userinfo.gender}" >
-                  <label for="gender">성별</label>
-                </div>
+                <div>
+								  <h4>성별</h4>
+	                <div class="form-floating mb-1">
+								    <div class="form-check">
+								        <input class="form-check-input" type="radio" name="gender" id="genderMale" value="M" ${userinfo.gender == 'M' ? 'checked' : ''}>
+								        <label class="form-check-label" for="genderMale">남성</label>
+								    </div>
+								    <div class="form-check">
+								        <input class="form-check-input" type="radio" name="gender" id="genderFemale" value="F" ${userinfo.gender == 'F' ? 'checked' : ''}>
+								        <label class="form-check-label" for="genderFemale">여성</label>
+								    </div>
+								 </div>
+								</div>
+               
                 <!-- 성별 라디오버튼 end -->
                                 
-                <div class="form-floating mb-5">
-                  <input type="email" class="form-control" id="email" name="email" value="${userinfo.email}" >
+                <div class="form-floating mb-1" >
+                  <input type="email" class="form-control" id="email" name="email" value="${userinfo.email}" required >
                   <label for="email">이메일</label>
                 </div>
                 
-                <div class="form-floating mb-5">
-                  <input type="text" class="form-control" id="keyword" name="keyword" value="${userinfo.keyword}" >
+                <div class="form-floating mb-1">
+                  <input type="text" class="form-control" id="keyword" name="keyword" value="${userinfo.keyword}"required >
                   <label for="keyword">관심업종 키워드</label>
                 </div>                
-                  
-                      <button class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2 " type="button" id="updateButton">수정</button>
-                    
-                    
-                      <button class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2 " type="button" id="cancelButton">취소</button>
-                    
-                    
-                      <button class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2 " type="button" id="withdrawButton">탈퇴</button>
-                    
+                  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                      <button class="btn btn-lg btn-primary btn-update text-uppercase fw-bold mb-2 " type="button" id="updateButton">수정</button>
+                      <button class="btn btn-lg btn-primary btn-withdraw text-uppercase fw-bold mb-2 " type="button" id="withdrawButton">탈퇴</button>
+                      <button class="btn btn-lg btn-primary btn-cancle text-uppercase fw-bold mb-2 " type="button" id="cancelButton">취소</button>
+                  </div> 
                                 
 
               </form>
@@ -90,7 +97,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
 	                	   var userId = $("#userId").val();
 	                     var phoneNo = $("#phoneNo").val();
 	                     var birthday = $("#birthday").val();
-	                     var gender = $("#gender").val();
+	                     var gender = $("input[name='gender']:checked").val();
 	                     var email = $("#email").val();
 	                     var keyword = $("#keyword").val();
 	

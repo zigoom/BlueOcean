@@ -27,6 +27,43 @@
 <link rel="stylesheet" href="${CP}/resources/css/footer.css" />
 <title>Insert title here</title>
 <link rel="stylesheet" href="${CP}/resources/css/admin.css"/>
+<style>
+#body-container {
+  max-width: 100%; /* 최대 너비 설정 */
+  max-height: 70vh; /* 최대 높이 설정 */
+  overflow-y: auto; /* 스크롤 활성화 */
+  overflow-x: hidden; /* 가로스크롤 비활성화 */
+}
+
+#data-table {
+  margin-left: 50px;
+  table-layout: fixed;
+  width: 100%;
+}
+
+/* 미디어 쿼리를 사용하여 화면 너비에 따라 스타일 변경 */
+@media screen and (max-width: 768px) {
+  #data-table {
+    margin-left: 0; /* 작은 화면에서는 왼쪽 마진 제거 */
+  }
+}
+
+#pagination {
+  margin-left: 120px;
+}
+
+#button-container {
+  display: flex;
+  justify-content: center;
+  margin-left: 120px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+#button-container > * {
+  margin-left: 7px;
+}
+</style>
 </head>
 <body>
 	<div>
@@ -56,49 +93,45 @@
 					<h2>BLUEOCEANS</h2>
 				</div>
 				<div id="admin-container"
-					style="background-color: white; width: 80%; height: 77vh;">
-					<form>
+					style="background-color: white; width: 80%; height: 77vh;">				
 						<div id="radio-container" style="margin: 30px 100px;">
-							<label><input type="radio" name="check" value="전체글">전체글</label>
-							<label><input type="radio" name="check" value="삭제된 글">삭제된
-								댓글</label> <label><input type="radio" name="check"
-								value="삭제되지 않은글">삭제되지 않은댓글</label>
+							<label><input type="radio" name="check" value="all" id="all-load">전체댓글</label>
+							<label><input type="radio" name="check" value="delete" id="delete-load">삭제된댓글</label>
+							<label><input type="radio" name="check" value="notDelete" id="notDelete-load">삭제되지 않은댓글</label>
 						</div>
 						<div id="body-container">
 
-							<table style="margin-left: 50px;table-layout: fixed; width: 100%">
+							<table style="margin-left: 50px;table-layout: fixed; width: 100%" id="data-table">
+							 <thead>
 								<tr>
-									<th scope="col">댓글제목</th>
+								  <th scope="col">댓글번호</th>
 									<th scope="col">아이디</th>
+									<th scope="col">글번호</th>
+									<th scope="col">댓글내용</th>
 									<th scope="col">등록일</th>
+									<th scope="col">수정일</th>
 									<th scope="col">삭제여부</th>
-									<th scope="col">삭제</th>
-									<th scope="col">복구</th>
+									<th class="delete" scope="col">삭제</th>
+									<th class="notDelete" scope="col">복구</th>
 								</tr>
-								<tr>
-									<td>댓글테스트</td>
-									<td>test1234</td>
-									<td>2023-08-18</td>
-									<td>삭제됨</td>
-									<td>삭제</td>
-									<td>복구</td>
-								</tr>
-
-								<tr>
-									<td>댓글테스트222222222222222222222222222222222222222222222222222222222222222222222</td>
-									<td>test12</td>
-									<td>2023-08-18</td>
-									<td>삭제되지않음</td>
-									<td>삭제</td>
-									<td>복구</td>
-								</tr>
+							 </thead>
+							 <tbody class="data-tbody">
+							 
+							 
+							 </tbody>
 							</table>
-						</div>
-					</form>
-				</div>
+						</div>				
+				</div>				
 			</div>
-		</div>
-	</div>
+			<div id="pagination" style="display: flex; justify-content: center;">
+        <!-- 페이지 번호를 동적으로 생성할 영역 -->
+      </div>
+      <div id="button-container">
+        <label>아이디<input type="text" class="search-id"></label>
+        <button class="btn btn-primary search-id-btn">검색</button>
+      </div>
+    </div>
+	</div>	
 </body>
 <script src="${CP}/resources/js/header-main.js"></script>
 <script src="${CP}/resources/js/util.js"></script>
@@ -119,5 +152,282 @@
 	adminHeaderBtn[4].addEventListener("click", function() {
 		window.location.href = "${CP}/BLUEOCEAN/admin/log.do";
 	})
+	
+	let totalData = null;
+  const dataPerPage = 10; // 페이지당 보여줄 데이터 수
+  let currentPage = 1; // 현재 페이지
+	
+	function allLoad() {
+    $.ajax({
+      type : "POST",
+      url : "/ehr/BLUEOCEAN/admin/loadReply.do",
+      async : true,
+      dataType : "json",
+      data : {},
+      success : function(data) {//통신 성공
+    	  totalData = data;
+        updateTableWithData(data.slice(0, dataPerPage));
+        createPagination(data.length);
+      },
+      error : function(data) {//실패시 처리
+        console.log("error:" + data);
+      }
+    });
+  }
+  
+	  // 페이지 번호를 클릭했을 때 해당 페이지의 데이터를 표시하는 함수
+	  function showDataForPage(page) {
+	    currentPage = page;
+	    const startIndex = (page - 1) * dataPerPage;
+	    const endIndex = startIndex + dataPerPage;
+	    updateTableWithData(totalData.slice(startIndex, endIndex));
+	  }
+	
+	  // 데이터 테이블 업데이트 함수
+	  function updateTableWithData(data) {
+	    // 데이터를 이용해 테이블 업데이트하는 로직을 여기에 작성
+	  }
+	  
+	  // 페이지 번호를 동적으로 생성하는 함수
+	  function createPagination(totalDataCount) {
+	    const totalPages = Math.ceil(totalDataCount / dataPerPage);
+	    const pagination = document.getElementById("pagination");
+	    pagination.innerHTML = "";
+	    
+	    for (let i = 1; i <= totalPages; i++) {
+	        const button = document.createElement("button");
+	        button.textContent = i;
+	        button.type = "button";
+	        button.classList.add("page_nation", "btn", "btn-primary"); // 클래스 추가
+	        button.style.margin = "5px";
+	        button.addEventListener("click", function() {
+	          showDataForPage(i);
+	        });
+	        
+	        pagination.appendChild(button);
+	       }  
+	    
+			    // 처음 페이지 설정
+			    showDataForPage(1);
+			  }
+	  // 모든 요소가 로드된 후에 실행
+	  $(document).ready(function() {
+		  allLoad();
+		  
+		    // 전체 버튼 클릭 시 다시 데이터 로드
+		    $("#all-load").on("click", function() {
+		      allLoad();
+		    });
+		  });
+	  
+	// 삭제한 댓글만 불러오는 함수 
+	  function deleteOptionLoad() {
+	    $.ajax({
+	      type : "POST",
+	      url : "/ehr/BLUEOCEAN/admin/loadReplyOption.do",
+	      async : true,
+	      dataType : "json",
+	      data : {
+	    	  replyDelete : 1
+	      },
+	      success : function(data) {
+	        totalData = data;
+	        updateTableWithData(data.slice(0, dataPerPage)); // 첫 페이지 데이터 표시
+	        createPagination(data.length);
+	      },
+	      error : function(data) {
+	        console.log("error:", data);
+	      }
+	    });
+	  }
+	  //  탈퇴함 버튼누를시 탈퇴한 회원 전체 불러오기
+	  $("#delete-load").on("click", deleteOptionLoad)
+
+	  //삭제하지 않은 댓글만 불러오는 함수
+	  function notDeleteOptionLoad() {
+	    $.ajax({
+	      type : "POST",
+	      url : "/ehr/BLUEOCEAN/admin/loadReplyOption.do",
+	      async : true,
+	      dataType : "json",
+	      data : {
+	    	  replyDelete : 0
+	      },
+	      success : function(data) {//통신 성공
+	        totalData = data;
+	        updateTableWithData(data.slice(0, dataPerPage)); // 첫 페이지 데이터 표시
+	        createPagination(data.length);
+	      },
+	      error : function(data) {//실패시 처리
+	        console.log("error:" + data);
+	      }
+	    });
+	  }
+	  $("#notDelete-load").on("click", notDeleteOptionLoad)
+  
+  function updateTableWithData(data) { 
+    var tbody = $(".data-tbody");
+    tbody.empty();
+    data
+        .forEach(function(user, i) {
+
+          var tr = $("<tr class='data-tr'></tr>");
+          tr
+              .append("<td class='comment-no'>" + data[i].commentNo
+                  + "</td>");
+          tr.append("<td class='user-id'>" + data[i].userId
+              + "</td>");
+          tr.append("<td class='post-no'>" + data[i].postNo
+              + "</td>");
+          tr.append("<td class='contents'>" + data[i].contents
+        		  + "</td>");
+          tr.append("<td class='reg-dt'>" + data[i].regDt
+              + "</td>");
+          tr.append("<td class='mod-dt'>" + data[i].modDt
+              + "</td>");
+          tr.append("<td class='reply-delete'>" + data[i].replyDelete
+                  + "</td>");
+          if (data[i].replyDelete == 0){
+	          tr
+	              .append("<td><button type='button' class='btn btn-primary delete-btn'>삭제</button></td>");
+	          tr
+	              .append("<td><button type='button' class='btn btn-secondary recover-btn'>복구</button></td>");
+          }else if (data[i].replyDelete ==1){
+        	  tr
+              .append("<td><button type='button' class='btn btn-secondary delete-btn'>삭제</button></td>");
+          tr
+              .append("<td><button type='button' class='btn btn-primary recover-btn'>복구</button></td>");
+          }
+          tbody.append(tr);
+        });
+  }
+	//선택한 댓글 삭제
+	  $(".data-tbody").on("click", ".delete-btn", function() {
+	    if ($(this).hasClass("btn-primary")) {
+	      let confirmDelete = confirm("정말로 데이터를 삭제하시겠습니까?");
+	      if (confirmDelete) {
+	        // 사용자가 확인을 눌렀을 때의 동작
+	        deleteData();
+	      } else {
+	        alert("데이터 삭제가 취소되었습니다.");
+	        return;
+	      }
+	      // 데이터 삭제 함수
+	      function deleteData() {
+	        // 실제 데이터 삭제 작업 수행
+	        alert("데이터가 삭제되었습니다.");
+	      }
+	      // 클릭한 버튼의 가장 가까운 상위 <tr> 요소를 찾음
+	      const trElement = $(this).closest("tr");
+
+	      // 해당 <tr> 요소 내의 .comment-no 요소의 텍스트를 가져옴
+	      const commentNo = trElement.find(".comment-no").text();
+
+	      $.ajax({
+	        type : "POST",
+	        url : "/ehr/BLUEOCEAN/admin/deleteReply.do",
+	        async : true,
+	        dataType : "html",
+	        data : {
+	        	commentNo : commentNo
+	        },
+	        success : function(data) {
+	          console.log("data:" + data);
+	          if ($("#all-load").is(":checked")) { //라디오버튼이 전체로 되어있는경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
+	            allLoad();
+	          } else if ($("#delete-load").is(":checked")) { //라디오버튼이 삭제함으로 되어있는경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
+	            deleteOptionLoad();
+	          } else if ($("#notDelete-load").is(":checked")) { //라디오버튼이 삭제되지않음으로 되어있는경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
+	            notDeleteOptionLoad();
+	          } else {
+	            allLoad(); //라디오버튼이 아무것도 체크되어있지않은경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
+	          }
+	        },
+	        error : function(data) {
+	          console.log("error:" + data);
+	        }
+	      });
+	    } else {
+	      alert("이미 삭제된 댓글입니다.")
+	    }
+
+	  });
+	//선택한 댓글 복구
+	  $(".data-tbody").on("click", ".recover-btn", function() {
+	    if ($(this).hasClass("btn-primary")) {
+	      let confirmDelete = confirm("정말로 데이터를 복구하시겠습니까?");
+	      if (confirmDelete) {
+	        // 사용자가 확인을 눌렀을 때의 동작
+	        notDeleteData();
+	      } else {
+	        alert("데이터 복구가 취소되었습니다.");
+	        return;
+	      }
+	      // 데이터 삭제 함수
+	      function notDeleteData() {
+	        // 실제 데이터 삭제 작업 수행
+	        alert("데이터가 복구되었습니다.");
+	      }
+	      // 클릭한 버튼의 가장 가까운 상위 <tr> 요소를 찾음
+	      const trElement = $(this).closest("tr");
+
+	      // 해당 <tr> 요소 내의 .comment-no 요소의 텍스트를 가져옴
+	      const commentNo = trElement.find(".comment-no").text();
+
+	      $.ajax({
+	        type : "POST",
+	        url : "/ehr/BLUEOCEAN/admin/notDeleteReply.do",
+	        async : true,
+	        dataType : "html",
+	        data : {
+	        	commentNo : commentNo
+	        },
+	        success : function(data) {
+	          console.log("data:" + data);
+	          if ($("#all-load").is(":checked")) { //라디오버튼이 전체로 되어있는경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
+	            allLoad();
+	          } else if ($("#delete-load").is(":checked")) { //라디오버튼이 삭제됌으로 되어있는경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
+	            deleteOptionLoad();
+	          } else if ($("#notDelete-load").is(":checked")) { //라디오버튼이 삭제하지않음으로 되어있는경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
+	            notDeleteOptionLoad();
+	          } else {
+	            allLoad(); //라디오버튼이 아무것도 체크되어있지않은경우 함수를불러와서 바로 페이지에 변동사항이 나타나도록 적용
+	          }
+	        },
+	        error : function(data) {
+	          console.log("error:" + data);
+	        }
+	      });
+	    } else {
+	      alert("이미 삭제되지않은 댓글입니다.")
+	    }
+	  });
+	
+	  $(".search-id-btn").on("click", function() {
+		    $.ajax({
+		      type : "POST",
+		      url : "/ehr/BLUEOCEAN/admin/loadReplyFromId.do",
+		      async : true,
+		      dataType : "json",
+		      data : {
+		        userId : $(".search-id").val()
+		      },
+		      success : function(data) {
+		        totalData = data;
+		        updateTableWithData(data.slice(0, dataPerPage)); // 첫 페이지 데이터 표시
+		        createPagination(data.length);
+		        radioGroup = document.getElementsByName("check");
+		        for (let i = 0; i < radioGroup.length; i++) {
+		          radioGroup[i].checked = false;
+		        }
+
+		      },
+		      error : function(data) {
+		        console.log("error:" + data);
+		      }
+
+		    })
+		  })
+
 </script>
 </html>

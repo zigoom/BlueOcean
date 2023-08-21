@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pcwk.ehr.adminreplypage">
+
+  <resultMap id="adminPageMap" type="com.pcwk.ehr.cmn.AdminPageVO">
+    <result property="userNo" column="user_no" />
+    <result property="userId" column="user_id" />
+    <result property="passwd" column="passwd" />
+    <result property="userName" column="user_name" />
+    <result property="birthday" column="birthday" />
+    <result property="gender" column="gender" />
+    <result property="keyword" column="keyword" />
+    <result property="email" column="email" />
+    <result property="phoneNo" column="phone_no" />
+    <result property="userLevel" column="user_level" />
+    <result property="withdrawal" column="withdrawal" />
+    <result property="agree" column="agree" />
+    <result property="otpUse" column="otp_use" />
+    <result property="seq" column="seq" />
+    <result property="title" column="title" />
+    <result property="contents" column="contents" />
+    <result property="div" column="div" />
+    <result property="readCnt" column="read_cnt" />
+    <result property="regDt" column="reg_dt" />
+    <result property="regId" column="reg_id" />
+    <result property="modDt" column="mod_dt" />
+    <result property="modId" column="mod_id" />
+    <result property="commentNo" column="comment_no" />
+    <result property="postNo" column="post_no" />
+    <result property="replyDelete" column="reply_delete" />
+    <result property="boardDelete" column="board_delete" />
+    <result property="no" column="no" />
+    <result property="identifier" column="identifier" />
+    <result property="subject" column="subject" />
+    <result property="context" column="context" />
+  </resultMap>
+  
+  <!-- 댓글전체목록 로드 -->
+  <select id="loadReply" resultMap="adminPageMap" resultType="com.pcwk.ehr.cmn.AdminPageVO">
+    SELECT * FROM REPLY
+  </select>
+  
+  <!-- 댓글목록 로드 (삭제된댓글 또는 삭제되지 않은 댓글) -->
+  <select id="loadReplyOption" resultMap="adminPageMap"
+    resultType="com.pcwk.ehr.cmn.AdminPageVO">
+    SELECT * FROM REPLY
+    WHERE reply_delete = #{replyDelete}
+  </select>
+  
+    <!-- 댓글목록 로드 -->
+  <select id="loadReplyFromId" resultMap="adminPageMap"
+    resultType="com.pcwk.ehr.cmn.AdminPageVO">
+    SELECT * FROM REPLY
+    WHERE user_id LIKE  '%' ||  #{userId} || '%'
+  </select>
+  
+    <!-- 댓글목록 카운트 -->
+  <select id="loadReplyCount" resultType="java.lang.Integer">
+    SELECT COUNT(*) FROM MEMBER
+  </select>
+  
+    <!-- 댓글목록 카운트 (삭제된댓글 또는 삭제되지 않은 댓글) -->
+  <select id="loadReplyCountOption" resultType="java.lang.Integer">
+    SELECT COUNT(*)
+    FROM REPLY
+     WHERE reply_delete = #{replyDelete}
+  </select>
+  
+    <!-- 댓글 삭제 -->
+  <update id="deleteReply" parameterType="AdminPageVO">
+    UPDATE REPLY
+    SET
+    reply_delete = 1
+    WHERE COMMENT_NO = #{commentNo}
+  </update>
+  
+  <!-- 댓글 복구 -->
+  <update id="notdeleteReply" parameterType="AdminPageVO">
+    UPDATE REPLY
+    SET
+    reply_delete = 0
+   WHERE COMMENT_NO = #{commentNo}
+  </update>
+  
+
+</mapper>

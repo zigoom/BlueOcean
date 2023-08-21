@@ -16,11 +16,20 @@
 	margin-left: 15px;
 }
 
-.modal-containor div input[type=text] {	
+.modal-containor div input[type=text],
+.modal-containor div input[type=password]
+ {	
 	width: 70%;
 }
 
+label{
+	text-align: center;
+}
+
 /* ------------------------모달끝---------------------------- */
+
+
+
 #header-box {
 	display: flex;
 	margin: 15px;

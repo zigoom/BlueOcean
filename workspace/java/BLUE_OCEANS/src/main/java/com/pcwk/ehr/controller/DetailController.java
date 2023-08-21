@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pcwk.ehr.cmn.BookmarkVO;
@@ -23,12 +24,18 @@ public class DetailController implements PcwkLogger {
 	NaverSearchService naverSearchService;
 
 	@RequestMapping(value = "/detail.do", method = RequestMethod.GET)
-	public String mainView(BookmarkVO inVO, Model model) {
+	public String mainView(BookmarkVO inVO, Model model, 
+							@RequestParam("stockName") String stockName,
+							@RequestParam("stockCode") String stockCode) {
 
 		LOG.debug("┌────────────────┐");
 		LOG.debug("│detailView      │");
 		LOG.debug("│inVO            │" + inVO);
 		LOG.debug("└────────────────┘");
+		
+	    inVO.setStockName(stockName);
+	    inVO.setStockCode(stockCode);
+		
 		model.addAttribute("inVO",inVO);
 
 		return "main/detail";

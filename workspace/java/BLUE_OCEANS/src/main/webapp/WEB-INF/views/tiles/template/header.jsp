@@ -132,9 +132,9 @@ ul {
                     error: function(xhr, textStatus, errorThrown) {
                         console.log("error:" + errorThrown);
                     }
-          //----------ajax end----------
-                  });
           
+                  });
+          //----------ajax end----------
                   
               }
                     else {
@@ -144,23 +144,38 @@ ul {
             
             minLength: 2, // 최소 입력 길이
             select: function(event, ui) {
-            $("#word").val(ui.item.value);
-            $("#word").data("code", ui.item.code); // 선택한 항목의 코드를 데이터로 설정
+						itemname = ui.item.value;
+						itemcode = ui.item.code;
+
+            
+            let currentDate = new Date();
+            
+            currentDate.setDate(currentDate.getDate() - 1);
+            
+            let formattedDate = currentDate.toISOString().split('T')[0];
+
+                  
+            console.log("Selected Name:", ui.item.value); // 선택한 항목의 코드를 콘솔에 출력
             console.log("Selected Code:", ui.item.code); // 선택한 항목의 코드를 콘솔에 출력
-            
-            let requestData = {
-                ticker: ui.item.code,
-                <%-- date: '<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>', --%>
-                date: '2023-08-16',
-                interval: '10'
-            };            
-            
-            console.log("Selected Code:", requestData.ticker); // 선택한 항목의 코드를 콘솔에 출력
-            console.log("Selected Date:", requestData.date);
-            console.log("Selected Interval:", requestData.interval);
-            
-            searchWithSelectedCode(requestData); // 선택된 코드로 검색
-            return false; // 기본 동작 중단
+                      //----------ajax----------
+                  $.ajax({
+                      type: "GET",
+                      url: '/ehr/BLUEOCEAN/detail.do',
+			                async: true,
+			                dataType: 'html',                      
+                      data: {
+      	                  stockName: itemname,
+                          stockCode: itemcode,
+                      },
+                      success: function(data) {
+                        window.location.href = '/ehr/BLUEOCEAN/detail.do?' + $.param({ stockName: itemname, stockCode: itemcode });
+                      },
+                    error: function(xhr, textStatus, errorThrown) {
+                        console.log("error:" + errorThrown);
+                    }
+          
+                  });
+          //----------ajax end----------
         }
     });
             

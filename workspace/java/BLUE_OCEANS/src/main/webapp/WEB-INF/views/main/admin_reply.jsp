@@ -48,6 +48,8 @@
   }
 }
 
+
+
 #pagination {
   margin-left: 120px;
 }
@@ -60,6 +62,8 @@
   margin-bottom: 20px;
   align-items: center;
 }
+
+
 #button-container > * {
   margin-left: 7px;
 }
@@ -101,7 +105,7 @@
 						</div>
 						<div id="body-container">
 
-							<table style="margin-left: 50px;table-layout: fixed; width: 100%" id="data-table">
+							<table class="table table-hover" style="margin-left: 50px;table-layout: fixed; width: 100%" id="data-table">
 							 <thead>
 								<tr>
 								  <th scope="col">댓글번호</th>
@@ -279,7 +283,7 @@
               + "</td>");
           tr.append("<td class='post-no'>" + data[i].postNo
               + "</td>");
-          tr.append("<td class='contents'>" + data[i].contents
+          tr.append("<td class='contents text-truncate'>" + data[i].contents
         		  + "</td>");
           tr.append("<td class='reg-dt'>" + data[i].regDt
               + "</td>");

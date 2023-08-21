@@ -44,7 +44,15 @@
   <!-- 댓글목록 로드 (삭제된댓글 또는 삭제되지 않은 댓글) -->
   <select id="loadReplyOption" resultMap="adminPageMap"
     resultType="com.pcwk.ehr.cmn.AdminPageVO">
-    SELECT * FROM REPLY
+    SELECT
+	    comment_no,
+	    user_id,
+	    post_no,
+	    contents,
+	    TO_CHAR(reg_dt,'YY/MM/DD HH24:MI:SS'),
+	    TO_CHAR(mod_dt,'YY/MM/DD HH24:MI:SS'),
+	    reply_delete 
+    FROM REPLY
     WHERE reply_delete = #{replyDelete}
   </select>
   

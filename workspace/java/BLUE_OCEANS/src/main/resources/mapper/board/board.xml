@@ -5,14 +5,15 @@
   <resultMap id="BoardMap" type="com.pcwk.ehr.domain.BoardVO">
   		<result column="num"           property="num"       	 />
         <result column="POST_NO"        property="seq"        	 />
-        <result column="userId"      	property="userId"        />
+        <result column="USER_ID"      	property="userId"        />
         <result column="TITLE"       	property="title"     	 />
         <result column="CONTENTS"       property="contents"      />
         <result column="READ_CNT"       property="readCnt"       />
-        <result column="regDt"         property="regDt"     	 />
-        <result column="modDt"   		property="modDt" 		 />
+        <result column="REG_DT"         property="regDt"     	 />
+        <result column="MOD_DT"   		property="modDt" 		 />
         <result column="BOARD_DELETE"   property="boardDelete"   />
   </resultMap>
+
 
   <!-- 검색조건 -->
   <sql id="searchCondition">
@@ -41,8 +42,8 @@ SELECT A.*,B.*
                <!--당일 등록이면 : 16:26 그렇치 않으면 2023/06/28 -->
 				DECODE( TO_CHAR(TT1.mod_dt,'YYYYMMDD'),TO_CHAR(sysdate,'YYYYMMDD')
                       ,TO_CHAR(TT1.mod_dt,'HH24:MI')
-                      ,TO_CHAR(TT1.mod_dt,'YYYY/MM/DD') )modDt,
-               TT1.user_id as userId,
+                      ,TO_CHAR(TT1.mod_dt,'YYYY/MM/DD') )mod_dt,
+               TT1.user_id,
                TT1.post_no
         FROM (
             SELECT ROWNUM as rnum, t1.*
@@ -97,52 +98,50 @@ SELECT A.*,B.*
 
 
 <!-- 게시글 상세 조회 -->
-<select id="doSelectOne" parameterType="BoardVO" resultType="BoardVO">
+<select id="doSelectOne" parameterType="BoardVO" resultMap="BoardMap">
       SELECT
        post_no,
+       user_id,
        title,
        contents,
        read_cnt,
-       TO_CHAR(reg_dt,'YYYY-MM-DD HH24:MI:SS')  reg_dt,
        TO_CHAR(mod_dt,'YYYY-MM-DD HH24:MI:SS')  mod_dt
    FROM board
    WHERE post_no = #{seq}
 </select>
  
- 
- 
- 
-  
- <!--  
-  <update id="doUpdateReadCnt" parameterType="BoardVO">
-      <![CDATA[
-      UPDATE board
-         SET read_cnt = NVL(read_cnt,0)+1
-       WHERE seq = #{seq}
-         AND reg_id  <> #{modId}
-      ]]>
-  </update>
-  
-  
-  <update id="doUpdate" parameterType="BoardVO">
-      UPDATE board
-      SET title    = #{title},
-          contents = #{contents},
-          div      = #{div},
-          mod_dt   = SYSDATE,
-          mod_id   = #{modId}
-      WHERE seq = #{seq}
-  </update>
-  
-  
-  <delete id="doDelete" parameterType="BoardVO">
-      DELETE FROM board
-      WHERE seq = #{seq}
-  </delete>
-  
-  
 
-	-->
+
+<!--  게시글 삭제  -->
+<update id="doDelete" parameterType="BoardVO">
+    UPDATE board
+    SET board_delete = 1
+    WHERE post_no = #{seq}
+</update>
+ 
+ 
+ 
+<!-- 게시물 수정 --> 
+<update id="doUpdate" parameterType="BoardVO">
+    UPDATE board
+    SET title    = #{title},
+        contents = #{contents},
+        mod_dt   = SYSDATE,
+        user_id   = #{userId}
+    WHERE post_no = #{seq}
+</update>
+  
+  
+   
+ 
+<update id="doUpdateReadCnt" parameterType="BoardVO">
+    <![CDATA[
+    UPDATE board
+       SET read_cnt = NVL(read_cnt,0)+1
+     WHERE post_no = #{seq}
+    ]]>
+</update>
+  
   	
   	
 </mapper>

@@ -18,15 +18,7 @@ public class BoardServiceImpl implements BoardService {
     
     
  
-    //게시물 클릭 
-//    @Override
-//    public boardDetail(BoardVO inVO) throws SQLException {
-//    	
-//    	System.out.println("boardDetail 서비스 구역");
-//    	System.out.println("inVO 값은 : "+inVO);
-//    	
-//    	return boardDao.boardDetail(inVO);
-//    }
+
     
     
     // 게시물 글 저장
@@ -41,13 +33,7 @@ public class BoardServiceImpl implements BoardService {
     }
     
     
-    // 게시물 상세페이지 삭제
-    @Override
-    public int doDelete(BoardVO inVO) throws SQLException {
-        // BoardDao의 doDelete 메서드를 호출하여 데이터를 삭제합니다.
-        // 구현이 완료되면 삭제된 데이터의 개수를 반환합니다.
-        return boardDao.doDelete(inVO);
-    }
+
 
     
     // 게시물 상세페이지 수정
@@ -55,27 +41,54 @@ public class BoardServiceImpl implements BoardService {
     public int doUpdate(BoardVO inVO) throws SQLException {
         // BoardDao의 doUpdate 메서드를 호출하여 데이터를 수정합니다.
         // 구현이 완료되면 수정된 데이터의 개수를 반환합니다.
+    	
+    	System.out.println("doUpdate 다오임플 구역 ");
+    	System.out.println("inVO 값은 : "+inVO);
+    	
         return boardDao.doUpdate(inVO);
     }
 
     
     
+    // 게시물 상세페이지 삭제
+    @Override
+    public int doDelete(BoardVO inVO) throws SQLException {
+        // BoardDao의 doDelete 메서드를 호출하여 데이터를 삭제합니다.
+        // 구현이 완료되면 삭제된 데이터의 개수를 반환합니다.
+    	
+    	System.out.println("doDelete 다오임플 구역 ");
+    	System.out.println("inVO 값은 : "+inVO);
+    	
+        return boardDao.doDelete(inVO);
+    }
+    
+    
+    
     // 게시판에서 제목 클릭 시 상세페이지로 이동 
     @Override
     public BoardVO doSelectOne(BoardVO inVO) throws SQLException {
-		//1. 단건조회
-		//2. 조회 count증가
     	
-		BoardVO vo = boardDao.doSelectOne(inVO);
+		BoardVO outVO = boardDao.doSelectOne(inVO);
+
 		System.out.println("Service doSelectOne 구역");
+		System.out.println("outVO 값은 : "+ outVO);
+		System.out.println("inVO 값은 : "+ inVO);
 		
-//		if(null !=vo ) {
-//			boardDao.doUpdateReadCnt(inVO);
-//		}
-//		
-		
-		return vo;
+		return outVO;
     }
+
+    
+    
+    
+    // 유저의 이름과 작성자의 이름이 다를경우 조회수 올려주기 
+    public int doUpdateReadCnt(BoardVO inVO ) throws SQLException {
+    	int flag;
+    	
+    	flag = boardDao.doUpdateReadCnt(inVO);
+    	
+    	return flag;
+    }
+    
 
     
     // 게시물 조회

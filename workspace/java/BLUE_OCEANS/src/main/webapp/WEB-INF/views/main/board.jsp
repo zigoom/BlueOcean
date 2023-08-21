@@ -4,13 +4,13 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
-    BoardVO vo = (BoardVO)request.getAttribute("inVO");
-    String divValue = vo.getDiv();
+     BoardVO vo = (BoardVO)request.getAttribute("inVO");
+      String divValue = vo.getDiv();
     String title    = "자유게시판"; //10 : 자유게시판, 20 : 공지사항
     if("20".equals(divValue)){
       title = "공지사항";
     }
-    request.setAttribute("title", title); 
+    request.setAttribute("title", title);   
     
     //paging
     //(int maxNum, int currPageNO, int rowPerPage, int bottomCount, String url. String s)
@@ -52,18 +52,17 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="${CP}/resources/css/header.css">
 <link rel="stylesheet" href="${CP}/resources/css/footer.css">
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="${CP}/resources/js/jquery-3.7.0.js"></script>
 
 <title>토론 게시판</title>
 </head>
 <body>
 	<div class="container">
 		<div class="row">
-			<table class="table">
+			<table class="table" id="boardTable">
 				<thead class="table-primary">
 					<tr>
 						<th class="table-success" style="text-align: center;">번호</th>
@@ -71,6 +70,7 @@
 						<th class="table-success" style="text-align: center;">제목</th>
 						<th class="table-success" style="text-align: center;">글쓴이</th>
 						<th class="table-success" style="text-align: center;">조회</th>
+						<th style="display:none;">DIV</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -80,16 +80,17 @@
 						<tr style="text-align: center;">
 							<td>${board.num}</td>
 							<td>${board.modDt}</td>
-							<td><a href="#" style="color: black; text-decoration: none;">${board.title}</a></td> <!-- ${CP}/detail/${board.title}  -->
+							<td><a href="#" style="color: black; text-decoration: none;">${board.title} </a></td> <!-- href는 수정 필요  -->
 							<td>${board.userId}</td>
 							<td>${board.readCnt}</td>
+							<td style="display:none;"><c:out value="${board.seq}"/></td>  
 						</tr>					
 					</c:forEach>	
 					</c:when>
 					<%-- 조회 데이터가 없는 경우 --%>
           <c:otherwise>
             <tr>
-              <td class="text-center" colspan="99">No data found</td>
+              <td class="text-center" colspan="99">찾는 제목이 없습니다</td>
             </tr>
           </c:otherwise>
         </c:choose>
@@ -101,16 +102,6 @@
 		</div>
 	</div>
 	</div>
-	<!-- <form action="${CP}/search" method="GET">
-		<div class="d-flex justify-content-center">
-			<input type="text" class="form-control" placeholder="제목을 입력하세요"
-				name="searchDiv" style="max-width: 250px;">
-			<div class="d-flex justify-content-center">
-				<button class="btn btn-sm btn-success" type="submit">검색</button>
-			</div>
-		</div>
-	</form> -->
-
 
 	<!-- paging  -->
 
@@ -165,34 +156,43 @@
    
 <script>
 
+
+
+
+
+
+
    function do_Retrieve(url, pageNo){
 	   console.log("url:"+url);
 	   console.log("pageNo:"+pageNo);
 	   let frm = document.boardFrm;
-     $("pageNo").val(1); //jquery
-     frm.action = url;
-     frm.pageNo.value=pageNo; //javascript
-     frm.submit(); //controller call 
+	   $("pageNo").val(1); //jquery
+	   frm.action = url;
+	   frm.pageNo.value=pageNo; //javascript
+	   frm.submit(); //controller call 
 	   
    }
 
 
 
-   //table 목록 click시  seq값 찾기
-/*    $("#boardTable>tbody").on("click","tr", function(e){
+   // table 목록 click시  seq값 찾기
+     $("#boardTable>tbody").on("click","tr", function(e){
      console.log("#boardTable>tBody");
      let tdArray = $(this).children();
-     console.log('tdArray:'+tdArray);
-     let seq = tdArray.eq(4).text();
+     tdArray.each(function(index) {
+         console.log('Cell ' + index + ': ' + $(this).text());
+     });
+     let seq = tdArray.eq(5).text();
+     let userId = tdArray.eq(3).text();
      console.log('seq:'+seq);
      if(confirm("상세 조회 하시겠어요?") == false ) return;
 		//div, seq
-     window.location.href = "${CP}/board/doSelectOne.do?div="+$("#div").val() + "&seq=" + seq;
-   }); */
+     window.location.href = "${CP}/BLUEOCEAN/doSelectOne.do?div="+$("#div").val() + "&seq=" + seq + "&userId=" + userId;
+   });   
    
    
    function doMoveToReg(){
-     console.log("doMoveToReg");
+     console.log("글쓰기 doMoveToReg");
      let frm = document.boardFrm;
      //$("#pageNo").val(1); //jquery
      console.log("frm.div.value"+frm.div.value);
@@ -200,7 +200,7 @@
      frm.pageNo.value = 1;
      frm.action = "${CP}/BLUEOCEAN/doMoveToReg.do";
      frm.submit(); //controller call
-	  }
+	 }
    
    
    function doRetrieveCall(pageNo) {

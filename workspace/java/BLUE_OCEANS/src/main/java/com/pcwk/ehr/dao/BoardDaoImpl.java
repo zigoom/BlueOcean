@@ -37,12 +37,6 @@ public class BoardDaoImpl implements BoardDao, PcwkLogger {
 
     
     
-    //게시물 클릭 
-//	@Override
-//	public BoardVO boardDetail(BoardVO inVO) throws SQLException {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
     
     
     
@@ -62,11 +56,13 @@ public class BoardDaoImpl implements BoardDao, PcwkLogger {
     
     @Override
     public int doDelete(BoardVO inVO) throws SQLException {
-        // Board 테이블에서 데이터를 삭제하는 로직을 구현하세요.
-        // 예를 들어, sqlSessionTemplate.delete(NAMESPACE + DOT + "doDelete", inVO); 등
-        // 적절한 MyBatis 메서드를 사용하여 데이터를 삭제할 수 있습니다.
-        // 구현이 완료되면 삭제된 데이터의 개수를 반환합니다.
-        return 0;
+		LOG.debug("┌──────────────────────────────┐");
+		LOG.debug("│doDelete                      │");
+		LOG.debug("│inVO의 값은                                     │"+inVO);
+		LOG.debug("│statement                     │"+NAMESPACE+DOT+"doDelete");
+		LOG.debug("└──────────────────────────────┘");	
+		
+		return sqlSessionTemplate.update(NAMESPACE+DOT+"doDelete", inVO);
     }
 
     
@@ -75,11 +71,12 @@ public class BoardDaoImpl implements BoardDao, PcwkLogger {
     
     @Override
     public int doUpdate(BoardVO inVO) throws SQLException {
-        // Board 테이블의 데이터를 수정하는 로직을 구현하세요.
-        // 예를 들어, sqlSessionTemplate.update(NAMESPACE + DOT + "doUpdate", inVO); 등
-        // 적절한 MyBatis 메서드를 사용하여 데이터를 수정할 수 있습니다.
-        // 구현이 완료되면 수정된 데이터의 개수를 반환합니다.
-        return 0;
+		LOG.debug("┌──────────────────────────────┐");
+		LOG.debug("│doUpdate                      │");
+		LOG.debug("│inVO                          │"+inVO);
+		LOG.debug("│statement                     │"+NAMESPACE+DOT+"doUpdate");
+		LOG.debug("└──────────────────────────────┘");	
+		return sqlSessionTemplate.update(NAMESPACE+DOT+"doUpdate", inVO);
     }
 
     
@@ -94,7 +91,10 @@ public class BoardDaoImpl implements BoardDao, PcwkLogger {
 		LOG.debug("│statement                     │"+NAMESPACE+DOT+"doSelectOne");
 		LOG.debug("└──────────────────────────────┘");	
 		
+		System.out.println("다오임플 doSelectOne 구역");
+		
 		return sqlSessionTemplate.selectOne(NAMESPACE+DOT+"doSelectOne", inVO);
+		
     }
 
     
@@ -104,7 +104,8 @@ public class BoardDaoImpl implements BoardDao, PcwkLogger {
     
     @Override
     public int doRetrieveCount(BoardVO inVO) throws SQLException {
-        return sqlSessionTemplate.selectOne(NAMESPACE + DOT + "doRetrieveCount", inVO);
+        //return sqlSessionTemplate.selectOne(NAMESPACE + DOT + "doRetrieveCount", inVO);
+    	return 0;
     }
 
     

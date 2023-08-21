@@ -35,28 +35,71 @@ public class BoardController implements PcwkLogger {
     public BoardController() {}
     
     
-//    @RequestMapping("/boardDetail.do")
-//    public String boardDetail(BoardVO inVO, Model model, HttpSession httpSession)throws SQLException{
-//    	String viewPage = "main/board_detail";
-//    	
-//    	System.out.println("boardDetail 컨트롤러 구역");
-//    	System.out.println("inVO 값은 : "+inVO.toString());
-//    	System.out.println("inVO 값은 : "+inVO);
-//    	
-//    	//등록자 ID를 Session에서 추출
-//    	//UserVO userVO = (UserVO) httpSession.getAttribute("user");
-//    	
-//    	//inVO.setUserId(userVO.getUserId());
-//    
-//    	//BoardVO outVO = boardService.boardDetail(inVO);
-//    	
-//		return viewPage;
-//    	
-//    }
     
+		@RequestMapping(value = "/doUpdate.do", method = RequestMethod.POST
+		        ,produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String doUpdate(BoardVO inVO)throws SQLException{
+	String jsonString = "";
+	LOG.debug("=================");
+	LOG.debug("== doUpdate ==");
+	LOG.debug("== inVO         =="+inVO);
+	LOG.debug("=================");
+	
+	int flag = this.boardService.doUpdate(inVO);
+	
+	String message = "";
+	if(1 == flag) {
+		message = inVO.getTitle()+"이 수정 되었습니다";
+	}else {
+		message = "수정 실패";
+	}
+	
+	jsonString = StringUtil.validMessageToJson(flag+"",  message);
+	LOG.debug("|jsonString                 |"+jsonString);
+	
+	return jsonString;
+			
+	}
+
+    
+    
+    
+    
+	@RequestMapping(value = "/doDelete.do", method = RequestMethod.GET, 
+							produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String doDelete(BoardVO inVO)throws SQLException{
+		String jsonString = "";
+		
+		LOG.debug("=================");
+		LOG.debug("== doDelete ==");
+		LOG.debug("== inVO 의 값은       =="+inVO);
+		LOG.debug("=================");
+		
+		//BoardVO outVO = boardService.doSelectOne(inVO);
+		int flag = boardService.doDelete(inVO);
+		
+		String message = "";
+		
+		if(1==flag) { //삭제 성공
+			message = inVO.getSeq()+"삭제 성공";
+		}else {       //삭제 실패
+		    message = inVO.getSeq()+"삭제 실패";    	
+		}
+		
+		jsonString = StringUtil.validMessageToJson(flag+"", message);
+		LOG.debug("|jsonString |"      +jsonString);
+		
+		return jsonString;
+				
+	}
+    
+	
+	
 
 	@RequestMapping("/doSelectOne.do")
-	public String doSelectOne(BoardVO inVO, Model model, HttpSession httpSession)throws SQLException{
+	public String doSelectOne(BoardVO inVO, Model model, HttpSession session)throws SQLException{
 		String view = "main/board_detail";
 		
 		LOG.debug("doSelectOne 컨트롤 구역");
@@ -65,21 +108,33 @@ public class BoardController implements PcwkLogger {
 		LOG.debug("== doSelectOne ==");
 		LOG.debug("== inVO         =="+inVO);
 		LOG.debug("=================");
+
+		String id = "";	
+		if (null != session.getAttribute("user")) {
+			id = (String)session.getAttribute("user");
+		}
+		System.out.println("id : "+id);
+		System.out.println("inVO.getUserId() : "+inVO.getUserId());
 		
+		boolean flag = id.equals(inVO.getUserId());
+		System.out.println("flag : "+flag);
+		
+		
+		if(!flag) {
+			boardService.doUpdateReadCnt(inVO);
+		}
 		
 		//등록자 ID를 Session에서 추출
-		//UserVO userVO = (UserVO) httpSession.getAttribute("user");
-		
-		System.out.println("doSelectOne 컨트롤러 구역 중간");	
-		//inVO.setUserId(userVO.getUserId());
+//		UserVO userVO = (UserVO) httpSession.getAttribute("user");
+//		inVO.setUserId(userVO.getUserId());		
 		
 		BoardVO outVO = boardService.doSelectOne(inVO);
 		
 		model.addAttribute("outVO", outVO);
-		model.addAttribute("inVO", inVO);
-
-		return view;
+		model.addAttribute("inVO", inVO);	
 		
+		return view;
+
 	}
     
     
@@ -177,10 +232,7 @@ public class BoardController implements PcwkLogger {
 		if(null != inVO && inVO.getTitle().equals("")) {
 		    return StringUtil.validMessageToJson("10", "제목을 입력하세요");
 		}
-//		// 등록자 : 20
-//		if(null != inVO && inVO.getRegId().equals("")) {
-//		    return StringUtil.validMessageToJson("20", "등록자를 입력하세요");
-//		}
+
 		
 		//내용 : 30
 		if(null != inVO && inVO.getContents().equals("")) {

@@ -11,8 +11,9 @@ public class BoardVO extends DTO {
 	private int    readCnt  ;//조회수
 	private String regDt    ;//등록일
 	private String modDt    ;//수정일
-	private String boardDelete ; //삭제여부
+	private int boardDelete ; //삭제여부
 	private String div      ;//구분
+	
 	
 	
 	public BoardVO() {
@@ -20,8 +21,129 @@ public class BoardVO extends DTO {
 	}
 
 
+
+	public int getNum() {
+		return num;
+	}
+
+
+
+	public void setNum(int num) {
+		this.num = num;
+	}
+
+
+
+	public int getSeq() {
+		return seq;
+	}
+
+
+
+	public void setSeq(int seq) {
+		this.seq = seq;
+	}
+
+
+
+	public String getUserId() {
+		return userId;
+	}
+
+
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+
+
+	public String getTitle() {
+		return title;
+	}
+
+
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+
+
+	public String getContents() {
+		return contents;
+	}
+
+
+
+	public void setContents(String contents) {
+		this.contents = contents;
+	}
+
+
+
+	public int getReadCnt() {
+		return readCnt;
+	}
+
+
+
+	public void setReadCnt(int readCnt) {
+		this.readCnt = readCnt;
+	}
+
+
+
+	public String getRegDt() {
+		return regDt;
+	}
+
+
+
+	public void setRegDt(String regDt) {
+		this.regDt = regDt;
+	}
+
+
+
+	public String getModDt() {
+		return modDt;
+	}
+
+
+
+	public void setModDt(String modDt) {
+		this.modDt = modDt;
+	}
+
+
+
+	public int getBoardDelete() {
+		return boardDelete;
+	}
+
+
+
+	public void setBoardDelete(int boardDelete) {
+		this.boardDelete = boardDelete;
+	}
+
+
+
+	public String getDiv() {
+		return div;
+	}
+
+
+
+	public void setDiv(String div) {
+		this.div = div;
+	}
+
+
+
 	public BoardVO(int num, int seq, String userId, String title, String contents, int readCnt, String regDt,
-			String modDt, String boardDelete, String div) {
+			String modDt, int boardDelete, String div) {
 		super();
 		this.num = num;
 		this.seq = seq;
@@ -36,105 +158,6 @@ public class BoardVO extends DTO {
 	}
 
 
-	public int getRowNum() {
-		return num;
-	}
-
-
-	public void setRowNum(int rowNum) {
-		this.num = rowNum;
-	}
-
-
-	public int getSeq() {
-		return seq;
-	}
-
-
-	public void setSeq(int seq) {
-		this.seq = seq;
-	}
-
-
-	public String getUserId() {
-		return userId;
-	}
-
-
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
-
-	public String getTitle() {
-		return title;
-	}
-
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-
-	public String getContents() {
-		return contents;
-	}
-
-
-	public void setContents(String contents) {
-		this.contents = contents;
-	}
-
-
-	public int getReadCnt() {
-		return readCnt;
-	}
-
-
-	public void setReadCnt(int readCnt) {
-		this.readCnt = readCnt;
-	}
-
-
-	public String getRegDt() {
-		return regDt;
-	}
-
-
-	public void setRegDt(String regDt) {
-		this.regDt = regDt;
-	}
-
-
-	public String getModDt() {
-		return modDt;
-	}
-
-
-	public void setModDt(String modDt) {
-		this.modDt = modDt;
-	}
-
-
-	public String getBoardDelete() {
-		return boardDelete;
-	}
-
-
-	public void setBoardDelete(String boardDelete) {
-		this.boardDelete = boardDelete;
-	}
-
-
-	public String getDiv() {
-		return div;
-	}
-
-
-	public void setDiv(String div) {
-		this.div = div;
-	}
-
 
 	@Override
 	public String toString() {
@@ -143,6 +166,7 @@ public class BoardVO extends DTO {
 				+ boardDelete + ", div=" + div + "]";
 	}
 
+	
 	
 	
 }

@@ -9,6 +9,8 @@ import com.pcwk.ehr.cmn.WorkDiv;
 	
 public interface BoardService extends WorkDiv<BoardVO> {
 
+	int doUpdateReadCnt(BoardVO inVO) throws SQLException;
+
 	 
 
 

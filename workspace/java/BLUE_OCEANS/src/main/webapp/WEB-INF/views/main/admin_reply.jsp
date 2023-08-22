@@ -441,7 +441,11 @@
          console.log('Cell ' + index + ': ' + $(this).text());
      });
      let seq = tdArray.eq(2).text();
-
+     
+     if ($(e.target).hasClass('delete-btn') || $(e.target).hasClass('recover-btn')) {
+    	    // 삭제 버튼 또는 복구 버튼을 클릭한 경우, 상세 페이지로 이동하지 않음
+    	    return;
+    	  }
      console.log('seq:'+seq);
      if(confirm("상세 조회 하시겠어요?") == false ) return;
     //div, seq

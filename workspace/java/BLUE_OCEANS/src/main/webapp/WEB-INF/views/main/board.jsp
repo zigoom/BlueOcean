@@ -65,11 +65,11 @@
 			<table class="table" id="boardTable">
 				<thead class="table-primary">
 					<tr>
-						<th class="table-success" style="text-align: center;">번호</th>
-						<th class="table-success" style="text-align: center;">날짜</th>
-						<th class="table-success" style="text-align: center;">제목</th>
-						<th class="table-success" style="text-align: center;">글쓴이</th>
-						<th class="table-success" style="text-align: center;">조회</th>
+						<th class="table-primary" style="text-align: center;">번호</th>
+						<th class="table-primary" style="text-align: center;">날짜</th>
+						<th class="table-primary" style="text-align: center;">제목</th>
+						<th class="table-primary" style="text-align: center;">글쓴이</th>
+						<th class="table-primary" style="text-align: center;">조회</th>
 						<th style="display:none;">DIV</th>
 					</tr>
 				</thead>
@@ -97,7 +97,7 @@
 				</tbody>
 			</table>
 			<div class="d-flex justify-content-end">
-				<a href="#" class="btn btn-sm btn-success" onclick="doMoveToReg();">글쓰기</a>
+				<a href="#" class="btn btn-sm btn-primary" onclick="doMoveToReg();">글쓰기</a>
 			</div>
 		</div>
 	</div>
@@ -133,20 +133,19 @@
       <input type="hidden" name="div"    id="div" value='${inVO.getDiv()}'>
        <div class="row g-1 d-flex justify-content-end">
         <div class="col-auto">
-          <input type="radio" name="searchDiv" id="searchTitle" value="10" checked>
-			<label for="searchTitle">제목</label>
+          
             <c:forEach var="vo" items="${searchList}">
               <option <c:if test="${vo.code == inVO.searchDiv}">selected</c:if> value="<c:out value='${vo.code}'/>">
                  <c:out value= '${vo.codeNm}'/>
               </option>
             </c:forEach>
-          </select>
+          
         </div>
         <div class="col-auto">
           <input type="text" name="searchWord" id="searchWord" value="<c:out value = '${inVO.searchWord}'/>" placeholder="제목을 입력하세요" class="form-control" style="width: 250px;">
         </div>
 		<div class="col-auto">
-        	<a href="#" class="btn btn-sm btn-success" id="doRetrieve">검색</a>
+        	<a href="#" class="btn btn-sm btn-primary" id="doRetrieve">검색</a>
     	</div>
       </div>
    </form>

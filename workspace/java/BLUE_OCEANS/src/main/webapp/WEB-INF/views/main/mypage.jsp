@@ -21,75 +21,83 @@ uri="http://java.sun.com/jsp/jstl/core"%>
   .d-flex.justify-content-between {
     justify-content: flex-end;
     }
+   .py-5{
+   
+    padding-bottom: 11rem!important;
+   }
 </style>
 </head>
 <body>
 <div class="container-fluid ps-md-0 centered-form">
-    <div class="col-md-8 col-lg-6">
+    <div class="col-md-8 col-lg-4">
       <div class="login d-flex py-5">
         <div class="container">
           <div class="row">
-              <div class="col-md-6 col-lg-12">
+              <div class="col-md-6 col-lg-11">
                <h1 class="login-heading mb-4">마이페이지</h1>
 
               
               <form>
-              
+                <hr class="my-1">
                 <input type="hidden" name="userNo" value="${userinfo.userNo}">
                 
-                <div class="form-floating mb-1" >
-                  <input type="name" class="form-control" id="name" name="name" value="${userinfo.name}" required readonly="true" >
-                  <label for="name">이름</label>
+		            <div class="col-12 py-1">
+		              <label for="name" class="form-label"><strong>이름</strong></label>
+		              <input type="text" class="form-control" id="name" name="name" value="${userinfo.name}" readonly="readonly">
+		            </div>
+		            
+                
+		            <div class="col-12 py-1">
+		              <label for="userId" class="form-label"><strong>아이디</strong></label>
+		              <input type="text" class="form-control" id="userId" name="userId" value="${userinfo.userId}" readonly="readonly">
+		            </div>
+                
+               
+		            <div class="col-12">
+		              <label for="phoneNo" class="form-label"><strong>전화번호</strong></label>
+		              <input type="text" class="form-control" id="phoneNo" name="phoneNo" value="${userinfo.phoneNo}">
+		            </div>
+               
+                <div class="col-12">
+		              <label for="birthday" class="form-label"><strong>생년월일</strong></label>
+		              <input type="text" class="form-control" id="birthday" name="birthday" value="${userinfo.birthday}">
                 </div>
                 
-                <div class="form-floating mb-1">
-                  <input type="id" class="form-control" id="userId" name="userId" value="${userinfo.userId}" readonly="true">
-                  <label for="userId">아이디</label>
-                </div>
-                
-                <div class="form-floating mb-1">
-                  <input type="text" class="form-control" id="phoneNo" name="phoneNo" value="${userinfo.phoneNo}" required >
-                  <label for="phoneNo">전화번호</label>
-                </div>
-           
-                <div class="form-floating mb-1">
-                  <input type="text" class="form-control" id="birthday" name="birthday" value="${userinfo.birthday}"required readonly="readonly">
-                  <label for="birthday">생년월일</label>
-                </div>
                 <!-- 성별 라디오버튼 -->
+                <hr class="my-1">
                 <div>
 								  <h4>성별</h4>
 	                <div class="form-floating mb-1">
 								    <div class="form-check">
 								        <input class="form-check-input" type="radio" name="gender" id="genderMale" value="M" ${userinfo.gender == 'M' ? 'checked' : ''}>
-								        <label class="form-check-label" for="genderMale">남성</label>
+								        <label class="form-check-label" for="genderMale"><strong>남성</strong></label>
 								    </div>
 								    <div class="form-check">
 								        <input class="form-check-input" type="radio" name="gender" id="genderFemale" value="F" ${userinfo.gender == 'F' ? 'checked' : ''}>
-								        <label class="form-check-label" for="genderFemale">여성</label>
+								        <label class="form-check-label" for="genderFemale"><strong>여성</strong></label>
 								    </div>
 								 </div>
 								</div>
-               
+               <hr class="my-1">
                 <!-- 성별 라디오버튼 end -->
                                 
-                <div class="form-floating mb-1" >
-                  <input type="email" class="form-control" id="email" name="email" value="${userinfo.email}" required >
-                  <label for="email">이메일</label>
+                <div class="col-12">
+                  <label for="email" class="form-label"><strong>이메일</strong></label>
+                  <input type="email" class="form-control" id="email" name="email" value="${userinfo.email}">
                 </div>
                 
-                <div class="form-floating mb-1">
-                  <input type="text" class="form-control" id="keyword" name="keyword" value="${userinfo.keyword}"required >
-                  <label for="keyword">관심업종 키워드</label>
-                </div>                
+                <div class="col-12">
+                  <label for="keyword" class="form-label"><strong>관심분야</strong></label>
+                  <input type="text" class="form-control" id="keyword" name="keyword" value="${userinfo.keyword}">
+                </div>
+                <hr class="my-1">             
                   <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                       <button class="btn btn-lg btn-primary btn-update text-uppercase fw-bold mb-2 " type="button" id="updateButton">수정</button>
                       <button class="btn btn-lg btn-primary btn-withdraw text-uppercase fw-bold mb-2 " type="button" id="withdrawButton">탈퇴</button>
                       <button class="btn btn-lg btn-primary btn-cancle text-uppercase fw-bold mb-2 " type="button" id="cancelButton">취소</button>
                   </div> 
-                                
-
               </form>
+
              <script>
 	             $(document).ready(function() {
 	                 $("#updateButton").click(function() {
@@ -187,7 +195,6 @@ uri="http://java.sun.com/jsp/jstl/core"%>
         </div>
       </div>
     </div>
-  </div>
 </body>
     <script src="${CP}/resources/js/header-main.js"></script>
     <script src="${CP}/resources/js/util.js"></script>

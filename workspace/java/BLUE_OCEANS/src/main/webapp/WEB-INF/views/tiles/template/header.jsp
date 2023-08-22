@@ -171,41 +171,54 @@ ul {
         
     });
             
-		    $("#header-search-btn").on("click", function() {
-		        // 검색 버튼 클릭 시 수행할 동작
-		        let keyword = $("#word").val();
-		
-		        if (keyword.trim() !== "") {
-		            let requestData = {
-		                name: keyword
-		            };
-		
-		            $.ajax({
-		                type: "POST",
-		                url: 'http://125.142.47.191:5001/blue-oceans/search-stocks-list',
-		                data: JSON.stringify(requestData),
-		                contentType: 'application/json',
-		                success: function(data) {
-		                    let autocompleteData = [];
-		                    data.data.forEach(function(data) {
-		                        autocompleteData.push({
-		                            label: data.Name + ' (' + data.Code + ')',
-		                            value: data.Name,
-		                            code: data.Code
-		                        });
-		                    });
-		
-		                    // 처리한 데이터를 사용하여 리다이렉트
-		                    var encodedData = encodeURIComponent(JSON.stringify(autocompleteData));
-		                    var redirectUrl = '${CP}/BLUEOCEAN/searchlist.do?data=' + encodedData;
-		                    window.location.href = redirectUrl;
-		                },
-		                error: function(xhr, textStatus, errorThrown) {
-		                    console.log("error:" + errorThrown);
-		                }
-		            });
-		        }
-		    });          
+					// 검색 버튼 클릭 시 이벤트 핸들러
+					$("#header-search-btn").on("click", function() {
+					    performSearch();
+					});
+					
+					// 엔터 키 눌렀을 때 이벤트 핸들러
+					$("#word").on("keydown", function(event) {
+					    if (event.keyCode === 13) { // Enter key
+					        event.preventDefault(); // 기본 동작 방지 (폼 제출 방지)
+					        performSearch();
+					    }
+					});
+					
+					function performSearch() {
+					    let keyword = $("#word").val();
+					
+					    if (keyword.trim() !== "") {
+					        let requestData = {
+					            name: keyword
+					        };
+					
+					        $.ajax({
+					            type: "POST",
+					            url: 'http://125.142.47.191:5001/blue-oceans/search-stocks-list',
+					            data: JSON.stringify(requestData),
+					            contentType: 'application/json',
+					            success: function(data) {
+					                let autocompleteData = [];
+					                data.data.forEach(function(data) {
+					                    autocompleteData.push({
+					                        label: data.Name + ' (' + data.Code + ')',
+					                        value: data.Name,
+					                        code: data.Code
+					                    });
+					                });
+					
+					                // 처리한 데이터를 사용하여 리다이렉트
+					                var encodedData = encodeURIComponent(JSON.stringify(autocompleteData));
+					                var redirectUrl = '${CP}/BLUEOCEAN/searchlist.do?data=' + encodedData;
+					                window.location.href = redirectUrl;
+					            },
+					            error: function(xhr, textStatus, errorThrown) {
+					                console.log("error:" + errorThrown);
+					            }
+					        });
+					    }
+					}
+       
 
         
 

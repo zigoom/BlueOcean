@@ -27,12 +27,12 @@
             <table style="margin-left: 50px; table-layout: fixed; width: 100%" id="data-table">
                 <thead>
                     <tr>
-                        <th scope="col">종목명</th>
-                        <th scope="col">현재가</th>
-                        <th scope="col">전일비</th>
-                        <th scope="col">등락률</th>
-                        <th scope="col">거래량</th>
-                    </tr>
+                        <th id="" scope="col">종목명</th>
+                        <th id="" scope="col">현재가</th>
+                        <th id="" scope="col">전일비</th>
+                        <th id="" scope="col">등락률</th>
+                        <th id="" scope="col">거래량</th>
+                    </tr>                    
                 </thead>
                 <tbody class="data-tbody">
                     <!-- 여기에 데이터를 동적으로 추가할 것입니다. -->
@@ -58,7 +58,7 @@ for (var i = 0; i < searchData.length; i++) {
 }
 
 // 배열에 저장된 "code" 값을 확인하기 위해 콘솔에 출력
-console.log(codeArray);
+//console.log(codeArray);
 
 $(document).ready(function() {        
     // fetchTickerData 함수 호출 시작
@@ -72,74 +72,98 @@ function fetchTickerData(index) {
         currentDate.setDate(currentDate.getDate() - 1);
         let formattedDate = currentDate.toISOString().split('T')[0];
 
-        let requestData1 = {
-            ticker: codeArray[index], // 현재 순서의 "code"
-            startDate: formattedDate,
-            endDate: '<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>'
-        };
-
-        $.ajax({
-            type: "POST",
-            url: 'http://125.142.47.191:5001/blue-oceans/search-tickers',
-            data: JSON.stringify(requestData1),
-            contentType: 'application/json',
-            success: function(data1) {
-            	console.log(`Fetched data for ticker ${requestData1.ticker}:`, data1);
                 // 다음 데이터 요청
-                let requestData2 = {
+                let requestData = {
                     ticker: codeArray[index], // 현재 순서의 "code"
                     date: '<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>',
                     interval: 10,
-                };
+                }; 
 
                 $.ajax({
                     type: "POST",
                     url: 'http://125.142.47.191:5001/blue-oceans/search-tickers',
-                    data: JSON.stringify(requestData2),
+                    data: JSON.stringify(requestData),
                     contentType: 'application/json',
-                    success: function(data2) {
-                        console.log(`Fetched data for ticker ${requestData2.ticker}:`, data2);
-
-                        // 데이터를 테이블에 추가하는 코드
+                    success: function(data) {
+                        console.log(`Fetched data for ticker ${requestData.ticker}:`, data);
+                        let stockName = data.stock_name;;
+                        const yesterdayIndex = data.data.length-2;
+                        const todayIndex = data.data.length-1;
+                        let yesterdayClose = data.data[yesterdayIndex].Close;
+                        let todayClose = data.data[todayIndex].Close;
+                        let todayOpen = data.data[todayIndex].Open;
+                        let change = todayClose - yesterdayClose;
+                        let volume = data.data[todayIndex].Volume;
+                        
+                        
+                        
+                        
+                        
                         const tbody = document.querySelector('.data-tbody');
-                        for (let i = 0; i < data1.data.length; i++) {
-                            const newRow = document.createElement('tr');
-                            const stockName = data1.stock_name;
-                            const open = parseInt(data1.data[i].Open);
-                            const close = parseInt(data1.data[i].Close);
-                            const change = data1.data[i].Change;
-                            const volume = data1.data[i].Volume;
-                            
-                            console.log(stockName);
-                            console.log(close - open);
-                            console.log(change);
-                            console.log(volume);
+                        for (let i = 0; i < 1; i++) {
 
-                            newRow.innerHTML = `
-                                <td>${stockName}</td>
-                                <td>${close}</td>
-                                <td>${close - open}</td>
-                                <td>${((close - open) / open) * 100}%</td>
-                                <td>Volume: ${volume}</td>
-                            `;
-                            tbody.appendChild(newRow);
+                            let tbody = $(".data-tbody");
+                            let tr = $("<tr class='data-tr'></tr>");
+                            tr.append("<td>"+stockName+"</td>")
+                            tr.append("<td>"+todayClose+"</td>");
+				                    // 전일비에 따라서 화살표와 색상 표시
+				                    if (change > 0) {
+				                        tr.append("<td><span style='color: red;'>&#9650; +"+ change + "</span></td>");
+				                    } else if (change < 0) {
+				                        tr.append("<td><span style='color: blue;'>&#9660; " + change + "</span></td>");
+				                    } else {
+				                        tr.append("<td>" + change + "</td>");
+				                    }
+				                    
+				                    // 등락률에 따라서 화살표와 색상 표시
+				                    let rateChange = ((todayClose - yesterdayClose) / yesterdayClose * 100).toFixed(2);
+				                    if (rateChange > 0) {
+				                        tr.append("<td><span style='color: red;'>&#9650;"+"+" + rateChange + "%</span></td>");
+				                    } else if (rateChange < 0) {
+				                        tr.append("<td><span style='color: blue;'>&#9660; " + rateChange + "%</span></td>");
+				                    } else {
+				                        tr.append("<td>" + rateChange + "%</td>");
+				                    }
+                            tr.append("<td>"+volume+"</td>");
+                            tbody.append(tr);                        
+                        
                         }
-
+                        
+                        
+                        
+                        
+                        
+                        
                         // 다음 요소에 대한 데이터 가져오기
                         fetchTickerData(index + 1);
                     },
                     error: function(xhr, textStatus, errorThrown) {
                         console.log("error:" + errorThrown);
                         // 다음 요소에 대한 데이터 가져오기
+                        fetchTickerData(index + 1);
                     }
                 });
+                // 데이터를 테이블에 추가하는 코드
+/*                         const tbody = document.querySelector('.data-tbody');
+                        for (let i = 0; i < data1.data.length/2; i++) {
 
-            },
-            error: function(xhr, textStatus, errorThrown) {
-                console.log("error:" + errorThrown);
-                // 다음 요소에 대한 데이터 가져오기
-            }
-        });
+                            
+                            console.log(stockName);
+                            console.log(change);
+                            console.log(volume);
+
+
+                            let tbody = $(".data-tbody");
+                            let tr = $("<tr class='data-tr'></tr>");
+                            tr.append("<td>"+stockName+"</td>")
+                            tr.append("<td> 미정 </td>");
+                            tr.append("<td>"+(close - open)+"</td>");
+                            tr.append("<td>"+(((close - open) / open) * 100) + "%</td>");
+                            tr.append("<td>"+volume+"</td>");
+                            tbody.append(tr);
+                        } */
+                          
+
     }
 }
 

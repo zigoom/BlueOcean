@@ -122,6 +122,14 @@
             loadData(); // Call the function to load data when the page loads
         });
         
+    function today(){
+    	const today = new Date();
+    	const year = today.getFullYear();
+    	const month = String(today.getMonth() + 1).padStart(2, '0');
+    	const day = String(today.getDate()).padStart(2, '0');
+    	const formattedDate = year+"-"+month+"-"+day;
+    	return formattedDate;
+    }
     </script>
 </head>
 <body>	
@@ -133,125 +141,140 @@
 	        </c:when>
 	        <c:otherwise>
 	            <c:choose>
+	            
+                
+                
+                            
+	            
+	            
+	            
+	            
+	            
+	            
+	            
+	            
+	            
+	            
+	            
+	            
 	                <c:when test="${empty bookmarkList}">
 	                    <!-- 관심목록이 없는 경우 메시지 표시 -->
 	                    <p>관심목록이 없습니다.</p>
 	                </c:when>
 	                <c:otherwise>
-                        <h5 style='font-size: 26px; font-weight:bold;'>관심목록</h5>
-	                    <!-- <table border="1" class="table table-sm">
-	                      <thead>
-	                        <tr class="table-primary">
-                              <th class="text-center font-weight-bold">종목</th>
-                              <th class="text-center font-weight-bold">현재가</th>
-                              <th class="text-center font-weight-bold">고가</th>
-                              <th class="text-center font-weight-bold">저가</th>
-                              <th class="text-center font-weight-bold">등락률</th>
-                              <th class="text-center font-weight-bold">거래량</th>
-	                        </tr>
-	                      </thead>
-	                      <tbody> -->
-	                      <!-- 로그인 된 경우에만 루프 내용을 표시 -->
-	                        <c:forEach var="item" items="${bookmarkList}" varStatus="loop">
+                        <!-- 관심목록  -->
+                        <h5 style='font-size: 26px; font-weight:bold; margin-bottom: 20px'>관심목록</h5>
+						<!-- 로그인 된 경우에만 루프 내용을 표시 -->
+						<div>
+							<table class="table table-sm" style="margin-bottom: 40px; border: 1;">
+							    <thead>
+							        <tr class="table-primary">
+							            <th class="text-center font-weight-bold">종목</th>
+                                        <th class="text-center font-weight-bold">현재가</th>
+                                        <th class="text-center font-weight-bold">전일가</th>
+							            <th class="text-center font-weight-bold">시작가</th>
+							            <th class="text-center font-weight-bold">고가</th>
+							            <th class="text-center font-weight-bold">저가</th>
+							            <th class="text-center font-weight-bold">등락률</th>
+							            <th class="text-center font-weight-bold">거래량</th>
+							        </tr>
+							    </thead>
+							    <tbody id="table-body"></tbody>
+							</table>
+							<c:forEach var="item" items="${bookmarkList}" varStatus="loop">
+							    <div class="table-container" data-ticker="${item}"></div>
+							</c:forEach>
+							<script>
+							    $(document).ready(function() {
+							        $(".table-container").each(function(index) {
+							            const td = $(this).data("ticker");
+							            const sd = today();
+							
+							            const requestData = {
+							                "ticker": td,
+							                "date": sd
+							            };							
+							            const tableContainer = $("#table-body"); // 테이블의 tbody에 행 추가
+							
+							            $.ajax({
+							                type: 'POST',
+							                url: 'http://192.168.0.74:5001/blue-oceans/search-today-tickers',
+							                data: JSON.stringify(requestData),
+							                contentType: 'application/json',
+							                mode: 'cors',
+							                success: function (result) {
+							                    const jsonData = result;
+							                    const data = jsonData.data[0];
+							                    let yesterdayClose = jsonData.yesterdayClose;
+							
+							                    const row = $("<tr>");
+							                    row.append($("<td>").html("&nbsp;" + jsonData.stock_name).addClass("font-weight-bold text-start"));
+							
+							                    const closeTd = $("<td>").addClass("font-weight-bold text-end");
+							                    if (data['Close'] < yesterdayClose) {
+							                        closeTd.css("color", "blue").html("▼ " + data['Close']+"&nbsp;");
+							                    } else if (data['Close'] > yesterdayClose) {
+							                        closeTd.css("color", "red").html("▲ " + data['Close']+"&nbsp;");
+							                    } else {
+							                        closeTd.html(data['Close']+"&nbsp;");
+							                    }                                       
+							                    row.append(closeTd);
 
-    <div class="table-container" data-ticker="${item}"></div>
-</c:forEach>
+                                                row.append($("<td>").html(data['Open']+"&nbsp;").addClass("font-weight-bold text-end"));
+							                    
+							                    const closeTd3 = $("<td>").html(yesterdayClose+"&nbsp;").addClass("font-weight-bold text-end");
+                                                if (data['Close'] < yesterdayClose) {
+                                                    closeTd3.css("color", "blue");
+                                                } else if (data['Close'] > yesterdayClose) {
+                                                    closeTd3.css("color", "red");
+                                                }
+                                                row.append(closeTd3);
 
-<script>
-    $(document).ready(function() {
-        $(".table-container").each(function(index) {
-        	console.log("!!!!!");
-            const td = $(this).data("ticker");
-            const sd = "2023-07-31";
-            const ed = "2023-07-31";
-
-            const requestData = {
-            	"ticker": td,
-                "startDate": sd,
-                "endtDate": ed,
-            };
-
-            const tableContainer = $(this);
-            
-            $.ajax({
-                type: 'POST',
-                url: 'http://192.168.0.74:5001/blue-oceans/search-tickers',
-                data: JSON.stringify(requestData),
-                contentType: 'application/json',
-                mode: 'cors',
-                success: function (result) {
-                    const jsonData = result;
-                    const table = $("<table>").addClass("table table-bordered");
-                    const thead = $("<thead>");
-                    const tbody = $("<tbody>");
-
-                    const headerLabels = ["Date", "Open", "High", "Low", "Close", "Volume", "Change"];
-                    const headerRow = $("<tr>").addClass("table-primary");
-
-
-                    /* const headerLabels = ["종목", "현재가", "고가", "저가", "등락률", "거래량", "Change"]; */
-                    
-                    headerLabels.forEach(label => {
-                        const th = $("<th>").addClass("text-center font-weight-bold").text(label);
-                        headerRow.append(th);
-                    });
-
-                    thead.append(headerRow);
-                    table.append(thead);
-                    jsonData.data
-                    
-                    /* jsonData.data.forEach(itemData => {
-                        const row = $("<tr>");
-
-                        // 원하는 순서대로 항목 키 값을 나열
-                        const keysInDesiredOrder = ["Volume", "High", "Low", "Close", "Open", "Change", "Date"];
-                        
-                        keysInDesiredOrder.forEach(key => {
-                            const cell = $("<td>").text(itemData[key]);
-                            row.append(cell);
-                        });
-
-                        tbody.append(row);
-                    }); */
-                    
-                    /* jsonData.data.forEach(itemData => {
-                        const row = $("<tr>");
-                        for (const key in itemData) {
-                            const cell = $("<td>").text(itemData[key]);
-                            row.append(cell);
-                        }
-                        tbody.append(row);
-                    }); */
-
-                    table.append(tbody);
-                    tableContainer.append(table);
-                },
-                error: function (error) {
-                    console.log('Error fetching data:', error);
-                }
-            });
-        });
-    });
-</script>               
-	                      <!-- </tbody>
-	                    </table> -->
+							                    row.append($("<td>").html(data['High']+"&nbsp;").addClass("font-weight-bold text-end"));
+							                    row.append($("<td>").html(data['Low']+"&nbsp;").addClass("font-weight-bold text-end"));
+							
+							                    const closeTd2 = $("<td>").html(data['Change']+"&nbsp;").addClass("font-weight-bold text-end");
+							                    if (data['Close'] < yesterdayClose) {
+							                        closeTd2.css("color", "blue");
+							                    } else if (data['Close'] > yesterdayClose) {
+							                        closeTd2.css("color", "red");
+							                    }
+							                    row.append(closeTd2);
+							
+							                    row.append($("<td>").html(data['Volume']+"&nbsp;").addClass("font-weight-bold text-end"));
+							
+							                    // 클릭 이벤트 추가
+							                    row.on("click", function() {
+							                        const stockName = jsonData.stock_name;
+							                        const ticker = jsonData.ticker;
+							                        const url = "/ehr/BLUEOCEAN/detail.do?stockName="+stockName+"&stockCode="+ticker;
+							                        window.location.href = url;
+							                    });
+							
+							                    tableContainer.append(row);
+							                },
+							                error: function (error) {
+							                    console.log('Error fetching data:', error);
+							                }
+							            });
+							        });
+							    });
+							</script>  
+						</div>            
 	                </c:otherwise>
 	            </c:choose>
 	        </c:otherwise>
 	    </c:choose>
-                
-                
-                
-        <!-- 증권시장  -->
-        <h5 style='font-size: 26px; font-weight:bold;'>증권시장</h5>
-        <div class="card-group">
+      <!-- 증권시장  -->
+      <h5 style='font-size: 26px; font-weight:bold; margin-bottom: 20px'>증권시장</h5>
+      <div class="card-group" style="margin-bottom: 40px;">
 		  <div class="card" style="margin-right: 10px">
             <div id="chart1" class="card-img-top" ></div>
 		    <div class="card-body" style="border: 1px; outline: 1px solid; outline-width:2px; margin: 2px">
 		      <h5 id="chart1-1" class="card-title" style='font-weight:bold; font-size: 22px;'></h5>
 		      <p class="card-text" id="chart1-2" style="font-weight:bold; margin-bottom: 0px; font-size: 16px;"></p>
               <p class="card-text" id="chart1-3" style="font-weight:bold; margin-bottom: 0px; font-size: 16px;"></p>
-              <p class="card-text"><small class="text-body-secondary" id="chart1-4" style='font-size: 8px;'></small></p>
+              <p class="card-text"><small class="text-body-secondary" id="chart1-4" style='font-size: 9px;'></small></p>
 		    </div>
 		  </div>
           <div class="card" style="margin-right: 10px">
@@ -260,38 +283,38 @@
               <h5 id="chart2-1" class="card-title" style='font-weight:bold; font-size: 22px;'></h5>
               <p class="card-text" id="chart2-2" style="font-weight:bold; margin-bottom: 0px; font-size: 16px;"></p>
               <p class="card-text" id="chart2-3" style="font-weight:bold; margin-bottom: 0px; font-size: 16px;"></p>
-              <p class="card-text"><small class="text-body-secondary" id="chart2-4" style='font-size: 8px;'></small></p>
+              <p class="card-text"><small class="text-body-secondary" id="chart2-4" style='font-size: 9px;'></small></p>
             </div>
           </div>
           <div class="card" style="margin-right: 10px">
             <div id="chart3" class="card-img-top" ></div>
             <div class="card-body" style="border: 1px; outline: 1px solid; outline-width:2px; margin: 2px">
               <h5 id="chart3-1" class="card-title" style='font-weight:bold; font-size: 22px;'></h5>
-              <p class="card-text" id="chart3-2" style="font-weight:bold; margin-bottom: 0px; font-size: 18px;"></p>
-              <p class="card-text" id="chart3-3" style="font-weight:bold; margin-bottom: 0px; font-size: 18px;"></p>
-              <p class="card-text"><small class="text-body-secondary" id="chart3-4" style='font-size: 8px;'></small></p>
+              <p class="card-text" id="chart3-2" style="font-weight:bold; margin-bottom: 0px; font-size: 16px;"></p>
+              <p class="card-text" id="chart3-3" style="font-weight:bold; margin-bottom: 0px; font-size: 16px;"></p>
+              <p class="card-text"><small class="text-body-secondary" id="chart3-4" style='font-size: 9px;'></small></p>
             </div>
           </div>
           <div class="card" style="margin-right: 10px">
             <div id="chart4" class="card-img-top" ></div>
             <div class="card-body" style="border: 1px; outline: 1px solid; outline-width:2px; margin: 2px">
               <h5 id="chart4-1" class="card-title" style='font-weight:bold; font-size: 22px;'></h5>
-              <p class="card-text" id="chart4-2" style="font-weight:bold; margin-bottom: 0px; font-size: 18px;"></p>
-              <p class="card-text" id="chart4-3" style="font-weight:bold; margin-bottom: 0px; font-size: 18px;"></p>
-              <p class="card-text"><small class="text-body-secondary" id="chart4-4" style='font-size: 8px;'></small></p>
+              <p class="card-text" id="chart4-2" style="font-weight:bold; margin-bottom: 0px; font-size: 16px;"></p>
+              <p class="card-text" id="chart4-3" style="font-weight:bold; margin-bottom: 0px; font-size: 16px;"></p>
+              <p class="card-text"><small class="text-body-secondary" id="chart4-4" style='font-size: 9px;'></small></p>
             </div>
           </div>
           <div class="card">
             <div id="chart5" class="card-img-top" ></div>
             <div class="card-body" style="border: 1px; outline: 1px solid; outline-width:2px; margin: 2px">
               <h5 id="chart5-1" class="card-title" style='font-weight:bold; font-size: 22px;'></h5>
-              <p class="card-text" id="chart5-2" style="font-weight:bold; margin-bottom: 0px; font-size: 18px;"></p>
-              <p class="card-text" id="chart5-3" style="font-weight:bold; margin-bottom: 0px; font-size: 18px;"></p>
-              <p class="card-text"><small class="text-body-secondary" id="chart5-4" style='font-size: 8px;'></small></p>
+              <p class="card-text" id="chart5-2" style="font-weight:bold; margin-bottom: 0px; font-size: 16px;"></p>
+              <p class="card-text" id="chart5-3" style="font-weight:bold; margin-bottom: 0px; font-size: 16px;"></p>
+              <p class="card-text"><small class="text-body-secondary" id="chart5-4" style='font-size: 9px;'></small></p>
             </div>
           </div>
 		</div>   
-		<script>
+	  <script>
 		function formatDateToYYYYMMDD(date) {
 			  const year = date.getFullYear();
 			  const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -363,7 +386,7 @@
 		  getHolidays(currentYear, countryCode, function(holidays) {
 			    const validDate = getValidDate(holidays);
 			    formattedDate = formatDateToYYYYMMDD(validDate);
-			    console.log('Valid Date:', formattedDate);
+			    /* console.log('Valid Date:', formattedDate); */
 			    
 			    // 차트 생성 및 데이터 요청
 			    for(let i=0;i<5;i++){
@@ -436,19 +459,21 @@
                 break;
 		    default:
 		  }
-		    
-		    
-		        
-		
-		    // 데이터를 받아옵니다.
-		    $.ajax({
+		  // 데이터를 받아옵니다.
+		  $.ajax({
 		      type: 'POST',
 		      url: 'http://192.168.0.74:5001/blue-oceans/search-stock-market-getinterval',
 		      data: JSON.stringify(requestData),
 		      contentType: 'application/json',
 		      success: function(response) {
 		        // 받아온 데이터를 가공하여 시간과 값을 분리합니다.
-		        let startData = response.startData;
+		        let startData = "";
+		        if(requestData.symbol == "KS11" || requestData.symbol == "KQ11" || requestData.symbol == "KS200"){
+		        	startData = response.yesterdayData;
+		        }else{
+		        	startData = response.openData;
+		        }
+		         
 		
 		        var chart1_1Element = document.getElementById("chart"+no+"-1");
 		        chart1_1Element.textContent = response.symbol_name;
@@ -477,9 +502,15 @@
 		       		lastTime = timeKey;
 		       		lastValue = data[timeKey];
 		       	  }
-		       	}
-		        chart1_2Element.textContent = "시작가: "+startData.toFixed(1);
-		        chart1_3Element.textContent = "현재가: "+lastValue.toFixed(1) + "("+(lastValue.toFixed(1)-startData.toFixed(1)).toFixed(1)+")";
+		       	}		        		        
+		        
+		        if(requestData.symbol == "KS11" || requestData.symbol == "KQ11" || requestData.symbol == "KS200"){
+	                chart1_3Element.textContent = "전일가: "+startData.toFixed(2);
+	                chart1_2Element.textContent = "현재가: "+lastValue.toFixed(2) + "("+(lastValue.toFixed(2)-startData.toFixed(2)).toFixed(2)+")";
+		        }else{
+                    chart1_3Element.textContent = "시작가: "+startData.toFixed(2);
+                    chart1_2Element.textContent = "현재가: "+lastValue.toFixed(2) + "("+(lastValue.toFixed(2)-startData.toFixed(2)).toFixed(2)+")";
+                }
 		        chart1_4Element.textContent = "( last update: "+date +" "+lastTime+" )";
 		
 		        
@@ -537,13 +568,11 @@
 		      },
 		    });
 		}		
-		</script>
-
-
+      </script>
       <!-- 거래량 상위 10개 종목  -->
-      <div id="tableContainer" style="margin-top: 20px; margin-bottom: 20px;"> </div>        
+      <div id="tableContainer" style="margin-top: 20px; margin-bottom: 40px;"> </div>        
       <!--네이버 뉴스 api 정보를 불러오는 영역-->
-      <div id="news-container"></div>
+      <div id="news-container" style="margin-bottom: 40px;"></div>
       <script>
       // 네이버 뉴스 api 호출
       $.ajax({

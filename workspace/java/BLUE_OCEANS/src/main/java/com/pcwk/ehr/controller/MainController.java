@@ -29,29 +29,21 @@ public class MainController implements PcwkLogger {
 		LOG.debug("│mainView        │");
 		LOG.debug("│inVO            │"+inVO);
 		LOG.debug("└────────────────┘");
-		
-		
-		BookmarkVO vo = new BookmarkVO();
+				
+		BookmarkVO outVO = new BookmarkVO();
 		
 		if (null != session.getAttribute("user")) {		
-			vo.setUserId((String) session.getAttribute("user"));		
-			List<BookmarkVO> bookmarkList = bookmarkService.loadBookmark(vo);
+			outVO.setUserId((String) session.getAttribute("user"));		
+			List<BookmarkVO> bookmarkList = bookmarkService.loadBookmark(outVO);
 			model.addAttribute("bookmarkList", bookmarkList); 
 		}
-		session.setAttribute("user", "pcwk");
-
-		vo.setUserId("pcwk");		
-
-    	List<BookmarkVO> outVO = bookmarkService.loadBookmark(vo);
-		System.out.println("sdsd - "+outVO.size());
-		System.out.println("!!!!!!!!! - "+outVO.get(0));
-		/*
-		 * for(int i = 0;i<bookmarkList.size();i++) {
-		 * System.out.println("!!!!!!!!! - "+bookmarkList.get(i).toString()); }
-		 */
-		model.addAttribute("bookmarkList", outVO); 
 		
-		
+//		session.setAttribute("user", "pcwk");
+//		vo.setUserId("pcwk");		
+//    	List<BookmarkVO> outVO = bookmarkService.loadBookmark(vo);
+//		for(int i = 0;i<outVO.size();i++) {
+//		System.out.println("!!!!!!!!! - "+outVO.get(i).toString()); }		
+//		model.addAttribute("bookmarkList", outVO); 				
 		
 		return "main/main";
 	}

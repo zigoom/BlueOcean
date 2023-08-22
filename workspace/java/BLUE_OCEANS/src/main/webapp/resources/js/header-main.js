@@ -430,14 +430,15 @@ $(document).ready(function () {
                 console.log('data:' + data);
                 let paredJSON = JSON.parse(data);
                 console.log('paredJSON.msgId:' + paredJSON.msgId);
-                if (paredJSON.msgId == 10 || paredJSON.msgId == 20) {
-                    alert('아이디나 비밀번호가 다릅니다.');
-                } 
-                else if (paredJSON.msgId == 30) {
+                
+                if (paredJSON.msgId == 30) {
                 	    alert('로그인이 완료되었습니다.');  	
                 		window.location.href = window.location.href; 
 
-                }
+                } else {
+                    	alert('아이디나 비밀번호가 다릅니다.');
+                } 
+               
             },
             error: function (data) {
                 // 실패시
@@ -582,7 +583,7 @@ $(document).ready(function () {
         findPwActive = findPwActive + 1;
         if (findPwActive >= 1) {
             appendAndShow(findPwhtml);
-            modalFooter.append("<button class='btn btn-primary' id='login_bt'>PW찾기</button>");
+            modalFooter.append("<button class='btn btn-primary' id='findpw_bt'>PW찾기</button>");
         }
     });
     

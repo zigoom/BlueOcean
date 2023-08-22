@@ -283,8 +283,8 @@
               + "</td>");
           tr.append("<td class='post-no'>" + data[i].postNo
               + "</td>");
-          tr.append("<td class='contents text-truncate'>" + data[i].contents
-        		  + "</td>");
+          tr.append("<td class='contents'>" + data[i].contents
+        		  +"</td>");
           tr.append("<td class='reg-dt'>" + data[i].regDt
               + "</td>");
           tr.append("<td class='mod-dt'>" + data[i].modDt
@@ -432,6 +432,21 @@
 
 		    })
 		  })
+		  
+		 // 댓글내용 click시  상세페이지 이동
+     $("#data-table>tbody").on("click","tr", function(e){
+     console.log("#data-table>tBody");
+     let tdArray = $(this).children();
+     tdArray.each(function(index) {
+         console.log('Cell ' + index + ': ' + $(this).text());
+     });
+     let seq = tdArray.eq(2).text();
+
+     console.log('seq:'+seq);
+     if(confirm("상세 조회 하시겠어요?") == false ) return;
+    //div, seq
+     window.location.href = "${CP}/BLUEOCEAN/doSelectOne.do?div="+$("#div").val()+ "&seq=" + seq;
+   });   
 
 </script>
 </html>

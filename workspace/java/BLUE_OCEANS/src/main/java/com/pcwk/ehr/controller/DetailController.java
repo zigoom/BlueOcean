@@ -24,17 +24,14 @@ public class DetailController implements PcwkLogger {
 	NaverSearchService naverSearchService;
 
 	@RequestMapping(value = "/detail.do", method = RequestMethod.GET)
-	public String mainView(BookmarkVO inVO, Model model, 
-							@RequestParam("stockName") String stockName,
-							@RequestParam("stockCode") String stockCode) {
+	public String mainView(BookmarkVO inVO, Model model) {
 
 		LOG.debug("┌────────────────┐");
 		LOG.debug("│detailView      │");
 		LOG.debug("│inVO            │" + inVO);
 		LOG.debug("└────────────────┘");
 		
-	    inVO.setStockName(stockName);
-	    inVO.setStockCode(stockCode);
+	   
 		
 		model.addAttribute("inVO",inVO);
 

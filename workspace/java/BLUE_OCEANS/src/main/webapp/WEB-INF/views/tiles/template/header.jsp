@@ -97,7 +97,7 @@ ul {
 
 		
 		$(document).ready(function() {
-			
+			 let itemcode;
 					   $("#adminBtn").on("click", function() {
 		            console.log('어드민');
 		              window.location.href = "${CP}/BLUEOCEAN/admin/user.do"; // 여기에 실제 관리자 페이지의 URL을 넣어주세요 
@@ -140,23 +140,13 @@ ul {
                     else {
                     response([]);
                     }
-              },
+              },             
             
             minLength: 2, // 최소 입력 길이
             select: function(event, ui) {
 						itemname = ui.item.value;
 						itemcode = ui.item.code;
 
-            
-            let currentDate = new Date();
-            
-            currentDate.setDate(currentDate.getDate() - 1);
-            
-            let formattedDate = currentDate.toISOString().split('T')[0];
-
-                  
-            console.log("Selected Name:", ui.item.value); // 선택한 항목의 코드를 콘솔에 출력
-            console.log("Selected Code:", ui.item.code); // 선택한 항목의 코드를 콘솔에 출력
                       //----------ajax----------
                   $.ajax({
                       type: "GET",
@@ -177,44 +167,53 @@ ul {
                   });
           //----------ajax end----------
         }
+        
+        
     });
             
-          $("#header-search-btn").on("click", function() {
-              searchWithSelectedCode(); // 버튼 클릭으로 검색
-          });
-        
-          // 검색어 입력란의 값이 변경될 때마다 실행될 함수
-            function searchWithSelectedCode(requestData) {
-            let keyword = $("#word").val();
-            if (eUtil.ISEmpty(keyword) == true) {
-                alert("검색어를 입력해주세요");
-                $("#word").focus();
-                return;
-            } else {
+		    $("#header-search-btn").on("click", function() {
+		        // 검색 버튼 클릭 시 수행할 동작
+		        let keyword = $("#word").val();
+		
+		        if (keyword.trim() !== "") {
+		            let requestData = {
+		                name: keyword
+		            };
+		
+		            $.ajax({
+		                type: "POST",
+		                url: 'http://125.142.47.191:5001/blue-oceans/search-stocks-list',
+		                data: JSON.stringify(requestData),
+		                contentType: 'application/json',
+		                success: function(data) {
+		                    let autocompleteData = [];
+		                    data.data.forEach(function(data) {
+		                        autocompleteData.push({
+		                            label: data.Name + ' (' + data.Code + ')',
+		                            value: data.Name,
+		                            code: data.Code
+		                        });
+		                    });
+		
+		                    // 처리한 데이터를 사용하여 리다이렉트
+		                    var encodedData = encodeURIComponent(JSON.stringify(autocompleteData));
+		                    var redirectUrl = '${CP}/BLUEOCEAN/searchlist.do?data=' + encodedData;
+		                    window.location.href = redirectUrl;
+		                },
+		                error: function(xhr, textStatus, errorThrown) {
+		                    console.log("error:" + errorThrown);
+		                }
+		            });
+		        }
+		    });          
 
-                $.ajax({
-                    type: "POST",
-                    url: 'http://125.142.47.191:5001/blue-oceans/search-tickers-getinterval',
-                    data: JSON.stringify(requestData),
-                    contentType: 'application/json',
-                    mode: 'cors',
-                    success: function(data) {
-                        var encodedData = encodeURIComponent(JSON.stringify(data));
-                        var redirectUrl = '${CP}/BLUEOCEAN/searchlist.do?data=' + encodedData;
-                        window.location.href = redirectUrl;
-                    },
-                    error: function(xhr, textStatus, errorThrown) {
-                        if (xhr.status === 404) {
-                            alert("검색된 단어가 없음");
-                        } else {
-                            console.log("error:" + errorThrown);
-                        }
-                    }
-                });
-            }
-        }
+        
+
       
           
+
+ });
+		
             $("#logout").on("click",function() {
               let logout = confirm(`${sessionScope.user}님 로그아웃?`);
               
@@ -238,8 +237,50 @@ ul {
                    }
            
            
-            });
- });
+            });		
+		
+		          // 검색어 입력란의 값이 변경될 때마다 실행될 함수
+            function searchWithSelectedCode(requestData) {
+            let keyword = $("#word").val();
+            if (eUtil.ISEmpty(keyword) == true) {
+                alert("검색어를 입력해주세요");
+                $("#word").focus();
+                return;
+            } else {
+
+              
+            let currentDate = new Date();
+            
+            currentDate.setDate(currentDate.getDate() - 1);
+            
+            let formattedDate = currentDate.toISOString().split('T')[0];              
+              
+            let requestData = {
+                ticker: itemcode, // 변경된 부분
+                startDate: formattedDate,
+                endtDate: '<%= new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date()) %>',
+            };                      
+                $.ajax({
+                    type: "POST",
+                    url: 'http://125.142.47.191:5001/blue-oceans/search-tickers',
+                    data: JSON.stringify(requestData),
+                    contentType: 'application/json',
+                    mode: 'cors',
+                    success: function(data) {
+                        var encodedData = encodeURIComponent(JSON.stringify(data));
+                        var redirectUrl = '${CP}/BLUEOCEAN/searchlist.do?data=' + encodedData;
+                        window.location.href = redirectUrl;
+                    },
+                    error: function(xhr, textStatus, errorThrown) {
+                        if (xhr.status === 404) {
+                            alert("검색된 단어가 없음");
+                        } else {
+                            console.log("error:" + errorThrown);
+                        }
+                    }
+                });
+            }
+        }
 		
 		
 		</script>

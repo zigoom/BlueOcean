@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pcwk.ehr.dao.AdminTermsofuseDao">
+	<resultMap type="AdminPageVO" id="AdminPageVOMap">
+		<result column="rnum"		property="rnum"/>
+		<result column="identifier"	property="identifier"/>
+		<result column="subject"	property="subject"/>
+		<result column="context"	property="context"/>
+	</resultMap>
+
+	<select id="doRetrieve" parameterType="AdminPageVO" resultMap="AdminPageVOMap">
+		SELECT rnum, identifier, subject, context
+        FROM (
+            SELECT rnum, identifier, subject, context, ROW_NUMBER() OVER (ORDER BY rnum) AS rn
+            FROM (
+                SELECT ROWNUM AS rnum, T1.identifier, T1.subject, T1.context
+                FROM (
+                    SELECT *
+                    FROM termsofuse
+                ) T1
+            )
+            WHERE ROWNUM &lt;= #{pageSize} * (#{pageNo} - 1) + #{pageSize}
+        )
+        WHERE rn BETWEEN (#{pageSize} * (#{pageNo} - 1)) + 1 AND #{pageSize} * #{pageNo}
+    </select>
+
+
+</mapper>

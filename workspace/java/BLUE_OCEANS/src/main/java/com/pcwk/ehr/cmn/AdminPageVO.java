@@ -34,15 +34,21 @@ public class AdminPageVO {
 	private int identifier;// 식별자
 	private String subject;// 제목
 	private String context;// 본문
+	private int rnum;	// 이용약관 페이지 페이징 number (adminpageTermsofuse)
 
+	
+	
 	public AdminPageVO() {
 	}
 
+
+	
+	
 	public AdminPageVO(int userNo, String userId, String passwd, String userName, int birthday, String gender,
 			String keyword, String email, String phoneNo, String userLevel, int withdrawal, int agree, int otpUse,
 			List<Integer> termsOfUse, int seq, String title, String contents, String div, int readCnt, String regDt,
 			String regId, String modDt, String modId, int commentNo, int postNo, int replyDelete, int boardDelete,
-			int no, int identifier, String subject, String context) {
+			int no, int identifier, String subject, String context, int rnum) {
 		super();
 		this.userNo = userNo;
 		this.userId = userId;
@@ -75,8 +81,17 @@ public class AdminPageVO {
 		this.identifier = identifier;
 		this.subject = subject;
 		this.context = context;
+		this.rnum = rnum;
 	}
 
+	public int getRnum() {
+		return rnum;
+	}
+
+	public void setRnum(int rnum) {
+		this.rnum = rnum;
+	}
+	
 	public int getUserNo() {
 		return userNo;
 	}
@@ -325,6 +340,9 @@ public class AdminPageVO {
 		this.context = context;
 	}
 
+
+
+
 	@Override
 	public String toString() {
 		return "AdminPageVO [userNo=" + userNo + ", userId=" + userId + ", passwd=" + passwd + ", userName=" + userName
@@ -334,7 +352,9 @@ public class AdminPageVO {
 				+ ", contents=" + contents + ", div=" + div + ", readCnt=" + readCnt + ", regDt=" + regDt + ", regId="
 				+ regId + ", modDt=" + modDt + ", modId=" + modId + ", commentNo=" + commentNo + ", postNo=" + postNo
 				+ ", replyDelete=" + replyDelete + ", boardDelete=" + boardDelete + ", no=" + no + ", identifier="
-				+ identifier + ", subject=" + subject + ", context=" + context + "]";
+				+ identifier + ", subject=" + subject + ", context=" + context + ", rnum=" + rnum + "]";
 	}
+
+	
 
 }

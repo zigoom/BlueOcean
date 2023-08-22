@@ -39,7 +39,7 @@ public class AdminMemberTest {
 
 	// 멤버 목록 불러오기
 	@Test
-	@Ignore
+	// @Ignore
 	public void testLoadMember() throws SQLException {
 
 		List<AdminPageVO> result = adminService.loadMember();
@@ -57,17 +57,17 @@ public class AdminMemberTest {
 		LOG.debug("===result===:" + result);
 
 	}
-	
-	// 멤버 목록 불러오기 (아이디를 통해)
-		@Test
-		//@Ignore
-		public void testLoadMemberFromId() throws SQLException {
-			AdminPageVO vo = new AdminPageVO();
-			vo.setUserId("qwe");
-			List<AdminPageVO> result = adminService.loadMemberFromId(vo);
-			LOG.debug("===result===:" + result);
 
-		}
+	// 멤버 목록 불러오기 (아이디를 통해)
+	@Test
+	@Ignore
+	public void testLoadMemberFromId() throws SQLException {
+		AdminPageVO vo = new AdminPageVO();
+		vo.setUserId("qwe");
+		List<AdminPageVO> result = adminService.loadMemberFromId(vo);
+		LOG.debug("===result===:" + result);
+
+	}
 
 	// 멤버 카운트
 	@Test

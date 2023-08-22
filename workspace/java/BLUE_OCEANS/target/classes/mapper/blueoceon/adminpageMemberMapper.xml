@@ -49,7 +49,7 @@
 		WHERE withdrawal = #{withdrawal}
 	</select>
 	
-	<!-- 회원목록 로드 -->
+	<!-- 회원목록 로드(유저아이디로 검색) -->
 	<select id="loadMemberFromId" resultMap="adminPageMap"
 		resultType="com.pcwk.ehr.cmn.AdminPageVO">
 		SELECT * FROM MEMBER

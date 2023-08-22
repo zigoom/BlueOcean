@@ -6,7 +6,8 @@
 
 
 	<select id="get" parameterType="UserVO" resultMap="userMap">
-		SELECT user_id
+		SELECT user_id,
+		       user_level
 		FROM member
 		where user_id = #{userId}
 
@@ -31,6 +32,7 @@
 
 	<resultMap type="UserVO" id="userMap">
 		<result column="user_id" property="userId" />
+		<result column="user_level" property="userLevel" />
 	</resultMap>
 
 </mapper>

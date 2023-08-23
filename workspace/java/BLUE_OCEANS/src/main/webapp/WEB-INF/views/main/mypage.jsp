@@ -41,56 +41,55 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                 <hr class="my-1">
                 <input type="hidden" name="userNo" value="${userinfo.userNo}">
                 
-		            <div class="col-12 py-1">
+		            <div class="col-12 py-2">
 		              <label for="name" class="form-label"><strong>이름</strong></label>
 		              <input type="text" class="form-control" id="name" name="name" value="${userinfo.name}" readonly="readonly">
 		            </div>
 		            
                 
-		            <div class="col-12 py-1">
+		            <div class="col-12 py-2">
 		              <label for="userId" class="form-label"><strong>아이디</strong></label>
 		              <input type="text" class="form-control" id="userId" name="userId" value="${userinfo.userId}" readonly="readonly">
 		            </div>
                 
                
-		            <div class="col-12">
+		            <div class="col-12 py-2">
 		              <label for="phoneNo" class="form-label"><strong>전화번호</strong></label>
 		              <input type="text" class="form-control" id="phoneNo" name="phoneNo" value="${userinfo.phoneNo}">
 		            </div>
                
-                <div class="col-12">
+                <div class="col-12 py-2">
 		              <label for="birthday" class="form-label"><strong>생년월일</strong></label>
 		              <input type="text" class="form-control" id="birthday" name="birthday" value="${userinfo.birthday}">
                 </div>
                 
                 <!-- 성별 라디오버튼 -->
-                <hr class="my-1">
+                
                 <div>
-								  <h4>성별</h4>
+								  <h6><strong>성별</strong></h6>
 	                <div class="form-floating mb-1">
-								    <div class="form-check">
+								    <div class="form-check form-check-inline">
 								        <input class="form-check-input" type="radio" name="gender" id="genderMale" value="M" ${userinfo.gender == 'M' ? 'checked' : ''}>
-								        <label class="form-check-label" for="genderMale"><strong>남성</strong></label>
+								        <label class="form-check-label" for="genderMale">남성</label>
 								    </div>
-								    <div class="form-check">
+								    <div class="form-check form-check-inline">
 								        <input class="form-check-input" type="radio" name="gender" id="genderFemale" value="F" ${userinfo.gender == 'F' ? 'checked' : ''}>
-								        <label class="form-check-label" for="genderFemale"><strong>여성</strong></label>
+								        <label class="form-check-label" for="genderFemale">여성</label>
 								    </div>
 								 </div>
 								</div>
-               <hr class="my-1">
+              
                 <!-- 성별 라디오버튼 end -->
                                 
-                <div class="col-12">
+                <div class="col-12 py-2">
                   <label for="email" class="form-label"><strong>이메일</strong></label>
                   <input type="email" class="form-control" id="email" name="email" value="${userinfo.email}">
                 </div>
                 
-                <div class="col-12">
+                <div class="col-12 py-2">
                   <label for="keyword" class="form-label"><strong>관심분야</strong></label>
                   <input type="text" class="form-control" id="keyword" name="keyword" value="${userinfo.keyword}">
-                </div>
-                <hr class="my-1">             
+                </div>           
                   <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                       <button class="btn btn-lg btn-primary btn-update text-uppercase fw-bold mb-2 " type="button" id="updateButton">수정</button>
                       <button class="btn btn-lg btn-primary btn-withdraw text-uppercase fw-bold mb-2 " type="button" id="withdrawButton">탈퇴</button>

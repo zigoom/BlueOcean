@@ -34,7 +34,7 @@ agreehtml += '	<div class="form-check">																												';
 agreehtml += '		<label class="form-check-label">개인정보호 동의</label>                                                                                       ';
 agreehtml += '		<input class="form-check-input" type="checkbox" value="" id="agree1">                                                         ';
 agreehtml += '			<div class="form-floating">                                                                                                             ';
-agreehtml += '				<textarea class="form-control" readonly="readonly" id="floatingTextarea2" style="height: 100px" rows="15" cols="40" height: 100px; resize: none;></textarea>         ';
+agreehtml += '				<textarea class="form-control no-resize" readonly="readonly" id="floatingTextarea2" style="height: 100px" rows="15" cols="40" height: 100px; resize: none;></textarea>         ';
 agreehtml += '				<label for="floatingTextarea2"></label>                                                                                                 ';
 agreehtml += '			</div>                                                                                                                                  ';
 agreehtml += '		</div>                                                                                                                                  ';
@@ -43,7 +43,7 @@ agreehtml += '		<div class="form-check">                                        
 agreehtml += '			<label class="form-check-label">회원가입 동의</label>                                                                                        ';
 agreehtml += '			<input class="form-check-input" type="checkbox" value="" id="agree2">                                                         ';
 agreehtml += '			<div class="form-floating">                                                                                                             ';
-agreehtml += '				<textarea class="form-control" readonly="readonly" id="floatingTextarea2" style="height: 100px" rows="15" cols="40" height: 100px; resize: none;></textarea>         ';
+agreehtml += '				<textarea class="form-control no-resize" readonly="readonly" id="floatingTextarea2" style="height: 100px" rows="15" cols="40" height: 100px; resize: none;></textarea>         ';
 agreehtml += '				<label for="floatingTextarea2"></label>                                                                                             ';
 agreehtml += '		</div>                                                                                                                                  ';
 agreehtml += '                                                                                                                                          ';
@@ -74,12 +74,12 @@ signUphtml += '      <label>생년월일</label>';
 signUphtml += "      <input maxlength='6' type='text' id='signUp_birthday' name='signUp_birthday' class='form-control placeholder-style' placeholder='생년월일 6자리만 입력해주세요'>";
 signUphtml += '    </div>';
 signUphtml += "    <div style='display: flex; align-items: center;'>";
-signUphtml += '  	 <label>성별</label>';
-signUphtml += "  	 <label for='genderM' style='margin-right: 10px;'>남</label>";
-signUphtml += "  	 <input type='radio' name='gender' value='M' id='signUp_M' style='margin-right: 10px;' checked>";
-signUphtml += "  	 <label for='genderF' style='margin-left: 10px;'>여</label>";
-signUphtml += "  	 <input type='radio' name='gender' value='F' id='signUp_F' style='margin-right: 10px;'>";
-signUphtml += '	   </div>';
+signUphtml += '       <label>성별</label>';
+signUphtml += "     <input type='radio' name='gender' value='M' id='signUp_M' style='margin-right: 10px;' checked>";
+signUphtml += '  	 <label for="signUp_M">남</label>';
+signUphtml += "     <input type='radio' name='gender' value='F' id='signUp_F' style='margin-left: 10px;'>";
+signUphtml += '	   <label for="signUp_F">여</label>';
+signUphtml += '   </div>';
 signUphtml += '     <div>';
 signUphtml += '     <label>핸드폰</label>';
 signUphtml += "         <input placeholder='-를 빼고 적어주세요' maxlength='11' type='text' name='phone' id='signUp_phone' class='form-control placeholder-style' oninput='validatePhoneNumber(this)'>";
@@ -359,7 +359,7 @@ $(document).ready(function () {
 								success: function(data) {
 								    console.log("data:" + data);
 								    if (data == "0") {
-                                        alert("일치하는 회원정보    가 없습니다.");
+                                        alert("일치하는 회원정보가 없습니다.");
 								    } else {
                                         alert("회원님의 아이디는 " + data + "입니다");
 								    }

@@ -32,6 +32,10 @@
   top: 10%;
 }
 
+  .no-resize {
+    resize: none;
+  }
+
 /* .custom-container label {
     text-align: left; 원하는 스타일로 덮어쓰기
 } */

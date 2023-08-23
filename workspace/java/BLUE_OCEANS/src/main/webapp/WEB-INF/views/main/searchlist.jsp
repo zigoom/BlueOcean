@@ -16,15 +16,42 @@
 <script src="${CP}/resources/js/util.js"></script>
 <link rel="stylesheet" href="${CP}/resources/css/header.css">
 <link rel="stylesheet" href="${CP}/resources/css/footer.css">
+<link rel="stylesheet" href="${CP}/resources/css/admin.css" />
 <title>Insert title here</title>
 </head>
+<style>
+      #data-table {
+        margin: 0 auto;
+        table-layout: fixed;
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+	  #data-table th {
+		    background-color: #f2f2f2; /* 테이블 헤더의 배경색을 설정합니다. */
+		}
+		
+		.data-tbody {
+		    background-color: #ffffff; /* 테이블 본문의 배경색을 설정합니다. */
+		}    
+    
+    .data-tr {
+    transition: background-color 0.3s ease; /* 호버 시 배경색 변화를 부드럽게 설정합니다. */
+    }
+    
+    .data-tr:hover {
+    background-color: #d3d3d3; /* 호버 시 배경색을 변경합니다. */
+    cursor: pointer; /* 호버 시 커서 모양을 변경합니다. */
+    }		
+		
+    
+</style>
 <body>
-	<p>검색페이지</p>
 
-	<div id="admin-container" style="background-color: white; width: 80%; height: 77vh;">
-    <form>
-        <div id="body-container">
-            <table style="margin-left: 50px; table-layout: fixed; width: 100%" id="data-table">
+<div class="main-container" style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+    <div id="body-container" style="background-color: white; width: 80%; height: 77vh; display: flex; flex-direction: column;">
+        <form>
+            <table style="table-layout: fixed; width: 100%" id="data-table">
                 <thead>
                     <tr>
                         <th id="" scope="col">종목명</th>
@@ -32,22 +59,29 @@
                         <th id="" scope="col">전일비</th>
                         <th id="" scope="col">등락률</th>
                         <th id="" scope="col">거래량</th>
-                    </tr>                    
+                    </tr>
                 </thead>
                 <tbody class="data-tbody">
                     <!-- 여기에 데이터를 동적으로 추가할 것입니다. -->
                 </tbody>
             </table>
+        </form>
+        <div id="pagination" style="display: flex; justify-content: center; margin-top: auto;">
+            <!-- 페이징 버튼이 바닥에 고정됩니다. -->
         </div>
-        <div id="pagination" style="display: flex; justify-content: center;">
-            <!-- 페이지 번호를 동적으로 생성할 영역 -->
-        </div>
-    </form>
+    </div>
 </div>
+
+
+
+
 
 	<script>
 		    // 서버에서 받아온 데이터
 let searchData = ${searchData}; // searchData 변수에 데이터 할당
+let totaldata = searchData.length;
+const dataPerPage = 10; // 한 페이지에 보여줄 데이터 개수
+let currentPage = 1; // 현재 선택된 페이지
 
 // "code" 부분을 배열로 저장할 변수 선언
 let codeArray = [];
@@ -105,7 +139,7 @@ function fetchTickerData(index) {
                             let tbody = $(".data-tbody");
                             let tr = $("<tr class='data-tr'></tr>");
                             tr.append("<td>"+stockName+"</td>")
-                            tr.append("<td>"+todayClose+"</td>");
+                            tr.append("<td>"+numberWithCommas(todayClose)+"</td>");
 				                    // 전일비에 따라서 화살표와 색상 표시
 				                    if (change > 0) {
 				                        tr.append("<td><span style='color: red;'>&#9650; +"+ change + "</span></td>");
@@ -125,7 +159,63 @@ function fetchTickerData(index) {
 				                        tr.append("<td>" + rateChange + "%</td>");
 				                    }
                             tr.append("<td>"+volume+"</td>");
-                            tbody.append(tr);                        
+                            tbody.append(tr);   
+				                            
+				                    // 클릭 이벤트 리스너 추가
+				                    tr.on("click", function() {
+				                        // 클릭한 데이터에 대한 정보를 콘솔에 출력
+				                        console.log("Clicked Data:");
+				                        console.log("Stock Name:", stockName);
+				                        console.log("Today Close:", todayClose);
+				                        console.log("Change:", change);
+				                        console.log("Rate Change:", rateChange + "%");
+				                        console.log("Volume:", volume);
+				                        
+				                        
+							                  let requestData = {
+							                      name: stockName
+							                  };
+							          
+							                  $.ajax({
+							                      type: "POST",
+							                      url: 'http://125.142.47.191:5001/blue-oceans/search-stocks-list',
+							                      data: JSON.stringify(requestData),
+							                      contentType: 'application/json',
+							                      success: function(data) {
+							                    	  console.log("data :", data);
+
+													            let value = stockName; // 클릭한 주식 이름
+													            let code = data.data[0].Code; // 클릭한 주식의 코드							                    	  
+							          
+					                                                                             //--------------------------------------------------------------------
+                                                $.ajax({
+                                                    type: "GET",
+                                                    url: '/ehr/BLUEOCEAN/detail.do',
+                                                    async: true,
+                                                    dataType: 'html',                      
+                                                    success: function(data) {
+                                                      window.location.href = '/ehr/BLUEOCEAN/detail.do?' + $.param({ stockName: value, stockCode: code });
+                                                    },
+                                                    
+                                                  error: function(xhr, textStatus, errorThrown) {
+                                                      console.log("error:" + errorThrown);
+                                                  }
+                                        
+                                                }); 
+											                          
+											                      },
+											                      error: function(xhr, textStatus, errorThrown) {
+											                          console.log("error:" + errorThrown);
+											                      }
+											                  });
+							                  
+
+							                  
+
+							              				                        
+				                        
+				                    });     
+				                    
                         
                         }
                         
@@ -136,6 +226,8 @@ function fetchTickerData(index) {
                         
                         // 다음 요소에 대한 데이터 가져오기
                         fetchTickerData(index + 1);
+                        
+                        createPagination(totaldata);
                     },
                     error: function(xhr, textStatus, errorThrown) {
                         console.log("error:" + errorThrown);
@@ -143,28 +235,52 @@ function fetchTickerData(index) {
                         fetchTickerData(index + 1);
                     }
                 });
-                // 데이터를 테이블에 추가하는 코드
-/*                         const tbody = document.querySelector('.data-tbody');
-                        for (let i = 0; i < data1.data.length/2; i++) {
 
-                            
-                            console.log(stockName);
-                            console.log(change);
-                            console.log(volume);
-
-
-                            let tbody = $(".data-tbody");
-                            let tr = $("<tr class='data-tr'></tr>");
-                            tr.append("<td>"+stockName+"</td>")
-                            tr.append("<td> 미정 </td>");
-                            tr.append("<td>"+(close - open)+"</td>");
-                            tr.append("<td>"+(((close - open) / open) * 100) + "%</td>");
-                            tr.append("<td>"+volume+"</td>");
-                            tbody.append(tr);
-                        } */
                           
 
     }
+}     
+
+function showDataForPage(page) {
+    currentPage = page;
+    const startIndex = (page - 1) * dataPerPage;
+    const endIndex = startIndex + dataPerPage;
+    //updateTableWithData(searchData.slice(startIndex, endIndex));
+}
+
+//페이지 번호를 동적으로 생성하는 함수
+function createPagination(totalDataCount) {
+    const totalPages = Math.ceil(totalDataCount / dataPerPage);
+    const pagination = document.getElementById("pagination");
+    pagination.innerHTML = "";
+
+    for (let i = 1; i <= totalPages; i++) {
+        const button = document.createElement("button");
+        button.textContent = i;
+        button.type = "button";
+        button.classList.add("page_nation", "btn", "btn-primary"); // 클래스 추가
+        button.style.margin = "5px";
+        button.addEventListener("click", function () {
+            showDataForPage(i);
+        });
+
+        pagination.appendChild(button);
+    }
+
+    // 처음 페이지 설정
+    showDataForPage(1);
+}
+
+// 페이지 번호를 클릭했을 때 해당 페이지의 데이터를 표시하는 함수
+function showDataForPage(page) {
+    currentPage = page;
+    const startIndex = (page - 1) * dataPerPage;
+    const endIndex = startIndex + dataPerPage;
+    //updateTableWithData(totalData.slice(startIndex, endIndex));
+}
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 

@@ -143,14 +143,12 @@
 	        <c:when test="${empty sessionScope.user}">
 	        <!-- 로그인 후 이용해주세요 메시지 표시 -->
 	        </c:when>
-	        <c:otherwise>
-	        
-	        
+	        <c:otherwise>       
             <!-- AI 추천  -->
 	        <h5 style='font-size: 26px; font-weight:bold; margin-bottom: 20px'>오늘의 AI 추천</h5>
 	        <div class="card-group" style="margin-bottom: 40px;">
 	          <div class="card" style="margin-right: 10px">
-                <div class="card-body" style="border: 1px; outline: 1px solid; outline-width:2px; margin: 2px;">
+                <div class="card-body" id="ai_chart1-6" style="border: 1px; outline: 1px solid; outline-width:2px; margin: 2px;">
                   <h5 id="ai_chart1-1" class="card-title" style='font-weight:bold; font-size: 22px;'></h5>
                   <p id="ai_chart1-2" class="card-text" style="font-weight:bold; margin-bottom: 0px; font-size: 16px;"></p>
                   <p id="ai_chart1-3" class="card-text" style="font-weight:bold; margin-bottom: 0px; font-size: 16px;"></p>
@@ -162,7 +160,7 @@
                 </div>
 	          </div>
 	          <div class="card" style="margin-right: 10px">
-                <div class="card-body" style="border: 1px; outline: 1px solid; outline-width:2px; margin: 2px;">
+                <div class="card-body" id="ai_chart2-6" style="border: 1px; outline: 1px solid; outline-width:2px; margin: 2px;">
                   <h5 id="ai_chart2-1" class="card-title" style='font-weight:bold; font-size: 22px;'></h5>
                   <p id="ai_chart2-2" class="card-text" style="font-weight:bold; margin-bottom: 0px; font-size: 16px;"></p>
                   <p id="ai_chart2-3" class="card-text" style="font-weight:bold; margin-bottom: 0px; font-size: 16px;"></p>
@@ -174,7 +172,7 @@
                 </div>
 	          </div>
 	          <div class="card" style="margin-right: 10px">
-                <div class="card-body" style="border: 1px; outline: 1px solid; outline-width:2px; margin: 2px;">
+                <div class="card-body" id="ai_chart3-6" style="border: 1px; outline: 1px solid; outline-width:2px; margin: 2px;">
                   <h5 id="ai_chart3-1" class="card-title" style='font-weight:bold; font-size: 22px;'></h5>
                   <p id="ai_chart3-2" class="card-text" style="font-weight:bold; margin-bottom: 0px; font-size: 16px;"></p>
                   <p id="ai_chart3-3" class="card-text" style="font-weight:bold; margin-bottom: 0px; font-size: 16px;"></p>
@@ -186,7 +184,7 @@
                 </div>
 	          </div>
 	          <div class="card" style="margin-right: 10px">
-                <div class="card-body" style="border: 1px; outline: 1px solid; outline-width:2px; margin: 2px;">
+                <div class="card-body" id="ai_chart4-6" style="border: 1px; outline: 1px solid; outline-width:2px; margin: 2px;">
                   <h5 id="ai_chart4-1" class="card-title" style='font-weight:bold; font-size: 22px;'></h5>
                   <p id="ai_chart4-2" class="card-text" style="font-weight:bold; margin-bottom: 0px; font-size: 16px;"></p>
                   <p id="ai_chart4-3" class="card-text" style="font-weight:bold; margin-bottom: 0px; font-size: 16px;"></p>
@@ -198,7 +196,7 @@
                 </div>
 	          </div>
 	          <div class="card">
-                <div class="card-body" style="border: 1px; outline: 1px solid; outline-width:2px; margin: 2px;">
+                <div class="card-body" id="ai_chart5-6" style="border: 1px; outline: 1px solid; outline-width:2px; margin: 2px;">
                   <h5 id="ai_chart5-1" class="card-title" style='font-weight:bold; font-size: 22px;'></h5>
                   <p id="ai_chart5-2" class="card-text" style="font-weight:bold; margin-bottom: 0px; font-size: 16px;"></p>
                   <p id="ai_chart5-3" class="card-text" style="font-weight:bold; margin-bottom: 0px; font-size: 16px;"></p>
@@ -210,122 +208,144 @@
                 </div>
 	          </div>
 	        </div>   
-	        <script>
-        
-	        $(document).ready(function() {
-	            let ai_chart = [];
-	            for (var i = 0; i < 5; i++) {
-	                ai_chart[(i + 1)] = LightweightCharts.createChart(document.getElementById('ai_chart' + (i + 1)), {
-	                    height: 160,
-	                    borderVisible: false,
-	                    layout: { backgroundColor: 'transparent' },
-	                    priceScale: { borderColor: 'transparent' },
-	                    timeScale: { borderColor: 'transparent', timeVisible: false },
-	                    grid: { vertLines: { color: 'transparent' }, horzLines: { color: 'transparent' } },
-	                    crosshair: { vertLine: { width: 0, color: 'transparent' }, horzLine: { width: 0, color: 'transparent' } },
-	                    handleScroll: false,
-	                });
-	            }
-
-	            let requestData = { "ticker": "" };
-
-	            // 데이터를 받아옵니다.
-	            $.ajax({
-	                type: 'POST',
-	                url: 'http://192.168.0.74:5001/blue-oceans/ai-stock-recommend',
-	                data: JSON.stringify(requestData),
-	                contentType: 'application/json',
-	                success: function(response) {
-	                    // 받아온 데이터를 가공하여 시간과 값을 분리합니다.
-	                    /* console.log(response); */
-	                    
-	                    response.datas.forEach((stockData, index) => {
-	                        const chart = ai_chart[(index + 1)];  // 해당 인덱스의 차트 가져오기
-
-	                        const prices = [];
-	                        const dates = Object.keys(stockData);
-
-	                        let firstDate = null;
-	                        let lastDate = null;
-	                        let beforeLastDate = null;
-	                        beforeLastValue = null;
-	                        lastValue = null;
-	                        
-	                        dates.forEach(date => {
-	                        	if (!firstDate) {
-	                                firstDate = date;
-	                            }
-	                        	beforeLastDate = lastDate; 
-	                            lastDate = date;
-	                        	
-	                        	
-	                            const value = stockData[date];
-	                            beforeLastValue = lastValue; // 현재 값이 마지막 값이 되기 전에 이전 값을 저장
-	                            lastValue = value; 
-
+	        <script>        
+		        $(document).ready(function() {
+		            let ai_chart = [];
+		            for (var i = 0; i < 5; i++) {
+		                ai_chart[(i + 1)] = LightweightCharts.createChart(document.getElementById('ai_chart' + (i + 1)), {
+		                    height: 160,
+		                    borderVisible: false,
+		                    layout: { backgroundColor: 'transparent' },
+		                    priceScale: { borderColor: 'transparent' },
+		                    timeScale: { borderColor: 'transparent', timeVisible: false },
+		                    grid: { vertLines: { color: 'transparent' }, horzLines: { color: 'transparent' } },
+		                    crosshair: { vertLine: { width: 0, color: 'transparent' }, horzLine: { width: 0, color: 'transparent' } },
+		                    handleScroll: false,
+		                });
+		            }
+	
+		            let requestData = { "ticker": "" };
+	
+		            // 데이터를 받아옵니다.
+		            $.ajax({
+		                type: 'POST',
+		                url: 'http://192.168.0.74:5001/blue-oceans/ai-stock-recommend',
+		                data: JSON.stringify(requestData),
+		                contentType: 'application/json',
+		                success: function(response) {
+		                    // 받아온 데이터를 가공하여 시간과 값을 분리합니다.
+		                    /* console.log(response); */
+		                    
+		                    response.datas.forEach((stockData, index) => {
+		                        const chart = ai_chart[(index + 1)];  // 해당 인덱스의 차트 가져오기
+	
+		                        const prices = [];
+		                        const dates = Object.keys(stockData);
+	
+		                        let firstDate = null;
+		                        let lastDate = null;
+		                        let beforeLastDate = null;
+		                        
+		                        beforeLastValue = null;
+		                        lastValue = null;
+		                        
+		                        dates.forEach(date => {
+		                        	if (!firstDate) {
+		                                firstDate = date;
+		                            }
+		                        	beforeLastDate = lastDate; 
+		                            lastDate = date;
+		                        	
+		                        	
+		                            const value = stockData[date];
+		                            beforeLastValue = lastValue; // 현재 값이 마지막 값이 되기 전에 이전 값을 저장
+		                            lastValue = value; 
+	
+		                            
+		                            prices.push({
+		                                time: date,
+		                                value: stockData[date]
+		                            });
+		                        });	                        
+	
+		                        // 데이터의 시작일과 마지막 전 날짜 사용 예시
+		                        //console.log("First Date:", firstDate);
+		                        //console.log("Last Date (before last date):", lastDate);
+		                        //document.getElementById('ai_chart'+(index+1)+'-5').innerHTML = "Start Date: " + firstDate + "<br>Last Date : " + lastDate;
+	                            	                        
+	                            var ai_chart1_5Element = document.getElementById("ai_chart"+(index+1)+"-5");
+	                            ai_chart1_5Element.innerHTML = "Last Training Date : " + beforeLastDate;
+	
+		                        var ai_chart1_1Element = document.getElementById("ai_chart"+(index+1)+"-1");
+		                        ai_chart1_1Element.innerHTML = (response.names[index] + "(" + response.tickers[index] + ")");
+	
+	                            var ai_chart1_2Element = document.getElementById("ai_chart"+(index+1)+"-2");
+                                ai_chart1_2Element.innerHTML = formattedDate(beforeLastDate) +" 가격: "+ String(beforeLastValue);
+                                
+	                            var ai_chart1_3Element = document.getElementById("ai_chart"+(index+1)+"-3");
+	                                                        
+	                            // 그래프 시리즈 생성
+	                            const series = chart.addLineSeries();
+	
+	                            // 시리즈 데이터 설정
+	                            series.setData(prices);
 	                            
-	                            prices.push({
-	                                time: date,
-	                                value: stockData[date]
-	                            });
-	                        });	                        
+	                            if (beforeLastValue > lastValue) {
+	                                series.applyOptions({
+	                                    color: 'blue',
+	                                }); 
+	                                ai_chart1_3Element.innerHTML = formattedDate(lastDate) + " 시작가 하락 예상";
+	                                ai_chart1_3Element.style.color = 'blue';
+	                            } else if (beforeLastValue < lastValue) {
+	                                series.applyOptions({
+	                                    color: 'red',
+	                                }); 
+	                                ai_chart1_3Element.innerHTML = formattedDate(lastDate) + " 시작가 상승 예상";
+	                                ai_chart1_3Element.style.color = 'red';
+	                            } else{
+	                                series.applyOptions({
+	                                    color: 'black',
+	                                }); 
+	                                ai_chart1_3Element.innerHTML = formattedDate(lastDate) + " 시작가 동일 예상";
+	                                ai_chart1_3Element.style.color = 'black';
+	                            }
+	
+		                        // 시리즈 이름 설정
+		                        series.applyOptions({
+		                            title: response.names[index],
+		                        });
+		                        
+		                        
+		                        
+		                        $('#ai_chart'+(index+1)+'-6').click(function() {
+		                            var name = response.names[index]; // 해당 인덱스의 이름 가져오기
+		                            var ticker = response.tickers[index]; // 해당 인덱스의 티커 가져오기
+		                            
+		                            
+                                    var newURL = '/ehr/BLUEOCEAN/detail.do?stockName='+encodeURIComponent(name)+'&stockCode='+encodeURIComponent(ticker);
+		                            //var newURL = '/ehr/BLUEOCEAN/detail.do?stockName='+name+'&stockCode='+ticker; //' + encodeURIComponent(name) + '&ticker=' + encodeURIComponent(ticker);
+		                            
+		                            // 새로운 페이지로 이동
+		                            window.location.href = newURL;
+		                        });
+		                    });
+		                },
+		                error: function(xhr, status, error) {
+		                    console.error(error);
+		                },
+		            });
+		        });
+		        
+		        function formattedDate (in_date){
+		        	var date = new Date(in_date);		        	
+		        	var month = (date.getMonth() + 1).toString().padStart(2, "0");
+		        	var day = date.getDate().toString().padStart(2, "0");
 
-	                        // 데이터의 시작일과 마지막 전 날짜 사용 예시
-	                        //console.log("First Date:", firstDate);
-	                        //console.log("Last Date (before last date):", lastDate);
-	                        //document.getElementById('ai_chart'+(index+1)+'-5').innerHTML = "Start Date: " + firstDate + "<br>Last Date : " + lastDate;
-                            	                        
-                            var ai_chart1_5Element = document.getElementById("ai_chart"+(index+1)+"-5");
-                            ai_chart1_5Element.innerHTML = "Last Training Date : " + beforeLastDate;
-
-	                        var ai_chart1_1Element = document.getElementById("ai_chart"+(index+1)+"-1");
-	                        ai_chart1_1Element.innerHTML = (response.names[index] + "(" + response.tickers[index] + ")");
-
-                            var ai_chart1_2Element = document.getElementById("ai_chart"+(index+1)+"-2");
-                                                        
-                            // 그래프 시리즈 생성
-                            const series = chart.addLineSeries();
-
-                            // 시리즈 데이터 설정
-                            series.setData(prices);
-                            
-                            if (beforeLastValue > lastValue) {
-                                series.applyOptions({
-                                    color: 'blue',
-                                }); 
-                                ai_chart1_2Element.innerHTML = "시작가 하락 예상";
-                                ai_chart1_2Element.style.color = 'blue';
-                            } else if (beforeLastValue < lastValue) {
-                                series.applyOptions({
-                                    color: 'red',
-                                }); 
-                                ai_chart1_2Element.innerHTML = "시작가 상승 예상";
-                                ai_chart1_2Element.style.color = 'red';
-                            } else{
-                                series.applyOptions({
-                                    color: 'black',
-                                }); 
-                                ai_chart1_2Element.innerHTML = "시작가 동일 예상";
-                                ai_chart1_2Element.style.color = 'black';
-                            }
-
-	                        // 시리즈 이름 설정
-	                        series.applyOptions({
-	                            title: response.names[index],
-	                        });
-	                    });
-	                },
-	                error: function(xhr, status, error) {
-	                    console.error(error);
-	                },
-	            });
-	        });
-      </script>
-	        
-	        
-	        
-	        
-	        
+		        	var formattedDate = month + "/" + day;
+		        	return formattedDate;
+		        }
+		        
+		        </script> 
 	            <c:choose>
 	                <c:when test="${empty bookmarkList}">
 	                    <!-- 관심목록이 없는 경우 메시지 표시 -->

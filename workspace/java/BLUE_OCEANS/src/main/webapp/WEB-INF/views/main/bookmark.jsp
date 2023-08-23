@@ -298,10 +298,10 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                 endDate: ed,
             };
 
-            // ajax를 활용해 http://192.168.0.74:5001//blue-oceans/search-tickers을 호출하여 불러온 데이터를 파싱
+            // ajax를 활용해 http://125.142.47.191:5001//blue-oceans/search-tickers을 호출하여 불러온 데이터를 파싱
             $.ajax({
                 type: 'POST',
-                url: 'http://192.168.0.74:5001//blue-oceans/search-tickers',
+                url: 'http://125.142.47.191:5001//blue-oceans/search-tickers',
                 data: JSON.stringify(requestData),
                 contentType: 'application/json',
                 mode: 'cors',
@@ -358,10 +358,10 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                                 '▲' +
                                     (((lastCloseValue - lastCloseValuePreviousDay) / lastCloseValuePreviousDay) * 100).toFixed(2)
                             );
-                            $('.price-changes').css('color', 'red');
-                            $('.price-changes-percent').css('color', 'red');
-                            $('.last-close-value').css('color', 'red');
-                            $('#price-change-box').css('background-color', '#FCEDEB');
+                            $('.price-changes').eq(i - 1).css('color', 'red');
+                            $('.price-changes-percent').eq(i - 1).css('color', 'red');
+                            $('.last-close-value').eq(i - 1).css('color', 'red');
+                            $('#price-change-box').eq(i - 1).css('background-color', '#FCEDEB');
                         } else {
                             $('.price-changes').text(
                                 '▼' + (lastCloseValue - lastCloseValuePreviousDay).toLocaleString()
@@ -370,10 +370,10 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                                 '▼' +
                                     (((lastCloseValue - lastCloseValuePreviousDay) / lastCloseValuePreviousDay) * 100).toFixed(2)
                             );
-                            $('.price-changes').css('color', 'blue');
-                            $('.price-changes-percent').css('color', 'blue');
-                            $('.last-close-value').css('color', 'blue');
-                            $('#price-change-box').css('background-color', '#ECF3FD');
+                            $('.price-changes').eq(i - 1).css('color', 'blue');
+                            $('.price-changes-percent').eq(i - 1).css('color', 'blue');
+                            $('.last-close-value').eq(i - 1).css('color', 'blue');
+                            $('#price-change-box').eq(i - 1).css('background-color', '#ECF3FD');
                         }
                     }
 

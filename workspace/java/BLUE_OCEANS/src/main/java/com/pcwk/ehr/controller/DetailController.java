@@ -31,6 +31,7 @@ public class DetailController implements PcwkLogger {
 		LOG.debug("│inVO            │" + inVO);
 		LOG.debug("└────────────────┘");
 		
+		
 	   
 		
 		model.addAttribute("inVO",inVO);

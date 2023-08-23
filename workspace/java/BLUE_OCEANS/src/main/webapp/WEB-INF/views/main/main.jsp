@@ -157,7 +157,7 @@
                   <p class="card-text"><small class="text-body-secondary" id="ai_chart1-4" style='font-size: 9px;'></small></p>
                 </div>
 	            <div id="ai_chart1" class="card-img-top"></div>
-	            <div class="card-body" style="border: 1px; outline: 1px solid; outline-width:2px; margin: 2px;">
+                <div style="border: 1px; outline: 1px solid; outline-width:2px; margin: 2px; padding-left: 10px; padding-bottom: 5px">
                   <p class="card-text"><small class="text-body-secondary" id="ai_chart1-5" style='font-size: 8px;'></small></p>
                 </div>
 	          </div>
@@ -169,7 +169,7 @@
                   <p class="card-text"><small class="text-body-secondary" id="ai_chart2-4" style='font-size: 9px;'></small></p>
                 </div>
 	            <div id="ai_chart2" class="card-img-top" ></div>
-                <div class="card-body" style="border: 1px; outline: 1px solid; outline-width:2px; margin: 2px;">
+                <div style="border: 1px; outline: 1px solid; outline-width:2px; margin: 2px; padding-left: 10px; padding-bottom: 5px">
                   <p class="card-text"><small class="text-body-secondary" id="ai_chart2-5" style='font-size: 8px;'></small></p>
                 </div>
 	          </div>
@@ -181,7 +181,7 @@
                   <p class="card-text"><small class="text-body-secondary" id="ai_chart3-4" style='font-size: 9px;'></small></p>
                 </div>
 	            <div id="ai_chart3" class="card-img-top" ></div>
-                <div class="card-body" style="border: 1px; outline: 1px solid; outline-width:2px; margin: 2px;">
+                <div style="border: 1px; outline: 1px solid; outline-width:2px; margin: 2px; padding-left: 10px; padding-bottom: 5px">
                   <p class="card-text"><small class="text-body-secondary" id="ai_chart3-5" style='font-size: 8px;'></small></p>
                 </div>
 	          </div>
@@ -193,7 +193,7 @@
                   <p class="card-text"><small class="text-body-secondary" id="ai_chart4-4" style='font-size: 9px;'></small></p>
                 </div>
 	            <div id="ai_chart4" class="card-img-top" ></div>
-                <div class="card-body" style="border: 1px; outline: 1px solid; outline-width:2px; margin: 2px;">
+                <div style="border: 1px; outline: 1px solid; outline-width:2px; margin: 2px; padding-left: 10px; padding-bottom: 5px">
                   <p class="card-text"><small class="text-body-secondary" id="ai_chart4-5" style='font-size: 8px;'></small></p>
                 </div>
 	          </div>
@@ -205,7 +205,7 @@
                   <p class="card-text"><small class="text-body-secondary" id="ai_chart5-4" style='font-size: 9px;'></small></p>
                 </div>
 	            <div id="ai_chart5" class="card-img-top" ></div>
-                <div class="card-body" style="border: 1px; outline: 1px solid; outline-width:2px; margin: 2px; padding: 0px">
+                <div style="border: 1px; outline: 1px solid; outline-width:2px; margin: 2px; padding-left: 10px; padding-bottom: 5px">
                   <p class="card-text"><small class="text-body-secondary" id="ai_chart5-5" style='font-size: 8px;'></small></p>
                 </div>
 	          </div>
@@ -237,8 +237,8 @@
 	                contentType: 'application/json',
 	                success: function(response) {
 	                    // 받아온 데이터를 가공하여 시간과 값을 분리합니다.
-	                    console.log(response);
-
+	                    /* console.log(response); */
+	                    
 	                    response.datas.forEach((stockData, index) => {
 	                        const chart = ai_chart[(index + 1)];  // 해당 인덱스의 차트 가져오기
 
@@ -248,18 +248,20 @@
 	                        let firstDate = null;
 	                        let lastDate = null;
 	                        let beforeLastDate = null;
+	                        beforeLastValue = null;
+	                        lastValue = null;
 	                        
 	                        dates.forEach(date => {
 	                        	if (!firstDate) {
 	                                firstDate = date;
 	                            }
-	                        	beforeLastDate = lastDate; // 현재 값이 마지막 값이 되기 전에 이전 값을 저장
+	                        	beforeLastDate = lastDate; 
 	                            lastDate = date;
 	                        	
 	                        	
-	                            /* const value = stockData[date];
+	                            const value = stockData[date];
 	                            beforeLastValue = lastValue; // 현재 값이 마지막 값이 되기 전에 이전 값을 저장
-	                            lastValue = value; */
+	                            lastValue = value; 
 
 	                            
 	                            prices.push({
@@ -273,24 +275,39 @@
 	                        //console.log("Last Date (before last date):", lastDate);
 	                        //document.getElementById('ai_chart'+(index+1)+'-5').innerHTML = "Start Date: " + firstDate + "<br>Last Date : " + lastDate;
                             	                        
-	                        var chart1_5Element = document.getElementById("ai_chart"+(index+1)+"-5");
-	                        chart1_5Element.innerHTML = "Start Date: " + firstDate + "<br>Last Date : " + beforeLastDate+" ";
-	                        
-	                        // 그래프 시리즈 생성
-	                        const series = chart.addLineSeries();
+                            var ai_chart1_5Element = document.getElementById("ai_chart"+(index+1)+"-5");
+                            ai_chart1_5Element.innerHTML = "Last Training Date : " + beforeLastDate;
 
-	                        // 시리즈 데이터 설정
-	                        series.setData(prices);
-	                        
-	                        if (beforeLastDate > lastDate) {
-	                        	series.applyOptions({
-	                                color: 'blue',
-	                            }); 
-	                        } else if (beforeLastDate < lastDate) {
-	                        	series.applyOptions({
-	                                color: 'red',
-	                            }); 
-	                        }
+	                        var ai_chart1_1Element = document.getElementById("ai_chart"+(index+1)+"-1");
+	                        ai_chart1_1Element.innerHTML = (response.names[index] + "(" + response.tickers[index] + ")");
+
+                            var ai_chart1_2Element = document.getElementById("ai_chart"+(index+1)+"-2");
+                                                        
+                            // 그래프 시리즈 생성
+                            const series = chart.addLineSeries();
+
+                            // 시리즈 데이터 설정
+                            series.setData(prices);
+                            
+                            if (beforeLastValue > lastValue) {
+                                series.applyOptions({
+                                    color: 'blue',
+                                }); 
+                                ai_chart1_2Element.innerHTML = "시작가 하락 예상";
+                                ai_chart1_2Element.style.color = 'blue';
+                            } else if (beforeLastValue < lastValue) {
+                                series.applyOptions({
+                                    color: 'red',
+                                }); 
+                                ai_chart1_2Element.innerHTML = "시작가 상승 예상";
+                                ai_chart1_2Element.style.color = 'red';
+                            } else{
+                                series.applyOptions({
+                                    color: 'black',
+                                }); 
+                                ai_chart1_2Element.innerHTML = "시작가 동일 예상";
+                                ai_chart1_2Element.style.color = 'black';
+                            }
 
 	                        // 시리즈 이름 설정
 	                        series.applyOptions({
@@ -622,12 +639,11 @@
 		      data: JSON.stringify(requestData),
 		      contentType: 'application/json',
 		      success: function(response) {
-		    	console.log(response)
+		    	//console.log(response)
 		        // 받아온 데이터를 가공하여 시간과 값을 분리합니다.
 		        let startData = "";
 		        if(requestData.symbol == "KS11" || requestData.symbol == "KQ11" || requestData.symbol == "KS200"){
 		        	startData = parseFloat(response.yesterdayData); 
-		        	console.log("!!!!! - "+startData)
 		        }else{
 		        	startData = response.openData;
 		        }

@@ -58,6 +58,22 @@
 #button-container > * {
   margin-left: 7px;
 }
+.hstack {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-self: stretch;
+    justify-content: space-around;
+
+}
+.gap-3 {
+    gap: 0rem !important;
+}
+.mx-5 {
+    margin-right: 1rem!important;
+    margin-left: 35rem!important;
+    t: ;
+}
 </style>
 </head>
 <body>
@@ -99,7 +115,7 @@
 					</div>
 					<div id="body-container">
 
-						<table style="margin-left: 50px; table-layout: fixed; width: 100%"
+						<table class="table table-hover" style="table-layout: fixed; width: 98.5%; margin-left:10px;"
 							id="data-table">
 							<thead>
 								<tr>
@@ -123,13 +139,17 @@
 				</div>
 
 			</div>
-			<div id="pagination" style="display: flex; justify-content: center;">
-				<!-- 페이지 번호를 동적으로 생성할 영역 -->
-			</div>
-			<div id="button-container">
-				<label>아이디<input type="text" class="search-id"></label>
-				<button class="btn btn-primary search-id-btn">검색</button>
-			</div>
+			     <div class="hstack gap-3 mx-5">
+        <div id="pagination" class="mx-auto">
+          <!-- 페이지 번호를 동적으로 생성할 영역 -->
+        </div>
+          <div id="button-container" style="margin-right: 50px">
+            <label>아이디
+              <input type="text" class="search-id">
+            </label>
+            <button class="btn btn-primary search-id-btn">검색</button>
+          </div>
+      </div>
 		</div>
 	</div>
 </body>

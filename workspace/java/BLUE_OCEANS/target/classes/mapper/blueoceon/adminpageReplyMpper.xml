@@ -38,22 +38,16 @@
   
   <!-- 댓글전체목록 로드 -->
   <select id="loadReply" resultMap="adminPageMap" resultType="com.pcwk.ehr.cmn.AdminPageVO">
-    SELECT * FROM REPLY
+    SELECT * FROM REPLY ORDER BY comment_no DESC
   </select>
   
   <!-- 댓글목록 로드 (삭제된댓글 또는 삭제되지 않은 댓글) -->
   <select id="loadReplyOption" resultMap="adminPageMap"
     resultType="com.pcwk.ehr.cmn.AdminPageVO">
-    SELECT
-	    comment_no,
-	    user_id,
-	    post_no,
-	    contents,
-	    TO_CHAR(reg_dt,'YY/MM/DD HH24:MI:SS'),
-	    TO_CHAR(mod_dt,'YY/MM/DD HH24:MI:SS'),
-	    reply_delete 
+    SELECT *
     FROM REPLY
     WHERE reply_delete = #{replyDelete}
+    ORDER BY comment_no DESC
   </select>
   
     <!-- 댓글목록 로드 -->
@@ -61,6 +55,7 @@
     resultType="com.pcwk.ehr.cmn.AdminPageVO">
     SELECT * FROM REPLY
     WHERE user_id LIKE  '%' ||  #{userId} || '%'
+    ORDER BY comment_no DESC
   </select>
   
     <!-- 댓글목록 카운트 -->

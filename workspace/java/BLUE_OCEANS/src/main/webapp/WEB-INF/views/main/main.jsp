@@ -102,12 +102,12 @@
 						    table += '<tr>' +
 						        '<td class="no text-center font-weight-bold">' + (index+1) + '</td>' +
 						        '<td class="name text-start font-weight-bold">&nbsp' + dataItem.Name + '</td>' +
-						        '<td class="close text-end ' + closeClass + ' font-weight-bold">' + closeIcon + ' ' + dataItem.Close + '&nbsp</td>' +
-						        '<td class="high text-end font-weight-bold">' + dataItem.High + '&nbsp</td>' +
-						        '<td class="low text-end font-weight-bold">' + dataItem.Low + '&nbsp</td>' +
-						        '<td class="changes text-end ' + changesClass + ' font-weight-bold">' + dataItem.Changes + '&nbsp</td>' +
+						        '<td class="close text-end ' + closeClass + ' font-weight-bold">' + closeIcon + ' ' + numberWithCommas(dataItem.Close) + '&nbsp</td>' +
+						        '<td class="high text-end font-weight-bold">' + numberWithCommas(dataItem.High) + '&nbsp</td>' +
+						        '<td class="low text-end font-weight-bold">' + numberWithCommas(dataItem.Low) + '&nbsp</td>' +
+						        '<td class="changes text-end ' + changesClass + ' font-weight-bold">' + numberWithCommas(dataItem.Changes) + '&nbsp</td>' +
 						        '<td class="chagesRatio text-end ' + changesClass + ' font-weight-bold">' + changesRatio + '&nbsp</td>' +
-						        '<td class="volume text-end font-weight-bold">' + dataItem.Volume + '&nbsp</td>' +
+						        '<td class="volume text-end font-weight-bold">' + numberWithCommas(dataItem.Volume) + '&nbsp</td>' +
 						    '</tr>';
 						});
                         table += '</tbody></table>';
@@ -121,7 +121,11 @@
 
             loadData(); // Call the function to load data when the page loads
         });
-        
+
+    // 천단위 쉼표를 추가하는 함수
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
     function today(){
     	const today = new Date();
     	const year = today.getFullYear();
@@ -265,8 +269,8 @@
 	                        });	                        
 
 	                        // 데이터의 시작일과 마지막 전 날짜 사용 예시
-	                        console.log("First Date:", firstDate);
-	                        console.log("Last Date (before last date):", lastDate);
+	                        //console.log("First Date:", firstDate);
+	                        //console.log("Last Date (before last date):", lastDate);
 	                        //document.getElementById('ai_chart'+(index+1)+'-5').innerHTML = "Start Date: " + firstDate + "<br>Last Date : " + lastDate;
                             	                        
 	                        var chart1_5Element = document.getElementById("ai_chart"+(index+1)+"-5");
@@ -277,6 +281,16 @@
 
 	                        // 시리즈 데이터 설정
 	                        series.setData(prices);
+	                        
+	                        if (beforeLastDate > lastDate) {
+	                        	series.applyOptions({
+	                                color: 'blue',
+	                            }); 
+	                        } else if (beforeLastDate < lastDate) {
+	                        	series.applyOptions({
+	                                color: 'red',
+	                            }); 
+	                        }
 
 	                        // 시리즈 이름 설정
 	                        series.applyOptions({
@@ -351,15 +365,15 @@
 							
 							                    const closeTd = $("<td>").addClass("font-weight-bold text-end");
 							                    if (data['Close'] < yesterdayClose) {
-							                        closeTd.css("color", "blue").html("▼ " + data['Close']+"&nbsp;");
+							                        closeTd.css("color", "blue").html("▼ " + numberWithCommas(data['Close'])+"&nbsp;");
 							                    } else if (data['Close'] > yesterdayClose) {
-							                        closeTd.css("color", "red").html("▲ " + data['Close']+"&nbsp;");
+							                        closeTd.css("color", "red").html("▲ " + numberWithCommas(data['Close'])+"&nbsp;");
 							                    } else {
-							                        closeTd.html(data['Close']+"&nbsp;");
+							                        closeTd.html(numberWithCommas(data['Close'])+"&nbsp;");
 							                    }                                       
 							                    row.append(closeTd);
 							                    
-							                    const closeTd3 = $("<td>").html(yesterdayClose+"&nbsp;").addClass("font-weight-bold text-end");
+							                    const closeTd3 = $("<td>").html(numberWithCommas(yesterdayClose)+"&nbsp;").addClass("font-weight-bold text-end");
                                                 if (data['Close'] < yesterdayClose) {
                                                     closeTd3.css("color", "blue");
                                                 } else if (data['Close'] > yesterdayClose) {
@@ -367,9 +381,9 @@
                                                 }
                                                 row.append(closeTd3);
 
-                                                row.append($("<td>").html(data['Open']+"&nbsp;").addClass("font-weight-bold text-end"));
-							                    row.append($("<td>").html(data['High']+"&nbsp;").addClass("font-weight-bold text-end"));
-							                    row.append($("<td>").html(data['Low']+"&nbsp;").addClass("font-weight-bold text-end"));
+                                                row.append($("<td>").html(numberWithCommas(data['Open'])+"&nbsp;").addClass("font-weight-bold text-end"));
+							                    row.append($("<td>").html(numberWithCommas(data['High'])+"&nbsp;").addClass("font-weight-bold text-end"));
+							                    row.append($("<td>").html(numberWithCommas(data['Low'])+"&nbsp;").addClass("font-weight-bold text-end"));
 							
 							                    const closeTd2 = $("<td>").html(data['Change']+"&nbsp;").addClass("font-weight-bold text-end");
 							                    if (data['Close'] < yesterdayClose) {
@@ -379,7 +393,7 @@
 							                    }
 							                    row.append(closeTd2);
 							
-							                    row.append($("<td>").html(data['Volume']+"&nbsp;").addClass("font-weight-bold text-end"));
+							                    row.append($("<td>").html(numberWithCommas(data['Volume'])+"&nbsp;").addClass("font-weight-bold text-end"));
 							
 							                    // 클릭 이벤트 추가
 							                    row.on("click", function() {
@@ -397,6 +411,10 @@
 							            });
 							        });
 							    });
+							    // 천단위 쉼표를 추가하는 함수
+						        function numberWithCommas(x) {
+						            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+						        }
 							</script>  
 						</div>            
 	                </c:otherwise>
@@ -577,7 +595,7 @@
 		    let requestData = {
               "symbol": "KS11",
               "date": formattedDate,
-              "interval": "10"
+              "interval": "5"
             };
 		    switch (no) {
 		    case 1:
@@ -604,10 +622,12 @@
 		      data: JSON.stringify(requestData),
 		      contentType: 'application/json',
 		      success: function(response) {
+		    	console.log(response)
 		        // 받아온 데이터를 가공하여 시간과 값을 분리합니다.
 		        let startData = "";
 		        if(requestData.symbol == "KS11" || requestData.symbol == "KQ11" || requestData.symbol == "KS200"){
-		        	startData = response.yesterdayData;
+		        	startData = parseFloat(response.yesterdayData); 
+		        	console.log("!!!!! - "+startData)
 		        }else{
 		        	startData = response.openData;
 		        }
@@ -619,16 +639,20 @@
 		        var chart1_3Element = document.getElementById("chart"+no+"-3");
 		        var chart1_4Element = document.getElementById("chart"+no+"-4");
 		        
-		        const data = response.data['10min'];
+		        const data = response.data['5min'];
 		        const timeSeriesData = [];
 		        for (const timeKey in data) {
-		          if (data.hasOwnProperty(timeKey)) {
-		            const [hours, minutes] = timeKey.split(':');
-		            const timestamp = new Date(requestData.date);
-		            timestamp.setHours(parseInt(hours));
-		            timestamp.setMinutes(parseInt(minutes));
-		            timeSeriesData.push({ time: timestamp.getTime(), value: data[timeKey] });
-		          }
+		            if (data.hasOwnProperty(timeKey)) {
+		                const [hours, minutes] = timeKey.split(':');
+		                const timestamp = new Date(requestData.date);
+		                timestamp.setHours(parseInt(hours));
+		                timestamp.setMinutes(parseInt(minutes));
+		                
+		                // 5분 단위로 데이터 가져오기 위해 시간 조정
+		                if (parseInt(minutes) % 5 === 0) {
+		                    timeSeriesData.push({ time: timestamp.getTime(), value: data[timeKey] });
+		                }
+		            }
 		        }
 		
 		        let date = response.date;

@@ -34,21 +34,18 @@ public class AdminPageVO {
 	private int identifier;// 식별자
 	private String subject;// 제목
 	private String context;// 본문
-	private int rnum;	// 이용약관 페이지 페이징 number (adminpageTermsofuse)
+	private int rnum; // 이용약관 페이지 페이징 number (adminpageTermsofuse)
+	private String log1;
+	private String log2;
 
-	
-	
 	public AdminPageVO() {
 	}
 
-
-	
-	
 	public AdminPageVO(int userNo, String userId, String passwd, String userName, int birthday, String gender,
 			String keyword, String email, String phoneNo, String userLevel, int withdrawal, int agree, int otpUse,
 			List<Integer> termsOfUse, int seq, String title, String contents, String div, int readCnt, String regDt,
 			String regId, String modDt, String modId, int commentNo, int postNo, int replyDelete, int boardDelete,
-			int no, int identifier, String subject, String context, int rnum) {
+			int no, int identifier, String subject, String context, int rnum, String log1, String log2) {
 		super();
 		this.userNo = userNo;
 		this.userId = userId;
@@ -82,16 +79,10 @@ public class AdminPageVO {
 		this.subject = subject;
 		this.context = context;
 		this.rnum = rnum;
+		this.log1 = log1;
+		this.log2 = log2;
 	}
 
-	public int getRnum() {
-		return rnum;
-	}
-
-	public void setRnum(int rnum) {
-		this.rnum = rnum;
-	}
-	
 	public int getUserNo() {
 		return userNo;
 	}
@@ -340,8 +331,29 @@ public class AdminPageVO {
 		this.context = context;
 	}
 
+	public int getRnum() {
+		return rnum;
+	}
 
+	public void setRnum(int rnum) {
+		this.rnum = rnum;
+	}
 
+	public String getLog1() {
+		return log1;
+	}
+
+	public void setLog1(String log1) {
+		this.log1 = log1;
+	}
+
+	public String getLog2() {
+		return log2;
+	}
+
+	public void setLog2(String log2) {
+		this.log2 = log2;
+	}
 
 	@Override
 	public String toString() {
@@ -352,9 +364,8 @@ public class AdminPageVO {
 				+ ", contents=" + contents + ", div=" + div + ", readCnt=" + readCnt + ", regDt=" + regDt + ", regId="
 				+ regId + ", modDt=" + modDt + ", modId=" + modId + ", commentNo=" + commentNo + ", postNo=" + postNo
 				+ ", replyDelete=" + replyDelete + ", boardDelete=" + boardDelete + ", no=" + no + ", identifier="
-				+ identifier + ", subject=" + subject + ", context=" + context + ", rnum=" + rnum + "]";
+				+ identifier + ", subject=" + subject + ", context=" + context + ", rnum=" + rnum + ", log1=" + log1
+				+ ", log2=" + log2 + "]";
 	}
-
-	
 
 }

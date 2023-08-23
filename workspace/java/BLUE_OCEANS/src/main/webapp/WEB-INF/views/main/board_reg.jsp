@@ -57,8 +57,8 @@
     <br>
     <div class="row g-1 d-flex justify-content-center">
       <div class="col-auto">
-      	<input type="button" class="btn btn-success" value="완료" id="doSave">
-        <input type="button" class="btn btn-success" value="취소" id="moveToList">
+      	<input type="button" class="btn btn-sm btn-primary" value="완료" id="doSave">
+        <input type="button" class="btn btn-sm btn-primary" value="취소" id="moveToList">
       </div>
     </div>
     <!--// 버튼 ----------------------------------------------------------------->
@@ -152,11 +152,13 @@
         });
    });//--doSave
    
-   
-
     
    
 </script>
+
+
+
+
 <script src="${CP}/resources/js/header-main.js"></script>
 <script src="${CP}/resources/js/util.js"></script>
 </body>

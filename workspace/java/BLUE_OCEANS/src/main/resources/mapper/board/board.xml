@@ -29,6 +29,48 @@
   
 
      
+     
+     
+<insert id="replySave" parameterType="BoardVO">
+<!-- <selectKey keyProperty="postno" resultType="int" order="BEFORE">
+      SELECT BOARD_post_no.NEXTVAL FROM DUAL      
+</selectKey>  -->
+    INSERT INTO reply (
+    	comment_no,
+		user_id,
+        post_no,
+        contents,
+        reg_dt,
+        mod_dt,
+        reply_delete = 0
+    ) VALUES (
+    	post_seq.NEXTVAL,
+		#{userId},
+        #{title},
+        #{contents},
+        0,
+        SYSDATE,                   
+        SYSDATE
+    )
+</insert>     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+ <!--      위에는 댓글 관련 쿼리문들                    -->
+ 
+ 
+ 
+ 
+<!--       아래는  게시판   관련  쿼리문들             -->     
 
 
 <!-- 게시물 목록 조회 -->
@@ -84,7 +126,8 @@ SELECT A.*,B.*
         contents,
         read_cnt,
         reg_dt,
-        mod_dt
+        mod_dt,
+        board_delete
     ) VALUES (
     	post_seq.NEXTVAL,
 		#{userId},
@@ -92,7 +135,8 @@ SELECT A.*,B.*
         #{contents},
         0,
         SYSDATE,                   
-        SYSDATE
+        SYSDATE,
+        0
     )
 </insert>
 
@@ -126,14 +170,13 @@ SELECT A.*,B.*
     UPDATE board
     SET title    = #{title},
         contents = #{contents},
-        mod_dt   = SYSDATE,
-        user_id   = #{userId}
+        mod_dt   = SYSDATE
     WHERE post_no = #{seq}
 </update>
   
   
    
- 
+ <!-- 게시물 조회수 -->
 <update id="doUpdateReadCnt" parameterType="BoardVO">
     <![CDATA[
     UPDATE board

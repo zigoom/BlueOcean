@@ -186,7 +186,7 @@
      console.log('seq:'+seq);
      if(confirm("상세 조회 하시겠어요?") == false ) return;
 		//div, seq
-     window.location.href = "${CP}/BLUEOCEAN/doSelectOne.do?div="+$("#div").val() + "&seq=" + seq + "&userId=" + userId;
+     window.location.href = "${CP}/BLUEOCEAN/doSelectOne.do?&seq=" + seq + "&userId=" + userId;
    });   
    
    
@@ -211,6 +211,7 @@
    
    $("#searchWord").on("keypress", function(e){
      console.log("searchWord");
+     
      if(13 == e.which) {
        e.preventDefault();
        doRetrieveCall(1);

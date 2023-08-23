@@ -11,7 +11,7 @@ public class BoardVO extends DTO {
 	private int    readCnt  ;//조회수
 	private String regDt    ;//등록일
 	private String modDt    ;//수정일
-	private int boardDelete ; //삭제여부
+	private int boardDelete ;//삭제여부
 	private String div      ;//구분
 	
 	

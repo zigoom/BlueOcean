@@ -1,4 +1,6 @@
 <%@ page import="com.pcwk.ehr.domain.BoardVO"%>
+<%@ page import="com.pcwk.ehr.domain.ReplyVO"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
@@ -61,12 +63,12 @@
 			    // if문으로 조건 처리
 			    if ((userType).equals(userId2)) {
 			%>
-				 <input type="button" class="btn btn-success" value="수정" id="doUpdate">
-		  		 <input type="button" class="btn btn-success" value="삭제" id="doDelete">
+				 <input type="button" class="btn btn-sm btn-primary" value="수정" id="doEdit">
+		  		 <input type="button" class="btn btn-sm btn-primary" value="삭제" id="doDelete">
 			<% } %>
 			</c:when>
 		</c:choose>		
-	      <input type="button" class="btn btn-success" value="목록" id="moveToList">	      
+	      <input type="button" class="btn btn-sm btn-primary" value="목록" id="moveToList">	      
       </div>
     </div>
     
@@ -75,12 +77,12 @@
     <!-- 내용 (contents)  ------------------------------------------------------------>
     
 	<table class="table view" style="width: 1000px;">
-		<tr>
-			<td align="left"><strong>${vo.title}</strong></td>
+		<tr id="tr1">
+			<td align="left"><strong  id="title">${vo.title}</strong></td>
 			<td align="right">${vo.readCnt}</td>
 			<td></td>
 		</tr> 
-		<tr>
+		<tr id="tr2">
 			<td align="left" style="color: gray;">${vo.userId}</td>
 			<td align="right" style="color: gray;">${vo.modDt}</td>
 			<td><input type="hidden" id="seq" value="${vo.seq}" /></td>
@@ -89,7 +91,7 @@
 	<br>
 	<div class="mb-3" style="width: 1000px;">
 	  <label for="exampleFormControlTextarea1" class="form-label"></label>
-	  <textarea class="form-control" id="exampleFormControlTextarea1" rows="8" readonly="readonly">${vo.contents}</textarea>
+	 <textarea class="form-control" id="contents" rows="8" readonly="readonly">${vo.contents}</textarea>
 	</div>
 
 
@@ -111,7 +113,7 @@
 					</div>
 					<br>
 					<div class="d-flex justify-content-end">
-						<a href="#" class="btn btn-sm btn-success" onclick="doDetail();">등록</a>
+						<a href="#" class="btn btn-sm btn-primary" id="addComment">등록</a>
 					</div>
 				</form>
 			</div>
@@ -124,7 +126,8 @@
 <script>
 
 	function moveToListView(){
-	    window.location.href="${CP}/BLUEOCEAN/boardView.do?div="+$("#div").val();
+	    window.location.href="${CP}/BLUEOCEAN/boardView.do"
+	    //?div="+$("#div").val();
 	}
 	
 	$("#moveToList").on("click",function(){
@@ -135,6 +138,7 @@
 	});
 
 	
+
 	
 	  
 	// 삭제 버튼 클릭 이벤트 설정
@@ -170,9 +174,54 @@
 	});//--doDelete-----------------------------------------------------------
 	
 	
-    
+
+	function moveToEditView(seq, title, contents){
+	    window.location.href="${CP}/BLUEOCEAN/doEdit.do?seq=" + seq + "&title=" + title + "&contents=" + contents;
+
+	    	//?div="+$("#div").val();
+	}
+	
+
+
+
+	
+ 	$("#doEdit").on("click",function(){
+	     console.log("수정 버튼 클릭 click");
+
+	     let seq = document.getElementById("seq").value;
+	     let title = document.getElementById("title").textContent;
+	     let contents = document.getElementById("contents").textContent;
+	     
+	     console.log('seq:'+seq);
+	     console.log('title:'+title);
+	     console.log('contents:'+contents);
+
+	     if(confirm('수정 화면으로 이동 하시겠습니까?')==false) return;
+	     
+	     moveToEditView(seq, title, contents);
+	}); 
 	
 	
+
+
+	// 댓글 등록 버튼 클릭 이벤트
+	$(document).ready(function() {
+	    $("#addComment").click(function() {
+
+	  	    console.log("addComment");
+		    //console.log("seq:"+$("#seq").val());
+		    
+	        if (confirm('댓글을 등록하시겠습니까?') === false) {
+	            return;
+	        }
+	        
+	        
+	        
+	        
+	    });
+	});
+	
+
 
 
     

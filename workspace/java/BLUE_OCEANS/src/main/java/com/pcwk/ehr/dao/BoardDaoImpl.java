@@ -71,6 +71,7 @@ public class BoardDaoImpl implements BoardDao, PcwkLogger {
     
     @Override
     public int doUpdate(BoardVO inVO) throws SQLException {
+    	System.out.println("doUpdate 다오임플 구역");
 		LOG.debug("┌──────────────────────────────┐");
 		LOG.debug("│doUpdate                      │");
 		LOG.debug("│inVO                          │"+inVO);

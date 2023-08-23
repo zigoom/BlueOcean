@@ -36,11 +36,53 @@ public class BoardController implements PcwkLogger {
     
     
     
-		@RequestMapping(value = "/doUpdate.do", method = RequestMethod.POST
-		        ,produces = "application/json;charset=UTF-8")
+    
+    
+    // 댓글 등록 컨트롤러
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    //////////////////////////////////////////////////// 아래는 게시판 컨트롤러 ///////////////////////////////////////////////////////////////////
+    
+	// 게시판 글수정 버튼 클릭 컨트롤러
+	@RequestMapping(value = "/doEdit.do", method = RequestMethod.GET)
+	public String doEdit(BoardVO inVO, Model model)throws SQLException{
+		String view = "main/board_edit_reg";
+		
+		LOG.debug(" 수정 버튼 클릭했습니다!! ");
+		
+		LOG.debug("=================");
+		LOG.debug("== doUpdate ==");
+		LOG.debug("== inVO         =="+inVO);
+		LOG.debug("=================");
+		
+		BoardVO outVO = boardService.doSelectOne(inVO);
+		LOG.debug("== outVO         =="+outVO);
+		
+		model.addAttribute("outVO", outVO);
+		
+		return view;
+		
+	}
+	
+	
+	
+	// 글 수정 버튼 클릭 후 수정 버튼 컨트롤러 
+	@RequestMapping(value = "/doUpdate.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public String doUpdate(BoardVO inVO)throws SQLException{
+		
 	String jsonString = "";
+	
 	LOG.debug("=================");
 	LOG.debug("== doUpdate ==");
 	LOG.debug("== inVO         =="+inVO);
@@ -61,11 +103,10 @@ public class BoardController implements PcwkLogger {
 	return jsonString;
 			
 	}
-
     
+	
     
-    
-    
+    // 상세 게시판 삭제 버튼 컨트롤러
 	@RequestMapping(value = "/doDelete.do", method = RequestMethod.GET, 
 							produces = "application/json;charset=UTF-8")
 	@ResponseBody
@@ -97,7 +138,7 @@ public class BoardController implements PcwkLogger {
     
 	
 	
-
+	// 게시판 게시물 클릭 컨트롤러 (상세조회)
 	@RequestMapping("/doSelectOne.do")
 	public String doSelectOne(BoardVO inVO, Model model, HttpSession session)throws SQLException{
 		String view = "main/board_detail";
@@ -208,7 +249,7 @@ public class BoardController implements PcwkLogger {
 	
 	
 	
-	// 글쓰기 저장 기능
+	// 글쓰기 버튼 , 저장 기능
 	@RequestMapping(value = "/doSave.do", method = RequestMethod.POST
 			,produces = "application/json;charset=UTF-8")
 	@ResponseBody

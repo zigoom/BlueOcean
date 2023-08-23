@@ -42,7 +42,7 @@ public class BoardServiceImpl implements BoardService {
         // BoardDao의 doUpdate 메서드를 호출하여 데이터를 수정합니다.
         // 구현이 완료되면 수정된 데이터의 개수를 반환합니다.
     	
-    	System.out.println("doUpdate 다오임플 구역 ");
+    	System.out.println("doUpdate 서비스 구역 ");
     	System.out.println("inVO 값은 : "+inVO);
     	
         return boardDao.doUpdate(inVO);
@@ -56,7 +56,7 @@ public class BoardServiceImpl implements BoardService {
         // BoardDao의 doDelete 메서드를 호출하여 데이터를 삭제합니다.
         // 구현이 완료되면 삭제된 데이터의 개수를 반환합니다.
     	
-    	System.out.println("doDelete 다오임플 구역 ");
+    	System.out.println("doDelete 서비스 구역 ");
     	System.out.println("inVO 값은 : "+inVO);
     	
         return boardDao.doDelete(inVO);
@@ -71,7 +71,7 @@ public class BoardServiceImpl implements BoardService {
 		BoardVO outVO = boardDao.doSelectOne(inVO);
 
 		System.out.println("Service doSelectOne 구역");
-		System.out.println("outVO 값은 : "+ outVO);
+		System.out.println("서비스 outVO 값은 : "+ outVO);
 		System.out.println("inVO 값은 : "+ inVO);
 		
 		return outVO;

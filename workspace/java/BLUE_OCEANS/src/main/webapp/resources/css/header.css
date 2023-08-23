@@ -17,15 +17,24 @@
 }
 
 .modal-containor div input[type=text],
-.modal-containor div input[type=password]
+.modal-containor div input[type=password],
+.modal-containor div input[type=tel]
  {	
 	width: 70%;
 }
 
-label{
+/*  label{
 	text-align: center;
+}  */
+
+.placeholder-style::placeholder {
+  font-size: 13px;
+  top: 10%;
 }
 
+/* .custom-container label {
+    text-align: left; 원하는 스타일로 덮어쓰기
+} */
 /* ------------------------모달끝---------------------------- */
 
 

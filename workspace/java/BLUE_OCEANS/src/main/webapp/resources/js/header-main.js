@@ -18,6 +18,7 @@ let modalBody = $('.modal-body');
  
 signInhtml += '<form>';
 signInhtml += "  <div class='modal-containor'>";
+
 signInhtml += '    <div>';
 signInhtml += '      <label>아이디</label>';
 signInhtml += "      <input id='login_id' type='text' class='form-control'>";
@@ -53,8 +54,8 @@ signUphtml += '<form>';
 signUphtml += "  <div class='modal-containor'>";
 signUphtml += '    <div>';
 signUphtml += '      <label>ID</label>';
-signUphtml += "      <input type='text' id='signUp_id' name='signUp_id' maxlength='15' class='form-control'>";
-signUphtml += "     <button type='button' style='font-size: 5px' class='btn btn-outline-primary' id='signup_idcheck' disabled>중복확인</button>";
+signUphtml += "      <input type='text' id='signUp_id' name='signUp_id' maxlength='15' placeholder='소문자+숫자 조합'  class='form-control placeholder-style'>";
+signUphtml += "     <button type='button' style='font-size: 13px' class='btn btn-outline-primary' id='signup_idcheck' disabled>중복확인</button>";
 signUphtml += '    </div>';
 signUphtml += '    <div>';
 signUphtml += '      <label>이름</label>';
@@ -62,54 +63,34 @@ signUphtml += "      <input type='text' id='signUp_name' name='signUp_name' clas
 signUphtml += '    </div>';
 signUphtml += '    <div>';
 signUphtml += '      <label>PW</label>';
-signUphtml += "      <input type='password' id='signUp_pw' name='signUp_pw' class='form-control'>";
+signUphtml += "      <input type='password' id='signUp_pw' name='signUp_pw' class='form-control placeholder-style' placeholder='8자리 소문자+숫자+특수문자 조합'>";
 signUphtml += '    </div>';
 signUphtml += '    <div>';
 signUphtml += '      <label>PW확인</label>';
-signUphtml += "      <input type='password' id='signUp_pw_check' name='signUp_pw_check' class='form-control'>";
+signUphtml += "      <input type='password' id='signUp_pw_check' name='signUp_pw_check' class='form-control placeholder-style' placeholder='PW와 같이 입력해주세요'>";
 signUphtml += '    </div>';
 signUphtml += '    <div>';
 signUphtml += '      <label>생년월일</label>';
-signUphtml +=
-    "      <input maxlength='6' type='text' id='signUp_birthday' name='signUp_birthday' class='form-control' placeholder='생년월일 6자리만 입력해주세요'>";
+signUphtml += "      <input maxlength='6' type='text' id='signUp_birthday' name='signUp_birthday' class='form-control placeholder-style' placeholder='생년월일 6자리만 입력해주세요'>";
 signUphtml += '    </div>';
 signUphtml += "    <div style='display: flex; align-items: center;'>";
 signUphtml += '  	 <label>성별</label>';
-signUphtml += "  	 <label for='genderM' style='margin-left: 10px; margin-right: 5px;'>남</label>";
+signUphtml += "  	 <label for='genderM' style='margin-right: 10px;'>남</label>";
 signUphtml += "  	 <input type='radio' name='gender' value='M' id='signUp_M' style='margin-right: 10px;' checked>";
 signUphtml += "  	 <label for='genderF' style='margin-left: 10px;'>여</label>";
 signUphtml += "  	 <input type='radio' name='gender' value='F' id='signUp_F' style='margin-right: 10px;'>";
 signUphtml += '	   </div>';
-/*signUphtml += '    <div>';
-signUphtml += '      <label>핸드폰</label>';
-signUphtml += "      <input type='text' id='signUp_phone' name='signUp_phone' class='form-control'>";
-signUphtml += '    </div>';*/
-
-/*signUphtml += ' <div> ';
-signUphtml += '   <input type="text" id="phone1" class="form-control" maxlength="3" placeholder="010" aria-label="Phone number first part">';
-signUphtml += '   <span class="input-group-text">-</span>';
-signUphtml += '   <input type="text" id="phone2" class="form-control" maxlength="4" placeholder="1234" aria-label="Phone number second part">';
-signUphtml += '   <span class="input-group-text">-</span>';
-signUphtml += '   <input type="text" id="phone3" class="form-control" maxlength="4" placeholder="5678" aria-label="Phone number third part">';
-signUphtml += ' </div>';*/
-signUphtml += '	<div class = "container"> ';
-signUphtml += '   <label>핸드폰</label>';
-signUphtml += '		<div class = "row"> ';
-signUphtml += '			<div class = "col-md-8"> ';
-signUphtml += '	 			<input type="text" maxlength="3" class="form-control" maxlength="3" placeholder="3자리">';
-signUphtml += '	  			<input type="text" maxlength="4" class="form-control" maxlength="4" placeholder="4자리">';
-signUphtml += '	  			<input type="text" maxlength="4" class="form-control" maxlength="4" placeholder="4자리">';
-signUphtml += '			</div>';
-signUphtml += '		</div>';
-signUphtml += '	</div>';
-signUphtml += '    <div>';
+signUphtml += '     <div>';
+signUphtml += '     <label>핸드폰</label>';
+signUphtml += "         <input placeholder='-를 빼고 적어주세요' maxlength='11' type='text' name='phone' id='signUp_phone' class='form-control placeholder-style' oninput='validatePhoneNumber(this)'>";
+signUphtml += '     </div>';
+signUphtml += '     <div>';
 signUphtml += '      <label>이메일</label>';
 signUphtml += "      <input type='text' id='signUp_email' name='signUp_email' class='form-control'>";
 signUphtml += '    </div>';
 signUphtml += '    <div>';
 signUphtml += '      <label>키워드</label>';
-signUphtml +=
-    "      <input placeholder='선택사항' type='text' id='signUp_keyword' name='signUp_keyword' class='form-control'>";
+signUphtml += "      <input placeholder='선택사항' type='text' id='signUp_keyword' name='signUp_keyword' class='form-control placeholder-style'>";
 signUphtml += '    </div>';
 signUphtml += '  </div>';
 signUphtml += '</form>';
@@ -262,13 +243,6 @@ $(document).ready(function () {
         }
     });
 
-	    function formatPhoneNumber() {
-	    const phone1 = document.getElementById("phone1").value;
-	    const phone2 = document.getElementById("phone2").value;
-	    const phone3 = document.getElementById("phone3").value;
-	
-	    return `${phone1}-${phone2}-${phone3}`;
-	  }
     
     $(document).on('click', '#signUp_bt', function () {
         console.log('signUp_bt');
@@ -315,8 +289,6 @@ $(document).ready(function () {
             return;
         }
 
-
-        const formattedPhoneNumber = formatPhoneNumber();
         $.ajax({
             type: 'POST',
             url: '/ehr/BLUEOCEAN/siginUp.do',
@@ -328,8 +300,7 @@ $(document).ready(function () {
                 passwd: $('#signUp_pw').val(),
                 birthday: $('#signUp_birthday').val(),
                 gender: $("input[name='gender']:checked").val(),
-                phone: formattedPhoneNumber,
-                //phone: $('#signUp_phone').val(),
+                phone: $('#signUp_phone').val(),
                 email: $('#signUp_email').val(),
                 keyword: $('#signUp_keyword').val(),
             },

@@ -97,7 +97,6 @@ ul {
 
 		
 		$(document).ready(function() {
-			 let itemcode;
 					   $("#adminBtn").on("click", function() {
 		            console.log('어드민');
 		              window.location.href = "${CP}/BLUEOCEAN/admin/user.do"; // 여기에 실제 관리자 페이지의 URL을 넣어주세요 
@@ -294,6 +293,10 @@ ul {
                 });
             }
         }
+		          
+            function validatePhoneNumber(input) {
+                input.value = input.value.replace(/[^0-9]/g, ''); // 입력값에서 숫자 이외의 문자 제거
+            }		          
 		
 		
 		</script>

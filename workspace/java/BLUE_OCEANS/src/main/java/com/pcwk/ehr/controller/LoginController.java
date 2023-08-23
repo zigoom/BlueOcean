@@ -60,18 +60,6 @@ public class LoginController implements PcwkLogger {
 		// 10 : 아이디 오류
 		// 20 : 비번 오류
 		// 30 : 성공
-		if (null == user.getUserId() || "".equals(user.getUserId())) {
-			message.setMsgId("1");
-			message.setMsgContents("아이디를 입력 하세요");
-
-			return new Gson().toJson(message);
-		}
-
-		if (null == user.getPasswd() || "".equals(user.getPasswd())) {
-			message.setMsgId("2");
-			message.setMsgContents("비밀번호를 입력 하세요");
-			return new Gson().toJson(message);
-		}
 
 		int status = loginService.doLogin(user);
 		if (30 == status) {
@@ -93,6 +81,7 @@ public class LoginController implements PcwkLogger {
 				message.setMsgContents("알수 없는 오류");
 			}
 		} else 	if (10 == status || 20 == status) {
+			message.setMsgId("0");
 			message.setMsgContents("아이디를 또는 비밀번호를 확인 하세요");
 		}
 

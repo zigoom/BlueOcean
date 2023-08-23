@@ -63,7 +63,12 @@
     margin-left: 35rem!important;
     t: ;
 }
-
+.contents {
+    white-space: nowrap; /* 긴 문자열을 한 줄로 유지 */
+    overflow: hidden; /* 넘치는 부분 숨김 */
+    text-overflow: ellipsis; /* 넘치는 부분에 ... 추가 */
+    max-width: 300px; /* 최대 너비 지정 */
+}
 #button-container>* {
 	margin-left: 7px;
 }
@@ -103,7 +108,7 @@
 								<tr>
 									<th scope="col">제목</th>
 									<th scope="col">아이디</th>
-									<th scope="col">조회수</th>
+									<th scope="col">내용</th>
 									<th scope="col">등록일</th>
 									<th scope="col">수정일</th>
 									<th scope="col">삭제여부</th>
@@ -127,9 +132,9 @@
         </div>
           <div id="button-container" style="margin-right: 50px">
             <label>제목
-              <input type="text" class="search-id">
+              <input type="text" class="search-title">
             </label>
-            <button class="btn btn-primary search-id-btn">검색</button>
+            <button class="btn btn-primary search-title-btn">검색</button>
           </div>
       </div>
 		</div>
@@ -277,14 +282,14 @@
 
 					let tr = $("<tr class='data-tr'></tr>");
 					tr
-							.append("<td class='user-id text-truncate'>" + data[i].title
+							.append("<td class='title text-truncate'>" + data[i].title
 									+ "</td>");
-					tr.append("<td class='user-name'>" + data[i].userId
+					tr.append("<td class='user-id'>" + data[i].userId
 							+ "</td>");
-					tr.append("<td class='birthday'>" + data[i].readCnt
+					tr.append("<td class='contents'>" + data[i].contents
 							+ "</td>");
-					tr.append("<td class='gender'>" + data[i].regDt + "</td>");
-					tr.append("<td class='phone-no'>" + data[i].modDt
+					tr.append("<td class='reg-dt'>" + data[i].regDt + "</td>");
+					tr.append("<td class='mod-dt'>" + data[i].modDt
 							+ "</td>");
 					tr.append("<td class='boardDelete'>" + data[i].boardDelete
 							+ "</td>");
@@ -323,8 +328,8 @@
 			// 클릭한 버튼의 가장 가까운 상위 <tr> 요소를 찾음
 			const trElement = $(this).closest("tr");
 
-			// 해당 <tr> 요소 내의 .user-id 요소의 텍스트를 가져옴
-			const title = trElement.find(".user-id").text();
+			// 해당 <tr> 요소 내의 .title 요소의 텍스트를 가져옴
+			const title = trElement.find(".title").text();
 
 			$.ajax({
 				type : "POST",
@@ -375,8 +380,8 @@
 			// 클릭한 버튼의 가장 가까운 상위 <tr> 요소를 찾음
 			const trElement = $(this).closest("tr");
 
-			// 해당 <tr> 요소 내의 .user-id 요소의 텍스트를 가져옴
-			const title = trElement.find(".user-id").text();
+			// 해당 <tr> 요소 내의 .title 요소의 텍스트를 가져옴
+			const title = trElement.find(".title").text();
 
 			$.ajax({
 				type : "POST",
@@ -407,14 +412,14 @@
 		}
 	});
 
-	$(".search-id-btn").on("click", function() {
+	$(".search-title-btn").on("click", function() {
 		$.ajax({
 			type : "POST",
 			url : "/ehr/BLUEOCEAN/admin/loadBoardFromTitle.do",
 			async : true,
 			dataType : "json",
 			data : {
-				title : $(".search-id").val()
+				title : $(".search-title").val()
 			},
 			success : function(data) {
 				totalData = data;

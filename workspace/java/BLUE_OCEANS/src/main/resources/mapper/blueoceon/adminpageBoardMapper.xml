@@ -38,19 +38,22 @@
 	<!-- 보드 전체 로드 -->
 	<select id="loadBoard" resultMap="adminPageMap" resultType="com.pcwk.ehr.cmn.AdminPageVO">
 		SELECT * FROM BOARD
+		ORDER BY post_no DESC
 	</select>
 	
 	<!--  보드 로드 (삭제한 글 또는 삭제하지 않은글) -->
 	<select id="loadBoardOption" resultMap="adminPageMap" resultType="com.pcwk.ehr.cmn.AdminPageVO">
 		SELECT * FROM BOARD
 		WHERE board_delete = #{boardDelete}
+		ORDER BY post_no DESC
 	</select>
 	
-	<!-- 회원목록 로드(타이틀로 검색) -->
+	<!-- 보드 로드(타이틀로 검색) -->
 	<select id="loadBoardFromTitle" resultMap="adminPageMap"
 		resultType="com.pcwk.ehr.cmn.AdminPageVO">
 		SELECT * FROM BOARD
 		WHERE title LIKE  '%' ||  #{title} || '%'
+		ORDER BY post_no DESC
 	</select>
 	
 	

@@ -37,6 +37,9 @@ public class AdminPageVO {
 	private int rnum; // 이용약관 페이지 페이징 number (adminpageTermsofuse)
 	private String log1;
 	private String log2;
+	private String startDate;
+	private String endDate;
+	private String logDate;
 
 	public AdminPageVO() {
 	}
@@ -45,7 +48,8 @@ public class AdminPageVO {
 			String keyword, String email, String phoneNo, String userLevel, int withdrawal, int agree, int otpUse,
 			List<Integer> termsOfUse, int seq, String title, String contents, String div, int readCnt, String regDt,
 			String regId, String modDt, String modId, int commentNo, int postNo, int replyDelete, int boardDelete,
-			int no, int identifier, String subject, String context, int rnum, String log1, String log2) {
+			int no, int identifier, String subject, String context, int rnum, String log1, String log2,
+			String startDate, String endDate, String logDate) {
 		super();
 		this.userNo = userNo;
 		this.userId = userId;
@@ -81,6 +85,9 @@ public class AdminPageVO {
 		this.rnum = rnum;
 		this.log1 = log1;
 		this.log2 = log2;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.logDate = logDate;
 	}
 
 	public int getUserNo() {
@@ -355,6 +362,30 @@ public class AdminPageVO {
 		this.log2 = log2;
 	}
 
+	public String getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+
+	public String getLogDate() {
+		return logDate;
+	}
+
+	public void setLogDate(String logDate) {
+		this.logDate = logDate;
+	}
+
 	@Override
 	public String toString() {
 		return "AdminPageVO [userNo=" + userNo + ", userId=" + userId + ", passwd=" + passwd + ", userName=" + userName
@@ -365,7 +396,7 @@ public class AdminPageVO {
 				+ regId + ", modDt=" + modDt + ", modId=" + modId + ", commentNo=" + commentNo + ", postNo=" + postNo
 				+ ", replyDelete=" + replyDelete + ", boardDelete=" + boardDelete + ", no=" + no + ", identifier="
 				+ identifier + ", subject=" + subject + ", context=" + context + ", rnum=" + rnum + ", log1=" + log1
-				+ ", log2=" + log2 + "]";
+				+ ", log2=" + log2 + ", startDate=" + startDate + ", endDate=" + endDate + ", logDate=" + logDate + "]";
 	}
 
 }

@@ -36,11 +36,13 @@
 		<result property="context" column="context" />
 		<result property="log1" column="log_1" />
 		<result property="log2" column="log_2" />
+		<result property="logDate" column="log_date" />
 	</resultMap>
 
 	<insert id="addLog">
 		INSERT INTO USER_LOG
-		(LOG_NO, USER_ID, LOG_DATE, LOG_1, LOG_2)
+		(LOG_NO, USER_ID, LOG_DATE,
+		LOG_1, LOG_2)
 		SELECT
 		LOG_seq.nextval, #{userId},
 		SYSDATE ,#{log1},#{log2}
@@ -48,4 +50,34 @@
 		MEMBER
 		WHERE USER_ID = #{userId}
 	</insert>
+	<select id="loadLog" resultMap="adminPageMap"
+		resultType="com.pcwk.ehr.cmn.AdminPageVO">
+		SELECT * FROM USER_LOG
+		ORDER BY log_no DESC
+	</select>
+	<select id="loadLogOption" resultMap="adminPageMap"
+		resultType="com.pcwk.ehr.cmn.AdminPageVO">
+		<![CDATA[
+        SELECT * FROM USER_LOG
+        WHERE log_date >= #{startDate, jdbcType=DATE}
+          AND log_date <= #{endDate, jdbcType=DATE}
+          ORDER BY log_no DESC
+    ]]>
+	</select>
+	<select id="loadLogCount" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM
+		USER_LOG
+	</select>
+	<select id="loadLogCountOption" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM
+		USER_LOG
+		WHERE user_id = #{userId}
+	</select>
+	<select id="loadLogFromId" resultMap="adminPageMap"
+		resultType="com.pcwk.ehr.cmn.AdminPageVO">
+		SELECT * FROM USER_LOG
+		WHERE user_id LIKE  '%' ||  #{userId} || '%'
+		ORDER BY log_no DESC
+	</select>
+	
 </mapper>

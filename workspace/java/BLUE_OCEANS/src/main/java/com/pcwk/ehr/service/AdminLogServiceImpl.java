@@ -21,6 +21,32 @@ public class AdminLogServiceImpl implements AdminLogService, PcwkLogger {
 	public int addLog(AdminPageVO vo) throws SQLException {
 		return adminLogDao.addLog(vo);
 	}
+
+	@Override
+	public List<AdminPageVO> loadLog() throws SQLException {
+		return adminLogDao.loadLog();
+	}
+
+	@Override
+	public List<AdminPageVO> loadLogOption(AdminPageVO vo) throws SQLException {
+		return adminLogDao.loadLogOption(vo);
+	}
+
+	@Override
+	public int loadLogCount() throws SQLException {
+		return adminLogDao.loadLogCount();
+	}
+
+	@Override
+	public int loadLogCountOption(AdminPageVO vo) throws SQLException {
+		return adminLogDao.loadLogCountOption(vo);
+	}
+
+	@Override
+	public List<AdminPageVO> loadLogFromId(AdminPageVO vo) throws SQLException {
+		return adminLogDao.loadLogFromId(vo);
+	}
+	
 	
 	
 

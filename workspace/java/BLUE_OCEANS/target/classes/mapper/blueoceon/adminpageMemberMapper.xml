@@ -40,6 +40,7 @@
 	<select id="loadMember" resultMap="adminPageMap"
 		resultType="com.pcwk.ehr.cmn.AdminPageVO">
 		SELECT * FROM MEMBER
+		ORDER BY user_no DESC
 	</select>
 
 	<!-- 회원목록 로드 (탈퇴한유저 또는 탈퇴하지 않은 유저) -->
@@ -47,6 +48,7 @@
 		resultType="com.pcwk.ehr.cmn.AdminPageVO">
 		SELECT * FROM MEMBER
 		WHERE withdrawal = #{withdrawal}
+		ORDER BY user_no DESC
 	</select>
 	
 	<!-- 회원목록 로드(유저아이디로 검색) -->
@@ -54,6 +56,7 @@
 		resultType="com.pcwk.ehr.cmn.AdminPageVO">
 		SELECT * FROM MEMBER
 		WHERE user_id LIKE  '%' ||  #{userId} || '%'
+		ORDER BY user_no DESC
 	</select>
 
 	<!-- 회원목록 카운트 -->

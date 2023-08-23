@@ -32,11 +32,6 @@ uri="http://java.sun.com/jsp/jstl/core"%>
         	.container{
         		width: 60%;
         	}
-            #chart-container {
-                width: 200px;
-                height: 200px;
-                margin: 15px;
-            }
 
             .bookmark-container {
                 border: 1px solid black;
@@ -48,7 +43,8 @@ uri="http://java.sun.com/jsp/jstl/core"%>
             .text-container {
                 margin-top: 15px;
                 margin-bottom: 15px;	
-                margin-right: 150px;
+                margin-right: 50px;
+                width: 500px;
             }
 
             .text-container p {
@@ -62,12 +58,13 @@ uri="http://java.sun.com/jsp/jstl/core"%>
             	text-decoration: none;
             	cursor: pointer;
             	color: black;
-            	font-size: 30px;
+            	font-size: 25px;
             	font-weight: bold;
             }
             .fa-solid{
             	color:gold;
             }
+            
 
         </style>
     </head>
@@ -91,7 +88,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                                 <form method="get" action="/ehr/BLUEOCEAN/detail.do" class="detail-form">
                                     <!-- 주식종목코드 값 담아두는 인풋 -->
                                     <div class="bookmark-container">
-                                        <div id="chart-container${loop.index+1}"></div>
+                                        <div id="chart-container${loop.index+1}" style="width: 500px;"></div>
                                         <div class="text-container">
                                             <a class="stock-name"></a>
                                             <input type="hidden" class="stock-code-input" name="stockCode" value="${item}">

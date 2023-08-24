@@ -30,7 +30,7 @@ ul {
 				<button class="btn btn-light header-btn" type="button" id="logout">로그아웃</button>
         <c:choose>
             <c:when test="${sessionScope.level == 0}">
-                <button class="btn btn-light header-btn" id="adminBtn">관리자 페이지</button>
+                <button class="btn btn-light header-btn" id="adminBtn">관리자 페이지</button>              
             </c:when>
         </c:choose>
 			</c:when>
@@ -41,7 +41,14 @@ ul {
 	</div>
 
 	<div id="search-results" style="overflow: auto; max-height: 200px;" class="search-box input-group col- flex-nowrap">
-		<!-- 검색 결과를 표시할 영역 -->
+		        <c:choose>
+            <c:when test="${sessionScope.level == 0}">
+                <p> <a href="http://125.142.47.191:5001/">파이썬 서버</a>
+                <br>
+                <a>DB IP:125.142.47.191:1521</a>
+                </p>
+            </c:when>
+        </c:choose>
 		<ul id="related-searches"></ul>
 	</div>
 

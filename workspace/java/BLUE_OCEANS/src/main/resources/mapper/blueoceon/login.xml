@@ -7,7 +7,9 @@
 
 	<select id="get" parameterType="UserVO" resultMap="userMap">
 		SELECT user_id,
-		       user_level
+		       user_level,
+		       passwd,
+		       WITHDRAWAL
 		FROM member
 		where user_id = #{userId}
 
@@ -26,13 +28,15 @@
 		FROM
 		member
 		WHERE user_id = #{userId}
-		AND passwd = #{passwd}
+		AND passwd = #{enCodeingPasswd}
 	</select>
 
 
 	<resultMap type="UserVO" id="userMap">
 		<result column="user_id" property="userId" />
 		<result column="user_level" property="userLevel" />
+		<result column="passwd" property="passwd" />
+		<result column="WITHDRAWAL" property="withdrawl" />
 	</resultMap>
 
 </mapper>

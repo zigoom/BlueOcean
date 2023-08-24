@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.CookieGenerator;
 
 import com.google.gson.Gson;
+import com.pcwk.ehr.cmn.AdminPageVO;
 import com.pcwk.ehr.cmn.MessageVO;
 import com.pcwk.ehr.cmn.PcwkLogger;
 import com.pcwk.ehr.domain.UserVO;
+import com.pcwk.ehr.service.AdminLogService;
 import com.pcwk.ehr.service.LoginService;
 
 @Controller("LoginController")
@@ -25,6 +27,9 @@ public class LoginController implements PcwkLogger {
 	@Autowired
 	LoginService loginService;
 
+	@Autowired 
+	AdminLogService adminLogService;
+	
 	public LoginController() {
 		LOG.debug("┌──────────────────────────────┐");
 		LOG.debug("│LoginContoller                │");
@@ -66,6 +71,8 @@ public class LoginController implements PcwkLogger {
 			message.setMsgId("30");
 			message.setMsgContents(user.getUserId() + "로그인 되었습니다");
 
+			
+
 			// --------------------------------------------------
 			// 사용자 정보 조회 : seesion처리
 			// --------------------------------------------------
@@ -76,11 +83,26 @@ public class LoginController implements PcwkLogger {
 				httpsession.setAttribute("level", userinfo.getUserLevel());
 				LOG.debug("-------------userinfo------------" + userinfo.getUserId());
 				LOG.debug("-------------userinfo------------" + userinfo.getUserLevel());
+				
+				if (null != httpsession.getAttribute("user")) {
+					AdminPageVO logVO = new AdminPageVO();
+					String id = (String) httpsession.getAttribute("user");
+					logVO.setUserId(id);
+					logVO.setLog1("로그인");
+
+					logVO.setLog2("아이디 : " + user.getUserId());
+
+					adminLogService.addLog(logVO);
+				}
+				
 			} else {
 				message.setMsgId("99");
 				message.setMsgContents("알수 없는 오류");
 			}
-		} else 	if (10 == status || 20 == status) {
+		} else	if (40 == status) {
+			message.setMsgId("40");
+			message.setMsgContents("탄퇴된 회원 입니다");
+		} else	if (10 == status || 20 == status) {
 			message.setMsgId("0");
 			message.setMsgContents("아이디를 또는 비밀번호를 확인 하세요");
 		}

@@ -23,22 +23,22 @@ uri="http://java.sun.com/jsp/jstl/core"%>
     }
    .py-5{
    
-    padding-bottom: 11rem!important;
+    padding-bottom: 7rem!important;
    }
 </style>
 </head>
 <body>
-<div class="container-fluid ps-md-0 centered-form">
-    <div class="col-md-8 col-lg-4">
-      <div class="login d-flex py-5">
+<div class="centered-form py-5" style="height: 85vh;">
+    <div class="col-md-11 col-lg-7">
+      <div class="login d-flex">
         <div class="container">
           <div class="row">
-              <div class="col-md-6 col-lg-11">
-               <h1 class="login-heading mb-4">마이페이지</h1>
+              <div>
+               <h1 class="login-heading mb-4">&nbsp;&nbsp;&nbsp;&nbsp;<b>마이페이지</b></h1>
 
               
-              <form>
                 <hr class="my-1">
+              <form style="padding-left:100px; padding-right: 100px; ">
                 <input type="hidden" name="userNo" value="${userinfo.userNo}">
                 
 		            <div class="col-12 py-2">
@@ -86,7 +86,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                   <input type="email" class="form-control" id="email" name="email" value="${userinfo.email}">
                 </div>
                 
-                <div class="col-12 py-2">
+                <div class="col-12 py-2"style="margin-bottom: 20px;">
                   <label for="keyword" class="form-label"><strong>관심분야</strong></label>
                   <input type="text" class="form-control" id="keyword" name="keyword" value="${userinfo.keyword}">
                 </div>           

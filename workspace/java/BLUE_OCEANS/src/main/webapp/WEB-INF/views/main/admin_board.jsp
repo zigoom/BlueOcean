@@ -47,28 +47,32 @@
 	margin-bottom: 20px;
 	align-items: center;
 }
-.hstack {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    align-self: stretch;
-    justify-content: space-around;
 
+.hstack {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	align-self: stretch;
+	justify-content: space-around;
 }
+
 .gap-3 {
-    gap: 0rem !important;
+	gap: 0rem !important;
 }
+
 .mx-5 {
-    margin-right: 1rem!important;
-    margin-left: 35rem!important;
-    t: ;
+	margin-right: 1rem !important;
+	margin-left: 35rem !important;
+	t:;
 }
+
 .contents {
-    white-space: nowrap; /* 긴 문자열을 한 줄로 유지 */
-    overflow: hidden; /* 넘치는 부분 숨김 */
-    text-overflow: ellipsis; /* 넘치는 부분에 ... 추가 */
-    max-width: 300px; /* 최대 너비 지정 */
+	white-space: nowrap; /* 긴 문자열을 한 줄로 유지 */
+	overflow: hidden; /* 넘치는 부분 숨김 */
+	text-overflow: ellipsis; /* 넘치는 부분에 ... 추가 */
+	max-width: 300px; /* 최대 너비 지정 */
 }
+
 #button-container>* {
 	margin-left: 7px;
 }
@@ -103,9 +107,10 @@
 					</div>
 					<div id="body-container">
 
-						<table class="table table-hover" style="table-layout: fixed; width: 98.5%; margin-left:10px;" id="data-table">
+						<table class="table table-hover" style="table-layout: fixed; width: 98.5%; margin-left: 10px;" id="data-table">
 							<thead>
 								<tr>
+									<th scope="col">글번호</th>
 									<th scope="col">제목</th>
 									<th scope="col">아이디</th>
 									<th scope="col">내용</th>
@@ -126,17 +131,16 @@
 				</div>
 
 			</div>
-      <div class="hstack gap-3 mx-5">
-        <div id="pagination" class="mx-auto">
-          <!-- 페이지 번호를 동적으로 생성할 영역 -->
-        </div>
-          <div id="button-container" style="margin-right: 50px">
-            <label>제목
-              <input type="text" class="search-title">
-            </label>
-            <button class="btn btn-primary search-title-btn">검색</button>
-          </div>
-      </div>
+			<div class="hstack gap-3 mx-5">
+				<div id="pagination" class="mx-auto">
+					<!-- 페이지 번호를 동적으로 생성할 영역 -->
+				</div>
+				<div id="button-container" style="margin-right: 50px">
+					<label>제목 <input type="text" class="search-title">
+					</label>
+					<button class="btn btn-primary search-title-btn">검색</button>
+				</div>
+			</div>
 		</div>
 	</div>
 </body>
@@ -281,16 +285,16 @@
 				.forEach(function(user, i) {
 
 					let tr = $("<tr class='data-tr'></tr>");
+					tr.append("<td class='seq'>" + data[i].postNo + "</td>");
+					tr.append("<td class='title text-truncate'>"
+							+ data[i].title + "</td>");
 					tr
-							.append("<td class='title text-truncate'>" + data[i].title
+							.append("<td class='user-id'>" + data[i].userId
 									+ "</td>");
-					tr.append("<td class='user-id'>" + data[i].userId
-							+ "</td>");
 					tr.append("<td class='contents'>" + data[i].contents
 							+ "</td>");
 					tr.append("<td class='reg-dt'>" + data[i].regDt + "</td>");
-					tr.append("<td class='mod-dt'>" + data[i].modDt
-							+ "</td>");
+					tr.append("<td class='mod-dt'>" + data[i].modDt + "</td>");
 					tr.append("<td class='boardDelete'>" + data[i].boardDelete
 							+ "</td>");
 					if (data[i].boardDelete == 0) {
@@ -437,6 +441,31 @@
 
 		})
 	})
+
+	// 댓글내용 click시  상세페이지 이동
+	$("#data-table>tbody").on(
+			"click",
+			"tr",
+			function(e) {
+				console.log("#data-table>tBody");
+				let tdArray = $(this).children();
+				tdArray.each(function(index) {
+					console.log('Cell ' + index + ': ' + $(this).text());
+				});
+				let seq = tdArray.eq(0).text();
+
+				if ($(e.target).hasClass('delete-btn')
+						|| $(e.target).hasClass('recover-btn')) {
+					// 삭제 버튼 또는 복구 버튼을 클릭한 경우, 상세 페이지로 이동하지 않음
+					return;
+				}
+				console.log('seq:' + seq);
+				if (confirm("상세 조회 하시겠어요?") == false)
+					return;
+				//div, seq
+				window.location.href = "${CP}/BLUEOCEAN/doSelectOne.do?seq="
+						+ seq
+			});
 </script>
 </html>
 

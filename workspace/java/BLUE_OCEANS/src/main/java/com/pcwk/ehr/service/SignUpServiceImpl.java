@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.pcwk.ehr.cmn.PcwkLogger;
@@ -16,6 +17,9 @@ public class SignUpServiceImpl implements SignUpService, PcwkLogger {
 	
 	@Autowired
 	SignUpDaoImpl signUpDaoImpl;
+	
+	@Autowired
+    private PasswordEncoder passwordEncoder;
 
 	public SignUpServiceImpl() {
 	}
@@ -29,10 +33,11 @@ public class SignUpServiceImpl implements SignUpService, PcwkLogger {
 		
 		userVO.setUserLevel(1);
 		
-		
+		// 비밀번호 암호화
+        String encryptedPassword = passwordEncoder.encode(userVO.getPasswd());
+        userVO.setPasswd(encryptedPassword);
+        
 		int flag = 0;
-		
-
 		flag = this.signUpDaoImpl.add(userVO);
 		
 		

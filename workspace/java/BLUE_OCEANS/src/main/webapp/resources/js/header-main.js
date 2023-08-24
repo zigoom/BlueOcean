@@ -387,6 +387,8 @@ $(document).ready(function () {
             $('#login_pw').focus();
             return;
         }
+        console.log("id"+$('#login_id').val());
+        console.log("pw"+$('#login_pw').val());
         $.ajax({
             type: 'POST',
             url: '/ehr/BLUEOCEAN/Login.do',
@@ -406,6 +408,8 @@ $(document).ready(function () {
                 	    alert('로그인이 완료되었습니다.');  	
                 		window.location.href = window.location.href; 
 
+                }else if(paredJSON.msgId == 40){
+                	alert('탈퇴된 회원입니다.');
                 } else {
                     	alert('아이디나 비밀번호가 다릅니다.');
                 } 

@@ -92,6 +92,7 @@ SELECT A.*,B.*
             FROM (
                 SELECT *
                 FROM board
+                WHERE board_delete = 0 
                 <if test=" '' != searchWord ">
                 <!-- 검색 수정하기  -->
                 WHERE title LIKE '%'|| #{searchWord} || '%'

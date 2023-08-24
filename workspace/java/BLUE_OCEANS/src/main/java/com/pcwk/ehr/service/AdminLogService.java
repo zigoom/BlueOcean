@@ -19,4 +19,7 @@ public interface AdminLogService {
 	int loadLogCountOption(AdminPageVO vo) throws SQLException;
 	
 	List<AdminPageVO> loadLogFromId(AdminPageVO vo)throws SQLException;
+	
+	List<AdminPageVO> loadLogOptionFromId(AdminPageVO vo)throws SQLException;
+
 }

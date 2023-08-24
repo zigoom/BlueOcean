@@ -51,11 +51,27 @@ public class AdminLogController implements PcwkLogger {
 		return flag;
 
 	}
-	
+
 	@RequestMapping(value = "/loadLogFromId.do", method = RequestMethod.POST)
 	@ResponseBody
 	public List<AdminPageVO> adminLoadLogFromId(AdminPageVO vo) throws SQLException {
 		List<AdminPageVO> LogList = adminLogService.loadLogFromId(vo);
+
+		return LogList;
+	}
+
+	@RequestMapping(value = "/loadLogOption.do", method = RequestMethod.POST)
+	@ResponseBody
+	public List<AdminPageVO> adminLoadLogOption(AdminPageVO vo) throws SQLException {
+		List<AdminPageVO> LogList = adminLogService.loadLogOption(vo);
+
+		return LogList;
+	}
+
+	@RequestMapping(value = "/loadLogOptionFromId.do", method = RequestMethod.POST)
+	@ResponseBody
+	public List<AdminPageVO> adminLoadLogOptionFromId(AdminPageVO vo) throws SQLException {
+		List<AdminPageVO> LogList = adminLogService.loadLogOptionFromId(vo);
 
 		return LogList;
 	}

@@ -2,7 +2,7 @@ package com.pcwk.ehr.cmn;
 
 public class BookmarkVO {
 	private int favoritesNo;		//관심번호
-    private int userNo;			//유저번호
+    private int userNo;				//유저번호
     private String userId;			//유저아이디
     private String stockCode;		//주식코드
     private String stockName;		//주식이름

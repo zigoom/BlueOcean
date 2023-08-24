@@ -167,6 +167,7 @@
 	let totalData = null;
 	const dataPerPage = 10; // 페이지당 보여줄 데이터 수
 	let currentPage = 1; // 현재 페이지
+	const pagesPerGroup = 10; // 페이지 그룹 당 보여줄 페이지 수
 
 	function allLoad() {
 		$.ajax({
@@ -188,40 +189,118 @@
 
 	// 페이지 번호를 클릭했을 때 해당 페이지의 데이터를 표시하는 함수
 	function showDataForPage(page) {
-		currentPage = page;
-		const startIndex = (page - 1) * dataPerPage;
-		const endIndex = startIndex + dataPerPage;
-		updateTableWithData(totalData.slice(startIndex, endIndex));
+	  currentPage = page;
+	  const startIndex = (page - 1) * dataPerPage;
+	  const endIndex = Math.min(startIndex + dataPerPage, totalData.length);
+	  updateTableWithData(totalData.slice(startIndex, endIndex));
+	  updatePagination();
+	}
+	
+	// 이전 페이지 그룹으로 이동
+	function goToPreviousGroup() {
+	  const targetGroup = Math.max(Math.ceil(currentPage / pagesPerGroup) - 1, 1);
+	  const targetPage = (targetGroup - 1) * pagesPerGroup + 1;
+	  showDataForPage(targetPage);
+	}
+	
+	// 다음 페이지 그룹으로 이동
+	function goToNextGroup() {
+		const totalPages = Math.ceil(totalData.length / dataPerPage);
+		const targetGroup = Math.min(Math.ceil(currentPage / pagesPerGroup) + 1, Math.ceil(totalData.length / dataPerPage / pagesPerGroup));
+	  const targetPage = (targetGroup - 1) * pagesPerGroup + 1;
+	  showDataForPage(targetPage);
+	}
+	
+	// 페이지 번호와 이전/다음 버튼을 업데이트하는 함수
+	function updatePagination() {
+	  const totalPages = Math.ceil(totalData.length / dataPerPage);
+	  const currentGroup = Math.ceil(currentPage / pagesPerGroup);
+	  const pagination = document.getElementById("pagination");
+	  pagination.innerHTML = "";
+
+	  const startPage = (currentGroup - 1) * pagesPerGroup + 1;
+	  const endPage = Math.min(startPage + pagesPerGroup - 1, totalPages);
+
+	  for (let i = startPage; i <= endPage; i++) {
+	    const button = document.createElement("button");
+	    button.textContent = i;
+	    button.type = "button";
+	    button.classList.add("page_nation", "btn", "btn-primary");
+	    button.style.margin = "5px";
+	    button.addEventListener("click", function() {
+	      showDataForPage(i);
+	    });
+
+	    pagination.appendChild(button);
+	  }
+	  
+	// 이전 버튼 추가
+	  if (startPage > 1) {
+	    const previousButton = document.createElement("button");
+	    previousButton.textContent = "이전";
+	    previousButton.type = "button";
+	    previousButton.classList.add("page_nation", "btn", "btn-primary");
+	    previousButton.style.margin = "5px";
+	    previousButton.addEventListener("click", goToPreviousGroup);
+
+	    pagination.insertBefore(previousButton, pagination.firstChild);
+	  }
+	// 다음 버튼 추가
+	  if (endPage < totalPages) {
+	    const nextButton = document.createElement("button");
+	    nextButton.textContent = "다음";
+	    nextButton.type = "button";
+	    nextButton.classList.add("page_nation", "btn", "btn-primary");
+	    nextButton.style.margin = "5px";
+	    nextButton.addEventListener("click", goToNextGroup);
+
+	    pagination.appendChild(nextButton);
+	  }
+	}
+	// 초기 페이지 설정
+	function initializePagination() {
+	  updatePagination();
+	  showDataForPage(currentPage);
 	}
 
-	// 데이터 테이블 업데이트 함수
-	function updateTableWithData(data) {
-		// 데이터를 이용해 테이블 업데이트하는 로직을 여기에 작성
-	}
 
+  // 데이터 테이블 업데이트 함수
+  function updateTableWithData(data) {
+    // 데이터를 이용해 테이블 업데이트하는 로직을 여기에 작성
+  }
+  
 	// 페이지 번호를 동적으로 생성하는 함수
-	function createPagination(totalDataCount) {
-		const totalPages = Math.ceil(totalDataCount / dataPerPage);
-		const pagination = document.getElementById("pagination");
-		pagination.innerHTML = "";
+	  function createPagination(totalDataCount) {
+	    const totalPages = Math.ceil(totalDataCount / dataPerPage);
 
-		for (let i = 1; i <= totalPages; i++) {
-			const button = document.createElement("button");
-			button.textContent = i;
-			button.type = "button";
-			button.classList.add("page_nation", "btn", "btn-primary"); // 클래스 추가
-			button.style.margin = "5px";
-			button.addEventListener("click", function() {
-				showDataForPage(i);
-			});
+	    const pagination = document.getElementById("pagination");
+	    pagination.innerHTML = "";
 
-			pagination.appendChild(button);
-		}
+	    // 현재 페이지가 속한 페이지 그룹 계산
+	    const currentGroup = Math.ceil(currentPage / pagesPerGroup);
 
-		// 처음 페이지 설정
-		showDataForPage(1);
-	}
+	    // 현재 페이지 그룹의 첫 번째 페이지 계산
+	    const startPage = (currentGroup - 1) * pagesPerGroup + 1;
+	    
+	    // 현재 페이지 그룹의 마지막 페이지 계산
+	    const endPage = Math.min(startPage + pagesPerGroup - 1, totalPages);
 
+	    for (let i = startPage; i <= endPage; i++) {
+	      const button = document.createElement("button");
+	      button.textContent = i;
+	      button.type = "button";
+	      button.classList.add("page_nation", "btn", "btn-primary");
+	      button.style.margin = "5px";
+	      button.addEventListener("click", function() {
+	        showDataForPage(i);
+	      });
+        
+        pagination.appendChild(button);
+       }  
+    
+		    // 처음 페이지 설정
+		    showDataForPage(startPage);
+		  }
 	// 모든 요소가 로드된 후에 실행
 	$(document).ready(function() {
 		allLoad();
@@ -316,24 +395,24 @@
 	//선택한 게시글 삭제
 	$(".data-tbody").on("click", ".delete-btn", function() {
 		if ($(this).hasClass("btn-primary")) {
-			let confirmDelete = confirm("정말로 데이터를 삭제하시겠습니까?");
+			let confirmDelete = confirm("정말로 게시글을 삭제하시겠습니까?");
 			if (confirmDelete) {
 				// 사용자가 확인을 눌렀을 때의 동작
 				deleteData();
 			} else {
-				alert("데이터 삭제가 취소되었습니다.");
+				alert("게시글 삭제가 취소되었습니다.");
 				return;
 			}
 			// 데이터 삭제 함수
 			function deleteData() {
 				// 실제 데이터 삭제 작업 수행
-				alert("데이터가 삭제되었습니다.");
+				alert("게시글이 삭제되었습니다.");
 			}
 			// 클릭한 버튼의 가장 가까운 상위 <tr> 요소를 찾음
 			const trElement = $(this).closest("tr");
 
 			// 해당 <tr> 요소 내의 .title 요소의 텍스트를 가져옴
-			const title = trElement.find(".title").text();
+			const title = trElement.find(".seq").text();
 
 			$.ajax({
 				type : "POST",
@@ -341,7 +420,7 @@
 				async : true,
 				dataType : "html",
 				data : {
-					title : title
+					postNo : title
 				},
 				success : function(data) {
 					console.log("data:" + data);
@@ -368,24 +447,24 @@
 	//선택한 게시글 복구
 	$(".data-tbody").on("click", ".recover-btn", function() {
 		if ($(this).hasClass("btn-primary")) {
-			let confirmDelete = confirm("정말로 데이터를 복구하시겠습니까?");
+			let confirmDelete = confirm("정말로 게시글을 복구하시겠습니까?");
 			if (confirmDelete) {
 				// 사용자가 확인을 눌렀을 때의 동작
 				notDeleteData();
 			} else {
-				alert("데이터 복구가 취소되었습니다.");
+				alert("게시글 복구가 취소되었습니다.");
 				return;
 			}
 			// 데이터 삭제 함수
 			function notDeleteData() {
 				// 실제 데이터 삭제 작업 수행
-				alert("데이터가 복구되었습니다.");
+				alert("게시글이 복구되었습니다.");
 			}
 			// 클릭한 버튼의 가장 가까운 상위 <tr> 요소를 찾음
 			const trElement = $(this).closest("tr");
 
 			// 해당 <tr> 요소 내의 .title 요소의 텍스트를 가져옴
-			const title = trElement.find(".title").text();
+			const title = trElement.find(".seq").text();
 
 			$.ajax({
 				type : "POST",
@@ -393,7 +472,7 @@
 				async : true,
 				dataType : "html",
 				data : {
-					title : title
+					postNo : title
 				},
 				success : function(data) {
 					console.log("data:" + data);

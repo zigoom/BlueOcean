@@ -325,18 +325,18 @@
 	//선택한 회원 삭제
 	$(".data-tbody").on("click", ".delete-btn", function() {
 		if ($(this).hasClass("btn-primary")) {
-			let confirmDelete = confirm("정말로 데이터를 삭제하시겠습니까?");
+			let confirmDelete = confirm("정말로 유저정보를 삭제하시겠습니까?");
 			if (confirmDelete) {
 				// 사용자가 확인을 눌렀을 때의 동작
 				deleteData();
 			} else {
-				alert("데이터 삭제가 취소되었습니다.");
+				alert("유저정보 삭제가 취소되었습니다.");
 				return;
 			}
 			// 데이터 삭제 함수
 			function deleteData() {
 				// 실제 데이터 삭제 작업 수행
-				alert("데이터가 삭제되었습니다.");
+				alert("유저정보가 삭제되었습니다.");
 			}
 			// 클릭한 버튼의 가장 가까운 상위 <tr> 요소를 찾음
 			const trElement = $(this).closest("tr");
@@ -377,18 +377,18 @@
 	//선택한 회원 복구
 	$(".data-tbody").on("click", ".recover-btn", function() {
 		if ($(this).hasClass("btn-primary")) {
-			let confirmDelete = confirm("정말로 데이터를 복구하시겠습니까?");
+			let confirmDelete = confirm("정말로 유저정보를 복구하시겠습니까?");
 			if (confirmDelete) {
 				// 사용자가 확인을 눌렀을 때의 동작
 				notDeleteData();
 			} else {
-				alert("데이터 복구가 취소되었습니다.");
+				alert("유저정보 복구가 취소되었습니다.");
 				return;
 			}
 			// 데이터 삭제 함수
 			function notDeleteData() {
 				// 실제 데이터 삭제 작업 수행
-				alert("데이터가 복구되었습니다.");
+				alert("유저정보가 복구되었습니다.");
 			}
 			// 클릭한 버튼의 가장 가까운 상위 <tr> 요소를 찾음
 			const trElement = $(this).closest("tr");

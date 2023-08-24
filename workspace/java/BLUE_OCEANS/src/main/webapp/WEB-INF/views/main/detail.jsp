@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="CP" value="${pageContext.request.contextPath }" />
 <!DOCTYPE html>
@@ -7,31 +6,18 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
-	crossorigin="anonymous" />
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-	crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.7.0.js"
-	integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
-	crossorigin="anonymous"></script>
-<script
-	src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
-<script src="https://kit.fontawesome.com/649b25c1cf.js"
-	crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+<script src="https://kit.fontawesome.com/649b25c1cf.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="${CP}/resources/css/header.css" />
 <link rel="stylesheet" href="${CP}/resources/css/footer.css" />
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <style>
-
 .container {
-  width: 80%;
+	width: 60%;
 }
 
 #chart-container {
@@ -64,10 +50,11 @@
 #chart-button-container {
 	display: flex;
 	justify-content: center;
+	margin-bottom: 50px;
 }
 
 #chart-button-container button {
-	width: 23%;
+	width: 15%;
 	margin: 10px;
 	border: 1px solid black;
 }
@@ -92,7 +79,7 @@
 
 #news-container {
 	width: 80%;
-	margin: 50px auto;
+	margin: 10px auto;
 }
 
 #news-container h5 {
@@ -114,21 +101,27 @@
 .fa-solid {
 	color: gold;
 }
+
+table {
+	margin-bottom: 20px;
+}
+h2{
+	font-weight: bold;
+	margin-bottom: 15px;
+}
 </style>
 <title>Insert title here</title>
 </head>
 <body>
 	<div class="container">
-		<input type="hidden" id="frombookmark-stockcode"
-			value="${inVO.stockCode}" /> <input type="hidden" id="ui"
-			value="${sessionScope.user}" />
+		<input type="hidden" id="frombookmark-stockcode" value="${inVO.stockCode}" /> <input type="hidden" id="ui" value="${sessionScope.user}" />
 		<!-- 유저아이디 값 담아두는 인풋 -->
 		<input type="hidden" id="sn" />
 		<!-- 주식종목이름 값 담아두는 인풋 -->
 		<input type="hidden" id="sc" />
 		<!-- 주식종목코드 값 담아두는 인풋 -->
 		<!--종목 이름 , 종목코드 , 전일대비 영역-->
-		<div style="display: flex">
+		<div style="display: flex; margin-bottom: 1.5rem !important; align-items: center;">
 			<h1 id="stock-name"></h1>
 			<div id="price-box">
 				<h1 class="last-close-value"></h1>
@@ -137,12 +130,12 @@
 					<h2 class="price-changes-percent"></h2>
 				</div>
 				<!-- 즐겨찾기 추가 영역 -->
-				<i style="margin-left: 50px; margin-top: 25px" id="bookmark-button"
-					class="fa-regular fa-star fa-2xl"></i>
+				<i style="margin-left: 50px; margin-top: 25px" id="bookmark-button" class="fa-regular fa-star fa-2xl"></i>
 			</div>
 		</div>
+		<hr class="my-1">
 		<!--차트 , 차트 버튼 영역-->
-		<div id="chart-and-button-container">
+		<div id="chart-and-button-container" style="margin-top: 50px; width: 90%; margin: 0 auto;">
 			<div id="chart-container-main">
 				<div id="chart-container"></div>
 			</div>
@@ -154,10 +147,13 @@
 				<button class="btn btn-light" id="minButton">10분</button>
 			</div>
 		</div>
+		<div style="margin : 0px 90px;">
+			<h2>주식 정보</h2>
+		</div>
+		
 		<!--해당 종목에 대한 정보를 담은 영역 (현재가, 전일대비, 등락률, 거래량. 전일가, 시가, 고가, 저가)-->
 		<div id="table-container">
-			<table
-				style="border-bottom: 1px solid black; border-top: 1px solid black">
+			<table style="border-bottom: 1px solid black; border-top: 1px solid black; width: 40%;">
 				<tr>
 					<th>현재가</th>
 					<td class="last-close-value"></td>
@@ -175,8 +171,7 @@
 					<td class="volume"></td>
 				</tr>
 			</table>
-			<table
-				style="border-bottom: 1px solid black; border-top: 1px solid black">
+			<table style="border-bottom: 1px solid black; border-top: 1px solid black; width: 40%;">
 				<tr>
 					<th>전일가</th>
 					<td class="prev-close"></td>
@@ -196,15 +191,13 @@
 			</table>
 			<input id="keyword" type="hidden" value="${inVO.stockName}" />
 		</div>
+		<div style="margin : 0px 90px; margin-top: 20px;">
+			<h2>뉴스 정보</h2>
+		</div>
 		<!--네이버 뉴스 api 정보를 불러오는 영역-->
 		<div id="news-container"></div>
 
-		<input type="hidden" name="Ticker" id="Ticker" value="" /> <input
-			type="hidden" name="StartDate" id="StartDate" value="2000-01-01" />
-
-		<input type="hidden" name="EndDate" id="EndDate" value="2023-07-27" />
-
-		<input type="hidden" value="데이터 요청" onclick="test()" />
+		<input type="hidden" name="Ticker" id="Ticker" value="" /> <input type="hidden" name="StartDate" id="StartDate" value="2000-01-01" /> <input type="hidden" name="EndDate" id="EndDate" value="2023-07-27" /> <input type="hidden" value="데이터 요청" onclick="test()" />
 	</div>
 </body>
 <script>

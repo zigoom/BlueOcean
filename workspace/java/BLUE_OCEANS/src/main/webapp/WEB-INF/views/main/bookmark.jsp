@@ -30,7 +30,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
 		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <style>
         	.container{
-        		width: 60%;
+        		width: 50%;
         	}
 
             .bookmark-container {
@@ -38,6 +38,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                 display: flex;
                 justify-content: space-between;
                 align-content: center;
+                height: 210px;
             }
 
             .text-container {
@@ -45,10 +46,11 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                 margin-bottom: 15px;	
                 margin-right: 50px;
                 width: 500px;
+                height: 250px;
             }
 
             .text-container p {
-                font-size: 20px;
+                font-size: 15px;
                 font-weight: bold;
             }
             .last-close-value{
@@ -58,7 +60,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
             	text-decoration: none;
             	cursor: pointer;
             	color: black;
-            	font-size: 25px;
+            	font-size: 17px;
             	font-weight: bold;
             }
             .fa-solid{
@@ -88,7 +90,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                                 <form method="get" action="/ehr/BLUEOCEAN/detail.do" class="detail-form">
                                     <!-- 주식종목코드 값 담아두는 인풋 -->
                                     <div class="bookmark-container">
-                                        <div id="chart-container${loop.index+1}" style="width: 500px;"></div>
+                                        <div id="chart-container${loop.index+1}" style="width: 500px; height: 250px;"></div>
                                         <div class="text-container">
                                             <a class="stock-name"></a>
                                             <input type="hidden" class="stock-code-input" name="stockCode" value="${item}">
@@ -277,7 +279,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
         const chartContainer = document.getElementById('chart-container' + i);
         console.log(chartContainer);
         const chart = LightweightCharts.createChart(chartContainer, {
-            width: 400, height: 300
+            width: 400, height: 200
         });
 
         // 데이터 설정

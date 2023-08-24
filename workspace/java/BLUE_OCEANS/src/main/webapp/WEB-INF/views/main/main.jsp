@@ -138,7 +138,7 @@
 </head>
 <body>	
   <div class="container">
-    <div class="row" >   
+    <div class="row" style="padding: 0px 90px 0px 90px;">   
 	    <c:choose>
 	        <c:when test="${empty sessionScope.user}">
 	        <!-- 로그인 후 이용해주세요 메시지 표시 -->

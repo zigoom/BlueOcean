@@ -34,21 +34,23 @@ public class AdminPageVO {
 	private int identifier;// 식별자
 	private String subject;// 제목
 	private String context;// 본문
-	private int rnum; // 이용약관 페이지 페이징 number (adminpageTermsofuse)
+	private String registrationDate;// 등록일
 	private String log1;
 	private String log2;
 	private String startDate;
 	private String endDate;
 	private String logDate;
-
+	
+	
 	public AdminPageVO() {
 	}
 
+	
 	public AdminPageVO(int userNo, String userId, String passwd, String userName, int birthday, String gender,
 			String keyword, String email, String phoneNo, String userLevel, int withdrawal, int agree, int otpUse,
 			List<Integer> termsOfUse, int seq, String title, String contents, String div, int readCnt, String regDt,
 			String regId, String modDt, String modId, int commentNo, int postNo, int replyDelete, int boardDelete,
-			int no, int identifier, String subject, String context, int rnum, String log1, String log2,
+			int no, int identifier, String subject, String context, String registrationDate, String log1, String log2,
 			String startDate, String endDate, String logDate) {
 		super();
 		this.userNo = userNo;
@@ -82,13 +84,24 @@ public class AdminPageVO {
 		this.identifier = identifier;
 		this.subject = subject;
 		this.context = context;
-		this.rnum = rnum;
+		this.registrationDate = registrationDate;
 		this.log1 = log1;
 		this.log2 = log2;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.logDate = logDate;
 	}
+
+
+	public String getRegistrationDate() {
+		return registrationDate;
+	}
+
+
+	public void setRegistrationDate(String registrationDate) {
+		this.registrationDate = registrationDate;
+	}
+
 
 	public int getUserNo() {
 		return userNo;
@@ -338,14 +351,6 @@ public class AdminPageVO {
 		this.context = context;
 	}
 
-	public int getRnum() {
-		return rnum;
-	}
-
-	public void setRnum(int rnum) {
-		this.rnum = rnum;
-	}
-
 	public String getLog1() {
 		return log1;
 	}
@@ -386,6 +391,7 @@ public class AdminPageVO {
 		this.logDate = logDate;
 	}
 
+
 	@Override
 	public String toString() {
 		return "AdminPageVO [userNo=" + userNo + ", userId=" + userId + ", passwd=" + passwd + ", userName=" + userName
@@ -395,8 +401,11 @@ public class AdminPageVO {
 				+ ", contents=" + contents + ", div=" + div + ", readCnt=" + readCnt + ", regDt=" + regDt + ", regId="
 				+ regId + ", modDt=" + modDt + ", modId=" + modId + ", commentNo=" + commentNo + ", postNo=" + postNo
 				+ ", replyDelete=" + replyDelete + ", boardDelete=" + boardDelete + ", no=" + no + ", identifier="
-				+ identifier + ", subject=" + subject + ", context=" + context + ", rnum=" + rnum + ", log1=" + log1
-				+ ", log2=" + log2 + ", startDate=" + startDate + ", endDate=" + endDate + ", logDate=" + logDate + "]";
+				+ identifier + ", subject=" + subject + ", context=" + context + ", registrationDate="
+				+ registrationDate + ", log1=" + log1 + ", log2=" + log2 + ", startDate=" + startDate + ", endDate="
+				+ endDate + ", logDate=" + logDate + "]";
 	}
+
+	
 
 }

@@ -6,7 +6,7 @@ import java.util.List;
 import com.pcwk.ehr.cmn.AdminPageVO;
 import com.pcwk.ehr.cmn.WorkDiv;
 
-public interface AdminTermsofuseDao extends WorkDiv<AdminPageVO>{
+public interface AdminTermsofuseDao{
 	
 	/**
 	 * 이용약관을 조회하는 메소드
@@ -14,6 +14,5 @@ public interface AdminTermsofuseDao extends WorkDiv<AdminPageVO>{
 	 * @return 등록된 이용약관 개수
 	 * @throws SQLException 데이터 베이스 관련 예외 발생 시
 	 */
-	@Override
-	public List<AdminPageVO> doRetrieve(AdminPageVO inVO) throws SQLException;
+	public List<AdminPageVO> doRetrieveTermsofuse(AdminPageVO inVO) throws SQLException;
 }

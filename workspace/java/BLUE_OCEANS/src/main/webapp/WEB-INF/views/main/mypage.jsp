@@ -46,7 +46,7 @@ pageEncoding="UTF-8"%>
               <form style="padding-left:100px; padding-right: 100px; ">
                 <input type="hidden" name="userNo" value="${userinfo.userNo}">
                 
-		            <div class="col-12 py-2">
+		            <div class="col-12 py-2" style="margin-top:40px; ">
 		              <label for="name" class="form-label"><strong>이름</strong></label>
 		              <input type="text" class="form-control" id="name" name="name" value="${userinfo.name}" readonly="readonly">
 		            </div>

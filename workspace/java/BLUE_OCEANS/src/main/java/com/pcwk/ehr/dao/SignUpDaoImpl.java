@@ -1,6 +1,7 @@
 package com.pcwk.ehr.dao;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,7 @@ import com.pcwk.ehr.domain.UserVO;
 import com.pcwk.ehr.service.SignUpService;
 
 @Repository
-public class SignUpDaoImpl implements SignUpDao, PcwkLogger {
+public class SignUpDaoImpl<TermsOfUseVO> implements SignUpDao, PcwkLogger {
 
 	private static final String NAMESPACE = "com.pcwk.ehr.signup";
 	private static final String DOT = ".";
@@ -122,5 +123,18 @@ public class SignUpDaoImpl implements SignUpDao, PcwkLogger {
 
 		return cnt;
 	}
+	
+	/*
+	 * @Override public List<TermsOfUseVO> getTotalTermsOf(List<Integer>
+	 * termOfUseNos) { String statement = NAMESPACE + ".TERMSOFUSE";
+	 * 
+	 * List<TermsOfUseVO> result = sqlSessionTemplate.selectList(statement,
+	 * termOfUseNos);
+	 * 
+	 * LOG.debug("┌─────────────────┐"); LOG.debug("│ DaoImpl구역                 │" +
+	 * statement); LOG.debug("└─────────────────┘");
+	 * 
+	 * return result; }
+	 */
 
 }

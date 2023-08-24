@@ -2,14 +2,20 @@ package com.pcwk.ehr.domain;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserVO {
+	
+	@Autowired
+	PasswordEncoder passwordEncoder;
 	 
 	private int userNo  ;//회원id
 	private String userId  ;//회원id
 	private String passwd  ;//비번
+	private String enCodeingPasswd  ;//암호화비번
 	private String name    ;//이름
 	private int birthday;	//생년월일
 	private String gender;	//성별
@@ -25,12 +31,14 @@ public class UserVO {
 	
 	public UserVO() {}
 
-	public UserVO(int userNo, String userId, String passwd, String name, int birthday, String gender, String keyword,
-			String email, String phone, int userLevel, int withdrawl) {
+	public UserVO(PasswordEncoder passwordEncoder, int userNo, String userId, String passwd, String enCodeingPasswd,
+			String name, int birthday, String gender, String keyword, String email, String phone, int userLevel,
+			int withdrawl, int agree, int otpUse, int otp, List<Integer> termsOfUse) {
 		super();
 		this.userNo = userNo;
 		this.userId = userId;
 		this.passwd = passwd;
+		this.enCodeingPasswd = enCodeingPasswd;
 		this.name = name;
 		this.birthday = birthday;
 		this.gender = gender;
@@ -39,7 +47,12 @@ public class UserVO {
 		this.phone = phone;
 		this.userLevel = userLevel;
 		this.withdrawl = withdrawl;
+		this.agree = agree;
+		this.otpUse = otpUse;
+		this.otp = otp;
+		this.termsOfUse = termsOfUse;
 	}
+
 
 	public int getUserNo() {
 		return userNo;
@@ -63,6 +76,14 @@ public class UserVO {
 
 	public void setPasswd(String passwd) {
 		this.passwd = passwd;
+	}
+
+	public String getEnCodeingPasswd() {
+		return enCodeingPasswd;
+	}
+
+	public void setEnCodeingPasswd(String enCodeingPasswd) {
+		this.enCodeingPasswd = enCodeingPasswd;
 	}
 
 	public String getName() {
@@ -163,18 +184,13 @@ public class UserVO {
 
 	@Override
 	public String toString() {
-		return "UserVO [userNo=" + userNo + ", userId=" + userId + ", passwd=" + passwd + ", name=" + name
-				+ ", birthday=" + birthday + ", gender=" + gender + ", keyword=" + keyword + ", email=" + email
-				+ ", phone=" + phone + ", userLevel=" + userLevel + ", withdrawl=" + withdrawl + ", agree=" + agree
-				+ ", otpUse=" + otpUse + ", otp=" + otp + ", termsOfUse=" + termsOfUse + "]";
+		return "UserVO [passwordEncoder=" + passwordEncoder + ", userNo=" + userNo + ", userId=" + userId + ", passwd="
+				+ passwd + ", enCodeingPasswd=" + enCodeingPasswd + ", name=" + name + ", birthday=" + birthday
+				+ ", gender=" + gender + ", keyword=" + keyword + ", email=" + email + ", phone=" + phone
+				+ ", userLevel=" + userLevel + ", withdrawl=" + withdrawl + ", agree=" + agree + ", otpUse=" + otpUse
+				+ ", otp=" + otp + ", termsOfUse=" + termsOfUse + "]";
 	}
-	
 
 	
 	
-
-	
-	
-		
-		
 }

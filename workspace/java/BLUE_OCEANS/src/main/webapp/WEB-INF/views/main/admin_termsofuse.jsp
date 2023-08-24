@@ -22,8 +22,67 @@
 		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 		<link rel="stylesheet" href="${CP}/resources/css/header.css" />
 		<link rel="stylesheet" href="${CP}/resources/css/footer.css" />
-		<title>Insert title here</title>
+		<title>약관관리</title>
 		<link rel="stylesheet" href="${CP}/resources/css/admin.css" />
+		<style>
+			#body-container {
+				max-width: 100%; /* 최대 너비 설정 */
+				max-height: 70vh; /* 최대 높이 설정 */
+				overflow-y: auto; /* 스크롤 활성화 */
+				overflow-x: hidden; /* 가로스크롤 비활성화 */
+			}
+			
+			#data-table {
+				margin-left: 50px;
+				table-layout: fixed;
+				width: 100%;
+			}
+			
+			/* 미디어 쿼리를 사용하여 화면 너비에 따라 스타일 변경 */
+			@media screen and (max-width: 768px) {
+				#data-table {
+					margin-left: 0; /* 작은 화면에서는 왼쪽 마진 제거 */
+				}
+			}
+			
+			#pagination {
+				margin-left: 120px;
+			}
+			
+			#button-container {
+				display: flex;
+				justify-content: center;
+				margin-left: 120px;
+				margin-top: 20px;
+				margin-bottom: 20px;
+				align-items: center;
+			}
+			.hstack {
+			    display: flex;
+			    flex-direction: row;
+			    align-items: center;
+			    align-self: stretch;
+			    justify-content: space-around;
+			
+			}
+			.gap-3 {
+			    gap: 0rem !important;
+			}
+			.mx-5 {
+			    margin-right: 1rem!important;
+			    margin-left: 35rem!important;
+			    t: ;
+			}
+			.contents {
+			    white-space: nowrap; /* 긴 문자열을 한 줄로 유지 */
+			    overflow: hidden; /* 넘치는 부분 숨김 */
+			    text-overflow: ellipsis; /* 넘치는 부분에 ... 추가 */
+			    max-width: 300px; /* 최대 너비 지정 */
+			}
+			#button-container>* {
+				margin-left: 7px;
+			}
+		</style>
 	</head>
 	
 	<body>
@@ -79,26 +138,17 @@
 				</div>
 			</div>
 		</div>
-		<script>
-		$(document).ready(function() {
-			$.ajax({
-	    		type: "GET",
-	    		url:"/ehr/BLUEOCEAN/admin/doRetrieveTermsofuse.do",
-	    		asyn:"true",
-	    		dataType:"html",
-	    		success:function(data){//통신 성공
-	        		console.log("success data:"+data);
-	        	},
-	        	error:function(data){//실패시 처리
-	        		console.log("error:"+data);
-	        	}
-	    	});
-		});
-			
-		
-			
-		</script>
-		
+		<div class="hstack gap-3 mx-5">
+			<div id="pagination" class="mx-auto">
+				<!-- 페이지 번호를 동적으로 생성할 영역 -->
+			</div>
+			<div id="button-container" style="margin-right: 50px">
+				<label>제목
+					<input type="text" class="search-title">
+				</label>
+				<button class="btn btn-primary search-title-btn">검색</button>
+			</div>
+		</div>
 	</body>
 	
 	<script src="${CP}/resources/js/header-main.js"></script>
@@ -120,5 +170,91 @@
 		adminHeaderBtn[4].addEventListener("click", function() {
 			window.location.href = "${CP}/BLUEOCEAN/admin/log.do";
 		})
+		
+		
+		let totalData = null;
+		const dataPerPage = 10;	// 페이지당 보여줄 데이터 
+		let currentPage = 1;	// 현재 페이지
+		
+		
+		// 이용약관을 불러오는 함수
+		function allLoad() {
+			$.ajax({
+				type : "POST",
+				url : "/ehr/BLUEOCEAN/admin/loadtermsofuse.do",
+				async : true,
+				dataType : "json",
+				data : {},
+				success : function(data) {
+					totalData = data;
+					updateTableWithData(data.slice(0, dataPerPage)); // 첫 페이지 데이터 표시
+					createPagination(data.length); 
+					console.log(data);
+				},
+				error : function(data) {
+					console.log("error:" + data);
+				}
+			});
+		}
+		
+		// 페이지 번호를 클릭했을 때 해당 페이지의 데이터를 표시하는 함수
+		function showDataForPage(page) {
+			currentPage = page;
+			const startIndex = (page - 1) * dataPerPage;
+			const endIndex = startIndex + dataPerPage;
+			updateTableWithData(totalData.slice(startIndex, endIndex));
+		}
+
+		// 데이터 테이블 업데이트 함수
+		function updateTableWithData(data) { // boardList로 수정
+			let tbody = $(".data-tbody");
+			tbody.empty();
+			data.forEach(function(user, i) {
+
+					let tr = $("<tr class='data-tr'></tr>");
+					tr.append("<td class='no'>" + data[i].no + "</td>");
+					tr.append("<td class='subject'>" + data[i].contents + "</td>");
+					tr.append("<td class='context'>" + data[i].context + "</td>");
+					tr.append("<td class='registrationDate'>" + data[i].registrationDate + "</td>");
+					
+
+					tbody.append(tr);
+			});
+		}
+
+		// 페이지 번호를 동적으로 생성하는 함수
+		function createPagination(totalDataCount) {
+			const totalPages = Math.ceil(totalDataCount / dataPerPage);
+			const pagination = document.getElementById("pagination");
+			pagination.innerHTML = "";
+
+			for (let i = 1; i <= totalPages; i++) {
+				const button = document.createElement("button");
+				button.textContent = i;
+				button.type = "button";
+				button.classList.add("page_nation", "btn", "btn-primary"); // 클래스 추가
+				button.style.margin = "5px";
+				button.addEventListener("click", function() {
+					showDataForPage(i);
+				});
+
+				pagination.appendChild(button);
+			}
+
+			// 처음 페이지 설정
+			showDataForPage(1);
+		}
+		
+		// 모든 요소가 로드된 후에 실행
+		$(document).ready(function() {
+			// allLoad 함수 실행
+			allLoad();
+
+			// 전체 버튼 클릭 시 다시 데이터 로드
+			$("#all-load").on("click", function() {
+				allLoad();
+			});
+		});
+		
 	</script>
 </html>

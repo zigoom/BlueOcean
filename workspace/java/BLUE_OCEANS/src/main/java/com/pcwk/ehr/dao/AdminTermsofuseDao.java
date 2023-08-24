@@ -9,10 +9,11 @@ import com.pcwk.ehr.cmn.WorkDiv;
 public interface AdminTermsofuseDao{
 	
 	/**
-	 * 이용약관을 조회하는 메소드
-	 * @param inVO
-	 * @return 등록된 이용약관 개수
-	 * @throws SQLException 데이터 베이스 관련 예외 발생 시
+	 * 이용약관 목록 불러오는 메소드
+	 * @return
+	 * @throws SQLException
 	 */
-	public List<AdminPageVO> doRetrieveTermsofuse(AdminPageVO inVO) throws SQLException;
+	List<AdminPageVO> loadtermsofuse() throws SQLException;
+	
+	
 }

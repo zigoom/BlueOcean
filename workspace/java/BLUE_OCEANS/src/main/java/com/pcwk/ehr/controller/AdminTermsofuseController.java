@@ -17,61 +17,36 @@ import com.pcwk.ehr.cmn.PcwkLogger;
 import com.pcwk.ehr.service.AdminTermsofuseService;
 
 @Controller("AdminTermsofuseController")
-@RequestMapping("BLUEOCEAN")
+@RequestMapping("BLUEOCEAN/admin")
 public class AdminTermsofuseController implements PcwkLogger{
 	
 	@Autowired
 	AdminTermsofuseService adminTermsofuseService;
 	
-	@RequestMapping(value = "/admin/termsofuse.do", method = RequestMethod.GET)
-	public String adminTersofuseView(AdminPageVO inVO, Model model, HttpSession session) throws SQLException{
+	@RequestMapping(value = "/termsofuse.do", method = RequestMethod.GET)
+	public String adminTermsofuseView(Model model) throws SQLException{
 		LOG.debug("┌──────────────────────┐");
-        LOG.debug("│mainTersofuse View    │");
-        LOG.debug("│vo                    │" + inVO);
+        LOG.debug("│adminTermsofuseView   │");
         LOG.debug("└──────────────────────┘");
         
-        
-        // page 번호
-  		//if(null != inVO && inVO.getPageNo()==0) {
-  		//	inVO.setPageNo(1);
-  		//}
+  		List<AdminPageVO> termsofuseList = adminTermsofuseService.loadtermsofuse();
+  		model.addAttribute("termsofuseList", termsofuseList); 
   		
-  		//page 사이즈
-  		//if(null != inVO && inVO.getPageSize()==0) {
-  		//	inVO.setPageSize(10);
-  		//}
-  		
-  		//searchWord
-  		//if(null != inVO && null == inVO.getSearchWord()) {
-  		//	inVO.setSearchWord("");
-  		//}
-
-  		//List<AdminPageVO> termsofuseList = adminTermsofuseService.doRetrieve(inVO);
-  		
-  		//model.addAttribute("termsofuseList", termsofuseList); 
-  		  		//	System.out.println("totalCnt:"+totalCnt);
-  		//}
-  			
-  		//model.addAttribute("totalCnt", totalCnt);
-		
-
         return "main/admin_termsofuse";
 		
 	}
 	
-	@RequestMapping(value = "/admin/doRetrieveTermsofuse.do", method = RequestMethod.GET)
+	
+	@RequestMapping(value = "/loadtermsofuse.do", method = RequestMethod.POST)
 	@ResponseBody
-	public List<AdminPageVO> doRetrieveTermsofuse(AdminPageVO inVO, Model model) throws SQLException{
-		List<AdminPageVO> outVO = this.adminTermsofuseService.doRetrieveTermsofuse(inVO);
-		
-		LOG.debug("┌────────────────────────┐");
-        LOG.debug("│doRetrieve Controller   │");
-        LOG.debug("│vo                      │" + inVO);
-        LOG.debug("└────────────────────────┘");
+	public List<AdminPageVO> loadTermsofuse() throws SQLException{
+		LOG.debug("┌──────────────────────┐");
+        LOG.debug("│loadTermsofuse        │");
+        LOG.debug("└──────────────────────┘");
         
-        model.addAttribute(outVO);
-        
-		return outVO;
+  		List<AdminPageVO> termsofuseList = adminTermsofuseService.loadtermsofuse();
+  		
+        return termsofuseList;
 	}
 	
 

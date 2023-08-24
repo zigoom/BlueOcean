@@ -30,17 +30,39 @@ public class AdminTermsofuseController implements PcwkLogger{
         LOG.debug("│vo                    │" + inVO);
         LOG.debug("└──────────────────────┘");
         
-        //List<AdminPageVO> termsofuseList = adminTermsofuseService.doRetrieve(inVO);
-        //model.addAttribute("termsofuseList", termsofuseList);
         
+        // page 번호
+  		//if(null != inVO && inVO.getPageNo()==0) {
+  		//	inVO.setPageNo(1);
+  		//}
+  		
+  		//page 사이즈
+  		//if(null != inVO && inVO.getPageSize()==0) {
+  		//	inVO.setPageSize(10);
+  		//}
+  		
+  		//searchWord
+  		//if(null != inVO && null == inVO.getSearchWord()) {
+  		//	inVO.setSearchWord("");
+  		//}
+
+  		//List<AdminPageVO> termsofuseList = adminTermsofuseService.doRetrieve(inVO);
+  		
+  		//model.addAttribute("termsofuseList", termsofuseList); 
+  		  		//	System.out.println("totalCnt:"+totalCnt);
+  		//}
+  			
+  		//model.addAttribute("totalCnt", totalCnt);
+		
+
         return "main/admin_termsofuse";
 		
 	}
 	
-	@RequestMapping(value = "/admin/testss.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/doRetrieveTermsofuse.do", method = RequestMethod.GET)
 	@ResponseBody
-	public List<AdminPageVO> doRetrieve(AdminPageVO inVO, Model model) throws SQLException{
-		List<AdminPageVO> outVO = this.adminTermsofuseService.doRetrieve(inVO);
+	public List<AdminPageVO> doRetrieveTermsofuse(AdminPageVO inVO, Model model) throws SQLException{
+		List<AdminPageVO> outVO = this.adminTermsofuseService.doRetrieveTermsofuse(inVO);
 		
 		LOG.debug("┌────────────────────────┐");
         LOG.debug("│doRetrieve Controller   │");

@@ -14,10 +14,6 @@
 			rel="stylesheet"
 			integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
 			crossorigin="anonymous" />
-		<script
-			src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-			integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2th55rYXK/7HAuoJl+0I4"
-			crossorigin="anonymous"></script>
 		<script src="https://code.jquery.com/jquery-3.7.0.js"
 			integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
 			crossorigin="anonymous"></script>
@@ -26,8 +22,8 @@
 		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 		<link rel="stylesheet" href="${CP}/resources/css/header.css" />
 		<link rel="stylesheet" href="${CP}/resources/css/footer.css" />
-		<title>약관관리 페이지</title>
-		<link rel="stylesheet" href="${CP}/resources/css/admin.css"/>
+		<title>Insert title here</title>
+		<link rel="stylesheet" href="${CP}/resources/css/admin.css" />
 	</head>
 	
 	<body>
@@ -63,24 +59,19 @@
 							<div id="radio-container" style="margin: 30px 100px;">
 							</div>
 							<div id="body-container">
-	
+								<h2> 약관 목록 조회 </h2>
 								<table style="margin-left: 50px;table-layout: fixed; width: 100%">
-									<tr>
-										<th scope="col">이용약관명</th>
-										<th scope="col">이용약관내용</th>
-										<th scope="col">등록일자</th>
-									</tr>
-									<tr>
-										<td>A-팀 프로젝트</td>
-										<td>이약관내용ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ333333333333333333333333333333333333333333333333333333333</td>
-										<td>2023-08-18</td>
-									</tr>
-	
-									<tr>
-										<td>B-팀 프로젝트</td>
-										<td>이약관내용ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</td>
-										<td>2023-08-18</td>
-									</tr>
+									<thead>
+										<tr>
+											<th scope="col" style="text-align: center;"> 순번 </th>
+											<th scope="col" style="text-align: center;"> 이용약관 이름 </th>
+											<th scope="col" style="text-align: center;"> 이용약관 내용 </th>
+											<th scope="col" style="text-align: center;"> 이용약관 등록일자 </th>
+										</tr>
+									</thead>
+									<tbody class="data-tbody">
+										
+									</tbody>
 								</table>
 							</div>
 						</form>
@@ -89,10 +80,27 @@
 			</div>
 		</div>
 		<script>
+		$(document).ready(function() {
+			$.ajax({
+	    		type: "GET",
+	    		url:"/ehr/BLUEOCEAN/admin/doRetrieveTermsofuse.do",
+	    		asyn:"true",
+	    		dataType:"html",
+	    		success:function(data){//통신 성공
+	        		console.log("success data:"+data);
+	        	},
+	        	error:function(data){//실패시 처리
+	        		console.log("error:"+data);
+	        	}
+	    	});
+		});
+			
+		
 			
 		</script>
 		
 	</body>
+	
 	<script src="${CP}/resources/js/header-main.js"></script>
 	<script src="${CP}/resources/js/util.js"></script>
 	<script>

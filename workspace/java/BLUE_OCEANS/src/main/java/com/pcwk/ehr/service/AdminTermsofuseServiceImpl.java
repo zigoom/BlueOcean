@@ -16,32 +16,12 @@ public class AdminTermsofuseServiceImpl implements AdminTermsofuseService, PcwkL
 	@Autowired
 	AdminTermsofuseDao adminTermsofuseDao;
 	
-	@Override
-	public int doSave(AdminPageVO inVO) throws SQLException {
-		return 0;
-	}
-
-	@Override
-	public int doDelete(AdminPageVO inVO) throws SQLException {
-		return 0;
-	}
-
-	@Override
-	public int doUpdate(AdminPageVO inVO) throws SQLException {
-		return 0;
-	}
-
-	@Override
-	public AdminPageVO doSelectOne(AdminPageVO inVO) throws SQLException {
-		return null;
-	}
-	
 	/**
 	 * 이용약관 조회
 	 */
 	@Override
-	public List<AdminPageVO> doRetrieve(AdminPageVO inVO) throws SQLException {
-		return adminTermsofuseDao.doRetrieve(inVO);
+	public List<AdminPageVO> doRetrieveTermsofuse(AdminPageVO inVO) throws SQLException {
+		return adminTermsofuseDao.doRetrieveTermsofuse(inVO);
 	}
 	
 	

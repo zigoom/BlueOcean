@@ -208,7 +208,64 @@
                 </div>
 	          </div>
 	        </div>   
-	        <script>        
+		        <script>   
+		        function formatDateToYYYYMMDD2(date) {
+		            const year = date.getFullYear();
+		            const month = String(date.getMonth() + 1).padStart(2, '0');
+		            const day = String(date.getDate()).padStart(2, '0');
+		            return year+"-"+month+"-"+day;
+		        }
+		        
+		        //공휴일 정보 가져오기 함수
+		        function getHolidays2(year, countryCode, callback) {
+		          $.ajax({
+		            type: 'GET',
+		            url: "https://date.nager.at/Api/v2/PublicHolidays/"+year+"/"+countryCode,
+		            success: function(response) {
+		              callback(response);
+		            },
+		            error: function(xhr, status, error) {
+		              console.error(error);
+		              callback([]);
+		            }
+		          });
+		        }
+		        // 주말 여부 확인 함수 (0: 일요일, 6: 토요일)
+		        function isWeekend2(day) {
+		          return day === 0 || day === 6;
+		        }
+		        // 오늘부터 다음 평일 날짜 탐색 함수
+		        function findNextValidday2(holidays, currentDate) {
+		            const oneDay = 24 * 60 * 60 * 1000; // 1일의 밀리초
+		            let nextDate = new Date(currentDate);
+
+		            while (true) {
+		                nextDate.setTime(nextDate.getTime() + oneDay); // 하루를 더함
+		                const nextDay = nextDate.getDay();
+
+		                if (!holidays.some(holiday => holiday.date === nextDate.toISOString()) && !isWeekend2(nextDay)) {
+		                    return nextDate;
+		                }
+		            }
+		        }
+		        //오늘이 공휴일이나 주말이 아니라면 오늘 날짜 반환, 아니면 다음 날짜 반환
+		        function getValidDate2(holidays, currentDate) {
+		          const currentDay = currentDate.getDay();
+		          
+		        
+		          if (!holidays.some(holiday => holiday.date === currentDate.toISOString()) && !isWeekend2(currentDay)) {
+		            return currentDate;
+		          } else {
+		            let nextValidDate = findNextValidday2(holidays, currentDate);
+		        
+		            // 다음 날자도 휴일이나 주말이면 다시 그 다음 찾기
+		            while (holidays.some(holiday => holiday.date === nextValidDate.toISOString()) || isWeekend(nextValidDate.getDay())) {
+		            	nextValidDate = findNextValidday2(holidays, new Date(nextValidDate.getTime() + 1));
+		            }
+		        
+		            return nextValidDate;
+		          }
+		        }
 		        $(document).ready(function() {
 		            let ai_chart = [];
 		            for (var i = 0; i < 5; i++) {
@@ -236,7 +293,114 @@
 		                    // 받아온 데이터를 가공하여 시간과 값을 분리합니다.
 		                    /* console.log(response); */
 		                    
-		                    response.datas.forEach((stockData, index) => {
+					        const year = new Date().getFullYear(); // 현재 연도
+				            const countryCode = 'KR'; // 국가 코드 (한국: KR)
+				            
+				            // 공휴일 정보 가져오기
+				            getHolidays2(year, countryCode, function (holidays) {
+				                response.datas.forEach((stockData, index) => {
+				                    const chart = ai_chart[(index + 1)]; // 해당 인덱스의 차트 가져오기
+				
+				                    const prices = [];
+				                    const dates = Object.keys(stockData);
+				
+				                    let firstDate = null;
+				                    let lastDate = null;
+				                    let beforeLastDate = null;
+				
+				                    beforeLastValue = null;
+				                    lastValue = null;
+				
+				                    dates.forEach((date, dateIndex) => {
+				                        if (!firstDate) {
+				                            firstDate = date;
+				                        }
+				                        beforeLastDate = lastDate;
+				                        lastDate = date;
+				
+				                        const value = stockData[date];
+				                        beforeLastValue = lastValue;
+				                        lastValue = value;
+				                        
+				                        if (dateIndex > 0 && dateIndex === dates.length - 1) {
+                                            const currentDate = new Date(lastDate);
+				                            const validDate = getValidDate2(holidays, currentDate);
+				                            let formattedDate = formatDateToYYYYMMDD(validDate);
+				
+				                            /* while (isWeekend2(currentDate.getDay()) || holidays.some(holiday => holiday.date === currentDate.toISOString())) {
+				                                currentDate.setTime(currentDate.getTime() + (24 * 60 * 60 * 1000)); // 하루를 더함
+				                            } */
+				
+				                            lastDate = formattedDate;
+				                        }
+				
+				                        prices.push({
+				                            time: lastDate,
+				                            value: stockData[date],
+				                        });
+				                    });
+
+					                var ai_chart1_5Element = document.getElementById("ai_chart"+(index+1)+"-5");
+	                                ai_chart1_5Element.innerHTML = "Last Training Date : " + beforeLastDate;
+	    
+	                                var ai_chart1_1Element = document.getElementById("ai_chart"+(index+1)+"-1");
+	                                ai_chart1_1Element.innerHTML = (response.names[index] + "(" + response.tickers[index] + ")");
+	    
+	                                var ai_chart1_2Element = document.getElementById("ai_chart"+(index+1)+"-2");
+	                                ai_chart1_2Element.innerHTML = formattedDate(beforeLastDate) +" 가격: "+ String(beforeLastValue);
+	                                
+	                                var ai_chart1_3Element = document.getElementById("ai_chart"+(index+1)+"-3");
+	                                                            
+	                                // 그래프 시리즈 생성
+	                                const series = chart.addLineSeries();
+	    
+	                                // 시리즈 데이터 설정
+	                                series.setData(prices);
+	                                
+	                                if (beforeLastValue > lastValue) {
+	                                    series.applyOptions({
+	                                        color: 'blue',
+	                                    }); 
+	                                    ai_chart1_3Element.innerHTML = formattedDate(lastDate) + " 시작가 하락 예상";
+	                                    ai_chart1_3Element.style.color = 'blue';
+	                                } else if (beforeLastValue < lastValue) {
+	                                    series.applyOptions({
+	                                        color: 'red',
+	                                    }); 
+	                                    ai_chart1_3Element.innerHTML = formattedDate(lastDate) + " 시작가 상승 예상";
+	                                    ai_chart1_3Element.style.color = 'red';
+	                                } else{
+	                                    series.applyOptions({
+	                                        color: 'black',
+	                                    }); 
+	                                    ai_chart1_3Element.innerHTML = formattedDate(lastDate) + " 시작가 동일 예상";
+	                                    ai_chart1_3Element.style.color = 'black';
+	                                }
+	    
+	                                // 시리즈 이름 설정
+	                                series.applyOptions({
+	                                    title: response.names[index],
+	                                });
+	                                
+	                                
+	                                
+	                                $('#ai_chart'+(index+1)+'-6').click(function() {
+	                                    var name = response.names[index]; // 해당 인덱스의 이름 가져오기
+	                                    var ticker = response.tickers[index]; // 해당 인덱스의 티커 가져오기
+	                                    
+	                                    
+	                                    var newURL = '/ehr/BLUEOCEAN/detail.do?stockName='+encodeURIComponent(name)+'&stockCode='+encodeURIComponent(ticker);
+	                                    //var newURL = '/ehr/BLUEOCEAN/detail.do?stockName='+name+'&stockCode='+ticker; //' + encodeURIComponent(name) + '&ticker=' + encodeURIComponent(ticker);
+	                                    
+	                                    // 새로운 페이지로 이동
+	                                    window.location.href = newURL;
+	                                });
+
+					            });
+					        });
+					        
+					        
+		                    /* response.datas.forEach((stockData, index) => {
 		                        const chart = ai_chart[(index + 1)];  // 해당 인덱스의 차트 가져오기
 	
 		                        const prices = [];
@@ -249,30 +413,40 @@
 		                        beforeLastValue = null;
 		                        lastValue = null;
 		                        
-		                        dates.forEach(date => {
+		                        dates.forEach((date, index) => {
 		                        	if (!firstDate) {
 		                                firstDate = date;
 		                            }
+
+                                    beforeLastDate = lastDate; 
+                                    lastDate = date;
+		                        	
+		                        	if (index === dates.length - 1) { // 마지막 인덱스인 경우에만 주말 처리
+		                                const currentDate = new Date(lastDate);
+		                                if (currentDate.getDay() === 5) { // 금요일인 경우
+		                                    currentDate.setDate(currentDate.getDate() + 3); // 다음주 월요일로 변경
+		                                    lastDate = currentDate.toISOString().split('T')[0]; // ISO 형식에서 날짜 부분만 추출
+		                                } else if (currentDate.getDay() === 6) { // 토요일인 경우
+		                                    currentDate.setDate(currentDate.getDate() + 2); // 다음주 월요일로 변경
+		                                    lastDate = currentDate.toISOString().split('T')[0]; // ISO 형식에서 날짜 부분만 추출
+		                                }
+		                            }
+		                        	
+		                        	
 		                        	beforeLastDate = lastDate; 
 		                            lastDate = date;
-		                        	
-		                        	
+		                        			                        	
 		                            const value = stockData[date];
 		                            beforeLastValue = lastValue; // 현재 값이 마지막 값이 되기 전에 이전 값을 저장
 		                            lastValue = value; 
 	
 		                            
 		                            prices.push({
-		                                time: date,
+		                                time: lastDate,
 		                                value: stockData[date]
 		                            });
 		                        });	                        
-	
-		                        // 데이터의 시작일과 마지막 전 날짜 사용 예시
-		                        //console.log("First Date:", firstDate);
-		                        //console.log("Last Date (before last date):", lastDate);
-		                        //document.getElementById('ai_chart'+(index+1)+'-5').innerHTML = "Start Date: " + firstDate + "<br>Last Date : " + lastDate;
-	                            	                        
+		                        
 	                            var ai_chart1_5Element = document.getElementById("ai_chart"+(index+1)+"-5");
 	                            ai_chart1_5Element.innerHTML = "Last Training Date : " + beforeLastDate;
 	
@@ -328,7 +502,7 @@
 		                            // 새로운 페이지로 이동
 		                            window.location.href = newURL;
 		                        });
-		                    });
+		                    }); */
 		                },
 		                error: function(xhr, status, error) {
 		                    console.error(error);
@@ -712,10 +886,10 @@
 		        chart1_4Element.textContent = "( last update: "+date +" "+lastTime+" )";
 		
 		        
-		        // 받아온 데이터 중에서 15:30 이후의 데이터를 제거합니다.
+		        // 받아온 데이터 중에서 15:50 이후의 데이터를 제거합니다.
 		        const cutoffTime = new Date(requestData.date);
 		        cutoffTime.setHours(15);
-		        cutoffTime.setMinutes(30);
+		        cutoffTime.setMinutes(50);
 		    
 		        const filteredTimeSeriesData = timeSeriesData.filter(entry => entry.time <= cutoffTime);
 		

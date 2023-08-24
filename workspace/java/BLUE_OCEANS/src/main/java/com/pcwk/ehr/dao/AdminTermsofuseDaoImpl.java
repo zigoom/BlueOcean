@@ -13,7 +13,7 @@ import com.pcwk.ehr.cmn.PcwkLogger;
 @Repository("AdminTermsofuseDao")
 public class AdminTermsofuseDaoImpl implements AdminTermsofuseDao, PcwkLogger{
 	
-	private static final String NAMESPACE="com.pcwk.ehr.adminTermsofuse";
+	private static final String NAMESPACE="com.pcwk.ehr.AdminTermsofuseDao";
 	final String DOT = ".";
 	
 	@Autowired
@@ -21,35 +21,12 @@ public class AdminTermsofuseDaoImpl implements AdminTermsofuseDao, PcwkLogger{
 	
 	public AdminTermsofuseDaoImpl() {}
 	
-	@Override
-	public int doSave(AdminPageVO inVO) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int doDelete(AdminPageVO inVO) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int doUpdate(AdminPageVO inVO) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public AdminPageVO doSelectOne(AdminPageVO inVO) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 	@Override
-	public List<AdminPageVO> doRetrieve(AdminPageVO inVO) throws SQLException {
+	public List<AdminPageVO> doRetrieveTermsofuse(AdminPageVO inVO) throws SQLException {
 		List<AdminPageVO> flag;
 		
-		String statement = NAMESPACE + DOT + "doRetrieve";
+		String statement = NAMESPACE + DOT + "doRetrieveTermsofuse";
 		
 		// 로그 출력
         LOG.debug("┌──────────────────────────┐");
@@ -59,7 +36,7 @@ public class AdminTermsofuseDaoImpl implements AdminTermsofuseDao, PcwkLogger{
         LOG.debug("│ 2. param=\n              │" + inVO.toString());
         LOG.debug("└──────────────────────────┘");
         
-        flag = this.sqlSessionTemplate.selectOne(statement,inVO);
+        flag = this.sqlSessionTemplate.selectList(statement, inVO);
         
         LOG.debug("┌──────────────────────────┐");
         LOG.debug("│ 3. Check flag            │" + flag);

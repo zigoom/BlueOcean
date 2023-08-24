@@ -36,7 +36,7 @@
 }
 
 #pagination {
-	margin-left: 120px;
+	margin-left: 170px;
 }
 
 #button-container {
@@ -57,7 +57,8 @@
 	flex-direction: row;
 	align-items: center;
 	align-self: stretch;
-	justify-content: space-around;
+	justify-content: center;
+	margin-left : 150px;
 }
 
 .gap-3 {
@@ -95,6 +96,10 @@
 					<h2>BLUEOCEANS</h2>
 				</div>
 				<div id="admin-container" style="background-color: white; width: 80%; height: 77vh;">
+					<div id="radio-container" style="margin: 30px 100px;">
+						<label>발생일자<input type="date" class="date-input"></label> <label>~<input type="date" class="date-input"></label> <label>아이디<input type="text" class="search-id"></label> <input type="button" class="btn btn-primary search-id-btn" value="조회">
+					</div>
+
 					<div id="body-container">
 
 						<table class="table table-hover" style="table-layout: fixed; width: 98.5%; margin-left: 10px;" id="data-table">
@@ -116,15 +121,11 @@
 				</div>
 
 			</div>
-			<div class="hstack gap-3 mx-5">
+			<div class="hstack">
 				<div id="pagination" class="mx-auto">
 					<!-- 페이지 번호를 동적으로 생성할 영역 -->
 				</div>
-				<div id="button-container" style="margin-right: 50px">
-					<label>아이디 <input type="text" class="search-id">
-					</label>
-					<button class="btn btn-primary search-id-btn">검색</button>
-				</div>
+
 			</div>
 		</div>
 	</div>
@@ -228,30 +229,85 @@
 		});
 	}
 
-	$(".search-id-btn").on("click", function() {
-		$.ajax({
-			type : "POST",
-			url : "/ehr/BLUEOCEAN/admin/loadLogFromId.do",
-			async : true,
-			dataType : "json",
-			data : {
-				userId : $(".search-id").val()
-			},
-			success : function(data) {
-				totalData = data;
-				updateTableWithData(data.slice(0, dataPerPage)); // 첫 페이지 데이터 표시
-				createPagination(data.length);
-				radioGroup = document.getElementsByName("check");
-				for (let i = 0; i < radioGroup.length; i++) {
-					radioGroup[i].checked = false;
-				}
+	$(".search-id-btn")
+			.on(
+					"click",
+					function() {
+						let dateInput = document
+								.querySelectorAll(".date-input");
+						if ((dateInput[0].value == '')
+								&& (dateInput[1].value == '')) {
+							$.ajax({
+								type : "POST",
+								url : "/ehr/BLUEOCEAN/admin/loadLogFromId.do",
+								async : true,
+								dataType : "json",
+								data : {
+									userId : $(".search-id").val()
+								},
+								success : function(data) {
+									totalData = data;
+									updateTableWithData(data.slice(0,
+											dataPerPage)); // 첫 페이지 데이터 표시
+									createPagination(data.length);
 
-			},
-			error : function(data) {
-				console.log("error:" + data);
-			}
+								},
+								error : function(data) {
+									console.log("error:" + data);
+								}
+							})
+						} else if ((dateInput[0].value == '')
+								|| (dateInput[1].value == '')) {
+							alert("발생일자를 모두 입력해주세요.");
+						} else if (!((dateInput[0].value == '') && (dateInput[1].value == ''))
+								&& ($(".search-id").val() == '')) {
+							$.ajax({
+								type : "POST",
+								url : "/ehr/BLUEOCEAN/admin/loadLogOption.do",
+								async : true,
+								dataType : "json",
+								data : {
+									startDate : dateInput[0].value,
+									endDate : dateInput[1].value
+								},
+								success : function(data) {
+									totalData = data;
+									updateTableWithData(data.slice(0,
+											dataPerPage)); // 첫 페이지 데이터 표시
+									createPagination(data.length);
 
-		})
-	})
+								},
+								error : function(data) {
+									console.log("error:" + data);
+								}
+
+							})
+						} else {
+							$
+									.ajax({
+										type : "POST",
+										url : "/ehr/BLUEOCEAN/admin/loadLogOptionFromId.do",
+										async : true,
+										dataType : "json",
+										data : {
+											startDate : dateInput[0].value,
+											endDate : dateInput[1].value,
+											userId : $(".search-id").val()
+										},
+										success : function(data) {
+											totalData = data;
+											updateTableWithData(data.slice(0,
+													dataPerPage)); // 첫 페이지 데이터 표시
+											createPagination(data.length);
+
+										},
+										error : function(data) {
+											console.log("error:" + data);
+										}
+
+									})
+						}
+
+					})
 </script>
 </html>

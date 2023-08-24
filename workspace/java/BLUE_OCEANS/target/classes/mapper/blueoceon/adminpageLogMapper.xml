@@ -64,6 +64,16 @@
           ORDER BY log_no DESC
     ]]>
 	</select>
+	<select id="loadLogOptionFromId" resultMap="adminPageMap"
+		resultType="com.pcwk.ehr.cmn.AdminPageVO">
+		<![CDATA[
+        SELECT * FROM USER_LOG
+        WHERE log_date >= #{startDate, jdbcType=DATE}
+          AND log_date <= #{endDate, jdbcType=DATE}
+          AND user_id LIKE  '%' ||  #{userId} || '%'
+          ORDER BY log_no DESC
+    ]]>
+	</select>
 	<select id="loadLogCount" resultType="java.lang.Integer">
 		SELECT COUNT(*) FROM
 		USER_LOG

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pcwk.ehr.dao.ReplyDao">
+
+  <resultMap id="ReplyMap" type="com.pcwk.ehr.domain.ReplyVO">
+  		<result column="COMMENT_NO"           property="commentNo"       />
+        <result column="USER_ID"       		  property="userId"        	 />
+        <result column="POST_NO"      	      property="postNo"          />
+        <result column="CONTENTS"       	  property="contents"     	 />
+        <result column="REG_DT"      		  property="regDt"           />
+        <result column="MOD_DT"       		  property="modDt"           />
+        <result column="REPLY_DELETE"         property="replyDelete"     />
+  </resultMap>
+
+
+<!-- 댓글 저장 기능 -->
+<insert id="doSave" parameterType="ReplyVO">
+    INSERT INTO reply (
+    	comment_no,
+		user_id,
+        post_no,
+        contents,
+        reg_dt,
+        mod_dt,
+        reply_delete
+    ) VALUES (
+    	reply_seq.NEXTVAL,
+		#{userId},
+        #{postNo},
+        #{contents},
+        SYSDATE,                   
+        SYSDATE,
+        0
+    )
+</insert>   
+
+
+
+
+
+<!-- 댓글 출력 화면 조회 -->
+<select id="doRetrieve" parameterType="ReplyVO"  resultMap="ReplyMap">
+SELECT  comment_no,
+		user_id,
+		contents,
+		mod_dt
+    FROM reply
+    WHERE post_no = #{postNo}
+    AND reply_delete = 0
+    ORDER BY mod_dt DESC
+</select>  
+
+
+
+
+
+<!--  댓글 삭제 기능 -->
+<update id="doDelete" parameterType="ReplyVO">
+    UPDATE reply
+    SET reply_delete = 1
+    WHERE comment_no = #{commentNo}
+</update>
+
+
+
+
+
+<!-- 댓글 수정 --> 
+<update id="doUpdate" parameterType="ReplyVO">
+    UPDATE reply
+    SET contents = #{contents},
+        reg_dt   = SYSDATE
+    WHERE comment_no = #{commentNo}
+</update> 
+
+
+</mapper>   

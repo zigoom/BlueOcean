@@ -19,7 +19,10 @@ import com.pcwk.ehr.domain.CodeVO;
 import com.pcwk.ehr.domain.BoardVO;
 import com.pcwk.ehr.service.BoardService;
 import com.pcwk.ehr.service.CodeService;
+import com.pcwk.ehr.service.ReplyService;
 import com.pcwk.ehr.domain.UserVO;
+import com.pcwk.ehr.domain.ReplyVO;
+import java.util.List;
 
 @Controller("BoardController")
 @RequestMapping("BLUEOCEAN")
@@ -31,6 +34,8 @@ public class BoardController implements PcwkLogger {
     @Autowired
     CodeService codeService;
 
+    @Autowired
+    ReplyService replyService;
     
     public BoardController() {}
     
@@ -39,20 +44,133 @@ public class BoardController implements PcwkLogger {
     
     
     // 댓글 등록 컨트롤러
+    @RequestMapping(value = "/doReplySave.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+	public String doSave(ReplyVO inVO, HttpSession session)throws SQLException{
+		
+		String jsonString = "";
+		
+		System.out.println("doReplySave 컨트롤러");
+		
+		String  userId = (String) session.getAttribute("user");
+		
+		
+		System.out.println("userId : "+userId);
+		
+		inVO.setUserId(userId);
+		
+		LOG.debug("=================");
+		LOG.debug("== doSave ==");
+		LOG.debug("== inVO         =="+inVO);
+		LOG.debug("=================");
+		
+		//내용 : 10
+		if(null != inVO && inVO.getContents().equals("")) {
+			return StringUtil.validMessageToJson("10", "내용을 입력하세요");
+		}
+		
+		//서비스 호출
+		int flag = this.replyService.doSave(inVO);
+				
+		String message = "";
+		if(1==flag) { //등록 성공
+			message = inVO.getContents()+"등록 성공";
+			
+		}else { //등록실패
+			message = inVO.getContents()+"등록 실패!!!ㅠㅠ";
+		}
+		
+		jsonString = StringUtil.validMessageToJson(flag+"", message);
+		
+		LOG.debug("|jsonString|"+jsonString);
+		
+		return jsonString;
+		
+	}
+		
     
     
+
+
+
+
     
+    // 댓글 삭제 버튼 컨트롤러
+	@RequestMapping(value = "/doReplyDelete.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String doDelete(ReplyVO inVO)throws SQLException{
+		String jsonString = "";
+		
+		LOG.debug("=================");
+		LOG.debug("== doReplyDelete ==");
+		LOG.debug("== inVO 의 값은       =="+inVO);
+		LOG.debug("=================");
+		
+		//ReplyVO outVO = replyService.doSelectOne(inVO);
+		int flag = replyService.doDelete(inVO);
+		
+		String message = "";
+		
+		if(1 == flag) { //삭제 성공
+		message = inVO.getPostNo()+"삭제 성공";
+		}else {       //삭제 실패
+	    message = inVO.getPostNo()+"삭제 실패";    	
+		}
+		
+		jsonString = StringUtil.validMessageToJson(flag+"", message);
+		
+		LOG.debug("|jsonString |"      +jsonString);
+		
+		LOG.debug("== inVO 의 값은   =="+inVO);
+
+		
+		return jsonString;
+		
+	}
     
-    
-    
-    
-    
-    
-    
+   
+
+	
+	
+	
+	// 글 수정 버튼 클릭 후 수정 버튼 컨트롤러 
+	@RequestMapping(value = "/doReplyUpdate.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public String doUpdate(ReplyVO inVO)throws SQLException{
+		
+		String jsonString = "";
+		
+		LOG.debug("=================");
+		LOG.debug("== doReplyUpdate ==");
+		LOG.debug("== inVO         =="+inVO);
+		LOG.debug("=================");
+		
+		int flag = this.replyService.doUpdate(inVO);
+		
+		String message = "";
+		if(1 == flag) {
+			message = inVO.getContents()+"이 수정 되었습니다";
+		}else {
+			message = "수정 실패";
+		}
+		
+		jsonString = StringUtil.validMessageToJson(flag+"",  message);
+		LOG.debug("|jsonString                 |"+jsonString);
+		
+		return jsonString;
+	}
+	
+	
+	
+	
     
     
     //////////////////////////////////////////////////// 아래는 게시판 컨트롤러 ///////////////////////////////////////////////////////////////////
     
+	
+	
+	
+	
 	// 게시판 글수정 버튼 클릭 컨트롤러
 	@RequestMapping(value = "/doEdit.do", method = RequestMethod.GET)
 	public String doEdit(BoardVO inVO, Model model)throws SQLException{
@@ -118,7 +236,7 @@ public class BoardController implements PcwkLogger {
 		LOG.debug("== inVO 의 값은       =="+inVO);
 		LOG.debug("=================");
 		
-		//BoardVO outVO = boardService.doSelectOne(inVO);
+		BoardVO outVO = boardService.doSelectOne(inVO);
 		int flag = boardService.doDelete(inVO);
 		
 		String message = "";
@@ -131,6 +249,8 @@ public class BoardController implements PcwkLogger {
 		
 		jsonString = StringUtil.validMessageToJson(flag+"", message);
 		LOG.debug("|jsonString |"      +jsonString);
+		LOG.debug("== inVO 의 값은22222222222       =="+inVO);
+		LOG.debug("== outVO 의 값은22222222222       =="+outVO);
 		
 		return jsonString;
 				
@@ -140,7 +260,7 @@ public class BoardController implements PcwkLogger {
 	
 	// 게시판 게시물 클릭 컨트롤러 (상세조회)
 	@RequestMapping("/doSelectOne.do")
-	public String doSelectOne(BoardVO inVO, Model model, HttpSession session)throws SQLException{
+	public String doSelectOne(BoardVO inVO, ReplyVO replyVO, Model model, HttpSession session)throws SQLException{
 		String view = "main/board_detail";
 		
 		LOG.debug("doSelectOne 컨트롤 구역");
@@ -165,6 +285,18 @@ public class BoardController implements PcwkLogger {
 			boardService.doUpdateReadCnt(inVO);
 		}
 		
+		// 게시물의 일련번호를 가져와서 댓글 VO에 해당 게시물 번호를 설정한다.
+		// inVO에서 getSeq로 번호를 가져오고, 가져온 값을 replyVO에 setPostNo에 값으로 설정한다?? 
+		replyVO.setPostNo(inVO.getSeq());
+		
+		System.out.println("replyVO 값은 : " + replyVO);
+		
+		
+		//댓글 상세조회
+		List<ReplyVO> replyList = replyService.doRetrieve(replyVO);
+		 
+		model.addAttribute("replyList", replyList);
+		 
 		//등록자 ID를 Session에서 추출
 //		UserVO userVO = (UserVO) httpSession.getAttribute("user");
 //		inVO.setUserId(userVO.getUserId());		

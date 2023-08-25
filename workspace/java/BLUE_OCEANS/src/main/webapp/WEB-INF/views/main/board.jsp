@@ -1,5 +1,7 @@
 <%@ page import="com.pcwk.ehr.cmn.StringUtil"%>
 <%@ page import="com.pcwk.ehr.domain.BoardVO"%>
+<%@ page import="com.pcwk.ehr.domain.ReplyVO"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -78,7 +80,7 @@
 				<c:when test="${not empty boardList}">
 					<c:forEach items="${boardList}" var="board">
 						<tr style="text-align: center;">
-							<td>${board.num}</td>
+							<td>${borard.num}</td>
 							<td>${board.modDt}</td>
 							<td><a href="#" style="color: black; text-decoration: none;">${board.title} </a></td> <!-- href는 수정 필요  -->
 							<td>${board.userId}</td>

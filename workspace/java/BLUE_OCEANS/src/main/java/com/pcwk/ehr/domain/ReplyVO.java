@@ -1,6 +1,8 @@
 package com.pcwk.ehr.domain;
 
-public class ReplyVO {
+import com.pcwk.ehr.cmn.DTO;
+
+public class ReplyVO extends DTO{
 
 	private int	   commentNo; // 댓글번호
 	private String userId; 	  // 아이디
@@ -86,13 +88,6 @@ public class ReplyVO {
 	}
 
 
-	@Override
-	public String toString() {
-		return "ReplyVO [commentNo=" + commentNo + ", userId=" + userId + ", postNo=" + postNo + ", contents="
-				+ contents + ", regDt=" + regDt + ", modDt=" + modDt + ", replyDelete=" + replyDelete + "]";
-	}
-
-
 	
 	public ReplyVO(int commentNo, String userId, int postNo, String contents, String regDt, String modDt,
 			int replyDelete) {
@@ -105,6 +100,16 @@ public class ReplyVO {
 		this.modDt = modDt;
 		this.replyDelete = replyDelete;
 	}
+
+
+	@Override
+	public String toString() {
+		return "ReplyVO [commentNo=" + commentNo + ", userId=" + userId + ", postNo=" + postNo + ", contents="
+				+ contents + ", regDt=" + regDt + ", modDt=" + modDt + ", replyDelete=" + replyDelete + "]";
+	}
+	
+	
+
 	
 	
 	

@@ -136,13 +136,13 @@
              
              
              if("1"== parsedJson.msgId){
-                 alert(parsedJson.msgContents);
+            	 alert("글 등록 성공");
                  //javascript
                  //window.location.href="${CP}/board/boardView.do?div="+$("#div").val();
                  
                  moveToListView();
              }else {
-                 alert(parsedJson.msgContents);
+            	 alert("글 등록 실패");
              }
              
             },

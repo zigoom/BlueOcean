@@ -88,7 +88,15 @@
                         // Loop through the data and add rows to the table
                         $.each(result.data, function(index, dataItem) {
 						    var changesClass = dataItem.ChagesRatio < 0 ? 'negative' : (dataItem.ChagesRatio > 0 ? 'positive' : '');
-						    var changesRatio = dataItem.ChagesRatio + '%';
+						    var changesRatio = "";
+						    
+						    if (dataItem.ChagesRatio === null) {
+                                changesRatio =  "0" + '%';
+					        } else {
+					        	changesRatio =  dataItem.ChagesRatio + '%';
+					        }
+						    
+						    
 						    var closeClass = dataItem.Changes < 0 ? 'negative' : (dataItem.Changes > 0 ? 'positive' : '');
 						
 						    // 아이콘 추가 로직
@@ -124,7 +132,12 @@
 
     // 천단위 쉼표를 추가하는 함수
     function numberWithCommas(x) {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    	if (x === null) {
+    		return 0;
+    	} else {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    	}
+    	
     }
     function today(){
     	const today = new Date();
@@ -624,7 +637,11 @@
 							    });
 							    // 천단위 쉼표를 추가하는 함수
 						        function numberWithCommas(x) {
-						            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+						            if (x === null) {
+						                return 0;
+						            } else {
+						                return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+						            }
 						        }
 							</script>  
 						</div>            

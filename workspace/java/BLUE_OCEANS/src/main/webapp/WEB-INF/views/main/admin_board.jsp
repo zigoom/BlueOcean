@@ -17,8 +17,8 @@
 <style>
 #body-container {
 	max-width: 100%; /* 최대 너비 설정 */
-	max-height: 70vh; /* 최대 높이 설정 */
-	overflow-y: auto; /* 스크롤 활성화 */
+	max-height: 80vh; /* 최대 높이 설정 */
+	overflow-y: hidden; /* 스크롤 활성화 */
 	overflow-x: hidden; /* 가로스크롤 비활성화 */
 }
 
@@ -63,7 +63,9 @@
 .mx-5 {
 	margin-right: 1rem !important;
 	margin-left: 35rem !important;
-	t:;
+	padding-top: 17px;
+	padding-bottom: 20px;
+	height: 100px;
 }
 
 .contents {
@@ -79,8 +81,16 @@
 </style>
 </head>
 <body>
+<c:choose>
+		<c:when test="${sessionScope.level != 0}">
+			<script>
+				alert("접근할 수 없습니다.")
+				window.location.href = "${CP}/BLUEOCEAN/main.do"
+			</script>
+		</c:when>
+		<c:otherwise>
 	<div>
-		<div id="main-container" style="background-color: white; width: 100%; height: 100vh; margin: 100px 0px;">
+		<div id="main-container" style="background-color: white; width: 100%; ">
 			<div id="header-container" style="background-color: #f1f1f1; height: 200px; border: 1px solid black; display: flex; justify-content: space-between; align-items: center;">
 				<div style="margin: 0px 130px;">
 					<h1>게시글관리</h1>
@@ -98,7 +108,7 @@
 				</div>
 			</div>
 			<div style="display: flex;">
-				<div id="side-container" style="width: 20%; height: 77vh; background-color: #f1f1f1; display: flex; justify-content: center; align-items: center;">
+				<div id="side-container" style="width: 20%; height: 80vh; background-color: #f1f1f1; display: flex; justify-content: center; align-items: center;">
 					<h2>BLUEOCEANS</h2>
 				</div>
 				<div id="admin-container" style="background-color: white; width: 80%; height: 77vh;">
@@ -131,7 +141,7 @@
 				</div>
 
 			</div>
-			<div class="hstack gap-3 mx-5">
+			<div class="hstack gap-3 mx-5 ">
 				<div id="pagination" class="mx-auto">
 					<!-- 페이지 번호를 동적으로 생성할 영역 -->
 				</div>
@@ -143,6 +153,8 @@
 			</div>
 		</div>
 	</div>
+	</c:otherwise>
+</c:choose>
 </body>
 <script src="${CP}/resources/js/header-main.js"></script>
 <script src="${CP}/resources/js/util.js"></script>

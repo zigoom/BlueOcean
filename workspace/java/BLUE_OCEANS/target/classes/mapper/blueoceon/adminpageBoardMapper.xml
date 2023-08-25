@@ -74,7 +74,7 @@
 		UPDATE BOARD
 		SET
 		board_delete = 1
-		WHERE title = #{title}
+		WHERE post_no = #{postNo}
 	</update>
 
 	<!-- 보드 복구 -->
@@ -82,6 +82,6 @@
 		UPDATE BOARD
 		SET
 		board_delete = 0
-		WHERE title = #{title}
+		WHERE post_no = #{postNo}
 	</update>
 </mapper>

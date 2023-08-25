@@ -59,6 +59,20 @@ public class BookmarkController implements PcwkLogger {
 
 		return "main/bookmark";
 	}
+	
+	// 북마크 화면을 보여주는 메소드
+		@RequestMapping(value = "/bookmarkReload.do")
+		@ResponseBody
+		public List<BookmarkVO> mainViewReload(BookmarkVO vo) throws SQLException {
+			LOG.debug("┌──────────────────────┐");
+			LOG.debug("│bookmarkViewReload    │");
+			LOG.debug("│vo                    │" + vo);
+			LOG.debug("└──────────────────────┘");
+
+			List<BookmarkVO> bookmarkList = bookmarkService.loadBookmark(vo);
+
+			return bookmarkList;
+		}
 
 	// 북마크를 추가하는 메소드
 	@RequestMapping(value = "/addBookmark.do")

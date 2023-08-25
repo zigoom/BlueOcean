@@ -80,6 +80,7 @@
 #news-container {
 	width: 80%;
 	margin: 10px auto;
+	margin-bottom: 70px;
 }
 
 #news-container h5 {
@@ -133,7 +134,9 @@ h2{
 				<i style="margin-left: 50px; margin-top: 25px" id="bookmark-button" class="fa-regular fa-star fa-2xl"></i>
 			</div>
 		</div>
+		<div style="margin-bottom: 40px;">
 		<hr class="my-1">
+		</div>
 		<!--차트 , 차트 버튼 영역-->
 		<div id="chart-and-button-container" style="margin-top: 50px; width: 90%; margin: 0 auto;">
 			<div id="chart-container-main">
@@ -420,10 +423,10 @@ h2{
     		  "date": dateString,
     		  "interval": "10"
     		}
-    // ajax를 활용해 http://125.142.47.191:5001/blue-oceans/search-tickers을 호출하여 불러온 데이터를 파싱
+    // ajax를 활용해 http://192.168.0.74:5001/blue-oceans/search-tickers을 호출하여 불러온 데이터를 파싱
     $.ajax({
         type: 'POST',
-        url: 'http://125.142.47.191:5001/blue-oceans/search-tickers',
+        url: 'http://192.168.0.74:5001/blue-oceans/search-tickers',
         data: JSON.stringify(requestData),
         contentType: 'application/json',
         mode: 'cors',
@@ -508,7 +511,7 @@ h2{
     if (minButton.addEventListener("click", function () {
         $.ajax({
             type: 'POST',
-            url: 'http://125.142.47.191:5001/blue-oceans/search-tickers-getinterval',
+            url: 'http://192.168.0.74:5001/blue-oceans/search-tickers-getinterval',
             data: JSON.stringify(requestMinData),
             contentType: 'application/json',	
             mode: 'cors',

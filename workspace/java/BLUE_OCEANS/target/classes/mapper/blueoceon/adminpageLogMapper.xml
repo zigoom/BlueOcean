@@ -82,6 +82,7 @@
 		SELECT COUNT(*) FROM
 		USER_LOG
 		WHERE user_id = #{userId}
+		ORDER BY log_no DESC
 	</select>
 	<select id="loadLogFromId" resultMap="adminPageMap"
 		resultType="com.pcwk.ehr.cmn.AdminPageVO">

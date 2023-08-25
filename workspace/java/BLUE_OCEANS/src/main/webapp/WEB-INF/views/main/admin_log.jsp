@@ -58,7 +58,7 @@
 	align-items: center;
 	align-self: stretch;
 	justify-content: center;
-	margin-left : 150px;
+	margin-left: 150px;
 }
 
 .gap-3 {
@@ -68,67 +68,79 @@
 .mx-5 {
 	margin-right: 1rem !important;
 	margin-left: 35rem !important;
-	t:;
+	padding-top: 17px;
+	padding-bottom: 20px;
+	height: 100px;
 }
 </style>
 </head>
 <body>
-	<div>
-		<div id="main-container" style="background-color: white; width: 100%; height: 100vh; margin: 100px 0px;">
-			<div id="header-container" style="background-color: #f1f1f1; height: 200px; border: 1px solid black; display: flex; justify-content: space-between; align-items: center;">
-				<div style="margin: 0px 130px;">
-					<h1>로그확인</h1>
-				</div>
-				<div style="display: flex; justify-content: center; margin: 0px 70px;">
-					<h2 class="admin-header-btn">회원관리</h2>
-					<h2 class="divide">|</h2>
-					<h2 class="admin-header-btn">게시글관리</h2>
-					<h2 class="divide">|</h2>
-					<h2 class="admin-header-btn">댓글관리</h2>
-					<h2 class="divide">|</h2>
-					<h2 class="admin-header-btn">약관관리</h2>
-					<h2 class="divide">|</h2>
-					<h2 class="admin-header-btn" style="border-bottom: 3px solid black;">로그확인</h2>
-				</div>
-			</div>
-			<div style="display: flex;">
-				<div id="side-container" style="width: 20%; height: 77vh; background-color: #f1f1f1; display: flex; justify-content: center; align-items: center;">
-					<h2>BLUEOCEANS</h2>
-				</div>
-				<div id="admin-container" style="background-color: white; width: 80%; height: 77vh;">
-					<div id="radio-container" style="margin: 30px 100px;">
-						<label>발생일자<input type="date" class="date-input"></label> <label>~<input type="date" class="date-input"></label> <label>아이디<input type="text" class="search-id"></label> <input type="button" class="btn btn-primary search-id-btn" value="조회">
+	<c:choose>
+		<c:when test="${sessionScope.level != 0}">
+			<script>
+				alert("접근할 수 없습니다.")
+				window.location.href = "${CP}/BLUEOCEAN/main.do"
+			</script>
+		</c:when>
+		<c:otherwise>
+			<div>
+				<div id="main-container" style="background-color: white; width: 100%; ">
+					<div id="header-container" style="background-color: #f1f1f1; height: 200px; border: 1px solid black; display: flex; justify-content: space-between; align-items: center;">
+						<div style="margin: 0px 130px;">
+							<h1>로그확인</h1>
+						</div>
+						<div style="display: flex; justify-content: center; margin: 0px 70px;">
+							<h2 class="admin-header-btn">회원관리</h2>
+							<h2 class="divide">|</h2>
+							<h2 class="admin-header-btn">게시글관리</h2>
+							<h2 class="divide">|</h2>
+							<h2 class="admin-header-btn">댓글관리</h2>
+							<h2 class="divide">|</h2>
+							<h2 class="admin-header-btn">약관관리</h2>
+							<h2 class="divide">|</h2>
+							<h2 class="admin-header-btn" style="border-bottom: 3px solid black;">로그확인</h2>
+						</div>
 					</div>
+					<div style="display: flex;">
+						<div id="side-container" style="width: 20%; height: 77vh; background-color: #f1f1f1; display: flex; justify-content: center; align-items: center;">
+							<h2>BLUEOCEANS</h2>
+						</div>
+						<div id="admin-container" style="background-color: white; width: 80%; height: 77vh;">
+							<div id="radio-container" style="margin: 30px 100px;">
+								<label>발생일자<input type="date" class="date-input"></label> <label>~<input type="date" class="date-input"></label> <label>아이디<input type="text" class="search-id"></label> <input type="button" class="btn btn-primary search-id-btn" value="조회">
+							</div>
 
-					<div id="body-container">
+							<div id="body-container">
 
-						<table class="table table-hover" style="table-layout: fixed; width: 98.5%; margin-left: 10px;" id="data-table">
-							<thead>
-								<tr>
-									<th scope="col">아이디</th>
-									<th scope="col">발생시간</th>
-									<th scope="col">로그내용</th>
-									<th scope="col">로그내용</th>
-								</tr>
-							</thead>
-							<tbody class="data-tbody">
+								<table class="table table-hover" style="table-layout: fixed; width: 98.5%; margin-left: 10px;" id="data-table">
+									<thead>
+										<tr>
+											<th scope="col">아이디</th>
+											<th scope="col">발생시간</th>
+											<th scope="col">로그이름</th>
+											<th scope="col">로그내용</th>
+										</tr>
+									</thead>
+									<tbody class="data-tbody">
 
-							</tbody>
-						</table>
+									</tbody>
+								</table>
+
+							</div>
+
+						</div>
 
 					</div>
+					<div class="hstack mx-5">
+						<div id="pagination" class="mx-auto">
+							<!-- 페이지 번호를 동적으로 생성할 영역 -->
+						</div>
 
+					</div>
 				</div>
-
 			</div>
-			<div class="hstack">
-				<div id="pagination" class="mx-auto">
-					<!-- 페이지 번호를 동적으로 생성할 영역 -->
-				</div>
-
-			</div>
-		</div>
-	</div>
+		</c:otherwise>
+	</c:choose>
 </body>
 <script src="${CP}/resources/js/header-main.js"></script>
 <script src="${CP}/resources/js/util.js"></script>

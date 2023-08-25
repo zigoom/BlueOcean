@@ -88,8 +88,7 @@
 </head>
 <body>
 	<div>
-		<div id="main-container"
-			style="background-color: white; width: 100%; height: 100vh; margin: 100px 0px;">
+		<div id="main-container" style="background-color: white; width: 100%; ">
 			<div id="header-container"
 				style="background-color: #f1f1f1; height: 200px; border: 1px solid black; display: flex; justify-content: space-between; align-items: center;">
 				<div style="margin: 0px 130px;">

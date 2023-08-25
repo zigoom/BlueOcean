@@ -36,6 +36,7 @@
     SELECT stock_code
     FROM favorites
     WHERE user_id = #{userId, jdbcType=VARCHAR}
+    ORDER BY favorites_no DESC
 </select>
 </mapper>
 

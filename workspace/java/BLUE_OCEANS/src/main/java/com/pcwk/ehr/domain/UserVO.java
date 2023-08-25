@@ -27,7 +27,14 @@ public class UserVO {
 	private int agree;	//이용약관 동의여부
 	private int otpUse;	//otp 사용여부
 	private int otp;	//otp 사용여부
-	private List<Integer> termsOfUse; //이용약관 
+	private List<Integer> termsOfUse; //이용약관
+	
+	private String subject;// 제목
+	private String context;// 본문
+	
+	
+
+
 	
 	public UserVO() {}
 
@@ -51,6 +58,22 @@ public class UserVO {
 		this.otpUse = otpUse;
 		this.otp = otp;
 		this.termsOfUse = termsOfUse;
+	}
+
+	public String getSubject() {
+		return subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+	public String getContext() {
+		return context;
+	}
+
+	public void setContext(String context) {
+		this.context = context;
 	}
 
 
@@ -188,7 +211,7 @@ public class UserVO {
 				+ passwd + ", enCodeingPasswd=" + enCodeingPasswd + ", name=" + name + ", birthday=" + birthday
 				+ ", gender=" + gender + ", keyword=" + keyword + ", email=" + email + ", phone=" + phone
 				+ ", userLevel=" + userLevel + ", withdrawl=" + withdrawl + ", agree=" + agree + ", otpUse=" + otpUse
-				+ ", otp=" + otp + ", termsOfUse=" + termsOfUse + "]";
+				+ ", otp=" + otp + ", termsOfUse=" + termsOfUse + ", subject=" + subject + ", context=" + context + "]";
 	}
 
 	

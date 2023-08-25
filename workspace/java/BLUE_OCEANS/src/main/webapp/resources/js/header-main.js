@@ -1,3 +1,4 @@
+let listdata = [];
 let signInhtml = '';
 let signInActive = 0;
 let signUphtml = '';
@@ -29,25 +30,6 @@ signInhtml += "      <input id='login_pw' type='password' class='form-control'>"
 signInhtml += '    </div>';
 signInhtml += '  </div>';
 signInhtml += '</form>';
-
-agreehtml += '	<div class="form-check">																												';
-agreehtml += '		<label class="form-check-label">개인정보호 동의</label>                                                                                       ';
-agreehtml += '		<input class="form-check-input" type="checkbox" value="" id="agree1">                                                         ';
-agreehtml += '			<div class="form-floating">                                                                                                             ';
-agreehtml += '				<textarea class="form-control no-resize" readonly="readonly" id="floatingTextarea2" style="height: 100px" rows="15" cols="40" height: 100px; resize: none;></textarea>         ';
-agreehtml += '				<label for="floatingTextarea2"></label>                                                                                                 ';
-agreehtml += '			</div>                                                                                                                                  ';
-agreehtml += '		</div>                                                                                                                                  ';
-agreehtml += '		<p>                                                                                                                                     ';
-agreehtml += '		<div class="form-check">                                                                                                                ';
-agreehtml += '			<label class="form-check-label">회원가입 동의</label>                                                                                        ';
-agreehtml += '			<input class="form-check-input" type="checkbox" value="" id="agree2">                                                         ';
-agreehtml += '			<div class="form-floating">                                                                                                             ';
-agreehtml += '				<textarea class="form-control no-resize" readonly="readonly" id="floatingTextarea2" style="height: 100px" rows="15" cols="40" height: 100px; resize: none;></textarea>         ';
-agreehtml += '				<label for="floatingTextarea2"></label>                                                                                             ';
-agreehtml += '		</div>                                                                                                                                  ';
-agreehtml += '                                                                                                                                          ';
-agreehtml += '	</div>                                                                                                                                  ';
 
 
 signUphtml += '<form>';
@@ -129,6 +111,7 @@ findPwhtml += "      <input type='text' class='form-control'>";
 findPwhtml += '    </div>';
 findPwhtml += '  </div>';
 findPwhtml += '</form>';
+
 
 function appendAndShow(title) {
     modalBody.empty();
@@ -425,6 +408,8 @@ $(document).ready(function () {
     });
     // ------------------------------로그인
     // end-----------------------------
+    
+    
 });
 
 // ID 한글 입력값 못 넣게 하는 함수
@@ -563,7 +548,7 @@ $(document).ready(function () {
     });
     
         $('#signUp').click(function () {
-       
+        agreehtml = '';
     	signUp.classList.remove("btn-light");
         signUp.classList.add("btn-secondary");
         classListRepair(signIn);
@@ -577,7 +562,76 @@ $(document).ready(function () {
         findPwActive = 0;
         agreeActive = agreeActive + 1;
         
+        $.ajax({
+            type: 'POST',
+            url: '/ehr/BLUEOCEAN/Termsofuse.do',
+            asyn: 'true',
+            dataType: 'json',
+            success: function (data) {
+                // 통신성공
+            	$.ajax({
+            	    type: 'POST',
+            	    url: '/ehr/BLUEOCEAN/Termsofuse.do',
+            	    async: true,
+            	    dataType: 'json',
+            	    success: function (data) {
+            	        // 통신성공
+            	        listdata = data;
 
+            	        console.log(listdata[0].subject);
+            	        console.log(listdata[1].subject);
+
+
+            	        for (let i = 0; i < listdata.length; i++) {
+            	        	
+            	        	
+            	            agreehtml += '<div class="form-check">';
+            	            agreehtml += '<label class="form-check-label">' + listdata[i].subject + '</label>';
+            	            agreehtml += '<input class="form-check-input" type="checkbox" value="" id="agree' + (i + 1) + '">';
+            	            agreehtml += '<div class="form-floating">';
+
+            	            // 줄 바꿈 처리를 위한 코드 시작
+            	            let lines = listdata[i].context.split("<br>");
+            	            let formattedContext = lines.join("\n");
+            	            agreehtml += '<textarea class="form-control no-resize" readonly="readonly" id="floatingTextarea' + (i + 1) + '" style="height: 100px" rows="15" cols="40" resize="none">' + formattedContext + '</textarea>';
+            	            // 줄 바꿈 처리를 위한 코드 끝
+
+            	            agreehtml += '<label for="floatingTextarea' + (i + 1) + '"></label>';
+            	            agreehtml += '</div>';
+            	            agreehtml += '</div>';
+            	        }
+
+            	        // agreehtml을 적절한 위치에 추가하면 됩니다.
+
+
+            	        // 그리고 나서 화면에 동적으로 생성한 내용을 추가해야 합니다.
+            	        // 여기서는 약관 동의 버튼 클릭 시의 처리를 보여드린 것입니다.
+            	        if (agreeActive >= 1) {
+            	            appendAndShow(agreehtml);
+            	            modalFooter.append("<button class='btn btn-primary' id='agree_N'>아니요</button>");
+            	            modalFooter.append("<button class='btn btn-primary' id='agree_Y'>예</button>");
+            	        }
+            	    },
+            	    error: function (data) {
+            	        // 실패시 처리
+            	        console.log('error:' + data);
+            	        alert('관리자에게 문의하십시오');
+            	    },
+            	});
+
+
+                
+                
+                
+            },
+            error: function (data) {
+                // 실패시
+                // 처리
+                console.log('error:' + data);
+                alert('관리자에게 문의하십시오');
+            },
+        });
+        
 
         // agreehtml 내용을 화면에 표시
         if (agreeActive >= 1) {

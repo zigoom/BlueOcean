@@ -1,6 +1,8 @@
 package com.pcwk.ehr.service;
 
 import java.sql.SQLException;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import com.pcwk.ehr.domain.UserVO;
 
@@ -28,5 +30,7 @@ public interface SignUpService {
 	
 	public int agree(UserVO userVO);
 
-	public int getTotalTermsOfUseCount();
+	public List<UserVO> doRetrieveTermsofuse(UserVO inVO) throws SQLException;
+
+	
 }

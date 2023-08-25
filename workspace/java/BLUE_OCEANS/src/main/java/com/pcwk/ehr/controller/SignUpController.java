@@ -1,12 +1,14 @@
 package com.pcwk.ehr.controller;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -57,5 +59,20 @@ public class SignUpController implements PcwkLogger{
 		return cnt;
 
 	}
+	
+	@RequestMapping(value = "/Termsofuse.do", method = RequestMethod.POST	)
+	@ResponseBody
+	public List<UserVO> Termsofuse(UserVO inVO, Model model) throws SQLException{
+		List<UserVO> outVO = this.signUpService.doRetrieveTermsofuse(inVO);
+		 
+		LOG.debug("┌────────────────────────┐");
+        LOG.debug("│Termsofuse Controller   │");
+        LOG.debug("│vo                      │" + inVO);
+        LOG.debug("└────────────────────────┘");
+        
+        //model.addAttribute(outVO);
+        
+		return outVO;
+	}	
 	
 }

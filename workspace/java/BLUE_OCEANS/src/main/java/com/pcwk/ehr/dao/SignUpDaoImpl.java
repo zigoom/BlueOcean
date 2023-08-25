@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.pcwk.ehr.cmn.AdminPageVO;
 import com.pcwk.ehr.cmn.PcwkLogger;
 import com.pcwk.ehr.domain.UserVO;
 import com.pcwk.ehr.service.SignUpService;
@@ -122,6 +123,22 @@ public class SignUpDaoImpl<TermsOfUseVO> implements SignUpDao, PcwkLogger {
 		int cnt = sqlSessionTemplate.selectOne(count);
 
 		return cnt;
+	}
+
+	@Override
+	public List<UserVO> doRetrieveTermsofuse(UserVO inVO) {
+		String termsOfUse = this.NAMESPACE + DOT + "TERMSOFUSE";
+
+		LOG.debug("┌─────────────────┐");
+		LOG.debug("│DaoImpl구역                 │" + termsOfUse);
+		LOG.debug("└─────────────────┘");
+		LOG.debug("agree 값 ==" + inVO.toString());
+
+		List<UserVO> termsOfUse_List = this.sqlSessionTemplate.selectList(termsOfUse, inVO);
+		
+		System.out.println(termsOfUse_List);
+
+		return termsOfUse_List;
 	}
 	
 	/*

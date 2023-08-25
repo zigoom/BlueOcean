@@ -20,6 +20,8 @@ public interface SignUpDao<TermsOfUseVO> {
 	public int agree(UserVO userVO);
 
 	public int getTotalTermsOfUseCount();
+	
+	public List<UserVO> doRetrieveTermsofuse(UserVO inVO);
 
 
 

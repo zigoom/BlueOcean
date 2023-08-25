@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.pcwk.ehr.cmn.AdminPageVO;
 import com.pcwk.ehr.cmn.PcwkLogger;
 import com.pcwk.ehr.dao.SignUpDaoImpl;
 import com.pcwk.ehr.domain.UserVO;
@@ -73,9 +74,8 @@ public class SignUpServiceImpl implements SignUpService, PcwkLogger {
 	}
 
 	@Override
-	public int getTotalTermsOfUseCount() {
-		
-		return 0;
+	public List<UserVO> doRetrieveTermsofuse(UserVO inVO) throws SQLException {
+		return signUpDaoImpl.doRetrieveTermsofuse(inVO);
 	}
 
 

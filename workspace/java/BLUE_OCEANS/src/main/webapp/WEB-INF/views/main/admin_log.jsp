@@ -352,14 +352,15 @@
 							alert("발생일자를 모두 입력해주세요.");
 						} else if (!((dateInput[0].value == '') && (dateInput[1].value == ''))
 								&& ($(".search-id").val() == '')) {
+							
 							$.ajax({
 								type : "POST",
 								url : "/ehr/BLUEOCEAN/admin/loadLogOption.do",
 								async : true,
 								dataType : "json",
 								data : {
-									startDate : dateInput[0].value,
-									endDate : dateInput[1].value
+									startDate : dateInput[0].value + " 00:00:00",
+									endDate : dateInput[1].value + " 23:59:59"
 								},
 								success : function(data) {
 									totalData = data;
@@ -381,8 +382,8 @@
 										async : true,
 										dataType : "json",
 										data : {
-											startDate : dateInput[0].value,
-											endDate : dateInput[1].value,
+											startDate : dateInput[0].value + " 00:00:00",
+											endDate : dateInput[1].value + " 23:59:59",
 											userId : $(".search-id").val()
 										},
 										success : function(data) {

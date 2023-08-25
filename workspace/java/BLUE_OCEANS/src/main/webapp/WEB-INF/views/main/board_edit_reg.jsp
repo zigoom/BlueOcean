@@ -48,13 +48,13 @@
     <input type="hidden" name="div" id="div" value="${inVO.getDiv()}">
     <input type="hidden" name="userId" id="userId" value="사용자ID값">
     <div class="d-flex justify-content-center">
-      <label for="exampleFormControlInput1" class="form-label">제목</label>
+      <label for="exampleFormControlInput1" class="form-label" style="margin-right : 10px;"><strong>제목</strong></label>
       <input type="text" class="title_cls" id="title" name="title"
       placeholder="제목을 입력하세요" required="required" maxlength="100" style="width: 900px;" value="<%= title %>">
     </div>
     <br><br>
     <div class="d-flex justify-content-center">
-      <label for="exampleFormControlTextarea1" class="form-label">내용</label>
+      <label for="exampleFormControlTextarea1" class="form-label"  style="margin-right : 10px;"><strong>내용</strong></label>
       <textarea class="form-control" id="contents" name="contents" required="required" style="width: 900px; height: 300px;"><%= contents %></textarea>
       <input type="hidden" id="modDt" value="${outVO.modDt}" />
       <input type="hidden" id="seq" value="${outVO.seq}" />

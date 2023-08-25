@@ -87,75 +87,85 @@
 </style>
 </head>
 <body>
-	<div>
-		<div id="main-container" style="background-color: white; width: 100%; ">
-			<div id="header-container"
-				style="background-color: #f1f1f1; height: 200px; border: 1px solid black; display: flex; justify-content: space-between; align-items: center;">
-				<div style="margin: 0px 130px;">
-					<h1>댓글관리</h1>
-				</div>
-				<div
-					style="display: flex; justify-content: center; margin: 0px 70px;">
-					<h2 class="admin-header-btn">회원관리</h2>
-					<h2 class="divide">|</h2>
-					<h2 class="admin-header-btn">게시글관리</h2>
-					<h2 class="divide">|</h2>
-					<h2 class="admin-header-btn" style="border-bottom: 3px solid black;">댓글관리</h2>
-					<h2 class="divide">|</h2>
-					<h2 class="admin-header-btn">약관관리</h2>
-					<h2 class="divide">|</h2>
-					<h2 class="admin-header-btn">로그확인</h2>
-				</div>
-			</div>
-			<div style="display: flex;">
-				<div id="side-container"
-					style="width: 20%; height: 77vh; background-color: #f1f1f1; display: flex; justify-content: center; align-items: center;">
-					<h2>BLUEOCEANS</h2>
-				</div>
-				<div id="admin-container"
-					style="background-color: white; width: 80%; height: 77vh;">				
-						<div id="radio-container" style="margin: 30px 100px;">
-							<label><input type="radio" name="check" value="all" id="all-load">전체댓글</label>
-							<label><input type="radio" name="check" value="delete" id="delete-load">삭제된댓글</label>
-							<label><input type="radio" name="check" value="notDelete" id="notDelete-load">삭제되지 않은댓글</label>
+	<c:choose>
+	    <c:when test="${sessionScope.level != 0}">
+	      <script>
+	        alert("접근할 수 없습니다.")
+	        window.location.href = "${CP}/BLUEOCEAN/main.do"
+	      </script>
+	    </c:when>
+	    <c:otherwise>
+				<div>
+					<div id="main-container" style="background-color: white; width: 100%; ">
+						<div id="header-container"
+							style="background-color: #f1f1f1; height: 200px; border: 1px solid black; display: flex; justify-content: space-between; align-items: center;">
+							<div style="margin: 0px 130px;">
+								<h1>댓글관리</h1>
+							</div>
+							<div
+								style="display: flex; justify-content: center; margin: 0px 70px;">
+								<h2 class="admin-header-btn">회원관리</h2>
+								<h2 class="divide">|</h2>
+								<h2 class="admin-header-btn">게시글관리</h2>
+								<h2 class="divide">|</h2>
+								<h2 class="admin-header-btn" style="border-bottom: 3px solid black;">댓글관리</h2>
+								<h2 class="divide">|</h2>
+								<h2 class="admin-header-btn">약관관리</h2>
+								<h2 class="divide">|</h2>
+								<h2 class="admin-header-btn">로그확인</h2>
+							</div>
 						</div>
-						<div id="body-container">
-
-							<table class="table table-hover" style="table-layout: fixed; width: 98.5%; margin-left:10px;"  id="data-table">
-							 <thead>
-								<tr>
-								  <th scope="col">댓글번호</th>
-									<th scope="col">아이디</th>
-									<th scope="col">글번호</th>
-									<th scope="col">댓글내용</th>
-									<th scope="col">등록일</th>
-									<th scope="col">수정일</th>
-									<th scope="col">삭제여부</th>
-									<th class="delete" scope="col">삭제</th>
-									<th class="notDelete" scope="col">복구</th>
-								</tr>
-							 </thead>
-							 <tbody class="data-tbody">
-							 
-							 
-							 </tbody>
-							</table>
-						</div>				
-				</div>				
-			</div>
-			<div class="hstack gap-3 mx-5">
-				<div id="pagination" class="mx-auto">
-	        <!-- 페이지 번호를 동적으로 생성할 영역 -->
-	      </div>
-		      <div id="button-container" style="margin-right: 50px">
-		        <label>아이디
-		          <input type="text" class="search-id">
-		        </label>
-		        <button class="btn btn-primary search-id-btn">검색</button>
-		      </div>
-      </div>
-    </div>
-	</div>	
+						<div style="display: flex;">
+							<div id="side-container"
+								style="width: 20%; height: 77vh; background-color: #f1f1f1; display: flex; justify-content: center; align-items: center;">
+								<h2>BLUEOCEANS</h2>
+							</div>
+							<div id="admin-container"
+								style="background-color: white; width: 80%; height: 77vh;">				
+									<div id="radio-container" style="margin: 30px 100px;">
+										<label><input type="radio" name="check" value="all" id="all-load">전체댓글</label>
+										<label><input type="radio" name="check" value="delete" id="delete-load">삭제된댓글</label>
+										<label><input type="radio" name="check" value="notDelete" id="notDelete-load">삭제되지 않은댓글</label>
+									</div>
+									<div id="body-container">
+			
+										<table class="table table-hover" style="table-layout: fixed; width: 98.5%; margin-left:10px;"  id="data-table">
+										 <thead>
+											<tr>
+											  <th scope="col">댓글번호</th>
+												<th scope="col">아이디</th>
+												<th scope="col">글번호</th>
+												<th scope="col">댓글내용</th>
+												<th scope="col">등록일</th>
+												<th scope="col">수정일</th>
+												<th scope="col">삭제여부</th>
+												<th class="delete" scope="col">삭제</th>
+												<th class="notDelete" scope="col">복구</th>
+											</tr>
+										 </thead>
+										 <tbody class="data-tbody">
+										 
+										 
+										 </tbody>
+										</table>
+									</div>				
+							</div>				
+						</div>
+						<div class="hstack gap-3 mx-5">
+							<div id="pagination" class="mx-auto">
+				        <!-- 페이지 번호를 동적으로 생성할 영역 -->
+				      </div>
+					      <div id="button-container" style="margin-right: 50px">
+					        <label>아이디
+					          <input type="text" class="search-id">
+					        </label>
+					        <button class="btn btn-primary search-id-btn">검색</button>
+					      </div>
+			      </div>
+			    </div>
+				</div>
+	       </c:otherwise>
+</c:choose>	
 </body>
 <script src="${CP}/resources/js/header-main.js"></script>
 <script src="${CP}/resources/js/util.js"></script>

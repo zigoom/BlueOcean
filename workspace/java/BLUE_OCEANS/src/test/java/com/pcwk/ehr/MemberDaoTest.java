@@ -50,9 +50,9 @@ public class MemberDaoTest implements PcwkLogger {
 
 	@Test
 	@Ignore
-	public void resetotp() throws Exception {
+	public void reseto() throws Exception {
 	    UserVO userVO = new UserVO();
-	    userVO.setUserId("TEST");
+	    userVO.setUserId("qwe5");
 
 	    String result = otpDao.reSetOtp(userVO);
 	    
@@ -62,10 +62,10 @@ public class MemberDaoTest implements PcwkLogger {
 	}
 	
 	@Test
-	@Ignore
+	
 	public void setotp() throws Exception {
 		UserVO userVO = new UserVO();
-		userVO.setUserId("TEST");
+		userVO.setUserId("qwe5");
 		
 	    // OTP의 범위를 100000부터 999999까지로 설정
 	    int min = 100000;
@@ -96,7 +96,7 @@ public class MemberDaoTest implements PcwkLogger {
 	@Ignore
 	public void sigup() throws SQLException, ClassNotFoundException {
 		//search = new UserVO(0,"TEST","123","테스트","0000","123123",0,123123,"M","전자",0);
-		search = new UserVO(55,"qwe123","123456","테스트",123456,"M","IT","naver.com","123-1231-2312",1,0);
+		//search = new UserVO(100,"qwe12332","123456","테스트",123456,"M","IT","naver.com","123-1231-2312",1,0);
 		
 		int result = singupDao.add(search);
 		
@@ -106,7 +106,7 @@ public class MemberDaoTest implements PcwkLogger {
 	}
 	
 	@Test
-	@Ignore
+
 	public void idchek() throws SQLException {
 		UserVO userVO = new UserVO();
 		userVO.setUserId("pcwk");
@@ -118,7 +118,7 @@ public class MemberDaoTest implements PcwkLogger {
 	
 	//약관동의 insert
 	@Test
-	//@Ignore
+
 	public void agree() throws Exception{
 	    UserVO userVO = new UserVO();
 	    userVO.setUserId("TEST");
@@ -143,7 +143,7 @@ public class MemberDaoTest implements PcwkLogger {
 
 	//카운트
 	@Test
-	@Ignore
+	
 	public void getCount() {
 		int result = singupDao.getTotalTermsOfUseCount();
 		LOG.debug("===result===:" + result);

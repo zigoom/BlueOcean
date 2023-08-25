@@ -66,7 +66,8 @@
 			</table>
 			<!-- 소 제목 -->
 			<div class="page-title">
-				<h2>${title}</h2>
+				<h1 class="login-heading mb-4">&nbsp;&nbsp;&nbsp;&nbsp;<b>상세 게시판</b></h1>
+				<div style="margin-bottom: 50px;"><hr class="mb-6"></div>
 			</div>
 
 			<!--// 소 제목 end ------------------------------------------------------------->
@@ -99,19 +100,25 @@
 
 			<!--// 버튼 ----------------------------------------------------------------->
 
+
+
 			<!-- 내용 (contents)  ------------------------------------------------------------>
 
 			<table class="table view" style="width: 1000px;">
 				<tr id="tr1">
-					<td align="left"><strong id="title">${vo.title}</strong></td>
-					<td align="right">${vo.readCnt}</td>
-					<td></td>
+					<td align="left"><span>제목 : </span><strong id="title">${vo.title}</strong></td>
+					<td align="right"><span>조회수 : </span>${vo.readCnt}</td>
 				</tr>
 				<tr id="tr2">
-					<td align="left" style="color: gray;">${vo.userId}</td>
-					<td align="right" style="color: gray;">${vo.modDt}</td>
-					<td><input type="hidden" id="seq" value="${vo.seq}" /></td>
+					<input type="hidden" id="seq" value="${vo.seq}" />
+					<td align="left" style="color: gray;">
+					<span>아이디 : </span>
+					<span id="userId">${vo.userId}</span>
+					</td>
+					<td align="right" style="color: gray;"><span>날짜 :  </span>${vo.modDt}</td>
+					
 				</tr>
+			
 			</table>
 			<br>
 			<div class="mb-3" style="width: 1000px;">
@@ -149,15 +156,15 @@
 				<table class="row g-1 d-flex justify-content-center card my-4" style="width: 1000px;" class="replyTable">
 							<tbody>
 								<tr>
-									<td style="text-align: left; font-size: 20px; width: 1000px;">${reply.userId}</td>
+									<td style="text-align: left; font-size: 20px; width: 1000px;">&nbsp;${reply.userId}</td>
 									<td><input type="hidden" class="commentNo" value="${reply.commentNo}" /></td>
 								</tr>
 								<tr>
-									<td style="text-align: left; font-size: 15px;">${reply.modDt}</td>
+									<td style="text-align: left; font-size: 15px;">&nbsp;${reply.modDt}</td>
 								</tr>
 								<tr>
-									<td style="text-align: left; font-size: 25px;">
-        							<div class="replyContentDisplay">${reply.contents}</div>
+									<td style="text-align: left; font-size: 22px;">
+        							<div class="replyContentDisplay">&nbsp;${reply.contents}</div>
         							
         							<!-- 수정 폼 (기본적으로 숨겨져 있음) -->
 						        	<div class="editForm" style="display:none;">
@@ -238,8 +245,9 @@
 	
 	
 	
-	function moveToEditView(seq, title, contents){
-	    window.location.href="${CP}/BLUEOCEAN/doEdit.do?seq=" + seq + "&title=" + title + "&contents=" + contents;
+	function moveToEditView(seq, userId, title, contents){
+		
+	    window.location.href="${CP}/BLUEOCEAN/doEdit.do?seq=" + seq + "&userId=" + userId + "&title="  + title + "&contents=" + contents;
 
 	    	//?div="+$("#div").val();
 	}
@@ -249,16 +257,18 @@
 	     console.log("수정 버튼 클릭 click");
 
 	     let seq = document.getElementById("seq").value;
+	     let userId = document.getElementById("userId").textContent;
 	     let title = document.getElementById("title").textContent;
 	     let contents = document.getElementById("contents").textContent;
 	     
 	     console.log('seq:'+seq);
+	     console.log('userId:'+userId);
 	     console.log('title:'+title);
 	     console.log('contents:'+contents);
 
 	     if(confirm('수정 화면으로 이동 하시겠습니까?')==false) return;
 	     
-	     moveToEditView(seq, title, contents);
+	     moveToEditView(seq, userId, title, contents);
 	}); 
 	
 	

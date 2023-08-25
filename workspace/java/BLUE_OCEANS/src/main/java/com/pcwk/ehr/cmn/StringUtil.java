@@ -83,23 +83,23 @@ public class StringUtil {
 		//-- << < 1 2 3 4 5 6 7 8 9 10 > >>		--------------------------------
 		
 		//<<
-		if(nowBlockNo > 1 && nowBlockNo <= maxBlockNo) {
-			html.append("<li  class=\"page-item\"> \n");
-			html.append("<a class=\"page-link\" href=\"javascript:"+scriptName+"('"+url+"',1); \"> \n"); //doRetrive('user/doRetrieve.do',1)
-			html.append("&laquo;");
-			html.append("</a> \n");
-			html.append("</li> \n");
-		}
+//		if(nowBlockNo > 1 && nowBlockNo <= maxBlockNo) {
+//			html.append("<li  class=\"page-item\"> \n");
+//			html.append("<a class=\"page-link\" href=\"javascript:"+scriptName+"('"+url+"',1); \"> \n"); //doRetrive('user/doRetrieve.do',1)
+//			html.append("&laquo;");
+//			html.append("</a> \n");
+//			html.append("</li> \n");
+//		}
 		
 		
 		//<
-		if(startPageNo > bottomCount) {
-			html.append("<li  class=\"page-item\"> \n");
-			html.append("<a class=\"page-link\" href=\"javascript:"+scriptName+"('"+url+"',"+(startPageNo - bottomCount)+"); \"> \n"); 
-			html.append("&lt;");
-			html.append("</a> \n");
-			html.append("</li> \n");			
-		}
+//		if(startPageNo > bottomCount) {
+//			html.append("<li  class=\"page-item\"> \n");
+//			html.append("<a class=\"page-link\" href=\"javascript:"+scriptName+"('"+url+"',"+(startPageNo - bottomCount)+"); \"> \n"); 
+//			html.append("&lt;");
+//			html.append("</a> \n");
+//			html.append("</li> \n");			
+//		}
 		
 		//1 2 3 4 5 6 7 8 9 10
 		int inx = 0;
@@ -122,22 +122,22 @@ public class StringUtil {
 		
 		
 		//>
-		if(maxPageNo > inx) {
-			html.append("<li  class=\"page-item\"> \n");
-			html.append("<a class=\"page-link\" href=\"javascript:"+scriptName+"('"+url+"',"+((nowBlockNo*bottomCount)+1)+"); \"> \n");
-			html.append("&gt;");
-			html.append("</a> \n");
-			html.append("</li> \n");				
-		}
+//		if(maxPageNo > inx) {
+//			html.append("<li  class=\"page-item\"> \n");
+//			html.append("<a class=\"page-link\" href=\"javascript:"+scriptName+"('"+url+"',"+((nowBlockNo*bottomCount)+1)+"); \"> \n");
+//			html.append("&gt;");
+//			html.append("</a> \n");
+//			html.append("</li> \n");				
+//		}
 		
 		//>>
-		if(maxPageNo > inx) {
-			html.append("<li  class=\"page-item\"> \n");
-			html.append("<a class=\"page-link\" href=\"javascript:"+scriptName+"('"+url+"',"+(maxPageNo)+"); \"> \n");
-			html.append("&raquo;");
-			html.append("</a> \n");
-			html.append("</li> \n");				
-		}
+//		if(maxPageNo > inx) {
+//			html.append("<li  class=\"page-item\"> \n");
+//			html.append("<a class=\"page-link\" href=\"javascript:"+scriptName+"('"+url+"',"+(maxPageNo)+"); \"> \n");
+//			html.append("&raquo;");
+//			html.append("</a> \n");
+//			html.append("</li> \n");				
+//		}
 		
 		
 		

@@ -33,7 +33,7 @@ pageEncoding="UTF-8"%>
 </style>
 </head>
 <body>
-<div class="centered-form py-5" style="height: 85vh;">
+<div class="centered-form py-5" style="height: 90vh;">
     <div class="col-md-11 col-lg-7">
       <div class="login d-flex">
         <div class="container">
@@ -101,6 +101,7 @@ pageEncoding="UTF-8"%>
                       <button class="btn btn-lg btn-primary btn-cancle text-uppercase fw-bold mb-2 " type="button" id="cancelButton">취소</button>
                   </div> 
               </form>
+              
 
              <script>
 	             $(document).ready(function() {

@@ -546,8 +546,8 @@
 	            </c:choose>
 	        </c:otherwise>
 	    </c:choose>
-      <!-- 증권시장  -->
-      <h5 style='font-size: 26px; font-weight:bold; margin-bottom: 20px'>증권시장</h5>
+      <!-- 국내 시장 동향  -->
+      <h5 style='font-size: 26px; font-weight:bold; margin-bottom: 20px'>국내 시장 동향</h5>
       <div class="card-group" style="margin-bottom: 40px;">
 		  <div class="card" style="margin-right: 10px">
             <div id="chart1" class="card-img-top" ></div>
@@ -561,7 +561,7 @@
           <div class="card" style="margin-right: 10px">
             <div id="chart2" class="card-img-top" ></div>
             <div class="card-body" style="border: 1px; outline: 1px solid; outline-width:2px; margin: 2px">
-              <h5 id="chart2-1" class="card-title" style='font-weight:bold; font-size: 22px;'></h5>
+              <h5 id="chart2-1" class="card-title text-center" style='font-weight:bold; font-size: 22px; background-color: #007AFE; color: #ffffff;'></h5>
               <p class="card-text" id="chart2-2" style="font-weight:bold; margin-bottom: 0px; font-size: 16px;"></p>
               <p class="card-text" id="chart2-3" style="font-weight:bold; margin-bottom: 0px; font-size: 16px;"></p>
               <p class="card-text"><small class="text-body-secondary" id="chart2-4" style='font-size: 9px;'></small></p>
@@ -570,7 +570,7 @@
           <div class="card" style="margin-right: 10px">
             <div id="chart3" class="card-img-top" ></div>
             <div class="card-body" style="border: 1px; outline: 1px solid; outline-width:2px; margin: 2px">
-              <h5 id="chart3-1" class="card-title" style='font-weight:bold; font-size: 22px;'></h5>
+              <h5 id="chart3-1" class="card-title text-center" style='font-weight:bold; font-size: 22px; background-color: #007AFE; color: #ffffff;'></h5>
               <p class="card-text" id="chart3-2" style="font-weight:bold; margin-bottom: 0px; font-size: 16px;"></p>
               <p class="card-text" id="chart3-3" style="font-weight:bold; margin-bottom: 0px; font-size: 16px;"></p>
               <p class="card-text"><small class="text-body-secondary" id="chart3-4" style='font-size: 9px;'></small></p>
@@ -579,7 +579,7 @@
           <div class="card" style="margin-right: 10px">
             <div id="chart4" class="card-img-top" ></div>
             <div class="card-body" style="border: 1px; outline: 1px solid; outline-width:2px; margin: 2px">
-              <h5 id="chart4-1" class="card-title" style='font-weight:bold; font-size: 22px;'></h5>
+              <h5 id="chart4-1" class="card-title text-center" style='font-weight:bold; font-size: 22px; background-color: #007AFE; color: #ffffff;'></h5>
               <p class="card-text" id="chart4-2" style="font-weight:bold; margin-bottom: 0px; font-size: 16px;"></p>
               <p class="card-text" id="chart4-3" style="font-weight:bold; margin-bottom: 0px; font-size: 16px;"></p>
               <p class="card-text"><small class="text-body-secondary" id="chart4-4" style='font-size: 9px;'></small></p>
@@ -588,7 +588,7 @@
           <div class="card">
             <div id="chart5" class="card-img-top" ></div>
             <div class="card-body" style="border: 1px; outline: 1px solid; outline-width:2px; margin: 2px">
-              <h5 id="chart5-1" class="card-title" style='font-weight:bold; font-size: 22px;'></h5>
+              <h5 id="chart5-1" class="card-title text-center" style='font-weight:bold; font-size: 22px; background-color: #007AFE; color: #ffffff;'></h5>
               <p class="card-text" id="chart5-2" style="font-weight:bold; margin-bottom: 0px; font-size: 16px;"></p>
               <p class="card-text" id="chart5-3" style="font-weight:bold; margin-bottom: 0px; font-size: 16px;"></p>
               <p class="card-text"><small class="text-body-secondary" id="chart5-4" style='font-size: 9px;'></small></p>

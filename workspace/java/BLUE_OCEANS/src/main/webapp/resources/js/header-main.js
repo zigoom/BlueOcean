@@ -16,10 +16,9 @@ let findPw = document.querySelector('#find-pw');
 let agree = document.querySelector('#agree');
 let modalFooter = $('.modal-footer');
 let modalBody = $('.modal-body');
- 
+
 signInhtml += '<form>';
 signInhtml += "  <div class='modal-containor'>";
-
 signInhtml += '    <div>';
 signInhtml += '      <label>아이디</label>';
 signInhtml += "      <input id='login_id' type='text' class='form-control'>";
@@ -94,20 +93,29 @@ findPwhtml += '<form>';
 findPwhtml += "  <div class='modal-containor'>";
 findPwhtml += '    <div>';
 findPwhtml += '      <label>아이디</label>';
-findPwhtml += "      <input type='text' class='form-control'>";
+findPwhtml += "      <input type='text' id='findpw_id' class='form-control'>";
 findPwhtml += '    </div>';
 findPwhtml += '    <div>';
 findPwhtml += '      <label>이름</label>';
-findPwhtml += "      <input type='text' class='form-control'>";
+findPwhtml += "      <input type='text' id='findpw_name' class='form-control'>";
 findPwhtml += '    </div>';
 findPwhtml += '    <div>';
 findPwhtml += '      <label>이메일</label>';
-findPwhtml += "      <input type='text' class='form-control'>";
-findPwhtml += "      <button id='otp_send'>otp전송";
+findPwhtml += "      <input type='text' id='findpw_email' class='form-control'>";
+findPwhtml += '      <button type="button" style="font-size: 13px" class="btn btn-outline-primary" id="otp_send">OTP 전송</button>';
 findPwhtml += '    </div>';
 findPwhtml += '    <div>';
 findPwhtml += '      <label>otp입력</label>';
-findPwhtml += "      <input type='text' class='form-control'>";
+findPwhtml += "      <input type='text' id='otp_number' minlength='6' class='form-control'>";
+findPwhtml += '      <button type="button" style="font-size: 11px" class="btn btn-outline-primary" id="otp_check" disabled>OTP 확인</button>';
+findPwhtml += '    </div>';
+findPwhtml += '    <div>';
+findPwhtml += '      <label id="lable_findpw_pw" style="display: none;">비밀번호</label>';
+findPwhtml += "      <input type='password' id='findpw_pw' class='form-control' style='display: none;'>";
+findPwhtml += '    </div>';
+findPwhtml += '    <div>';
+findPwhtml += '      <label id="lable_findpw_pwcheck" style="display: none;">비밀번호 확인</label>';
+findPwhtml += "      <input type='password' id='findpw_pwcheck' class='form-control' style='display: none;'>";
 findPwhtml += '    </div>';
 findPwhtml += '  </div>';
 findPwhtml += '</form>';
@@ -127,15 +135,15 @@ let idcheck = 0; // 아이디 체크 했으면 1 안했으면 0
 let idEffectiveness = 0; // 아이디 체크 했으면 1 안했으면 0
 let agree_check1 = 0;
 let agree_check2 = 0;
-	function classListRepair(btn){
-		btn.classList.remove("btn-secondary");
-		btn.classList.add("btn-light");
-	}
-	
-$(document).ready(function () {
-	
 
-	
+function classListRepair(btn) {
+    btn.classList.remove("btn-secondary");
+    btn.classList.add("btn-light");
+}
+
+$(document).ready(function () {
+
+
     console.log('테스트중');
     signIn.classList.remove("btn-light");
     signIn.classList.add("btn-secondary");
@@ -154,15 +162,103 @@ $(document).ready(function () {
     }
 
 
+    $(document).on('click', '#otp_send', function () {
+        if (eUtil.ISEmpty($('#findpw_id').val()) == true) {
+            alert('아이디를 입력하세요.');
+            
+            // 아이디 조합 검사
+        } else if (eUtil.ISEmpty($('#findpw_name').val()) == true) {
+            alert('이름을 입력하세요.');
+            
+            // 아이디 조합 검사
+        } else if (eUtil.ISEmpty($('#findpw_email').val()) == true) {
+            alert('이메일을 입력하세요.');
+            
+            // 아이디 조합 검사
+        }
+        else {
+            $.ajax({
+                url: '/ehr/BLUEOCEAN/sendOTP.do',
+                type: 'POST',
+                data: {
+                    userId: $('#findpw_id').val(),
+                    name: $('#findpw_name').val(),
+                    email: $('#findpw_email').val()
+                },
+                success: function (data) {
+                    console.log('아이디 체크', data);
+                    if (data == 1) {
+                        alert("otp전송")
+                        document.querySelector('#otp_check').removeAttribute('disabled');                        
+                    } else {
+                        alert('일치하는 회원이 없거나 otp사용중 입니다.');
+                    }
+                },
+                error: function (request, error) {
+                    console.log(request);
+                    console.log(error);
+                    alert('에러가 났습니다');
+                },
+            });
+        }
+    });
     
+    $(document).on('click', '#otp_check', function () {
+        if (eUtil.ISEmpty($('#otp_number').val()) == true) {
+            alert('otp를 입력하세요.');
+            
+            
+        }
+        else {
+            $.ajax({
+                url: '/ehr/BLUEOCEAN/checkOtp.do',
+                type: 'POST',
+                data: {
+                    otp: $('#otp_number').val(),
+                    userId: $('#findpw_id').val()
+                },
+                success: function (data) {
+                    console.log('아이디 체크', data);
+                    if (data == 1) {
+                        alert("otp가 일치합니다");
+                        
+                        $('#lable_findpw_pw').css('display', 'block');
+                        $('#findpw_pw').css('display', 'block');
+                        $('#lable_findpw_pwcheck').css('display', 'block');
+                        $('#findpw_pwcheck').css('display', 'block');
+
+                        $('#findpw_pw').on('blur', function () {
+                            if (!validatePassword($(this).val())) {
+                                alert('8자 이상으로 영문, 숫자, 특수문자를 혼합하여 만들어주세요.');
+                                $(this).val('');
+                            }
+                        });
+
+                        $('#findpw_pwcheck').on('blur', function () {
+                            if (!passwordMatch($('#findpw_pw').val(), $(this).val())) {
+                                alert('비밀번호가 다릅니다.');
+                                $(this).val('');
+                            }
+                        });
+                    } else {
+                        alert('otp가 일치하지 않습니다.');
+                    }
+                },
+                error: function (request, error) {
+                    console.log(request);
+                    console.log(error);
+                    alert('에러가 났습니다');
+                },
+            });
+        }
+    });    
+
 
     // ------------------------------회원가입----------------------------
-   
 
-    
-    
+
     // 아이디 중복검사
-    
+
     $(document).on('click', '#signup_idcheck', function () {
         let input = $('#signUp_id').val();
         let regex = /^[a-z0-9]+$/;
@@ -177,7 +273,6 @@ $(document).ready(function () {
             return;
         } else {
             let id = $('#signUp_id').val();
-            console.log('checkId 실행됨' + id); // 추가한
             // 코드
             $.ajax({
                 url: '/ehr/BLUEOCEAN/idCheck.do',
@@ -226,9 +321,8 @@ $(document).ready(function () {
         }
     });
 
-    
+
     $(document).on('click', '#signUp_bt', function () {
-        console.log('signUp_bt');
 
         if (eUtil.ISEmpty($('#signUp_id').val()) == true) {
             alert('아이디를 입력하세요.');
@@ -291,12 +385,11 @@ $(document).ready(function () {
                 // 통신
                 // 성공
                 console.log('success data:' + data);
-                if (data == 1){
+                if (data == 1) {
                     alert("회원가입이 완료되었습니다.")
                     window.location.href = window.location.href;
-                }
-                else{
-                	alert("관리자에게 문의하십시오.")
+                } else {
+                    alert("관리자에게 문의하십시오.")
                 }
             },
             error: function (data) {
@@ -308,56 +401,53 @@ $(document).ready(function () {
     });
     // ------------------------------회원가입 end----------------------------
 
-	// ------------------------------아이디 찾기------------------------------	
+    // ------------------------------아이디 찾기------------------------------
 
-					$(document).on("click","#findid_bt",function() {
-					console.log("findid_bt");
-	
-					if (eUtil.ISEmpty($("#findid_name").val()) == true) {
-						alert("이름을 입력하세요.");
-						$("#findid_name").focus();
-						return true;
-					}
-					else if (eUtil.ISEmpty($("#findid_email").val()) == true) {
-						alert("이메일을 입력하세요.");
-						$("#findid_email").focus();
-						return true;
-					}
-					else{
-					console.log($("#findid_name").val());
-					console.log($("#findid_email").val());
-					$.ajax({
-								type : "POST",
-								url : "/ehr/BLUEOCEAN/findId.do",
-								asyn : "true",
-								dataType : "html", 
-								data : {
-	
-									name : $("#findid_name")
-											.val(),
-									email : $("#findid_email")
-											.val()
-	
-								},
-								success: function(data) {
-								    console.log("data:" + data);
-								    if (data == "0") {
-                                        alert("일치하는 회원정보가 없습니다.");
-								    } else {
-                                        alert("회원님의 아이디는 " + data + "입니다");
-								    }
-								},
-							});
-					}
-	
-				});					
-	// ------------------------------아이디 찾기 end---------------------------
-    
-    
+    $(document).on("click", "#findid_bt", function () {
+        console.log("findid_bt");
+
+        if (eUtil.ISEmpty($("#findid_name").val()) == true) {
+            alert("이름을 입력하세요.");
+            $("#findid_name").focus();
+            return true;
+        } else if (eUtil.ISEmpty($("#findid_email").val()) == true) {
+            alert("이메일을 입력하세요.");
+            $("#findid_email").focus();
+            return true;
+        } else {
+            console.log($("#findid_name").val());
+            console.log($("#findid_email").val());
+            $.ajax({
+                type: "POST",
+                url: "/ehr/BLUEOCEAN/findId.do",
+                asyn: "true",
+                dataType: "html",
+                data: {
+
+                    name: $("#findid_name")
+                        .val(),
+                    email: $("#findid_email")
+                        .val()
+
+                },
+                success: function (data) {
+                    console.log("data:" + data);
+                    if (data == "0") {
+                        alert("일치하는 회원정보가 없습니다.");
+                    } else {
+                        alert("회원님의 아이디는 " + data + "입니다");
+                    }
+                },
+            });
+        }
+
+    });
+    // ------------------------------아이디 찾기 end---------------------------
+
+
     // ------------------------------로그인-----------------------------
 
     $(document).on('click', '#login_bt', function () {
-        console.log('login_bt');
 
         if (eUtil.ISEmpty($('#login_id').val()) == true) {
             alert('아이디를 입력하세요.');
@@ -370,8 +460,8 @@ $(document).ready(function () {
             $('#login_pw').focus();
             return;
         }
-        console.log("id"+$('#login_id').val());
-        console.log("pw"+$('#login_pw').val());
+        console.log("id" + $('#login_id').val());
+        console.log("pw" + $('#login_pw').val());
         $.ajax({
             type: 'POST',
             url: '/ehr/BLUEOCEAN/Login.do',
@@ -386,17 +476,17 @@ $(document).ready(function () {
                 console.log('data:' + data);
                 let paredJSON = JSON.parse(data);
                 console.log('paredJSON.msgId:' + paredJSON.msgId);
-                
-                if (paredJSON.msgId == 30) {
-                	    alert('로그인이 완료되었습니다.');  	
-                		window.location.href = window.location.href; 
 
-                }else if(paredJSON.msgId == 40){
-                	alert('탈퇴된 회원입니다.');
+                if (paredJSON.msgId == 30) {
+                    alert('로그인이 완료되었습니다.');
+                    window.location.href = window.location.href;
+
+                } else if (paredJSON.msgId == 40) {
+                    alert('탈퇴된 회원입니다.');
                 } else {
-                    	alert('아이디나 비밀번호가 다릅니다.');
-                } 
-               
+                    alert('아이디나 비밀번호가 다릅니다.');
+                }
+
             },
             error: function (data) {
                 // 실패시
@@ -406,85 +496,113 @@ $(document).ready(function () {
             },
         });
     });
-    // ------------------------------로그인
-    // end-----------------------------
-    
-    
+    // ------------------------------로그인 end-----------------------------
+
+    $(document).on('click', '#findpw_bt', function () {
+        console.log("findpw_bt");
+
+        $.ajax({
+            type: 'POST',
+            url: '/ehr/BLUEOCEAN/resetpasswd.do',
+            asyn: 'true',
+            dataType: 'json',
+            data: {
+            	userId: $('#findpw_id').val(),
+                passwd: $('#findpw_pw').val(),
+            },
+            success: function (data) {
+                console.log('data:' + data);
+                console.log('data:' + data.otp);
+                if(data.otp == 1){
+                	alert("비밀번호 변경완료");
+                	window.location.href = window.location.href;
+                }else{
+                	alert("비밀번호 변경실패");
+                }
+            },
+            error: function (data) {
+                console.log('error:' + data);
+                alert("관리자에게 문의하세요");
+            },
+        });
+    });
 });
 
 // ID 한글 입력값 못 넣게 하는 함수
-	$(document).on('change', '#agree1', function () {
-	    if (this.checked) {
-	        agree_check1 = 1;
-	        console.log(agree_check1);
-	    }
-	    else{
-	    	agree_check1 = 0;
-	    	console.log(agree_check1);
-	    }
-	});
-	
-	$(document).on('change', '#agree2', function () {
-	    if (this.checked) {
-	        agree_check2 = 1;
-	        console.log(agree_check1);
-	    }
-	    else{
-	    	agree_check2gkem = 0;
-	    	console.log(agree_check1);
-	    }
-	});
+$(document).on('change', '#agree1', function () {
+    if (this.checked) {
+        agree_check1 = 1;
+        console.log(agree_check1);
+    } else {
+        agree_check1 = 0;
+        console.log(agree_check1);
+    }
+});
 
-	$('#signIn').click(function () {
-    	signIn.classList.remove("btn-light");
-    	signIn.classList.add("btn-secondary");
-    	classListRepair(signUp);
-    	classListRepair(findId);
-    	classListRepair(findPw);
-    	classListRepair(agree);
-    	
-        signInActive = signInActive + 1;
-        findIdActive = 0;
-        findPwActive = 0;
-        signUpActive = 0;
-        agreeActive = 0;
-        if (signInActive >= 1) {
-            appendAndShow(signInhtml);
-            modalFooter.append("<button class='btn btn-primary' id='login_bt'>로그인</button>");
-        }
-    });
+$(document).on('change', '#agree2', function () {
+    if (this.checked) {
+        agree_check2 = 1;
+        console.log(agree_check1);
+    } else {
+        agree_check2gkem = 0;
+        console.log(agree_check1);
+    }
+});
 
-	$(document).on('click', '#agree_Y', function () {
-		
-	        if(agree_check1 == 1 && agree_check2 == 1){
-	        	  console.log("agree");
-    	agree.classList.remove("btn-light");
-    	agree.classList.add("btn-secondary");
-    	classListRepair(signIn);
-    	classListRepair(findId);
-    	classListRepair(findPw);
-    	
-    	
+$('#signIn').click(function () {
+    signIn.classList.remove("btn-light");
+    signIn.classList.add("btn-secondary");
+    classListRepair(signUp);
+    classListRepair(findId);
+    classListRepair(findPw);
+    classListRepair(agree);
+
+    signInActive = signInActive + 1;
+    findIdActive = 0;
+    findPwActive = 0;
+    signUpActive = 0;
+    agreeActive = 0;
+    if (signInActive >= 1) {
+        appendAndShow(signInhtml);
+        modalFooter.append("<button class='btn btn-primary' id='login_bt'>로그인</button>");
+    }
+});
+
+$(document).on('click', '#agree_N', function () {
+	window.location.href = window.location.href;
+});
+
+$(document).on('click', '#agree_Y', function () {
+
+    if (agree_check1 == 1 && agree_check2 == 1) {
+        console.log("agree");
+        agree.classList.remove("btn-light");
+        agree.classList.add("btn-secondary");
+        classListRepair(signIn);
+        classListRepair(findId);
+        classListRepair(findPw);
+
+
         signUpActive = signUpActive + 1;
         signInActive = 0;
         findIdActive = 0;
         findPwActive = 0;
-        agreeActive  = 0;
+        agreeActive = 0;
         if (signUpActive >= 1) {
             appendAndShow(signUphtml);
             modalFooter.append("<button class='btn btn-primary' id='signUp_bt'>회원가입</button>");
         }
 
         document.querySelector('#signUp_id').addEventListener('input', function () {
-		    const signUpButton = document.querySelector('#signup_idcheck');
-		    const inputVal = this.value.trim(); // 입력 값을 얻어와서 공백 제거
-		
-		    if (inputVal.length > 0) { // 입력 값이 있는 경우
-		        signUpButton.removeAttribute('disabled');
-		    } else { // 입력 값이 없는 경우
-		        signUpButton.setAttribute('disabled', 'disabled');
-		    }
-		});
+            const signUpButton = document.querySelector('#signup_idcheck');
+            const inputVal = this.value.trim(); // 입력 값을 얻어와서 공백 제거
+
+            if (inputVal.length > 0) { // 입력 값이 있는 경우
+                signUpButton.removeAttribute('disabled');
+            } else { // 입력 값이 없는 경우
+                signUpButton.setAttribute('disabled', 'disabled');
+            }
+        });
 
         // 아이디 입력 필드에서 포커스를 잃었을 때 유효성 검사 수행
         document.querySelector('#signUp_id').addEventListener('keyup', function (event) {
@@ -493,154 +611,165 @@ $(document).ready(function () {
             event.target.value = englishOnlyValue;
         });
 
-        document.querySelector('#signUp_pw').addEventListener('blur', function () {
+/*        document.querySelector('#signUp_pw').addEventListener('blur', function () {
             validatePassword();
         });
 
         document.querySelector('#signUp_pw_check').addEventListener('blur', function () {
             passwordSameCheck();
-        });      	
-	        }
-	        else{
-	        	alert("동의를 눌러주세요");
-	        }
-		
-    	
+        });*/
+        document.querySelector('#signUp_pw').addEventListener('blur', function () {
+            if (!validatePassword($(this).val())) {
+                alert('8자 이상으로 영문, 숫자, 특수문자를 혼합하여 만들어주세요.');
+                $(this).val('');
+            }
+	    });
+	
+	    document.querySelector('#signUp_pw_check').addEventListener('blur', function () {
+            if (!passwordMatch($('#signUp_pw').val(), $(this).val())) {
+                alert('비밀번호가 다릅니다.');
+                $(this).val('');
+            }
+	    });      
+        
+        
+    } else {
+        alert("동의를 눌러주세요");
+    }
+
+
+});
+
+$('#find-id').click(function () {
+    findId.classList.remove("btn-light");
+    findId.classList.add("btn-secondary");
+    classListRepair(signIn);
+    classListRepair(signUp);
+    classListRepair(findPw);
+    classListRepair(agree);
+
+
+    signInActive = 0;
+    signUpActive = 0;
+    findPwActive = 0;
+    agreeActive = 0;
+    findIdActive = findIdActive + 1;
+    if (findIdActive >= 1) {
+        appendAndShow(findIdhtml);
+        modalFooter.append("<button class='btn btn-primary' id='findid_bt'>ID찾기</button>");
+    }
+});
+
+$('#find-pw').click(function () {
+    findPw.classList.remove("btn-light");
+    findPw.classList.add("btn-secondary");
+    classListRepair(signIn);
+    classListRepair(signUp);
+    classListRepair(findId);
+    classListRepair(agree);
+
+    signInActive = 0;
+    signUpActive = 0;
+    findIdActive = 0;
+    agreeActive = 0;
+    findPwActive = findPwActive + 1;
+    if (findPwActive >= 1) {
+        appendAndShow(findPwhtml);
+        modalFooter.append("<button class='btn btn-primary' id='findpw_bt'>PW초기화</button>");
+    }
+});
+
+$('#signUp').click(function () {
+
+    signUp.classList.remove("btn-light");
+    signUp.classList.add("btn-secondary");
+    classListRepair(signIn);
+    classListRepair(signUp);
+    classListRepair(findId);
+    classListRepair(agree);
+
+    signUpActive = 0;
+    signInActive = 0;
+    findIdActive = 0;
+    findPwActive = 0;
+    agreeActive = agreeActive + 1;
+    agreehtml = '';
+    $.ajax({
+        type: 'POST',
+        url: '/ehr/BLUEOCEAN/Termsofuse.do',
+        asyn: 'true',
+        dataType: 'json',
+        success: function (data) {
+            // 통신성공
+            $.ajax({
+                type: 'POST',
+                url: '/ehr/BLUEOCEAN/Termsofuse.do',
+                async: true,
+                dataType: 'json',
+                success: function (data) {
+                    // 통신성공
+                    listdata = data;
+
+                    console.log(listdata[0].subject);
+                    console.log(listdata[1].subject);
+
+
+                    for (let i = 0; i < listdata.length; i++) {
+
+
+                        agreehtml += '<div class="form-check">';
+                        agreehtml += '<label class="form-check-label">' + listdata[i].subject + '</label>';
+                        agreehtml += '<input class="form-check-input" type="checkbox" value="" id="agree' + (i + 1) + '">';
+                        agreehtml += '<div class="form-floating">';
+
+                        // 줄 바꿈 처리를 위한 코드 시작
+                        let lines = listdata[i].context.split("<br>");
+                        let formattedContext = lines.join("\n");
+                        agreehtml += '<textarea class="form-control no-resize" readonly="readonly" id="floatingTextarea' + (i + 1) + '" style="height: 100px" rows="15" cols="40" resize="none">' + formattedContext + '</textarea>';
+                        // 줄 바꿈 처리를 위한 코드 끝
+
+                        agreehtml += '<label for="floatingTextarea' + (i + 1) + '"></label>';
+                        agreehtml += '</div>';
+                        agreehtml += '</div>';
+                    }
+
+                    // agreehtml을 적절한 위치에 추가하면 됩니다.
+
+
+                    // 그리고 나서 화면에 동적으로 생성한 내용을 추가해야 합니다.
+                    // 여기서는 약관 동의 버튼 클릭 시의 처리를 보여드린 것입니다.
+                    if (agreeActive >= 1) {
+                        appendAndShow(agreehtml);
+                        modalFooter.append("<button class='btn btn-primary' id='agree_N'>아니요</button>");
+                        modalFooter.append("<button class='btn btn-primary' id='agree_Y'>예</button>");
+                    }
+                },
+                error: function (data) {
+                    // 실패시 처리
+                    console.log('error:' + data);
+                    alert('관리자에게 문의하십시오');
+                },
+            });
+
+
+        },
+        error: function (data) {
+            // 실패시
+            // 처리
+            console.log('error:' + data);
+            alert('관리자에게 문의하십시오');
+        },
     });
 
-    $('#find-id').click(function () {
-    	findId.classList.remove("btn-light");
-    	findId.classList.add("btn-secondary");
-    	classListRepair(signIn);
-    	classListRepair(signUp);
-    	classListRepair(findPw);
-    	classListRepair(agree);
-    	
-        
-        signInActive = 0;
-        signUpActive = 0;
-        findPwActive = 0;
-        agreeActive = 0;
-        findIdActive = findIdActive + 1;
-        if (findIdActive >= 1) {
-            appendAndShow(findIdhtml);
-            modalFooter.append("<button class='btn btn-primary' id='findid_bt'>ID찾기</button>");
-        }
-    });
 
-    $('#find-pw').click(function () {
-    	findPw.classList.remove("btn-light");
-    	findPw.classList.add("btn-secondary");
-    	classListRepair(signIn);
-    	classListRepair(signUp);
-    	classListRepair(findId);
-    	classListRepair(agree);
-        
-        signInActive = 0;
-        signUpActive = 0;
-        findIdActive = 0;
-        agreeActive = 0;
-        findPwActive = findPwActive + 1;
-        if (findPwActive >= 1) {
-            appendAndShow(findPwhtml);
-            modalFooter.append("<button class='btn btn-primary' id='findpw_bt'>PW찾기</button>");
-        }
-    });
-    
-        $('#signUp').click(function () {
-        agreehtml = '';
-    	signUp.classList.remove("btn-light");
-        signUp.classList.add("btn-secondary");
-        classListRepair(signIn);
-        classListRepair(signUp);
-        classListRepair(findId);
-        classListRepair(agree);
+    // agreehtml 내용을 화면에 표시
+    if (agreeActive >= 1) {
+        appendAndShow(agreehtml);
+        modalFooter.append("<button class='btn btn-primary' id='agree_N' >아니요</button>");
+        modalFooter.append("<button class='btn btn-primary' id='agree_Y' >예</button>");
+    }
 
-        signUpActive = 0;
-        signInActive = 0;
-        findIdActive = 0;
-        findPwActive = 0;
-        agreeActive = agreeActive + 1;
-        
-        $.ajax({
-            type: 'POST',
-            url: '/ehr/BLUEOCEAN/Termsofuse.do',
-            asyn: 'true',
-            dataType: 'json',
-            success: function (data) {
-                // 통신성공
-            	$.ajax({
-            	    type: 'POST',
-            	    url: '/ehr/BLUEOCEAN/Termsofuse.do',
-            	    async: true,
-            	    dataType: 'json',
-            	    success: function (data) {
-            	        // 통신성공
-            	        listdata = data;
-
-            	        console.log(listdata[0].subject);
-            	        console.log(listdata[1].subject);
-
-
-            	        for (let i = 0; i < listdata.length; i++) {
-            	        	
-            	        	
-            	            agreehtml += '<div class="form-check">';
-            	            agreehtml += '<label class="form-check-label">' + listdata[i].subject + '</label>';
-            	            agreehtml += '<input class="form-check-input" type="checkbox" value="" id="agree' + (i + 1) + '">';
-            	            agreehtml += '<div class="form-floating">';
-
-            	            // 줄 바꿈 처리를 위한 코드 시작
-            	            let lines = listdata[i].context.split("<br>");
-            	            let formattedContext = lines.join("\n");
-            	            agreehtml += '<textarea class="form-control no-resize" readonly="readonly" id="floatingTextarea' + (i + 1) + '" style="height: 100px" rows="15" cols="40" resize="none">' + formattedContext + '</textarea>';
-            	            // 줄 바꿈 처리를 위한 코드 끝
-
-            	            agreehtml += '<label for="floatingTextarea' + (i + 1) + '"></label>';
-            	            agreehtml += '</div>';
-            	            agreehtml += '</div>';
-            	        }
-
-            	        // agreehtml을 적절한 위치에 추가하면 됩니다.
-
-
-            	        // 그리고 나서 화면에 동적으로 생성한 내용을 추가해야 합니다.
-            	        // 여기서는 약관 동의 버튼 클릭 시의 처리를 보여드린 것입니다.
-            	        if (agreeActive >= 1) {
-            	            appendAndShow(agreehtml);
-            	            modalFooter.append("<button class='btn btn-primary' id='agree_N'>아니요</button>");
-            	            modalFooter.append("<button class='btn btn-primary' id='agree_Y'>예</button>");
-            	        }
-            	    },
-            	    error: function (data) {
-            	        // 실패시 처리
-            	        console.log('error:' + data);
-            	        alert('관리자에게 문의하십시오');
-            	    },
-            	});
-
-
-                
-                
-                
-            },
-            error: function (data) {
-                // 실패시
-                // 처리
-                console.log('error:' + data);
-                alert('관리자에게 문의하십시오');
-            },
-        });
-        
-
-        // agreehtml 내용을 화면에 표시
-        if (agreeActive >= 1) {
-	        appendAndShow(agreehtml);
-	        modalFooter.append("<button class='btn btn-primary' id='agree_N' >아니요</button>");
-	        modalFooter.append("<button class='btn btn-primary' id='agree_Y' >예</button>");	
-        }
-
-    });
+});
 
 
 // 비밀번호 유효성 검사 함수
@@ -667,3 +796,21 @@ function passwordSameCheck() {
     }
     return true;
 }
+
+function validatePassword(password) {
+    let pattern = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[~!@#$%^&*()_+|<>?:{}]).{8,}$/;
+    return pattern.test(password);
+}
+
+function passwordMatch(password, confirmPassword) {
+    return password === confirmPassword;
+}
+
+function handleEnterKeyPress(event) {
+    if (event.key === "Enter" && signInActive >= 1) {
+    	console.log("엔터")
+        $('#login_bt').trigger('click');
+    }
+}
+
+document.addEventListener("keydown", handleEnterKeyPress);

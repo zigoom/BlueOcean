@@ -20,7 +20,7 @@ public class SignUpServiceImpl implements SignUpService, PcwkLogger {
 	SignUpDaoImpl signUpDaoImpl;
 	
 	@Autowired
-    private PasswordEncoder passwordEncoder;
+    PasswordEncoder passwordEncoder;
 
 	public SignUpServiceImpl() {
 	}
@@ -29,7 +29,7 @@ public class SignUpServiceImpl implements SignUpService, PcwkLogger {
 	public int add(UserVO userVO) throws ClassNotFoundException, SQLException {
 
 		LOG.debug("┌──────────────────────────────┐");
-		LOG.debug("│ServiceImpl 구역!!!!           │" + userVO.toString());
+		LOG.debug("│ServiceImpl 구역                                   │" + userVO.toString());
 		LOG.debug("└──────────────────────────────┘");
 		
 		userVO.setUserLevel(1);

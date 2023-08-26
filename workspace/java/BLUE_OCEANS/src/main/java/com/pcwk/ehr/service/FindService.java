@@ -6,7 +6,14 @@ import com.pcwk.ehr.domain.UserVO;
 
 public interface FindService  {
 
-	String findId(UserVO user) throws SQLException, ClassNotFoundException;
+	public String findId(UserVO user) throws SQLException, ClassNotFoundException;
 
+	public String OTP(UserVO user) throws SQLException, ClassNotFoundException;
+
+	public String checkOTP(UserVO user) throws SQLException, ClassNotFoundException, Exception;
+
+	public UserVO resetPassWd(UserVO user) throws Exception;
+	
+	
 	
 }

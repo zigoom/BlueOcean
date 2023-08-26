@@ -37,12 +37,23 @@ public class LoginController implements PcwkLogger {
 	}
 
 	@RequestMapping(value = "/logout.do")
-	public String logout(HttpSession session) {
+	public String logout(HttpSession session,UserVO user) throws SQLException {
 		LOG.debug("┌───────────────┐");
 		LOG.debug("│logout()       │");
 		LOG.debug("└───────────────┘");
 
+		
 		if (null != session.getAttribute("user")) {
+			AdminPageVO logVO = new AdminPageVO();
+			String id = (String) session.getAttribute("user");
+			logVO.setUserId(id);
+			logVO.setLog1("로그인");
+
+			logVO.setLog2("아이디 : " + user.getUserId());
+
+			adminLogService.addLog(logVO);
+			
+			
 			session.removeAttribute("user");
 			session.invalidate();
 			LOG.debug("=session.getAttribute(user)");
@@ -101,7 +112,7 @@ public class LoginController implements PcwkLogger {
 			}
 		} else	if (40 == status) {
 			message.setMsgId("40");
-			message.setMsgContents("탄퇴된 회원 입니다");
+			message.setMsgContents("탈퇴된 회원 입니다");
 		} else	if (10 == status || 20 == status) {
 			message.setMsgId("0");
 			message.setMsgContents("아이디를 또는 비밀번호를 확인 하세요");

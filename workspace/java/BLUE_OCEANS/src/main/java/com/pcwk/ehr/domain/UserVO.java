@@ -28,7 +28,6 @@ public class UserVO {
 	private int otpUse;	//otp 사용여부
 	private int otp;	//otp 사용여부
 	private List<Integer> termsOfUse; //이용약관
-	
 	private String subject;// 제목
 	private String context;// 본문
 	

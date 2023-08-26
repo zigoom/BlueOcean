@@ -12,11 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.pcwk.ehr.cmn.AdminPageVO;
 import com.pcwk.ehr.cmn.DTO;
 import com.pcwk.ehr.cmn.PcwkLogger;
 import com.pcwk.ehr.cmn.StringUtil;
 import com.pcwk.ehr.domain.CodeVO;
 import com.pcwk.ehr.domain.BoardVO;
+import com.pcwk.ehr.service.AdminLogService;
 import com.pcwk.ehr.service.BoardService;
 import com.pcwk.ehr.service.CodeService;
 import com.pcwk.ehr.service.ReplyService;
@@ -36,6 +39,9 @@ public class BoardController implements PcwkLogger {
 
     @Autowired
     ReplyService replyService;
+    
+    @Autowired
+    AdminLogService adminLogService;
     
     public BoardController() {}
     
@@ -76,6 +82,17 @@ public class BoardController implements PcwkLogger {
 		if(1==flag) { //등록 성공
 			message = inVO.getContents()+"등록 성공";
 			
+			if (null != session.getAttribute("user")) {
+				AdminPageVO logVO = new AdminPageVO();
+				String id = (String) session.getAttribute("user");
+				logVO.setUserId(id);
+				logVO.setLog1("댓글  등록");
+
+				logVO.setLog2("작성내용: " +inVO.getContents());
+
+				adminLogService.addLog(logVO);
+			}
+			
 		}else { //등록실패
 			message = inVO.getContents()+"등록 실패!!!ㅠㅠ";
 		}
@@ -83,6 +100,8 @@ public class BoardController implements PcwkLogger {
 		jsonString = StringUtil.validMessageToJson(flag+"", message);
 		
 		LOG.debug("|jsonString|"+jsonString);
+		
+
 		
 		return jsonString;
 		
@@ -98,7 +117,7 @@ public class BoardController implements PcwkLogger {
     // 댓글 삭제 버튼 컨트롤러
 	@RequestMapping(value = "/doReplyDelete.do", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String doDelete(ReplyVO inVO)throws SQLException{
+	public String doDelete(ReplyVO inVO, HttpSession session)throws SQLException{
 		String jsonString = "";
 		
 		LOG.debug("=================");
@@ -113,6 +132,18 @@ public class BoardController implements PcwkLogger {
 		
 		if(1 == flag) { //삭제 성공
 		message = inVO.getPostNo()+"삭제 성공";
+		
+		if (null != session.getAttribute("user")) {
+			AdminPageVO logVO = new AdminPageVO();
+			String id = (String) session.getAttribute("user");
+			logVO.setUserId(id);
+			logVO.setLog1("댓글 삭제");
+
+			logVO.setLog2("삭제한 댓글번호: " + inVO.getCommentNo() + 
+						  ", 내용: " + inVO.getContents());
+
+			adminLogService.addLog(logVO);
+		}
 		}else {       //삭제 실패
 	    message = inVO.getPostNo()+"삭제 실패";    	
 		}
@@ -136,7 +167,7 @@ public class BoardController implements PcwkLogger {
 	// 글 수정 버튼 클릭 후 수정 버튼 컨트롤러 
 	@RequestMapping(value = "/doReplyUpdate.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String doUpdate(ReplyVO inVO)throws SQLException{
+	public String doUpdate(ReplyVO inVO,HttpSession session)throws SQLException{
 		
 		String jsonString = "";
 		
@@ -150,6 +181,19 @@ public class BoardController implements PcwkLogger {
 		String message = "";
 		if(1 == flag) {
 			message = inVO.getContents()+"이 수정 되었습니다";
+			
+			if (null != session.getAttribute("user")) {
+				AdminPageVO logVO = new AdminPageVO();
+				String id = (String) session.getAttribute("user");
+				logVO.setUserId(id);
+				logVO.setLog1("댓글 수정");
+
+				logVO.setLog2("수정한 댓글 번호: " + inVO.getCommentNo() +
+						",  수정한 댓글 내용: " + inVO.getContents());
+
+				adminLogService.addLog(logVO);
+			}
+			
 		}else {
 			message = "수정 실패";
 		}
@@ -197,7 +241,7 @@ public class BoardController implements PcwkLogger {
 	// 글 수정 버튼 클릭 후 수정 버튼 컨트롤러 
 	@RequestMapping(value = "/doUpdate.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String doUpdate(BoardVO inVO)throws SQLException{
+	public String doUpdate(BoardVO inVO,HttpSession session)throws SQLException{
 		
 	String jsonString = "";
 	
@@ -211,6 +255,19 @@ public class BoardController implements PcwkLogger {
 	String message = "";
 	if(1 == flag) {
 		message = inVO.getTitle()+"이 수정 되었습니다";
+		
+		if (null != session.getAttribute("user")) {
+			AdminPageVO logVO = new AdminPageVO();
+			String id = (String) session.getAttribute("user");
+			logVO.setUserId(id);
+			logVO.setLog1("게시글 수정");
+
+			logVO.setLog2("게시글 번호: " + inVO.getSeq() +
+					      ", 제목: " + inVO.getTitle());
+
+			adminLogService.addLog(logVO);
+		}
+		
 	}else {
 		message = "수정 실패";
 	}
@@ -228,7 +285,7 @@ public class BoardController implements PcwkLogger {
 	@RequestMapping(value = "/doDelete.do", method = RequestMethod.GET, 
 							produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public String doDelete(BoardVO inVO)throws SQLException{
+	public String doDelete(BoardVO inVO , HttpSession session)throws SQLException{
 		String jsonString = "";
 		
 		LOG.debug("=================");
@@ -243,6 +300,18 @@ public class BoardController implements PcwkLogger {
 		
 		if(1==flag) { //삭제 성공
 			message = inVO.getSeq()+"삭제 성공";
+			
+			if (null != session.getAttribute("user")) {
+				AdminPageVO logVO = new AdminPageVO();
+				String id = (String) session.getAttribute("user");
+				logVO.setUserId(id);
+				logVO.setLog1("게시글 삭제");
+
+				logVO.setLog2("삭제한 게시글 번호 : " + inVO.getSeq());
+
+				adminLogService.addLog(logVO);
+			}
+			
 		}else {       //삭제 실패
 		    message = inVO.getSeq()+"삭제 실패";    	
 		}
@@ -279,6 +348,13 @@ public class BoardController implements PcwkLogger {
 		
 		boolean flag = id.equals(inVO.getUserId());
 		System.out.println("flag : "+flag);
+		AdminPageVO logVO = new AdminPageVO();
+		logVO.setUserId(id);
+		logVO.setLog1("상세게시글 조회");
+
+		logVO.setLog2("게시글 번호: " + inVO.getSeq());
+
+		adminLogService.addLog(logVO);
 		
 		
 		if(!flag) {
@@ -364,7 +440,7 @@ public class BoardController implements PcwkLogger {
 	
 	// 글쓰기 버튼 
 	@RequestMapping("/doMoveToReg.do")
-	public String doMoveToReg(BoardVO inVO, Model model)throws SQLException{
+	public String doMoveToReg(BoardVO inVO, Model model,HttpSession session)throws SQLException{
 		String view = "main/board_reg";
 		LOG.debug(" 글쓰기 버튼 클릭했습니다!! ");
 		
@@ -374,6 +450,16 @@ public class BoardController implements PcwkLogger {
 		LOG.debug("=================");
 		
 		model.addAttribute("inVO", inVO);
+		if (null != session.getAttribute("user")) {
+			AdminPageVO logVO = new AdminPageVO();
+			String id = (String) session.getAttribute("user");
+			logVO.setUserId(id);
+			logVO.setLog1("글 작성페이지 이동");
+
+			logVO.setLog2("이동");
+
+			adminLogService.addLog(logVO);
+		}
 		
 		return view;
 		
@@ -417,7 +503,7 @@ public class BoardController implements PcwkLogger {
 		
 		String message = "";
 		if(1==flag) { //등록 성공
-			message = inVO.getTitle()+"등록 성공";
+			message = inVO.getTitle()+"등록 성공";		
 			
 		}else { //등록실패
 			message = inVO.getTitle()+"등록 실패!!!ㅠㅠ";
@@ -426,6 +512,17 @@ public class BoardController implements PcwkLogger {
 		jsonString = StringUtil.validMessageToJson(flag+"", message);
 		
 		LOG.debug("|jsonString|"+jsonString);
+		
+		if (null != session.getAttribute("user")) {
+			AdminPageVO logVO = new AdminPageVO();
+			String id = (String) session.getAttribute("user");
+			logVO.setUserId(id);
+			logVO.setLog1("글 등록");
+
+			logVO.setLog2("등록한 글제목: " + inVO.getTitle());
+
+			adminLogService.addLog(logVO);
+		}
 		
 		return jsonString;
 		

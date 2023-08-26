@@ -36,7 +36,42 @@
 <title>글쓰기</title>
 </head>
 <body>
-  <!-- contents  -->
+<div class="container">
+    <div class="row">       
+        <div style="padding-left: 110px; padding-right: 110px; margin-bottom: -15px;" >
+            <h1 class="login-heading mb-4" style="margin-top: 18px;"> &nbsp;&nbsp;&nbsp;&nbsp;<b>게시글 수정</b></h1>
+            <hr class="my-1"><br>     
+        </div>
+        <form action="#"  name="reg_frm" id="reg_frm"> <br><br>
+			<input type="hidden" name="div" id="div" value="${inVO.getDiv()}">
+			<input type="hidden" name="userId" id="userId" value="사용자ID값">
+			<div class="d-flex justify-content-center">
+			  <label for="exampleFormControlInput1" class="form-label" style="margin-right : 10px;"><strong>제목</strong></label>
+			  <input type="text" class="title_cls" id="title" name="title" placeholder="제목을 입력하세요" required="required" maxlength="100" style="width: 900px;" value="<%= title %>">
+			</div> <br><br>
+			<div class="d-flex justify-content-center">
+			  <label for="exampleFormControlTextarea1" class="form-label"  style="margin-right : 10px;"><strong>내용</strong></label>
+			  <textarea class="form-control" id="contents" name="contents" required="required" style="width: 900px; height: 300px;"><%= contents %></textarea>
+			  <input type="hidden" id="modDt" value="${outVO.modDt}" />
+			  <input type="hidden" id="seq" value="${outVO.seq}" />
+			  <input type="hidden" id="outVOuserId" value="${outVO.userId}" />
+			</div>
+		</form>
+    <!-- 버튼 -->
+    <br><br>
+    <div class="row g-1 d-flex justify-content-center" style="margin-bottom : 20px; margin-top: 20px">
+      <div class="col-auto">
+        <input type="button" class="btn btn-primary" value="&nbsp;수정&nbsp;" id="doUpdate">&nbsp;&nbsp;
+        <input type="button" class="btn btn-primary" value="&nbsp;취소&nbsp;" id="moveToList">
+      </div>
+    </div><br><br><br>
+    <!--// 버튼 ----------------------------------------------------------------->
+    </div>
+    <br><br>
+</div>
+
+
+  <%-- <!-- contents  -->
   <div class="container">
   <!-- 소 제목 -->
   <div class="page-title">
@@ -59,8 +94,8 @@
       <input type="hidden" id="modDt" value="${outVO.modDt}" />
       <input type="hidden" id="seq" value="${outVO.seq}" />
  	  <input type="hidden" id="outVOuserId" value="${outVO.userId}" />
-    <%--   <input type="hidden" id="title" value="${vo.title}" />
-      <input type="hidden" id="contents" value="${vo.contents}" />  --%> 
+      <input type="hidden" id="title" value="${vo.title}" />
+      <input type="hidden" id="contents" value="${vo.contents}" />  
     </div>
 </form>
   </div>
@@ -77,7 +112,7 @@
       </div>
     </div>
     <!--// 버튼 ----------------------------------------------------------------->
-  
+   --%>
 <script>
    function moveToListView(seq, userId){
 	   window.location.href = "${CP}/BLUEOCEAN/doSelectOne.do?seq=" + seq + "&userId=" + userId;

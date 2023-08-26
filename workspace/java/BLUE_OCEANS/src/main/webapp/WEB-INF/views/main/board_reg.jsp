@@ -28,17 +28,14 @@
 <title>글쓰기</title>
 </head>
 <body>
-  <!-- contents  -->
-  <div class="container">
-  <!-- 소 제목 -->
-  <div class="page-title">
-  	<h1 class="login-heading mb-4">
-	&nbsp;&nbsp;&nbsp;&nbsp;<b>글작성 페이지</b>
-	</h1>
-	<div style="margin-bottom: 50px;"><hr class="mb-6"></div>
-  </div>
-	<br><br>
-    <form action="#"  name="reg_frm" id="reg_frm">
+
+<div class="container">
+    <div class="row">       
+       <div style="padding-left: 110px; padding-right: 110px; margin-bottom: -15px;" >
+            <h1 class="login-heading mb-4" style="margin-top: 18px;"> &nbsp;&nbsp;&nbsp;&nbsp;<b>게시글 쓰기</b></h1>
+            <hr class="my-1"><br>     
+	   </div>
+	   <form action="#"  name="reg_frm" id="reg_frm"> <br><br>
         <input type="hidden" name="div" id="div" value="${inVO.getDiv()}">
         <input type="hidden" name="userId" id="userId" value="사용자ID값">
         <div class="d-flex justify-content-center">
@@ -46,26 +43,26 @@
           <input type="text" class="title_cls" id="title" name="title"
           placeholder="제목을 입력하세요" required="required" maxlength="100" style="width: 900px;">
         </div>
-        	<br><br>
+            <br><br>
         <div class="d-flex justify-content-center">
           <label for="exampleFormControlTextarea1" class="form-label" style="margin-right : 10px;"><strong>내용</strong></label>
           <textarea class="form-control" id="contents" name="contents" required="required" style="width: 900px; height: 300px;"></textarea>
         </div>
-    </form>
-  </div>
-  <!--// contents  ------------------------------------------------------------>
-    <!--// 소 제목 end ------------------------------------------------------------->
- 
+        </form>
     <!-- 버튼 -->
-    <br>
-    <div class="row g-1 d-flex justify-content-center" style="margin-bottom : 20px;">
+    <br><br>
+    <div class="row g-1 d-flex justify-content-center" style="margin-bottom : 20px; margin-top: 20px">
       <div class="col-auto">
-      	<input type="button" class="btn btn-sm btn-primary" value="완료" id="doSave">
-        <input type="button" class="btn btn-sm btn-primary" value="취소" id="moveToList">
+        <input type="button" class="btn btn-primary" value="&nbsp;완료&nbsp;" id="doSave">&nbsp;&nbsp;
+        <input type="button" class="btn btn-primary" value="&nbsp;취소&nbsp;" id="moveToList">
       </div>
-    </div>
+    </div><br><br><br>
     <!--// 버튼 ----------------------------------------------------------------->
-  
+	</div>
+	<br><br>
+</div>
+
+
 <script>
    function moveToListView(){
        window.location.href="${CP}/BLUEOCEAN/boardView.do?div="+$("#div").val();

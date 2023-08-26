@@ -62,127 +62,111 @@
 </head>
 
 <body>
-	<div class="container">
-		<h1 class="login-heading mb-4">
-			&nbsp;&nbsp;&nbsp;&nbsp;<b>게시판</b>
-		</h1>
-		<div style="margin-bottom: 50px;"><hr class="mb-6"></div>
-		<div class="row">
-			<table class="table" id="boardTable" style="width: 1000px; margin: 0 auto;">
-				<thead class="table-primary">
-					<tr>
-						<th class="table-primary" style="text-align: center;">번호</th>
-						<th class="table-primary" style="text-align: center;">날짜</th>
-						<th class="table-primary" style="text-align: center;">제목</th>
-						<th class="table-primary" style="text-align: center;">글쓴이</th>
-						<th class="table-primary" style="text-align: center;">조회</th>
-						<th style="display:none;">DIV</th>
-					</tr>
-				</thead>
-				<tbody>
-				<c:choose>
-				<c:when test="${not empty boardList}">
-					<c:forEach items="${boardList}" var="board">
-						<tr style="text-align: center;">
-							<td>${board.num}</td>
-							<td>${board.modDt}</td>
-							<td><a href="#" style="color: black; text-decoration: none;">${board.title} </a></td> <!-- href는 수정 필요  -->
-							<td>${board.userId}</td>
-							<td>${board.readCnt}</td>
-							<td style="display:none;"><c:out value="${board.seq}"/></td>  
-						</tr>					
-					</c:forEach>	
-					</c:when>
-					<%-- 조회 데이터가 없는 경우 --%>
-          <c:otherwise>
-            <tr>
-              <td class="text-center" colspan="99">찾는 제목이 없습니다</td>
-            </tr>
-          </c:otherwise>
-        </c:choose>
-				</tbody>
-			</table>
-			</br>
-			<div class="d-flex justify-content-end">
-				<a href="#" class="btn btn-sm btn-primary" style="margin: 20px 150px 0 0;" onclick="doMoveToReg();">글쓰기</a>
-			</div>
-		</div>
+<div class="container">
+	<div class="row">		
+	    <div style="padding-left: 110px; padding-right: 110px; margin-bottom: -15px;" >
+		    <h1 class="login-heading mb-4" style="margin-top: 18px;"> &nbsp;&nbsp;&nbsp;&nbsp;<b>토론게시판</b></h1>
+            <hr class="my-1"><br>	        
+            <table class="table" id="boardTable" style="width: 1000px; margin: 0 auto;">
+                <thead class="table-primary">
+                    <tr>
+                        <th class="table-primary" style="text-align: center; width: 5%;">번호</th>
+                        <th class="table-primary" style="text-align: center; width: 15%;">날짜</th>
+                        <th class="table-primary" style="text-align: center; width: 40%;">제목</th>
+                        <th class="table-primary" style="text-align: center; width: 15%;">글쓴이</th>
+                        <th class="table-primary" style="text-align: center; width: 5%;">조회</th>
+                        <th style="display:none;">DIV</th>
+                    </tr>
+                </thead>
+                <tbody>
+                   <c:choose>
+	                   <c:when test="${not empty boardList}">
+		                   <c:forEach items="${boardList}" var="board">
+		                        <tr style="text-align: center;">
+		                            <td>${board.num}</td>
+		                            <td>${board.modDt}</td>
+		                            <td><a href="#" style="color: black; text-decoration: none;">${board.title} </a></td> <!-- href는 수정 필요  -->
+		                            <td>${board.userId}</td>
+		                            <td>${board.readCnt}</td>
+		                            <td style="display:none;"><c:out value="${board.seq}"/></td>  
+		                        </tr>                   
+		                    </c:forEach>    
+	                    </c:when>
+                    <%-- 조회 데이터가 없는 경우 --%>
+			           <c:otherwise>
+			            <tr>
+			              <td class="text-center" colspan="99">찾는 제목이 없습니다</td>
+			            </tr>
+			           </c:otherwise>
+		           </c:choose>
+                </tbody>
+            </table>
+            </br>
+	    </div> 
+        <div class="d-flex justify-content-end">
+            <a href="#" class="btn btn-sm btn-primary" style="margin: 5px 150px 0 0;" onclick="doMoveToReg();">글쓰기</a>
+        </div>
 	</div>
-	</div>
-
+	
 	<!-- paging  -->
-
-<div class="d-flex justify-content-center">
-    <nav aria-label="Page navigation example">
-        <ul class="pagination">
-            <!-- 맨 처음 페이지로 이동 -->
-            <li class="page-item">
-                <a class="page-link" href="/ehr/BLUEOCEAN/boardView.do?pageNo=1" aria-label="First">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-            <!-- 이전 페이지로 이동 -->
-            <li class="page-item">
-                <a class="page-link" href="/ehr/BLUEOCEAN/boardView.do?pageNo=<%= pageNo - 1 %>" aria-label="Previous">
-                    <span aria-hidden="true">&lt;</span>
-                </a>
-            </li>
-            <%=StringUtil.renderPaging(totalCnt, pageNo, pageSize, bottomCount, "/ehr/BLUEOCEAN/boardView.do", "do_Retrieve")%>
-            <!-- 다음 페이지로 이동 -->
-            <li class="page-item">
-                <a class="page-link" href="/ehr/BLUEOCEAN/boardView.do?pageNo=<%= pageNo + 1 %>" aria-label="Next">
-                    <span aria-hidden="true">&gt;</span>
-                </a>
-            </li>
-            <!-- 맨 마지막 페이지로 이동 -->
-            <li class="page-item">
-                <a class="page-link" href="/ehr/BLUEOCEAN/boardView.do?pageNo=<%= (int) Math.ceil((double) totalCnt / pageSize) %>" aria-label="Last">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
+	<div class="d-flex justify-content-center">
+	    <nav aria-label="Page navigation example">
+	        <ul class="pagination">
+	            <!-- 맨 처음 페이지로 이동 -->
+	            <li class="page-item">
+	                <a class="page-link" href="/ehr/BLUEOCEAN/boardView.do?pageNo=1" aria-label="First">
+	                    <span aria-hidden="true">&laquo;</span>
+	                </a>
+	            </li>
+	            <!-- 이전 페이지로 이동 -->
+	            <li class="page-item">
+	                <a class="page-link" href="/ehr/BLUEOCEAN/boardView.do?pageNo=<%= pageNo - 1 %>" aria-label="Previous">
+	                    <span aria-hidden="true">&lt;</span>
+	                </a>
+	            </li>
+	            <%=StringUtil.renderPaging(totalCnt, pageNo, pageSize, bottomCount, "/ehr/BLUEOCEAN/boardView.do", "do_Retrieve")%>
+	            <!-- 다음 페이지로 이동 -->
+	            <li class="page-item">
+	                <a class="page-link" href="/ehr/BLUEOCEAN/boardView.do?pageNo=<%= pageNo + 1 %>" aria-label="Next">
+	                    <span aria-hidden="true">&gt;</span>
+	                </a>
+	            </li>
+	            <!-- 맨 마지막 페이지로 이동 -->
+	            <li class="page-item">
+	                <a class="page-link" href="/ehr/BLUEOCEAN/boardView.do?pageNo=<%= (int) Math.ceil((double) totalCnt / pageSize) %>" aria-label="Last">
+	                    <span aria-hidden="true">&raquo;</span>
+	                </a>
+	            </li>
+	        </ul>
+	    </nav>
+	</div>
+    <!--// paging --------------------------------------------------------------->
+	<!-- 검색 form -->
+	 <form class="d-flex justify-content-center" action="${CP}/BLUEOCEAN/boardView.do" method="get" name="boardFrm">
+	   <input type="hidden" name="pageNo" id="pageNo">
+	   <input type="hidden" name="div"    id="div" value='${inVO.getDiv()}'>
+	    <div class="row g-1 d-flex justify-content-end">
+	     <div class="col-auto">
+	       
+	         <c:forEach var="vo" items="${searchList}">
+	           <option <c:if test="${vo.code == inVO.searchDiv}">selected</c:if> value="<c:out value='${vo.code}'/>">
+	              <c:out value= '${vo.codeNm}'/>
+	           </option>
+	         </c:forEach>
+	       
+	     </div>
+	     <div class="col-auto">
+	       <input type="text" name="searchWord" id="searchWord" value="<c:out value = '${inVO.searchWord}'/>" placeholder="제목을 입력하세요" class="form-control" style="width: 250px;">
+	     </div>
+	     <div class="col-auto" style="padding: 4px; margin-left: 5px">
+	         <a href="#" class="btn btn-sm btn-primary" id="doRetrieve">&nbsp;검색&nbsp;</a>
+	     </div>
+	   </div>
+	</form>
+	<br><br>
+	<!-- //검색 form end--------------------------------------------------------->
 </div>
-
-
-
-	<!--// paging --------------------------------------------------------------->
-	
-	
-   <!-- 검색 form -->
-	<form class="d-flex justify-content-center" action="${CP}/BLUEOCEAN/boardView.do" method="get" name="boardFrm">
-      <input type="hidden" name="pageNo" id="pageNo">
-      <input type="hidden" name="div"    id="div" value='${inVO.getDiv()}'>
-       <div class="row g-1 d-flex justify-content-end">
-        <div class="col-auto">
-          
-            <c:forEach var="vo" items="${searchList}">
-              <option <c:if test="${vo.code == inVO.searchDiv}">selected</c:if> value="<c:out value='${vo.code}'/>">
-                 <c:out value= '${vo.codeNm}'/>
-              </option>
-            </c:forEach>
-          
-        </div>
-        <div class="col-auto">
-          <input type="text" name="searchWord" id="searchWord" value="<c:out value = '${inVO.searchWord}'/>" placeholder="제목을 입력하세요" class="form-control" style="width: 250px;">
-        </div>
-		<div class="col-auto">
-        	<a href="#" class="btn btn-sm btn-primary" id="doRetrieve" style="margin-bottom : 20px;">검색</a>
-    	</div>
-      </div>
-   </form>
-   <!-- //검색 form end--------------------------------------------------------->
-   
-	
-   
 <script>
-
-
-
-
-
-
-
    function do_Retrieve(url, pageNo){
 	   console.log("url:"+url);
 	   console.log("pageNo:"+pageNo);
@@ -192,8 +176,6 @@
 	   frm.pageNo.value=pageNo; //javascript
 	   frm.submit(); //controller call 
    }
-
-
 
    // table 목록 click시  seq값 찾기
      $("#boardTable>tbody").on("click","tr", function(e){

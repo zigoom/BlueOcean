@@ -59,137 +59,137 @@
 </head>
 <body>
 
+<div class="container">
+    <div class="row">       
+       <div style="padding-left: 110px; padding-right: 110px; margin-bottom: -15px;" >
+            <h1 class="login-heading mb-4" style="margin-top: 18px;"> &nbsp;&nbsp;&nbsp;&nbsp;<b>상세 게시판</b></h1>
+            <hr class="my-1"><br>   
+       </div>
+       <!--// 소 제목 end ------------------------------------------------------------->
+
+            <!-- 버튼 -->
+            <div class="row g-1 d-flex justify-content-end" style="padding-right: 150px; margin-top: 20px;">
+                <div class="col-auto">
+                    <c:choose>
+                        <c:when test="${not empty sessionScope.user}">
+                            <%
+                            // 세션에서 "userType" 값 가져오기
+                            String userType = (String) session.getAttribute("user");
+                            String userId2 = vo.getUserId();
+                            // if문으로 조건 처리
+                            if ((userType).equals(userId2)) {
+                            %>
+                            <input type="button" class="btn btn-sm btn-primary" value="  수정  " id="doEdit">
+                            <input type="button" class="btn btn-sm btn-primary" value="  삭제  " id="doDelete">
+                            <% } %>
+                        </c:when>
+                    </c:choose>
+                    <input type="button" class="btn btn-sm btn-primary" value="  목록  " id="moveToList">
+                </div>
+            </div>
+            <!--// 버튼 ----------------------------------------------------------------->
+            <!-- 내용 (contents)  ------------------------------------------------------------>
+            <div class="row g-1 d-flex justify-content-end" style="padding-right: 150px;">
+	            <table class="table view" style="width: 1000px;">
+	                <tr id="tr1">
+	                    <td align="left"><span>제목 : </span><strong id="title">${vo.title}</strong></td>
+	                    <td align="right"><span>조회수 : </span>${vo.readCnt}</td>
+	                </tr>
+	                <tr id="tr2">
+	                    <input type="hidden" id="seq" value="${vo.seq}" />
+	                    <td align="left" style="color: gray;">
+	                    <span>아이디 : </span>
+	                    <span id="userId">${vo.userId}</span>
+	                    </td>
+	                    <td align="right" style="color: gray;"><span>날짜 :  </span>${vo.modDt}</td>
+	                    
+	                </tr>
+	            
+	            </table>
+	            <br>
+	            <div class="mb-3" style="width: 1000px;">
+	                <label for="exampleFormControlTextarea1" class="form-label"></label>
+	                <textarea class="form-control" id="contents" rows="8"
+	                    readonly="readonly">${vo.contents}</textarea>
+	            </div>
+            </div>
+            <!--// 내용 (contents) ------------------------------------------------------------>            
+            <div class="row g-1 d-flex justify-content-end" style="padding-right: 150px;">
+	            <!-- 댓글  ------------------------------------------------------------>
+	            <div class="row g-1 d-flex justify-content-center card my-4"
+	                style="width: 1000px;">
+	                <h5 class="card-header">댓글</h5>
+	                <div class="card-body">
+	                    <form>
+	                        <div class="form-group">
+	                            <textarea class="form-control" rows="4" id="addcontents"></textarea>
+	                        </div>
+	                        <br>
+	                        <div class="d-flex justify-content-end">
+	                            <a href="#" class="btn btn-sm btn-primary" id="addComment">등록</a>
+	                        </div>
+	                    </form>
+	                </div>
+	            </div>
+            </div>            
+            <div class="row g-1 d-flex justify-content-end" style="padding-right: 150px;">
+	            <c:choose>
+	            <c:when test="${not empty replyList}">
+	            <c:forEach items="${replyList}" var="reply">
+	                <table class="row g-1 d-flex justify-content-center card my-4" style="width: 1000px;" class="replyTable">
+	                            <tbody>
+	                                <tr>
+	                                    <td style="text-align: left; font-size: 20px; width: 1000px;">&nbsp;${reply.userId}</td>
+	                                    <td><input type="hidden" class="commentNo" value="${reply.commentNo}" /></td>
+	                                </tr>
+	                                <tr>
+	                                    <td style="text-align: left; font-size: 15px;">&nbsp;${reply.modDt}</td>
+	                                </tr>
+	                                <tr>
+	                                    <td style="text-align: left; font-size: 22px;">
+	                                    <div class="replyContentDisplay">&nbsp;${reply.contents}</div>
+	                                    
+	                                    <!-- 수정 폼 (기본적으로 숨겨져 있음) -->
+	                                    <div class="editForm" style="display:none;">
+	                                    <textarea class="form-control editTextarea" rows="3">${reply.contents}</textarea>
+	                                    
+	                                    <a href="#" class="btn btn-sm btn-primary saveEdit">저장</a>
+	                                </tr>
+	                                <tr>
+	                                    <td style="text-align: right;">
+	                                        <div class="card-body">
+	                                        <c:if test="${sessionScope.user == reply.userId}">
+	                                            <a href="#" class="btn btn-sm btn-primary replydoUpdate">수정</a>
+	                                            <a href="#" class="btn btn-sm btn-primary replydoDelete">삭제</a>
+	                                        </c:if>
+	                                        </div>
+	                                    </td>
+	                                </tr>
+	                            </tbody>
+	                        </table>
+	                    </c:forEach>
+	                </c:when>
+	            </c:choose>
+            </div>
+            <!-- 댓글 end  ------------------------------------------------------------>
+    </div>
+</div>
+
+
 	<!-- contents  -->
-	<div class="container ">
+	<!-- <div class="container ">
 		<div class="row g-1 d-flex justify-content-center">
 			<table class="table">
 			</table>
-			<!-- 소 제목 -->
+			소 제목
 			<div class="page-title">
 				<h1 class="login-heading mb-4">&nbsp;&nbsp;&nbsp;&nbsp;<b>상세 게시판</b></h1>
 				<div style="margin-bottom: 50px;"><hr class="mb-6"></div>
 			</div>
 
-			<!--// 소 제목 end ------------------------------------------------------------->
-
-			<!-- 버튼 -->
-			<div class="row g-1 d-flex justify-content-end"
-				style="padding-right: 150px;">
-				<div class="col-auto">
-
-					<c:choose>
-						<c:when test="${not empty sessionScope.user}">
-							<%
-						    // 세션에서 "userType" 값 가져오기
-						    String userType = (String) session.getAttribute("user");
-							String userId2 = vo.getUserId();
-						    // if문으로 조건 처리
-						    if ((userType).equals(userId2)) {
-							%>
-							<input type="button" class="btn btn-sm btn-primary" value="수정"
-								id="doEdit">
-							<input type="button" class="btn btn-sm btn-primary" value="삭제"
-								id="doDelete">
-							<% } %>
-						</c:when>
-					</c:choose>
-					<input type="button" class="btn btn-sm btn-primary" value="목록"
-						id="moveToList">
-				</div>
-			</div>
-
-			<!--// 버튼 ----------------------------------------------------------------->
-
-
-
-			<!-- 내용 (contents)  ------------------------------------------------------------>
-
-			<table class="table view" style="width: 1000px;">
-				<tr id="tr1">
-					<td align="left"><span>제목 : </span><strong id="title">${vo.title}</strong></td>
-					<td align="right"><span>조회수 : </span>${vo.readCnt}</td>
-				</tr>
-				<tr id="tr2">
-					<input type="hidden" id="seq" value="${vo.seq}" />
-					<td align="left" style="color: gray;">
-					<span>아이디 : </span>
-					<span id="userId">${vo.userId}</span>
-					</td>
-					<td align="right" style="color: gray;"><span>날짜 :  </span>${vo.modDt}</td>
-					
-				</tr>
 			
-			</table>
-			<br>
-			<div class="mb-3" style="width: 1000px;">
-				<label for="exampleFormControlTextarea1" class="form-label"></label>
-				<textarea class="form-control" id="contents" rows="8"
-					readonly="readonly">${vo.contents}</textarea>
-			</div>
-
-
-			<!--// 내용 (contents) ------------------------------------------------------------>
-
-
-
-
-			<!-- 댓글  ------------------------------------------------------------>
-			<div class="row g-1 d-flex justify-content-center card my-4"
-				style="width: 1000px;">
-				<h5 class="card-header">댓글</h5>
-				<div class="card-body">
-					<form>
-						<div class="form-group">
-							<textarea class="form-control" rows="4" id="addcontents"></textarea>
-						</div>
-						<br>
-						<div class="d-flex justify-content-end">
-							<a href="#" class="btn btn-sm btn-primary" id="addComment">등록</a>
-						</div>
-					</form>
-				</div>
-			</div>
-
-		<c:choose>
-			<c:when test="${not empty replyList}">
-			<c:forEach items="${replyList}" var="reply">
-				<table class="row g-1 d-flex justify-content-center card my-4" style="width: 1000px;" class="replyTable">
-							<tbody>
-								<tr>
-									<td style="text-align: left; font-size: 20px; width: 1000px;">&nbsp;${reply.userId}</td>
-									<td><input type="hidden" class="commentNo" value="${reply.commentNo}" /></td>
-								</tr>
-								<tr>
-									<td style="text-align: left; font-size: 15px;">&nbsp;${reply.modDt}</td>
-								</tr>
-								<tr>
-									<td style="text-align: left; font-size: 22px;">
-        							<div class="replyContentDisplay">&nbsp;${reply.contents}</div>
-        							
-        							<!-- 수정 폼 (기본적으로 숨겨져 있음) -->
-						        	<div class="editForm" style="display:none;">
-						            <textarea class="form-control editTextarea" rows="3">${reply.contents}</textarea>
-						            
-						            <a href="#" class="btn btn-sm btn-primary saveEdit">저장</a>
-								</tr>
-								<tr>
-									<td style="text-align: right;">
-										<div class="card-body">
-										<c:if test="${sessionScope.user == reply.userId}">
-										    <a href="#" class="btn btn-sm btn-primary replydoUpdate">수정</a>
-										    <a href="#" class="btn btn-sm btn-primary replydoDelete">삭제</a>
-										</c:if>
-										</div>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</c:forEach>
-				</c:when>
-			</c:choose>
-<!-- 댓글 end  ------------------------------------------------------------>
 		</div>
-	</div>
+	</div> -->
 
 </body>
 

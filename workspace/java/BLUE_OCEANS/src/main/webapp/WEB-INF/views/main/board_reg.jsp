@@ -32,21 +32,24 @@
   <div class="container">
   <!-- 소 제목 -->
   <div class="page-title">
-    <h2>글쓰기</h2>
+  	<h1 class="login-heading mb-4">
+	&nbsp;&nbsp;&nbsp;&nbsp;<b>글작성 페이지</b>
+	</h1>
+	<div style="margin-bottom: 50px;"><hr class="mb-6"></div>
   </div>
 	<br><br>
     <form action="#"  name="reg_frm" id="reg_frm">
         <input type="hidden" name="div" id="div" value="${inVO.getDiv()}">
         <input type="hidden" name="userId" id="userId" value="사용자ID값">
         <div class="d-flex justify-content-center">
-          <label for="exampleFormControlInput1" class="form-label">제목</label>
+          <label for="exampleFormControlInput1" class="form-label" style="margin-right : 10px;"><strong>제목</strong></label>
           <input type="text" class="title_cls" id="title" name="title"
-          placeholder="제목을 입력하세요" required="required" maxlength="100" style="width: 1000px;">
+          placeholder="제목을 입력하세요" required="required" maxlength="100" style="width: 900px;">
         </div>
         	<br><br>
         <div class="d-flex justify-content-center">
-          <label for="exampleFormControlTextarea1" class="form-label">내용</label>
-          <textarea class="form-control" id="contents" name="contents" required="required" style="width: 1000px; height: 300px;"></textarea>
+          <label for="exampleFormControlTextarea1" class="form-label" style="margin-right : 10px;"><strong>내용</strong></label>
+          <textarea class="form-control" id="contents" name="contents" required="required" style="width: 900px; height: 300px;"></textarea>
         </div>
     </form>
   </div>
@@ -55,7 +58,7 @@
  
     <!-- 버튼 -->
     <br>
-    <div class="row g-1 d-flex justify-content-center">
+    <div class="row g-1 d-flex justify-content-center" style="margin-bottom : 20px;">
       <div class="col-auto">
       	<input type="button" class="btn btn-sm btn-primary" value="완료" id="doSave">
         <input type="button" class="btn btn-sm btn-primary" value="취소" id="moveToList">

@@ -87,8 +87,7 @@
 	
 	<body>
 		<div>
-			<div id="main-container"
-				style="background-color: white; width: 100%; height: 100vh; margin: 100px 0px;">
+			<div id="main-container" style="background-color: white; width: 100%; ">
 				<div id="header-container"
 					style="background-color: #f1f1f1; height: 200px; border: 1px solid black; display: flex; justify-content: space-between; align-items: center;">
 					<div style="margin: 0px 130px;">
@@ -119,7 +118,7 @@
 							</div>
 							<div id="body-container">
 								<h2> 약관 목록 조회 </h2>
-								<table style="margin-left: 50px;table-layout: fixed; width: 100%">
+								<table style="margin-left: 50px;table-layout: fixed; width: 100%" id="data-table">
 									<thead>
 										<tr>
 											<th scope="col" style="text-align: center;"> 순번 </th>
@@ -213,8 +212,8 @@
 
 					let tr = $("<tr class='data-tr'></tr>");
 					tr.append("<td class='no'>" + data[i].no + "</td>");
-					tr.append("<td class='subject'>" + data[i].contents + "</td>");
-					tr.append("<td class='context'>" + data[i].context + "</td>");
+					tr.append("<td class='subject'>" + data[i].subject + "</td>");
+					tr.append("<td class='context'>" + data[i].context.substring(0, 10) + "</td>");
 					tr.append("<td class='registrationDate'>" + data[i].registrationDate + "</td>");
 					
 
@@ -255,6 +254,34 @@
 				allLoad();
 			});
 		});
+		
+		// 댓글내용 click시  상세페이지 이동
+		$("#data-table>tbody").on("click","tr",
+			function(e) {
+				console.log("#data-table>tBody");
+				let tdArray = $(this).children();
+				
+				tdArray.each(function(index) {
+					console.log('Cell ' + index + ': ' + $(this).text());
+				});
+				
+				let no = tdArray.eq(0).text();
+			
+				if ($(e.target).hasClass('delete-btn') || $(e.target).hasClass('recover-btn')) {
+					// 삭제 버튼 또는 복구 버튼을 클릭한 경우, 상세 페이지로 이동하지 않음
+					return;
+				}
+				
+				console.log('no:' + no);
+				
+				if (confirm("상세 조회 하시겠어요?") == false)
+					return;
+				
+				//div, seq
+				window.location.href = "${CP}/BLUEOCEAN/admin/termsofusedetail.do?no=" + no
+			}
+		);
+		console.log("!")
 		
 	</script>
 </html>

@@ -59,12 +59,16 @@
 <link rel="stylesheet" href="${CP}/resources/css/header.css">
 <link rel="stylesheet" href="${CP}/resources/css/footer.css">
 
-<title>토론 게시판</title>
 </head>
+
 <body>
 	<div class="container">
+		<h1 class="login-heading mb-4">
+			&nbsp;&nbsp;&nbsp;&nbsp;<b>게시판</b>
+		</h1>
+		<div style="margin-bottom: 50px;"><hr class="mb-6"></div>
 		<div class="row">
-			<table class="table" id="boardTable">
+			<table class="table" id="boardTable" style="width: 1000px; margin: 0 auto;">
 				<thead class="table-primary">
 					<tr>
 						<th class="table-primary" style="text-align: center;">번호</th>
@@ -80,7 +84,7 @@
 				<c:when test="${not empty boardList}">
 					<c:forEach items="${boardList}" var="board">
 						<tr style="text-align: center;">
-							<td>${borard.num}</td>
+							<td>${board.num}</td>
 							<td>${board.modDt}</td>
 							<td><a href="#" style="color: black; text-decoration: none;">${board.title} </a></td> <!-- href는 수정 필요  -->
 							<td>${board.userId}</td>
@@ -98,8 +102,9 @@
         </c:choose>
 				</tbody>
 			</table>
+			</br>
 			<div class="d-flex justify-content-end">
-				<a href="#" class="btn btn-sm btn-primary" onclick="doMoveToReg();">글쓰기</a>
+				<a href="#" class="btn btn-sm btn-primary" style="margin: 20px 150px 0 0;" onclick="doMoveToReg();">글쓰기</a>
 			</div>
 		</div>
 	</div>
@@ -107,23 +112,38 @@
 
 	<!-- paging  -->
 
-	<div class="d-flex justify-content-center">
-	    <nav aria-label="Page navigation example">
-	        <ul class="pagination">
-	            <li class="page-item">
-	                <a class="page-link" href="/ehr/BLUEOCEAN/boardView.do?pageNo=<%= pageNo - 1 %>" aria-label="Previous">
-	                    <span aria-hidden="true">&laquo;</span>
-	                </a>
-	            </li>
-	            <%=StringUtil.renderPaging(totalCnt, pageNo, pageSize, bottomCount, "/ehr/BLUEOCEAN/boardView.do", "do_Retrieve")%> 
-	            <li class="page-item <% if (pageNo * pageSize >= totalCnt) { %>disabled<% } %>">
-	                <a class="page-link" href="<% if (pageNo * pageSize < totalCnt) { %>/ehr/BLUEOCEAN/boardView.do?pageNo=<%= pageNo + 1 %><% } else { %>#<% } %>" aria-label="Next">
-	                    <span aria-hidden="true">&raquo;</span>
-	                </a>
-	            </li>
-	        </ul>
-	    </nav>    
-	</div>
+<div class="d-flex justify-content-center">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <!-- 맨 처음 페이지로 이동 -->
+            <li class="page-item">
+                <a class="page-link" href="/ehr/BLUEOCEAN/boardView.do?pageNo=1" aria-label="First">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <!-- 이전 페이지로 이동 -->
+            <li class="page-item">
+                <a class="page-link" href="/ehr/BLUEOCEAN/boardView.do?pageNo=<%= pageNo - 1 %>" aria-label="Previous">
+                    <span aria-hidden="true">&lt;</span>
+                </a>
+            </li>
+            <%=StringUtil.renderPaging(totalCnt, pageNo, pageSize, bottomCount, "/ehr/BLUEOCEAN/boardView.do", "do_Retrieve")%>
+            <!-- 다음 페이지로 이동 -->
+            <li class="page-item">
+                <a class="page-link" href="/ehr/BLUEOCEAN/boardView.do?pageNo=<%= pageNo + 1 %>" aria-label="Next">
+                    <span aria-hidden="true">&gt;</span>
+                </a>
+            </li>
+            <!-- 맨 마지막 페이지로 이동 -->
+            <li class="page-item">
+                <a class="page-link" href="/ehr/BLUEOCEAN/boardView.do?pageNo=<%= (int) Math.ceil((double) totalCnt / pageSize) %>" aria-label="Last">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
 
 
 	<!--// paging --------------------------------------------------------------->
@@ -147,7 +167,7 @@
           <input type="text" name="searchWord" id="searchWord" value="<c:out value = '${inVO.searchWord}'/>" placeholder="제목을 입력하세요" class="form-control" style="width: 250px;">
         </div>
 		<div class="col-auto">
-        	<a href="#" class="btn btn-sm btn-primary" id="doRetrieve">검색</a>
+        	<a href="#" class="btn btn-sm btn-primary" id="doRetrieve" style="margin-bottom : 20px;">검색</a>
     	</div>
       </div>
    </form>
@@ -171,7 +191,6 @@
 	   frm.action = url;
 	   frm.pageNo.value=pageNo; //javascript
 	   frm.submit(); //controller call 
-	   
    }
 
 
@@ -222,7 +241,7 @@
    
    $("#doRetrieve").on("click",function(){
      console.log("doRetrieve");
-     window.alert("doRetrieve");
+     //window.alert("doRetrieve");
      doRetrieveCall(1);
    });
    

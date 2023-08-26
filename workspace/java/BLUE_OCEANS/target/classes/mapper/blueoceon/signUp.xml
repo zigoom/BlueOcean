@@ -77,5 +77,20 @@
     </foreach>
 </insert>
 
+		<select id="TERMSOFUSE" parameterType="UserVO" resultMap="userVOMap">
+			SELECT
+			    *
+			FROM
+			    termsofuse
+			where no = 1 OR no =2
+		</select>
+
+
+    <resultMap type="AdminPageVO" id="userVOMap">
+        <result property="identifier"     column="identifier"/>
+        <result property="subject"      column="subject"/>
+        <result property="context"      column="context"/>
+    </resultMap>
+
 
 </mapper>

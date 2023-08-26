@@ -658,7 +658,7 @@
 		  }
 		}
 		
-		$(document).ready(function() {
+		/* $(document).ready(function() {
 		  const countryCode = 'KR';
 		  const currentYear = new Date().getFullYear();
 		  
@@ -666,19 +666,48 @@
 		
 		  getHolidays(currentYear, countryCode, function(holidays) {
 			    const validDate = getValidDate(holidays);
-			    formattedDate = formatDateToYYYYMMDD(validDate);
+			    formattedDate = formatDateToYYYYMMDD(validDate); */
 			    /* console.log('Valid Date:', formattedDate); */
 			    
 			    // 차트 생성 및 데이터 요청
-			    for(let i=0;i<5;i++){
+			    /* for(let i=0;i<5;i++){
 			        createChartAndFetchData(formattedDate,i);
 			    }
 			  });
-		  }); 
+		  });  */
+		  
+		  $(document).ready(function() {
+			    // 초기 실행
+			    updateChartsAndData();
+			  
+			    // 주기적으로 실행
+			    setInterval(function() {
+			        updateChartsAndData();
+			    }, 300000); // 300000ms = 5 minutes
+			});
+		  
+
+			function updateChartsAndData() {
+			    const countryCode = 'KR';
+			    const currentYear = new Date().getFullYear();
+			    const formattedDate = ""; // 변수 초기화
+
+			    getHolidays(currentYear, countryCode, function(holidays) {
+			        const validDate = getValidDate(holidays);
+			        let formattedDate = formatDateToYYYYMMDD(validDate);
+
+			        // 차트 생성 및 데이터 요청
+			        for (let i = 0; i < 5; i++) {
+			            createChartAndFetchData(formattedDate, i);
+			        }
+			    });
+			}
 		
 		function createChartAndFetchData(formattedDate, no) {
 			// 차트를 생성합니다.
 			no = no+1;
+			const chartElement = document.getElementById('chart' + no);
+		    chartElement.innerHTML = ''; // 기존 차트 요소 비우기
 			
 		    const chart = LightweightCharts.createChart(document.getElementById('chart'+no), {
 		      /* width: 800, */

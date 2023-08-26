@@ -110,11 +110,11 @@ findPwhtml += "      <input type='text' id='otp_number' minlength='6' class='for
 findPwhtml += '      <button type="button" style="font-size: 11px" class="btn btn-outline-primary" id="otp_check" disabled>OTP 확인</button>';
 findPwhtml += '    </div>';
 findPwhtml += '    <div>';
-findPwhtml += '      <label id="lable_findpw_pw" style="display: none;">비밀번호</label>';
+findPwhtml += '      <label id="lable_findpw_pw" style="display: none;">PW</label>';
 findPwhtml += "      <input type='password' id='findpw_pw' class='form-control' style='display: none;'>";
 findPwhtml += '    </div>';
 findPwhtml += '    <div>';
-findPwhtml += '      <label id="lable_findpw_pwcheck" style="display: none;">비밀번호 확인</label>';
+findPwhtml += '      <label id="lable_findpw_pwcheck" style="display: none;">PW확인</label>';
 findPwhtml += "      <input type='password' id='findpw_pwcheck' class='form-control' style='display: none;'>";
 findPwhtml += '    </div>';
 findPwhtml += '  </div>';
@@ -142,7 +142,7 @@ function classListRepair(btn) {
 }
 
 $(document).ready(function () {
-
+	
 
     console.log('테스트중');
     signIn.classList.remove("btn-light");
@@ -291,7 +291,7 @@ $(document).ready(function () {
                     if (cnt != 1) {
                         // 사용가능
                         // id
-                        alert('사용가능한 id입니다');
+                        alert('사용가능한 ID입니다');
                         idcheck = 1;
                         /*
                          * $(".id_ok").css("display",
@@ -303,7 +303,7 @@ $(document).ready(function () {
                     } else {
                         // 중복된
                         // 아이디
-                        alert('중복된 id입니다');
+                        alert('중복된 ID입니다');
                         /*
                          * $(".id_already").css("display",
                          * "inline-block");
@@ -446,9 +446,18 @@ $(document).ready(function () {
 
 
     // ------------------------------로그인-----------------------------
+    function handleEnterKeyPress(event) {
+    	signInActive = 1;
+        if (event.key === "Enter" && signInActive >= 1) {
+            $('#login_bt').trigger('click');
+        }
+        signInActive = 0;
+    }
 
+    document.addEventListener("keydown", handleEnterKeyPress);
+    
     $(document).on('click', '#login_bt', function () {
-
+    	console.log('로그인 값'+signInActive);
         if (eUtil.ISEmpty($('#login_id').val()) == true) {
             alert('아이디를 입력하세요.');
             $('#login_id').focus();
@@ -480,7 +489,7 @@ $(document).ready(function () {
                 if (paredJSON.msgId == 30) {
                     alert('로그인이 완료되었습니다.');
                     window.location.href = window.location.href;
-
+                    signInActive = 0;
                 } else if (paredJSON.msgId == 40) {
                     alert('탈퇴된 회원입니다.');
                 } else {
@@ -677,6 +686,7 @@ $('#find-pw').click(function () {
         appendAndShow(findPwhtml);
         modalFooter.append("<button class='btn btn-primary' id='findpw_bt'>PW초기화</button>");
     }
+    
 });
 
 $('#signUp').click(function () {
@@ -806,11 +816,3 @@ function passwordMatch(password, confirmPassword) {
     return password === confirmPassword;
 }
 
-function handleEnterKeyPress(event) {
-    if (event.key === "Enter" && signInActive >= 1) {
-    	console.log("엔터")
-        $('#login_bt').trigger('click');
-    }
-}
-
-document.addEventListener("keydown", handleEnterKeyPress);

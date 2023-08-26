@@ -444,10 +444,10 @@
 							            <th class="text-center font-weight-bold">종목</th>
                                         <th class="text-center font-weight-bold">현재가</th>
                                         <th class="text-center font-weight-bold">전일가</th>
+                                        <th class="text-center font-weight-bold">등락률</th>
 							            <th class="text-center font-weight-bold">시작가</th>
 							            <th class="text-center font-weight-bold">고가</th>
 							            <th class="text-center font-weight-bold">저가</th>
-							            <th class="text-center font-weight-bold">등락률</th>
 							            <th class="text-center font-weight-bold">거래량</th>
 							        </tr>
 							    </thead>
@@ -499,18 +499,20 @@
                                                     closeTd3.css("color", "red");
                                                 }
                                                 row.append(closeTd3);
+                                                
+                                                
+                                                const closeTd2 = $("<td>").html((((data['Close'] - yesterdayClose) / yesterdayClose) *100).toFixed(2)+"% &nbsp;").addClass("font-weight-bold text-end");
+                                                if (data['Close'] < yesterdayClose) {
+                                                    closeTd2.css("color", "blue");
+                                                } else if (data['Close'] > yesterdayClose) {
+                                                    closeTd2.css("color", "red");
+                                                }
+                                                row.append(closeTd2);
 
                                                 row.append($("<td>").html(numberWithCommas(data['Open'])+"&nbsp;").addClass("font-weight-bold text-end"));
 							                    row.append($("<td>").html(numberWithCommas(data['High'])+"&nbsp;").addClass("font-weight-bold text-end"));
 							                    row.append($("<td>").html(numberWithCommas(data['Low'])+"&nbsp;").addClass("font-weight-bold text-end"));
 							
-							                    const closeTd2 = $("<td>").html(data['Change']+"&nbsp;").addClass("font-weight-bold text-end");
-							                    if (data['Close'] < yesterdayClose) {
-							                        closeTd2.css("color", "blue");
-							                    } else if (data['Close'] > yesterdayClose) {
-							                        closeTd2.css("color", "red");
-							                    }
-							                    row.append(closeTd2);
 							
 							                    row.append($("<td>").html(numberWithCommas(data['Volume'])+"&nbsp;").addClass("font-weight-bold text-end"));
 							
@@ -550,8 +552,8 @@
 		  <div class="card" style="margin-right: 10px">
             <div id="chart1" class="card-img-top" ></div>
 		    <div class="card-body" style="border: 1px; outline: 1px solid; outline-width:2px; margin: 2px">
-		      <h5 id="chart1-1" class="card-title" style='font-weight:bold; font-size: 22px;'></h5>
-		      <p class="card-text" id="chart1-2" style="font-weight:bold; margin-bottom: 0px; font-size: 16px;"></p>
+		      <h5 id="chart1-1" class="card-title text-center" style='font-weight:bold; font-size: 22px; background-color: #007AFE; color: #ffffff;'></h5>
+		      <p class="card-text text-center" id="chart1-2" style="font-weight:bold; margin-bottom: 0px; font-size: 16px;"></p>
               <p class="card-text" id="chart1-3" style="font-weight:bold; margin-bottom: 0px; font-size: 16px;"></p>
               <p class="card-text"><small class="text-body-secondary" id="chart1-4" style='font-size: 9px;'></small></p>
 		    </div>

@@ -108,6 +108,7 @@
 						<div id="admin-container" style="background-color: white; width: 80%; height: 77vh;">
 							<div id="radio-container" style="margin: 30px 100px;">
 								<label>발생일자<input type="date" class="date-input"></label> <label>~<input type="date" class="date-input"></label> <label>아이디<input type="text" class="search-id"></label> <input type="button" class="btn btn-primary search-id-btn" value="조회">
+								<input type="button" value="초기화" class="btn btn-primary reset-btn"> 
 							</div>
 
 							<div id="body-container">
@@ -400,6 +401,11 @@
 									})
 						}
 
+					})
+					$(".reset-btn").on("click",function(){
+						allLoad();
+						document.querySelectorAll(".date-input")[0].value = null
+						document.querySelectorAll(".date-input")[1].value = null
 					})
 </script>
 </html>

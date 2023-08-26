@@ -17,7 +17,7 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <style>
 .container {
-	width: 50%;
+	width: 60%;
 }
 
 .bookmark-container {
@@ -29,15 +29,15 @@
 }
 
 .text-container {
-	margin-top: 15px;
+	margin-top: 7px;
 	margin-bottom: 15px;
-	margin-right: 50px;
+	margin-left: 50px;
 	width: 500px;
 	height: 250px;
 }
 
 .text-container p {
-	font-size: 15px;
+	font-size: 17px;
 	font-weight: bold;
 }
 
@@ -49,7 +49,7 @@
 	text-decoration: none;
 	cursor: pointer;
 	color: black;
-	font-size: 17px;
+	font-size: 18px;
 	font-weight: bold;
 }
 
@@ -63,7 +63,9 @@
 		<h1 class="login-heading mb-4">
 			&nbsp;&nbsp;&nbsp;&nbsp;<b>관심페이지</b>
 		</h1>
-		<div style="margin-bottom: 50px;"><hr class="mb-6"></div>
+		<div style="margin-bottom: 50px;">
+			<hr class="mb-6">
+		</div>
 		<c:choose>
 			<c:when test="${empty sessionScope.user}">
 				<!-- 로그인 후 이용해주세요 메시지 표시 -->
@@ -78,31 +80,32 @@
 					<c:otherwise>
 						<!-- 로그인 된 경우에만 루프 내용을 표시 -->
 						<c:forEach var="item" items="${bookmarkList}" varStatus="loop">
-
-							<div class="list-container">
-								<form method="get" action="/ehr/BLUEOCEAN/detail.do" class="detail-form">
-									<!-- 주식종목코드 값 담아두는 인풋 -->
-									<div class="bookmark-container">
-										<div id="chart-container${loop.index+1}" style="width: 500px; height: 250px;"></div>
-										<div class="text-container">
-											<a class="stock-name"></a> <input type="hidden" class="stock-code-input" name="stockCode" value="${item}"> <input type="hidden" class="stock-name-input" name="stockName">
-											<p class="last-close-value"></p>
-											<p class="high"></p>
-											<p class="volume"></p>
-											<p class="low"></p>
+							<div style="margin: 0px auto; width: 80%;">
+								<div class="list-container">
+									<form method="get" action="/ehr/BLUEOCEAN/detail.do" class="detail-form">
+										<!-- 주식종목코드 값 담아두는 인풋 -->
+										<div class="bookmark-container">
+											<div id="chart-container${loop.index+1}" style="width: 500px; height: 250px;"></div>
+											<div class="text-container">
+												<a class="stock-name"></a> <input type="hidden" class="stock-code-input" name="stockCode" value="${item}"> <input type="hidden" class="stock-name-input" name="stockName">
+												<p class="last-close-value"></p>
+												<p class="high"></p>
+												<p class="volume"></p>
+												<p class="low"></p>
+											</div>
+											<div style="margin-right: 15px;">
+												<i style="margin-left: 50px; margin-top: 25px" class="fa-regular fa-star fa-2xl bookmark-button"></i>
+											</div>
 										</div>
-										<div style="margin-right: 15px;">
-											<i style="margin-left: 50px; margin-top: 25px" class="fa-regular fa-star fa-2xl bookmark-button"></i>
-										</div>
-									</div>
-								</form>
+									</form>
 
-								<input type="hidden" class="ui" value="${sessionScope.user}" />
-								<!-- 유저아이디 값 담아두는 인풋 -->
-								<input type="hidden" class="sn" />
-								<!-- 주식종목이름 값 담아두는 인풋 -->
-								<input type="hidden" class="sc" /> <input type="hidden" name="Ticker" id="Ticker" value="${item}" class="Ticker" /> <input type="hidden" name="StartDate" id="StartDate" class="StartDate" value="1900-01-01" /> <input type="hidden" name="EndDate" id="EndDate" class="EndDate" /> <label> <input class="submit-button" type="hidden" value="데이터 요청" />
-								</label>
+									<input type="hidden" class="ui" value="${sessionScope.user}" />
+									<!-- 유저아이디 값 담아두는 인풋 -->
+									<input type="hidden" class="sn" />
+									<!-- 주식종목이름 값 담아두는 인풋 -->
+									<input type="hidden" class="sc" /> <input type="hidden" name="Ticker" id="Ticker" value="${item}" class="Ticker" /> <input type="hidden" name="StartDate" id="StartDate" class="StartDate" value="1900-01-01" /> <input type="hidden" name="EndDate" id="EndDate" class="EndDate" /> <label> <input class="submit-button" type="hidden" value="데이터 요청" />
+									</label>
+								</div>
 							</div>
 						</c:forEach>
 					</c:otherwise>
@@ -261,7 +264,7 @@
 		const chartContainer = document.getElementById('chart-container' + i);
 		console.log(chartContainer);
 		const chart = LightweightCharts.createChart(chartContainer, {
-			width : 400,
+			width : 450,
 			height : 200
 		});
 
@@ -280,11 +283,11 @@
 				endDate : ed,
 			};
 
-			// ajax를 활용해 http://192.168.0.74:5001/blue-oceans/search-tickers을 호출하여 불러온 데이터를 파싱
+			// ajax를 활용해 http://125.142.47.191:5001/blue-oceans/search-tickers을 호출하여 불러온 데이터를 파싱
 			$
 					.ajax({
 						type : 'POST',
-						url : 'http://192.168.0.74:5001/blue-oceans/search-tickers',
+						url : 'http://125.142.47.191:5001/blue-oceans/search-tickers',
 						data : JSON.stringify(requestData),
 						contentType : 'application/json',
 						mode : 'cors',

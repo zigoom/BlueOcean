@@ -63,7 +63,7 @@
 .mx-5 {
 	margin-right: 1rem !important;
 	margin-left: 35rem !important;
-	padding-top: 17px;
+	margin-top: 17px;
 	padding-bottom: 20px;
 	height: 100px;
 }
@@ -108,7 +108,7 @@
 				</div>
 			</div>
 			<div style="display: flex;">
-				<div id="side-container" style="width: 20%; height: 80vh; background-color: #f1f1f1; display: flex; justify-content: center; align-items: center;">
+				<div id="side-container" style="width: 20%; height: 88vh; background-color: #f1f1f1; display: flex; justify-content: center; align-items: center;">
 					<h2>BLUEOCEANS</h2>
 				</div>
 				<div id="admin-container" style="background-color: white; width: 80%; height: 77vh;">

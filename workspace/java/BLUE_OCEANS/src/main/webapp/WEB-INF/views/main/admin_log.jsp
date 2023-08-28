@@ -67,7 +67,7 @@
 
 .mx-5 {
 	margin-right: 1rem !important;
-	margin-left: 35rem !important;
+	margin-left: 25rem !important;
 	padding-top: 17px;
 	padding-bottom: 20px;
 	height: 100px;

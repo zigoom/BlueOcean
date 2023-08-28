@@ -86,7 +86,18 @@
        let sTitle = document.querySelector(".title_cls").value;
        //class값으로 값 가지고 오기
        console.log("sTitle:"+sTitle);
-       
+           const textarea01 = $("#title").val()
+           const textarea02 = $("#contents").val()
+	      
+	       if (textarea01.length > 30) {
+	           alert("제목은 15자 까지만 가능합니다.");
+	           return;
+	       }
+           if (textarea02.length > 500) {
+               alert("내용은 500자 까지만 가능합니다.");
+               return;
+           }
+	       
    /*     if(eUtil.ISEmpty($("#title").val())==true) {
           alert("제목을 입력 하세요.");
           $("#title").focus();

@@ -299,6 +299,11 @@
 			
 			console.log("seq : "+ seq);
 			console.log("addcontents : "+ addcontents);
+			
+           if (addcontents.length > 150) {
+               alert("제목은 150자 까지만 가능합니다.");
+               return;
+           }
 
 			if (confirm('댓글을 등록하시겠습니까?') === false) {
 				return;

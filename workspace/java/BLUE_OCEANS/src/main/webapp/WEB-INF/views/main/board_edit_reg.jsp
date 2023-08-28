@@ -159,6 +159,20 @@
 		    console.log("contents"+contents);
 		    console.log('userId : '+ userId);
 		    
+
+           const textarea01 = $("#title").val()
+           const textarea02 = $("#contents").val()
+          
+           if (textarea01.length > 30) {
+               alert("제목은 15자 까지만 가능합니다.");
+               return;
+           }
+           if (textarea02.length > 500) {
+               alert("내용은 500자 까지만 가능합니다.");
+               return;
+           }
+		    
+		    
 	        if (confirm('수정하시겠습니까?') === false) {
 	            return;
 	        }

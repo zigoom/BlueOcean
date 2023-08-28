@@ -37,13 +37,14 @@
     </resultMap>
     
     <select id="loadtermsofuse" resultMap="AdminPageVOMap" resultType="com.pcwk.ehr.cmn.AdminPageVO">
+        -- 이용약관 전체조회
         SELECT  no,
                 subject,
                 context,
                 DECODE( TO_CHAR(registration_date,'YYYYMMDD'),TO_CHAR(sysdate,'YYYYMMDD'),
                         TO_CHAR(registration_date,'HH24:MI'),
                         TO_CHAR(registration_date,'YYYY/MM/DD')) AS registrationDate
-        FROM termsofuse
+        FROM TERMSOFUSE
         ORDER BY no
     </select>
     
@@ -52,15 +53,22 @@
 		SELECT no,
 		       subject,
 		       context
-		FROM termsofuse
+		FROM TERMSOFUSE
 		WHERE no = #{no}
     </select>
     
     <update id="termsofuseUpdate" parameterType="com.pcwk.ehr.cmn.AdminPageVO">
+    	-- 이용약관 수정
     	UPDATE TERMSOFUSE
 		SET
 		subject = #{subject},
 		context = #{context}
 		WHERE no = #{no}
     </update>
+    
+    <delete id="termsofuseDelete" parameterType="com.pcwk.ehr.cmn.AdminPageVO">
+		
+		DELETE FROM termsofuse
+		WHERE no = #{no}
+	</delete>
 </mapper>

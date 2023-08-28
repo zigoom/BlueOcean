@@ -15,6 +15,6 @@ public interface AdminTermsofuseDao{
 	 */
 	List<AdminPageVO> loadtermsofuse() throws SQLException;
 	
-	public int termsofuseUpdate(AdminPageVO vo) throws SQLException;
+	
 	
 }

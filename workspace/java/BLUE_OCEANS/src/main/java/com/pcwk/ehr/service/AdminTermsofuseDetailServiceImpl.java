@@ -17,7 +17,7 @@ public class AdminTermsofuseDetailServiceImpl implements AdminTermsofuseDetailSe
 	AdminTermsofuseDetailDao adminTermsofuseDetailDao;		// AdminTermsofuseDao 인터페이스를 사용하여 데이터베이스와 상호 작용하는 DAO 객체를 참조한다.
 	
 	/**
-	 * 이용약관 상세 데이터를 로드하는 메서드이다. 
+	 * 이용약관 상세 데이터를 로드하는 메소드이다. 
 	 * 이 메서드는 AdminTermsofuseDetailDao의 loadTermsofuseDetail() 메서드를 호출하여 데이터베이스에서 데이터를 가져온다.
 	 */
 	@Override
@@ -29,7 +29,10 @@ public class AdminTermsofuseDetailServiceImpl implements AdminTermsofuseDetailSe
         
 		return adminTermsofuseDetailDao.loadTermsofuseDetail(inVO);
 	}
-
+	
+	/**
+	 * 이용약관 수정을 로드하는 메소드이다.
+	 */
 	@Override
 	public int termsofuseUpdate(AdminPageVO vo) throws SQLException {
 		// 로그 출력
@@ -38,6 +41,20 @@ public class AdminTermsofuseDetailServiceImpl implements AdminTermsofuseDetailSe
         LOG.debug("└──────────────────────────────────┘");
         
 		return adminTermsofuseDetailDao.termsofuseUpdate(vo);
+	}
+	
+	/**
+	 * 이용약관 삭제를 로드하는 메소드이다.
+	 */
+	@Override
+	public int termsofuseDelete(AdminPageVO vo) throws SQLException {
+		// 로그 출력
+        LOG.debug("┌──────────────────────────────────┐");
+        LOG.debug("│ ServiceImpl_termsofuseDelete     │");
+        LOG.debug("│ AdminPageVO vo				      │" + vo);
+        LOG.debug("└──────────────────────────────────┘");
+        
+		return adminTermsofuseDetailDao.termsofuseDelete(vo);
 	}
 	
 	

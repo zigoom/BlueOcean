@@ -16,6 +16,20 @@ public interface AdminTermsofuseDetailService {
 	 */
 	public AdminPageVO loadTermsofuseDetail(AdminPageVO inVO) throws SQLException;
 
-	public int termsofuseUpdate(AdminPageVO vo) throws SQLException;
+	/**
+	 * 이용약관 수정을 하는 메소드
+	 * @param vo
+	 * @return
+	 * @throws SQLException
+	 */
+	public int termsofuseUpdate(AdminPageVO vo)throws SQLException;
+	
+	/**
+	 * 이용약관 삭제를 하는 메소드
+	 * @param vo
+	 * @return
+	 * @throws SQLException
+	 */
+	public int termsofuseDelete(AdminPageVO vo)throws SQLException;
 
 }

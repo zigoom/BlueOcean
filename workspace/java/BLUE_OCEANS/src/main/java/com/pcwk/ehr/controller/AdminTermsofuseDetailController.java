@@ -43,13 +43,29 @@ public class AdminTermsofuseDetailController implements PcwkLogger{
 	@ResponseBody
 	public int termsofuseUpdate(AdminPageVO vo)throws SQLException{
 		
+		LOG.debug("┌────────────────────────────┐");
+        LOG.debug("│termsofuseUpdate		    │");
+        LOG.debug("└────────────────────────────┘");
+        
 		int flag = adminTermsofuseDetailService.termsofuseUpdate(vo);
 		LOG.debug("flag"+flag);
 		return flag;
 	}
 	
 	
-	
+	@RequestMapping(value = "/termsofuseDelete.do", method = RequestMethod.POST)
+	@ResponseBody
+	public int termsofuseDelete(AdminPageVO vo)throws SQLException{
+		
+		LOG.debug("┌────────────────────────────┐");
+        LOG.debug("│termsofuseDelete		    │");
+        LOG.debug("│vo						    │"+vo);
+        LOG.debug("└────────────────────────────┘");
+        
+		int flag = adminTermsofuseDetailService.termsofuseDelete(vo);
+		LOG.debug("flag : "+flag);
+		return flag;
+	}
 	
 
 	

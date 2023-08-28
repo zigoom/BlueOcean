@@ -50,6 +50,17 @@ public class AdminTermsofuseDetailDaoImpl implements AdminTermsofuseDetailDao, P
 		return sqlSessionTemplate.update(NAMESPACE+DOT+"termsofuseUpdate",vo);
 	}
 
+
+	@Override
+	public int termsofuseDelete(AdminPageVO vo) throws SQLException {
+		LOG.debug("┌──────────────────────────────────┐");
+        LOG.debug("│termsofuseUpdateDaoImpl           │");
+        LOG.debug("│AdminPageVO vo		              │" + vo);
+        LOG.debug("└──────────────────────────────────┘");
+		
+		return sqlSessionTemplate.delete(NAMESPACE+DOT+"termsofuseDelete",vo);
+	}
+
 	
 }
 

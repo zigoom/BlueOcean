@@ -22,7 +22,7 @@ ul {
 		</div>
 		<button class="btn btn-light header-btn" id="boardBtn">토론게시판</button>
 		<button class="btn btn-light header-btn" id="favoriteBtn">관심목록</button>
-        
+         
 		<c:choose>
 			<c:when test="${not empty sessionScope.user}">
 			  <button class="btn btn-light header-btn" id="mypageBtn">마이페이지</button>

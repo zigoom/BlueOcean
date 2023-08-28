@@ -26,32 +26,32 @@ public class AdminTermsofuseDetailController implements PcwkLogger{
 	AdminTermsofuseDetailService adminTermsofuseDetailService;
 	
 	@RequestMapping(value = "/termsofusedetail.do", method = RequestMethod.GET)
-	public String adminTermsofusDetailView(Model model) throws SQLException{
+	public String adminTermsofusDetailView(AdminPageVO inVO, Model model) throws SQLException{
 		LOG.debug("┌────────────────────────────┐");
         LOG.debug("│adminTermsofuseDetailView   │");
         LOG.debug("└────────────────────────────┘");
         
-  		//List<AdminPageVO> termsofuseDetailList = adminTermsofuseDetailService.loadTermsofuseDetail(inVO)();
-  		//model.addAttribute("termsofuseDetailList", termsofuseDetailList); 
+        AdminPageVO result = adminTermsofuseDetailService.loadTermsofuseDetail(inVO);
+        model.addAttribute("result",result);
+  		LOG.debug(result);
   		
         return "main/admin_termsofusedetail";
 		
 	}
 	
-	
-	@RequestMapping(value = "/loadtermsofusedetail.do", method = RequestMethod.POST)
-	public String loadTermsofuseDetail(AdminPageVO inVO, Model model, HttpSession session) throws SQLException{
-		LOG.debug("┌────────────────────────────┐");
-        LOG.debug("│loadTermsofuseDetail        │");
-        LOG.debug("└────────────────────────────┘");
-        
-  		AdminPageVO outVO = adminTermsofuseDetailService.loadTermsofuseDetail(inVO);
+	@RequestMapping(value = "/termsofuseUpdate.do", method = RequestMethod.POST)
+	@ResponseBody
+	public int termsofuseUpdate(AdminPageVO vo)throws SQLException{
 		
-		model.addAttribute("outVO", outVO);
-		model.addAttribute("inVO", inVO);	
-		
-        return "main/admin_termsofusedetail";
+		int flag = adminTermsofuseDetailService.termsofuseUpdate(vo);
+		LOG.debug("flag"+flag);
+		return flag;
 	}
+	
+	
+	
+	
+
 	
 
 }

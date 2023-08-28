@@ -7,15 +7,15 @@ import com.pcwk.ehr.cmn.AdminPageVO;
 import com.pcwk.ehr.cmn.WorkDiv;
 
 public interface AdminTermsofuseDetailService {
-	
-	
+
 	/**
 	 * 이용약관 상세를 불러오는 메소드
+	 * 
 	 * @return
-	 * @throws SQLException
+	 * @throws SQLExceptiona
 	 */
 	public AdminPageVO loadTermsofuseDetail(AdminPageVO inVO) throws SQLException;
-	
-	
-	
+
+	public int termsofuseUpdate(AdminPageVO vo) throws SQLException;
+
 }

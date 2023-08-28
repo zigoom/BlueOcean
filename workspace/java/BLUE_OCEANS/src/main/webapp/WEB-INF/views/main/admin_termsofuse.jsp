@@ -101,7 +101,7 @@
 						<h2 class="divide">|</h2>
 						<h2 class="admin-header-btn">댓글관리</h2>
 						<h2 class="divide">|</h2>
-						<h2 class="admin-header-btn">약관관리</h2>
+						<h2 class="admin-header-btn"  style="border-bottom: 3px solid black;">약관관리</h2>
 						<h2 class="divide">|</h2>
 						<h2 class="admin-header-btn">로그확인</h2>
 					</div>
@@ -117,7 +117,6 @@
 							<div id="radio-container" style="margin: 30px 100px;">
 							</div>
 							<div id="body-container">
-								<h2> 약관 목록 조회 </h2>
 								<table style="margin-left: 50px;table-layout: fixed; width: 100%" id="data-table">
 									<thead>
 										<tr>
@@ -278,7 +277,7 @@
 					return;
 				
 				//div, seq
-				window.location.href = "${CP}/BLUEOCEAN/admin/termsofusedetail.do?no=" + no
+				window.location.href = "${CP}/BLUEOCEAN/admin/termsofusedetail.do?no="+no
 			}
 		);
 		console.log("!")

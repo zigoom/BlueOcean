@@ -29,6 +29,16 @@ public class AdminTermsofuseDetailServiceImpl implements AdminTermsofuseDetailSe
         
 		return adminTermsofuseDetailDao.loadTermsofuseDetail(inVO);
 	}
+
+	@Override
+	public int termsofuseUpdate(AdminPageVO vo) throws SQLException {
+		// 로그 출력
+        LOG.debug("┌──────────────────────────────────┐");
+        LOG.debug("│ ServiceImpl_termsofuseUpdate     │");
+        LOG.debug("└──────────────────────────────────┘");
+        
+		return adminTermsofuseDetailDao.termsofuseUpdate(vo);
+	}
 	
 	
 }

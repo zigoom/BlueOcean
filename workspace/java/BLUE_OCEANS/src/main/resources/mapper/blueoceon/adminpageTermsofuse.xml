@@ -51,11 +51,16 @@
     	-- 이용약관 특정 데이터 조회
 		SELECT no,
 		       subject,
-		       context,
-		       DECODE( TO_CHAR(registration_date,'YYYYMMDD'),TO_CHAR(sysdate,'YYYYMMDD'),
-		                TO_CHAR(registration_date,'HH24:MI'),
-		                TO_CHAR(registration_date,'YYYY/MM/DD'))
+		       context
 		FROM termsofuse
 		WHERE no = #{no}
     </select>
+    
+    <update id="termsofuseUpdate" parameterType="com.pcwk.ehr.cmn.AdminPageVO">
+    	UPDATE TERMSOFUSE
+		SET
+		subject = #{subject},
+		context = #{context}
+		WHERE no = #{no}
+    </update>
 </mapper>

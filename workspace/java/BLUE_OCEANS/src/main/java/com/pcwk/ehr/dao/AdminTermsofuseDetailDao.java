@@ -14,6 +14,8 @@ public interface AdminTermsofuseDetailDao{
 	 * @throws SQLException
 	 */
 	public AdminPageVO loadTermsofuseDetail(AdminPageVO inVO) throws SQLException;
+
+	public int termsofuseUpdate(AdminPageVO vo)throws SQLException;
 	
 	
 }

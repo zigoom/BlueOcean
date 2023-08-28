@@ -19,6 +19,7 @@ public class AdminTermsofuseDetailDaoImpl implements AdminTermsofuseDetailDao, P
 	final String DOT = ".";
 	
 	
+	
 	@Autowired
 	SqlSessionTemplate sqlSessionTemplate;	// MyBatis의 SqlSession을 편리하게 사용하기 위한 Spring 클래스이다. 데이터베이스와의 상호 작용을 처리한다.
 	
@@ -37,6 +38,16 @@ public class AdminTermsofuseDetailDaoImpl implements AdminTermsofuseDetailDao, P
         LOG.debug("└──────────────────────────────────┘");
         
 		return sqlSessionTemplate.selectOne(NAMESPACE+DOT+"loadTermsofuseDetail",inVO);
+	}
+
+
+	@Override
+	public int termsofuseUpdate(AdminPageVO vo) throws SQLException {
+		LOG.debug("┌──────────────────────────────────┐");
+        LOG.debug("│termsofuseUpdateDaoImpl           │");
+        LOG.debug("└──────────────────────────────────┘");
+        
+		return sqlSessionTemplate.update(NAMESPACE+DOT+"termsofuseUpdate",vo);
 	}
 
 	

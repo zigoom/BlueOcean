@@ -47,9 +47,9 @@ public class LoginController implements PcwkLogger {
 			AdminPageVO logVO = new AdminPageVO();
 			String id = (String) session.getAttribute("user");
 			logVO.setUserId(id);
-			logVO.setLog1("로그인");
+			logVO.setLog1("로그아웃");
 
-			logVO.setLog2("아이디 : " + user.getUserId());
+			logVO.setLog2("아이디 : " + id);
 
 			adminLogService.addLog(logVO);
 			

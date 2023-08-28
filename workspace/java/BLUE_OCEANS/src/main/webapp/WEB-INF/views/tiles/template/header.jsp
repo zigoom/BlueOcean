@@ -13,9 +13,9 @@ ul {
 }
 </style>
 <header>
-	<div id="header-box" style="padding: 0px 180px 0px 180px;">
-		<img alt="" src="${CP}/resources/imgs/logo.png" id="logo" style="margin-right: 5px; padding: 5px;">
-		<div class="search-box input-group col-flex-nowrap">
+	<div id="header-box">
+		<img alt="" src="${CP}/resources/imgs/logo.png" id="logo">
+		<div class="search-box input-group col- flex-nowrap">
 			<span class="input-group-text" id="basic-addon1">종목검색</span>
 			<input id="word" type="text" class="form-control col-sm-4" placeholder="종목명 또는 종목코드를 입력해주세요." aria-label="Username" aria-describedby="basic-addon1">
 			<button id="header-search-btn" style="" class="btn btn-primary">검색</button>
@@ -39,13 +39,14 @@ ul {
 			</c:otherwise>
 		</c:choose>
 	</div>
-	<div id="search-results" style="overflow: auto; max-height: 200px; padding: 0px 180px 0px 180px; display: flex; justify-content: flex-end;" class="col-flex-nowrap">
-        <c:choose>
+
+	<div id="search-results" style="overflow: auto; max-height: 200px;" class="search-box input-group col- flex-nowrap">
+		        <c:choose>
             <c:when test="${sessionScope.level == 0}">
-	                 <p> <a href="http://125.142.47.191:5001/">파이썬 서버</a>
-	                 <br>
-	                 <a>DB주소 : 125.142.47.191:1521</a>
-	                  </p>
+                <p> <a href="http://125.142.47.191:5001/">파이썬 서버</a>
+                <br>
+                <a>DB IP:125.142.47.191:1521</a>
+                </p>
             </c:when>
         </c:choose>
 		<ul id="related-searches"></ul>
@@ -60,7 +61,7 @@ ul {
 					<button id="signIn" type="button" class="btn btn-secondary">로그인</button>
 					<button id="signUp" type="button" class="btn btn-light">회원가입</button>
 					<button id="find-id" type="button" class="btn btn-light">ID찾기</button>
-					<button id="find-pw" type="button" class="btn btn-light">PW초기화</button>
+					<button id="find-pw" type="button" class="btn btn-light">PW찾기</button>
 					<button id="agree" type="button" class="btn btn-light" hidden="">동의</button>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>

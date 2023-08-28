@@ -61,7 +61,7 @@ ul {
 					<button id="signIn" type="button" class="btn btn-secondary">로그인</button>
 					<button id="signUp" type="button" class="btn btn-light">회원가입</button>
 					<button id="find-id" type="button" class="btn btn-light">ID찾기</button>
-					<button id="find-pw" type="button" class="btn btn-light">PW초기화</button>
+          <button id="find-pw" type="button" class="btn btn-light">PW초기화</button>
 					<button id="agree" type="button" class="btn btn-light" hidden="">동의</button>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>

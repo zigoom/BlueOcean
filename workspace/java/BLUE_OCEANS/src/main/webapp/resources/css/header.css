@@ -2,30 +2,32 @@
 /* -------------------------모달----------------------------- */
 
 .modal-containor div {
-	text-align: center;
-	display: flex;
-	justify-content: space-between;
-	margin: 15px 50px;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  margin: 15px 50px;
 }
 
 .modal-header button {
-	margin-left: 5px;
+  margin-left: 5px;
 }
 
 .modal-containor div input {
-	margin-left: 15px;
+  margin-left: 15px;
 }
 
 .modal-containor div input[type=text],
 .modal-containor div input[type=password],
 .modal-containor div input[type=tel]
- {	
-	width: 70%;
+ {  
+  width: 70%;
 }
 
-/*  label{
-	text-align: center;
-}  */
+  label{
+  display: flex;
+  align-items: center; /* 수직 중앙 정렬 */
+  text-align: center;
+} 
 
 .placeholder-style::placeholder {
   font-size: 13px;
@@ -36,46 +38,47 @@
     resize: none;
   }
 
+
+
 /* .custom-container label {
     text-align: left; 원하는 스타일로 덮어쓰기
 } */
 /* ------------------------모달끝---------------------------- */
 
 
-
 #header-box {
-	display: flex;
-	margin: 15px;
-	align-items: center;
-	justify-content: center;
-	overflow-x: auto;
+  display: flex;
+  margin: 15px;
+  align-items: center;
+  justify-content: center;
+  overflow-x: auto;
 }
 
-.input-group {
-	max-width: 600px;
-	flex: 1 1 auto;
-}
+/* .input-group {
+  max-width: 600px;
+  flex: 1 1 auto;
+} */
 
 #logo {
-	margin-right: 150px;
-	font-size: 20px;
-	cursor: pointer;
+  margin-right: 150px;
+  font-size: 20px;
+  cursor: pointer;
 }
 
 .header-btn {
-	margin: 0px 10px;
-	padding: 0px 20px;
-	height: 40px;
-	font-size: 14px;
-	white-space: nowrap;
+  margin: 0px 10px;
+  padding: 0px 20px;
+  height: 40px;
+  font-size: 14px;
+  white-space: nowrap;
 }
 
 .header-search-btn {
-	font-size: 10px;
+  font-size: 10px;
 }
 
 @media ( max-width : 600px) {
-	.header-btn {
-		margin: 5px 5px;
-	}
+  .header-btn {
+    margin: 5px 5px;
+  }
 }

@@ -5,6 +5,8 @@ import java.util.Random;
 
 import org.apache.velocity.anakia.Escape;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,9 @@ public class FindServiceImpl implements FindService, PcwkLogger {
 	
 	@Autowired
     PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	JavaMailSender javaMailSender;
 
 	public FindServiceImpl() {
 	}
@@ -29,6 +34,7 @@ public class FindServiceImpl implements FindService, PcwkLogger {
 	@Override
 	public UserVO resetPassWd(UserVO user) throws Exception {
 		UserVO result = new UserVO();
+
 		
 		String inputPassword = user.getPasswd();
 		UserVO seletepasswd = findDao.seletePasswd(user);
@@ -88,6 +94,7 @@ public class FindServiceImpl implements FindService, PcwkLogger {
 		// 1. 정상
 		// 2. otp를 사용중이거나 일치하는 아이디없음
 		String result = "";
+		SimpleMailMessage message = new SimpleMailMessage();
 
 		int otpusercheck = findDao.otpuserCheck(user);
 		if (otpusercheck == 1) {
@@ -103,7 +110,8 @@ public class FindServiceImpl implements FindService, PcwkLogger {
 				int otp = random.nextInt(max - min + 1) + min;
 
 				user.setOtp(otp);
-
+				sendEmail(user);
+				
 				int setotp = findDao.setOtp(user);
 				if (setotp == 1) {
 					LOG.debug("OTP set설정");
@@ -122,6 +130,16 @@ public class FindServiceImpl implements FindService, PcwkLogger {
 		}
 
 		return result;
+	}
+	
+	public void sendEmail(UserVO user) {
+	    SimpleMailMessage message = new SimpleMailMessage();
+	    message.setFrom("je971002@naver.com");
+	    message.setTo(user.getEmail());
+	    message.setSubject("OTP번호");
+	    message.setText("OTP 6자리 : "+user.getOtp());
+
+	    javaMailSender.send(message);
 	}
 
 	@Override

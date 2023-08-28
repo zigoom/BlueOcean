@@ -34,9 +34,9 @@ signInhtml += '</form>';
 signUphtml += '<form>';
 signUphtml += "  <div class='modal-containor'>";
 signUphtml += '    <div>';
-signUphtml += '      <label>ID</label>';
-signUphtml += "      <input type='text' id='signUp_id' name='signUp_id' maxlength='15' placeholder='소문자+숫자 조합'  class='form-control placeholder-style'>";
-signUphtml += "     <button type='button' style='font-size: 13px' class='btn btn-outline-primary' id='signup_idcheck' disabled>중복확인</button>";
+signUphtml += '     <label>ID</label>';
+signUphtml += '      <input type="text" style="" id="signUp_id" name="signUp_id" maxlength="15" placeholder="소문자+숫자 조합" class="form-control placeholder-style">';
+signUphtml += "      <button type='button' style='font-size: 13px' class='btn btn-outline-primary' id='signup_idcheck'>중복확인</button>";
 signUphtml += '    </div>';
 signUphtml += '    <div>';
 signUphtml += '      <label>이름</label>';
@@ -56,10 +56,14 @@ signUphtml += "      <input maxlength='6' type='text' id='signUp_birthday' name=
 signUphtml += '    </div>';
 signUphtml += "    <div style='display: flex; align-items: center;'>";
 signUphtml += '       <label>성별</label>';
-signUphtml += "     <input type='radio' name='gender' value='M' id='signUp_M' style='margin-right: 10px;' checked>";
+signUphtml += '    <div>';
+signUphtml += "     <input type='radio' name='gender' value='M' id='signUp_M' checked>";
 signUphtml += '  	 <label for="signUp_M">남</label>';
-signUphtml += "     <input type='radio' name='gender' value='F' id='signUp_F' style='margin-left: 10px;'>";
+signUphtml += '    </div>';
+signUphtml += '    <div>';
+signUphtml += "     <input type='radio' name='gender' value='F' id='signUp_F'>";
 signUphtml += '	   <label for="signUp_F">여</label>';
+signUphtml += '    </div>';
 signUphtml += '   </div>';
 signUphtml += '     <div>';
 signUphtml += '     <label>핸드폰</label>';
@@ -100,14 +104,14 @@ findPwhtml += '      <label>이름</label>';
 findPwhtml += "      <input type='text' id='findpw_name' class='form-control'>";
 findPwhtml += '    </div>';
 findPwhtml += '    <div>';
-findPwhtml += '      <label>이메일</label>';
+findPwhtml += '      <label>email</label>';
 findPwhtml += "      <input type='text' id='findpw_email' class='form-control'>";
-findPwhtml += '      <button type="button" style="font-size: 13px" class="btn btn-outline-primary" id="otp_send">OTP 전송</button>';
+findPwhtml += '      <button type="button" style="font-size: 10px" class="btn btn-outline-primary" id="otp_send">OTP전송</button>';
 findPwhtml += '    </div>';
 findPwhtml += '    <div>';
-findPwhtml += '      <label>otp입력</label>';
+findPwhtml += '      <label>OTP</label>';
 findPwhtml += "      <input type='text' id='otp_number' minlength='6' class='form-control'>";
-findPwhtml += '      <button type="button" style="font-size: 11px" class="btn btn-outline-primary" id="otp_check" disabled>OTP 확인</button>';
+findPwhtml += '      <button type="button" style="font-size: 10px" class="btn btn-outline-primary" id="otp_check" disabled>OTP확인</button>';
 findPwhtml += '    </div>';
 findPwhtml += '    <div>';
 findPwhtml += '      <label id="lable_findpw_pw" style="display: none;">PW</label>';
@@ -446,7 +450,7 @@ $(document).ready(function () {
 
 
     // ------------------------------로그인-----------------------------
-    function handleEnterKeyPress(event) {
+/*    function handleEnterKeyPress(event) {
     	signInActive = 1;
         if (event.key === "Enter" && signInActive >= 1) {
             $('#login_bt').trigger('click');
@@ -454,7 +458,7 @@ $(document).ready(function () {
         signInActive = 0;
     }
 
-    document.addEventListener("keydown", handleEnterKeyPress);
+    document.addEventListener("keydown", handleEnterKeyPress);*/
     
     $(document).on('click', '#login_bt', function () {
     	console.log('로그인 값'+signInActive);
@@ -509,7 +513,12 @@ $(document).ready(function () {
 
     $(document).on('click', '#findpw_bt', function () {
         console.log("findpw_bt");
-
+        if (eUtil.ISEmpty($('#findpw_pw').val()) == true) {
+            alert('비밀번호를 입력하세요.');
+            $('#findpw_pw').focus();
+            return;
+        }      
+        else{
         $.ajax({
             type: 'POST',
             url: '/ehr/BLUEOCEAN/resetpasswd.do',
@@ -526,7 +535,7 @@ $(document).ready(function () {
                 	alert("비밀번호 변경완료");
                 	window.location.href = window.location.href;
                 }else{
-                	alert("비밀번호 변경실패");
+                	alert("사용중인 비밀번호 입니다.");
                 }
             },
             error: function (data) {
@@ -534,7 +543,9 @@ $(document).ready(function () {
                 alert("관리자에게 문의하세요");
             },
         });
+        }
     });
+    
 });
 
 // ID 한글 입력값 못 넣게 하는 함수
@@ -584,12 +595,12 @@ $(document).on('click', '#agree_N', function () {
 $(document).on('click', '#agree_Y', function () {
 
     if (agree_check1 == 1 && agree_check2 == 1) {
-        console.log("agree");
-        agree.classList.remove("btn-light");
-        agree.classList.add("btn-secondary");
+    	signUp.classList.remove("btn-light");
+    	signUp.classList.add("btn-secondary");
         classListRepair(signIn);
         classListRepair(findId);
         classListRepair(findPw);
+        classListRepair(agree);        
 
 
         signUpActive = signUpActive + 1;
@@ -691,12 +702,11 @@ $('#find-pw').click(function () {
 
 $('#signUp').click(function () {
 
-    signUp.classList.remove("btn-light");
-    signUp.classList.add("btn-secondary");
+	signUp.classList.remove("btn-light");
+	signUp.classList.add("btn-secondary");
     classListRepair(signIn);
-    classListRepair(signUp);
     classListRepair(findId);
-    classListRepair(agree);
+    classListRepair(findPw);
 
     signUpActive = 0;
     signInActive = 0;

@@ -5,6 +5,9 @@
 .admin-header-btn {
 	cursor: pointer;
 }
+#radio-container{
+	display: flex;
+}
 
 #radio-container label {
 	margin: 0px 10px;

@@ -84,6 +84,38 @@
 #button-container > * {
   margin-left: 7px;
 }
+.divide {
+	margin: 0px 10px;
+}
+
+.admin-header-btn {
+	cursor: pointer;
+}
+#radio-container{
+	display: flex;
+}
+
+#radio-container label {
+	margin: 0px 10px;
+}
+
+th {
+	padding: 10px 30px;
+	text-align: center;
+	word-wrap: break-word;
+}
+
+td {
+	padding: 10px 30px;
+	text-align: center;
+	word-wrap: break-word;
+}
+
+input[type="date"],
+#id-input {
+	margin-left: 15px;
+}
+
 </style>
 </head>
 <body>

@@ -72,6 +72,38 @@
 	padding-bottom: 20px;
 	height: 100px;
 }
+.divide {
+	margin: 0px 10px;
+}
+
+.admin-header-btn {
+	cursor: pointer;
+}
+#radio-container{
+	display: flex;
+}
+
+#radio-container label {
+	margin: 0px 10px;
+}
+
+th {
+	padding: 10px 30px;
+	text-align: center;
+	word-wrap: break-word;
+}
+
+td {
+	padding: 10px 30px;
+	text-align: center;
+	word-wrap: break-word;
+}
+
+input[type="date"],
+#id-input {
+	margin-left: 15px;
+}
+
 </style>
 </head>
 <body>
@@ -106,8 +138,8 @@
 							<h2>BLUEOCEANS</h2>
 						</div>
 						<div id="admin-container" style="background-color: white; width: 80%; height: 77vh;">
-							<div id="radio-container" style="margin: 30px 100px;">
-								<label>발생일자<input type="date" class="date-input"></label> <label>~<input type="date" class="date-input"></label> <label>아이디<input type="text" class="search-id"></label> <input type="button" class="btn btn-primary search-id-btn" value="조회">
+							<div id="radio-container" style="margin: 30px 100px; display: flex;" >
+								<label>발생일자<input type="date" class="date-input"></label> <label>~<input type="date" class="date-input"></label> <label>아이디<input type="text" class="search-id"></label> <input type="button" class="btn btn-primary search-id-btn" value="조회" style="margin-right: 10px;">
 								<input type="button" value="초기화" class="btn btn-primary reset-btn"> 
 							</div>
 

@@ -37,7 +37,7 @@
 }
 
 .text-container p {
-	font-size: 17px;
+	font-size: 15px;
 	font-weight: bold;
 }
 
@@ -49,7 +49,7 @@
 	text-decoration: none;
 	cursor: pointer;
 	color: black;
-	font-size: 18px;
+	font-size: 15px;
 	font-weight: bold;
 }
 
@@ -80,7 +80,7 @@
 					<c:otherwise>
 						<!-- 로그인 된 경우에만 루프 내용을 표시 -->
 						<c:forEach var="item" items="${bookmarkList}" varStatus="loop">
-							<div style="margin: 0px auto; width: 80%;">
+							<div style="margin: 10px auto; width: 80%;">
 								<div class="list-container">
 									<form method="get" action="/ehr/BLUEOCEAN/detail.do" class="detail-form">
 										<!-- 주식종목코드 값 담아두는 인풋 -->

@@ -59,7 +59,8 @@
             function loadData() {
                 $.ajax({
                     type: 'POST',
-                    url: 'http://192.168.0.74:5001/blue-oceans/search-top10-stock',
+                    //url: 'http://192.168.0.74:5001/blue-oceans/search-top10-stock',
+                    url: 'http://127.0.0.1:5001/blue-oceans/search-top10-stock',
                     headers: {
                         'accept': 'application/json',
                         'Content-Type': 'application/json',
@@ -299,7 +300,8 @@
 		            // 데이터를 받아옵니다.
 		            $.ajax({
 		                type: 'POST',
-		                url: 'http://192.168.0.74:5001/blue-oceans/ai-stock-recommend',
+		                //url: 'http://192.168.0.74:5001/blue-oceans/ai-stock-recommend',
+		                url: 'http://127.0.0.1:5001/blue-oceans/ai-stock-recommend',
 		                data: JSON.stringify(requestData),
 		                contentType: 'application/json',
 		                success: function(response) {
@@ -470,7 +472,8 @@
 							
 							            $.ajax({
 							                type: 'POST',
-							                url: 'http://192.168.0.74:5001/blue-oceans/search-today-tickers',
+							                //url: 'http://192.168.0.74:5001/blue-oceans/search-today-tickers',
+							                url: 'http://127.0.0.1:5001/blue-oceans/search-today-tickers',
 							                data: JSON.stringify(requestData),
 							                contentType: 'application/json',
 							                mode: 'cors',
@@ -772,7 +775,8 @@
 		  // 데이터를 받아옵니다.
 		  $.ajax({
 		      type: 'POST',
-		      url: 'http://192.168.0.74:5001/blue-oceans/search-stock-market-getinterval',
+		      //url: 'http://192.168.0.74:5001/blue-oceans/search-stock-market-getinterval',
+		      url: 'http://127.0.0.1:5001/blue-oceans/search-stock-market-getinterval',
 		      data: JSON.stringify(requestData),
 		      contentType: 'application/json',
 		      success: function(response) {

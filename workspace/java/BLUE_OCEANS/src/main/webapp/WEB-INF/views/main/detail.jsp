@@ -426,7 +426,8 @@ h2{
     // ajax를 활용해 http://192.168.0.74:5001/blue-oceans/search-tickers을 호출하여 불러온 데이터를 파싱
     $.ajax({
         type: 'POST',
-        url: 'http://192.168.0.74:5001/blue-oceans/search-tickers',
+        //url: 'http://192.168.0.74:5001/blue-oceans/search-tickers',
+        url: 'http://127.0.0.1:5001/blue-oceans/search-tickers',
         data: JSON.stringify(requestData),
         contentType: 'application/json',
         mode: 'cors',
@@ -511,7 +512,8 @@ h2{
     if (minButton.addEventListener("click", function () {
         $.ajax({
             type: 'POST',
-            url: 'http://192.168.0.74:5001/blue-oceans/search-tickers-getinterval',
+            //url: 'http://192.168.0.74:5001/blue-oceans/search-tickers-getinterval',
+            url: 'http://127.0.0.1:5001/blue-oceans/search-tickers-getinterval',
             data: JSON.stringify(requestMinData),
             contentType: 'application/json',	
             mode: 'cors',

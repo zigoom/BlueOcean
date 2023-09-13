@@ -115,7 +115,8 @@ function fetchTickerData(index) {
 
                 $.ajax({
                     type: "POST",
-                    url: 'http://125.142.47.191:5001/blue-oceans/search-tickers',
+                    //url: 'http://125.142.47.191:5001/blue-oceans/search-tickers',
+                    url: 'http://127.0.0.1:5001/blue-oceans/search-tickers',
                     data: JSON.stringify(requestData),
                     contentType: 'application/json',
                     success: function(data) {
@@ -178,7 +179,8 @@ function fetchTickerData(index) {
 							          
 							                  $.ajax({
 							                      type: "POST",
-							                      url: 'http://125.142.47.191:5001/blue-oceans/search-stocks-list',
+							                      //url: 'http://125.142.47.191:5001/blue-oceans/search-stocks-list',
+							                      url: 'http://127.0.0.1:5001/blue-oceans/search-stocks-list',
 							                      data: JSON.stringify(requestData),
 							                      contentType: 'application/json',
 							                      success: function(data) {

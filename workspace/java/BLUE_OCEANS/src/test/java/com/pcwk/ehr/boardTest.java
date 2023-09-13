@@ -42,7 +42,6 @@ public class boardTest {
 	
 	// 게시판 글 조회 테스트
 	@Test
-	@Ignore
 	public void testAddBoard() throws SQLException {
 		
 		BoardVO inVO = new BoardVO();

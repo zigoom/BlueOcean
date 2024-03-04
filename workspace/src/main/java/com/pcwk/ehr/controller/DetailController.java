@@ -22,7 +22,7 @@ import com.pcwk.ehr.service.AdminLogService;
 import com.pcwk.ehr.service.NaverSearchService;
 
 @Controller("DetailController")
-@RequestMapping("BLUEOCEAN")
+@RequestMapping("BlueOcean")
 public class DetailController implements PcwkLogger {
 
 	@Autowired

@@ -18,7 +18,7 @@ import com.pcwk.ehr.cmn.PcwkLogger;
 import com.pcwk.ehr.domain.UserVO;
 import com.pcwk.ehr.service.SignUpService;
 @Controller("SignUpController")
-@RequestMapping("BLUEOCEAN")
+@RequestMapping("BlueOcean")
 public class SignUpController implements PcwkLogger{
 	
 	@Autowired

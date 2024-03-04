@@ -15,7 +15,7 @@ import com.pcwk.ehr.cmn.PcwkLogger;
 import com.pcwk.ehr.service.AdminReplyService;
 
 	@Controller("AdminReplyController")
-	@RequestMapping("BLUEOCEAN/admin")
+	@RequestMapping("BlueOcean/admin")
 	public class AdminReplyController implements PcwkLogger{
 		
 		

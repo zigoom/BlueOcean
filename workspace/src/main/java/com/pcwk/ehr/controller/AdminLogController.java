@@ -15,7 +15,7 @@ import com.pcwk.ehr.cmn.PcwkLogger;
 import com.pcwk.ehr.service.AdminLogService;
 
 @Controller("AdminLogController")
-@RequestMapping("BLUEOCEAN/admin")
+@RequestMapping("BlueOcean/admin")
 public class AdminLogController implements PcwkLogger {
 	@Autowired
 	AdminLogService adminLogService;

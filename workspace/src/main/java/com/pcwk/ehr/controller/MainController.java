@@ -17,7 +17,7 @@ import com.pcwk.ehr.domain.MainVO;
 import com.pcwk.ehr.service.BookmarkService;
 
 @Controller("MainController")
-@RequestMapping("BLUEOCEAN")
+@RequestMapping("BlueOcean")
 public class MainController implements PcwkLogger {
 
     @Autowired

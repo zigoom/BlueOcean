@@ -20,7 +20,7 @@ import com.pcwk.ehr.service.AdminLogService;
 import com.pcwk.ehr.service.FindService;
 
 @Controller("FindController")
-@RequestMapping("BLUEOCEAN")
+@RequestMapping("BlueOcean")
 public class FindController implements PcwkLogger {
 
 	@Autowired

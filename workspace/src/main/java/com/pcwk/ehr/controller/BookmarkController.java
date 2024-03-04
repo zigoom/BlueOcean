@@ -22,7 +22,7 @@ import com.pcwk.ehr.service.BookmarkService;
 import com.pcwk.ehr.service.NaverSearchService;
 
 @Controller("BookmarkController")
-@RequestMapping("BLUEOCEAN")
+@RequestMapping("BlueOcean")
 public class BookmarkController implements PcwkLogger {
 
 	@Autowired

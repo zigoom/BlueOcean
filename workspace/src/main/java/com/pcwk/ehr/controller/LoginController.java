@@ -21,7 +21,7 @@ import com.pcwk.ehr.service.AdminLogService;
 import com.pcwk.ehr.service.LoginService;
 
 @Controller("LoginController")
-@RequestMapping("BLUEOCEAN")
+@RequestMapping("BlueOcean")
 public class LoginController implements PcwkLogger {
 
 	@Autowired

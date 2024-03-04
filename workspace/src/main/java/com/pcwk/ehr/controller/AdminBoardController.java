@@ -15,7 +15,7 @@ import com.pcwk.ehr.cmn.PcwkLogger;
 import com.pcwk.ehr.service.AdminBoardService;
 
 @Controller("AdminBoardController")
-@RequestMapping("BLUEOCEAN/admin")
+@RequestMapping("BlueOcean/admin")
 public class AdminBoardController implements PcwkLogger {
 	@Autowired
 	AdminBoardService adminBoardService;

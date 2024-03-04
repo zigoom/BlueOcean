@@ -23,7 +23,7 @@ import com.pcwk.ehr.cmn.AdminPageVO;
 import com.pcwk.ehr.cmn.MyPageVO;
 
 @Controller("MyPageController")
-@RequestMapping("BLUEOCEAN")
+@RequestMapping("BlueOcean")
 public class MyPageController implements PcwkLogger {
 
 	@Autowired

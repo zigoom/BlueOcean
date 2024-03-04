@@ -19,7 +19,7 @@ import com.pcwk.ehr.service.AdminTermsofuseDetailService;
 import com.pcwk.ehr.service.AdminTermsofuseService;
 
 @Controller("AdminTermsofuseDetailController")
-@RequestMapping("BLUEOCEAN/admin")
+@RequestMapping("BlueOcean/admin")
 public class AdminTermsofuseDetailController implements PcwkLogger{
 	
 	@Autowired

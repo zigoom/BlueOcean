@@ -404,7 +404,7 @@
 	                                    var ticker = response.tickers[index]; // 해당 인덱스의 티커 가져오기
 	                                    
 	                                    
-	                                    var newURL = '/ehr/BLUEOCEAN/detail.do?stockName='+encodeURIComponent(name)+'&stockCode='+encodeURIComponent(ticker);
+	                                    var newURL = '/BlueOcean/detail.do?stockName='+encodeURIComponent(name)+'&stockCode='+encodeURIComponent(ticker);
 	                                    //var newURL = '/ehr/BLUEOCEAN/detail.do?stockName='+name+'&stockCode='+ticker; //' + encodeURIComponent(name) + '&ticker=' + encodeURIComponent(ticker);
 	                                    
 	                                    // 새로운 페이지로 이동
@@ -523,7 +523,7 @@
 							                    row.on("click", function() {
 							                        const stockName = jsonData.stock_name;
 							                        const ticker = jsonData.ticker;
-							                        const url = "/ehr/BLUEOCEAN/detail.do?stockName="+stockName+"&stockCode="+ticker;
+							                        const url = "/BlueOcean/detail.do?stockName="+stockName+"&stockCode="+ticker;
 							                        window.location.href = url;
 							                    });
 							
@@ -896,7 +896,7 @@
       // 네이버 뉴스 api 호출
       $.ajax({
           type: 'GET',
-          url: '/ehr/BLUEOCEAN/doNaverSearch.do',
+          url: '/BlueOcean/doNaverSearch.do',
           asyn: 'true',
           dataType: 'html',
           data: {

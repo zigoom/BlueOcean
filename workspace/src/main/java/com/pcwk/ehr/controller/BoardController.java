@@ -28,7 +28,7 @@ import com.pcwk.ehr.domain.ReplyVO;
 import java.util.List;
 
 @Controller("BoardController")
-@RequestMapping("BLUEOCEAN")
+@RequestMapping("BlueOcean")
 public class BoardController implements PcwkLogger {
 
     @Autowired

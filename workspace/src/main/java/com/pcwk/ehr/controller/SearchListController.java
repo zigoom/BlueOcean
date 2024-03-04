@@ -22,7 +22,7 @@ import com.pcwk.ehr.domain.UserVO;
 import com.pcwk.ehr.service.AdminLogService;
 
 @Controller("SearchListController")
-@RequestMapping("BLUEOCEAN")
+@RequestMapping("BlueOcean")
 public class SearchListController implements PcwkLogger {
 
 	@Autowired 

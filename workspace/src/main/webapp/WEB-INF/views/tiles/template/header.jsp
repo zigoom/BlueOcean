@@ -88,16 +88,16 @@ ul {
 </header>
 <script>
 		$("#logo").on("click",function(){
-			window.location.href = "${CP}/BLUEOCEAN/main.do";
+			window.location.href = "${CP}/BlueOcean/main.do";
 		})
 		$("#boardBtn").on("click",function(){
-			window.location.href = "${CP}/BLUEOCEAN/boardView.do";
+			window.location.href = "${CP}/BlueOcean/boardView.do";
 		})
 		$("#favoriteBtn").on("click",function(){
-			window.location.href = "${CP}/BLUEOCEAN/bookmark.do";
+			window.location.href = "${CP}/BlueOcean/bookmark.do";
 		})
 		$("#mypageBtn").on("click",function(){
-			window.location.href = "${CP}/BLUEOCEAN/mypage.do";
+			window.location.href = "${CP}/BlueOcean/mypage.do";
 		})
 		
 
@@ -106,7 +106,7 @@ ul {
 		$(document).ready(function() {
 					   $("#adminBtn").on("click", function() {
 		            console.log('어드민');
-		              window.location.href = "${CP}/BLUEOCEAN/admin/user.do"; // 여기에 실제 관리자 페이지의 URL을 넣어주세요 
+		              window.location.href = "${CP}/BlueOcean/admin/user.do"; // 여기에 실제 관리자 페이지의 URL을 넣어주세요 
 		          });
 			     
              $("#word").autocomplete({
@@ -157,7 +157,7 @@ ul {
                       //----------ajax----------
                   $.ajax({
                       type: "GET",
-                      url: '/ehr/BLUEOCEAN/detail.do',
+                      url: '/BlueOcean/detail.do',
 			                async: true,
 			                dataType: 'html',                      
                       data: {
@@ -165,7 +165,7 @@ ul {
                           stockCode: itemcode,
                       },
                       success: function(data) {
-                        window.location.href = '/ehr/BLUEOCEAN/detail.do?' + $.param({ stockName: itemname, stockCode: itemcode });
+                        window.location.href = '/BlueOcean/detail.do?' + $.param({ stockName: itemname, stockCode: itemcode });
                       },
                     error: function(xhr, textStatus, errorThrown) {
                         console.log("error:" + errorThrown);
@@ -217,7 +217,7 @@ ul {
 					
 					                // 처리한 데이터를 사용하여 리다이렉트
 					                var encodedData = encodeURIComponent(JSON.stringify(autocompleteData));
-					                var redirectUrl = '${CP}/BLUEOCEAN/searchlist.do?data=' + encodedData;
+					                var redirectUrl = '${CP}/BlueOcean/searchlist.do?data=' + encodedData;
 					                window.location.href = redirectUrl;
 					            },
 					            error: function(xhr, textStatus, errorThrown) {
@@ -241,7 +241,7 @@ ul {
               if(logout){
                 $.ajax({
                               type : "POST",
-                              url : "/ehr/BLUEOCEAN/logout.do",
+                              url : "/BlueOcean/logout.do",
                               asyn : "true",
                               dataType : "html",
                               data : {},
@@ -249,7 +249,7 @@ ul {
                                 // 성공
                                 console.log("data:"+ data);
                               alert("로그아웃 됨");
-                              window.location.href = "${CP}/BLUEOCEAN/main.do"; 
+                              window.location.href = "${CP}/BlueOcean/main.do"; 
                               },
                               error : function(data) {// 실패시 처리
                                 console.log("error:"+ data);
@@ -290,7 +290,7 @@ ul {
                     mode: 'cors',
                     success: function(data) {
                         var encodedData = encodeURIComponent(JSON.stringify(data));
-                        var redirectUrl = '${CP}/BLUEOCEAN/searchlist.do?data=' + encodedData;
+                        var redirectUrl = '${CP}/BlueOcean/searchlist.do?data=' + encodedData;
                         window.location.href = redirectUrl;
                     },
                     error: function(xhr, textStatus, errorThrown) {

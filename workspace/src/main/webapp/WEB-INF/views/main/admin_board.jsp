@@ -117,7 +117,7 @@ input[type="date"],
 		<c:when test="${sessionScope.level != 0}">
 			<script>
 				alert("접근할 수 없습니다.")
-				window.location.href = "${CP}/BLUEOCEAN/main.do"
+				window.location.href = "${CP}/BlueOcean/main.do"
 			</script>
 		</c:when>
 		<c:otherwise>
@@ -193,19 +193,19 @@ input[type="date"],
 <script>
 	let adminHeaderBtn = document.querySelectorAll(".admin-header-btn");
 	adminHeaderBtn[0].addEventListener("click", function() {
-		window.location.href = "${CP}/BLUEOCEAN/admin/user.do";
+		window.location.href = "${CP}/BlueOcean/admin/user.do";
 	})
 	adminHeaderBtn[1].addEventListener("click", function() {
-		window.location.href = "${CP}/BLUEOCEAN/admin/board.do";
+		window.location.href = "${CP}/BlueOcean/admin/board.do";
 	})
 	adminHeaderBtn[2].addEventListener("click", function() {
-		window.location.href = "${CP}/BLUEOCEAN/admin/reply.do";
+		window.location.href = "${CP}/BlueOcean/admin/reply.do";
 	})
 	adminHeaderBtn[3].addEventListener("click", function() {
-		window.location.href = "${CP}/BLUEOCEAN/admin/termsofuse.do";
+		window.location.href = "${CP}/BlueOcean/admin/termsofuse.do";
 	})
 	adminHeaderBtn[4].addEventListener("click", function() {
-		window.location.href = "${CP}/BLUEOCEAN/admin/log.do";
+		window.location.href = "${CP}/BlueOcean/admin/log.do";
 	})
 
 	let totalData = null;
@@ -216,7 +216,7 @@ input[type="date"],
 	function allLoad() {
 		$.ajax({
 			type : "POST",
-			url : "/ehr/BLUEOCEAN/admin/loadBoard.do",
+			url : "/BlueOcean/admin/loadBoard.do",
 			async : true,
 			dataType : "json",
 			data : {},
@@ -359,7 +359,7 @@ input[type="date"],
 	function deleteOptionLoad() {
 		$.ajax({
 			type : "POST",
-			url : "/ehr/BLUEOCEAN/admin/loadBoardOption.do",
+			url : "/BlueOcean/admin/loadBoardOption.do",
 			async : true,
 			dataType : "json",
 			data : {
@@ -382,7 +382,7 @@ input[type="date"],
 	function notDeleteOptionLoad() {
 		$.ajax({
 			type : "POST",
-			url : "/ehr/BLUEOCEAN/admin/loadBoardOption.do",
+			url : "/BlueOcean/admin/loadBoardOption.do",
 			async : true,
 			dataType : "json",
 			data : {
@@ -460,7 +460,7 @@ input[type="date"],
 
 			$.ajax({
 				type : "POST",
-				url : "/ehr/BLUEOCEAN/admin/deleteBoard.do",
+				url : "/BlueOcean/admin/deleteBoard.do",
 				async : true,
 				dataType : "html",
 				data : {
@@ -512,7 +512,7 @@ input[type="date"],
 
 			$.ajax({
 				type : "POST",
-				url : "/ehr/BLUEOCEAN/admin/notDeleteBoard.do",
+				url : "/BlueOcean/admin/notDeleteBoard.do",
 				async : true,
 				dataType : "html",
 				data : {
@@ -542,7 +542,7 @@ input[type="date"],
 	$(".search-title-btn").on("click", function() {
 		$.ajax({
 			type : "POST",
-			url : "/ehr/BLUEOCEAN/admin/loadBoardFromTitle.do",
+			url : "/BlueOcean/admin/loadBoardFromTitle.do",
 			async : true,
 			dataType : "json",
 			data : {
@@ -586,7 +586,7 @@ input[type="date"],
 				if (confirm("상세 조회 하시겠어요?") == false)
 					return;
 				//div, seq
-				window.location.href = "${CP}/BLUEOCEAN/doSelectOne.do?seq="
+				window.location.href = "${CP}/BlueOcean/doSelectOne.do?seq="
 						+ seq
 			});
 </script>

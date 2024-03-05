@@ -192,11 +192,11 @@ function fetchTickerData(index) {
 					                                                                             //--------------------------------------------------------------------
                                                 $.ajax({
                                                     type: "GET",
-                                                    url: '/ehr/BLUEOCEAN/detail.do',
+                                                    url: '/BlueOcean/detail.do',
                                                     async: true,
                                                     dataType: 'html',                      
                                                     success: function(data) {
-                                                      window.location.href = '/ehr/BLUEOCEAN/detail.do?' + $.param({ stockName: value, stockCode: code });
+                                                      window.location.href = '/BlueOcean/detail.do?' + $.param({ stockName: value, stockCode: code });
                                                     },
                                                     
                                                   error: function(xhr, textStatus, errorThrown) {

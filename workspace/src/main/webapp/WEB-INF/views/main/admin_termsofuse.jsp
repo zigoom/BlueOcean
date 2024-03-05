@@ -154,19 +154,19 @@
 	<script>
 		let adminHeaderBtn = document.querySelectorAll(".admin-header-btn");
 		adminHeaderBtn[0].addEventListener("click", function() {
-			window.location.href = "${CP}/BLUEOCEAN/admin/user.do";
+			window.location.href = "${CP}/BlueOcean/admin/user.do";
 		})
 		adminHeaderBtn[1].addEventListener("click", function() {
-			window.location.href = "${CP}/BLUEOCEAN/admin/board.do";
+			window.location.href = "${CP}/BlueOcean/admin/board.do";
 		})
 		adminHeaderBtn[2].addEventListener("click", function() {
-			window.location.href = "${CP}/BLUEOCEAN/admin/reply.do";
+			window.location.href = "${CP}/BlueOcean/admin/reply.do";
 		})
 		adminHeaderBtn[3].addEventListener("click", function() {
-			window.location.href = "${CP}/BLUEOCEAN/admin/termsofuse.do";
+			window.location.href = "${CP}/BlueOcean/admin/termsofuse.do";
 		})
 		adminHeaderBtn[4].addEventListener("click", function() {
-			window.location.href = "${CP}/BLUEOCEAN/admin/log.do";
+			window.location.href = "${CP}/BlueOcean/admin/log.do";
 		})
 		
 		
@@ -179,7 +179,7 @@
 		function allLoad() {
 			$.ajax({
 				type : "POST",
-				url : "/ehr/BLUEOCEAN/admin/loadtermsofuse.do",
+				url : "/BlueOcean/admin/loadtermsofuse.do",
 				async : true,
 				dataType : "json",
 				data : {},
@@ -277,7 +277,7 @@
 					return;
 				
 				//div, seq
-				window.location.href = "${CP}/BLUEOCEAN/admin/termsofusedetail.do?no="+no
+				window.location.href = "${CP}/BlueOcean/admin/termsofusedetail.do?no="+no
 			}
 		);
 		console.log("!")

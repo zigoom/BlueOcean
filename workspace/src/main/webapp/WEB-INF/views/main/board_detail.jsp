@@ -196,7 +196,7 @@
 <script>
 
 	function moveToListView(){
-	    window.location.href="${CP}/BLUEOCEAN/boardView.do"
+	    window.location.href="${CP}/BlueOcean/boardView.do"
 	    //?div="+$("#div").val();
 	}
 	
@@ -222,7 +222,7 @@
 	    // 서버에 삭제 요청을 전달
 	    $.ajax({
 	        type: "GET", // HTTP 메소드를 설정합니다.
-	        url: "/ehr/BLUEOCEAN/doDelete.do", // 요청을 전송할 URL을 설정합니다.
+	        url: "/BlueOcean/doDelete.do", // 요청을 전송할 URL을 설정합니다.
 	        datatype : "json",
 	        data: {
 	            seq: $("#seq").val(), // 삭제할 게시물의 일련 번호 (seq)를 전달합니다.
@@ -247,7 +247,7 @@
 	
 	function moveToEditView(seq, userId, title, contents){
 		
-	    window.location.href="${CP}/BLUEOCEAN/doEdit.do?seq=" + seq + "&userId=" + userId + "&title="  + title + "&contents=" + contents;
+	    window.location.href="${CP}/BlueOcean/doEdit.do?seq=" + seq + "&userId=" + userId + "&title="  + title + "&contents=" + contents;
 
 	    	//?div="+$("#div").val();
 	}
@@ -312,7 +312,7 @@
 			// 서버에 댓글 저장 요청을 전달
 			$.ajax({
 				type : "GET", // HTTP 메소드를 설정합니다.
-				url : "/ehr/BLUEOCEAN/doReplySave.do", // 요청을 전송할 URL을 설정합니다.
+				url : "/BlueOcean/doReplySave.do", // 요청을 전송할 URL을 설정합니다.
 				datatype : "json",
 				data : {
 					postNo :   $("#seq").val(), 
@@ -360,7 +360,7 @@
 	    // 서버에 삭제 요청을 전달
 	    $.ajax({
 	        type: "GET", // HTTP 메소드를 설정합니다.
-	        url: "/ehr/BLUEOCEAN/doReplyDelete.do", // 요청을 전송할 URL을 설정합니다.
+	        url: "/BlueOcean/doReplyDelete.do", // 요청을 전송할 URL을 설정합니다.
 	        dataType : "json",
 	        data: {
 	        	commentNo: commentNo,
@@ -417,7 +417,7 @@
 	    // 서버에 수정 요청을 전달
 	    $.ajax({
 	        type: "POST",
-	        url: "/ehr/BLUEOCEAN/doReplyUpdate.do",
+	        url: "/BlueOcean/doReplyUpdate.do",
 	        dataType : "json",
 	        data: {
 	        	commentNo: commentNo,

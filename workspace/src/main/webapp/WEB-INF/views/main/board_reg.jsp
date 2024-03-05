@@ -65,7 +65,7 @@
 
 <script>
    function moveToListView(){
-       window.location.href="${CP}/BLUEOCEAN/boardView.do?div="+$("#div").val();
+       window.location.href="${CP}/BlueOcean/boardView.do?div="+$("#div").val();
    }
    
    $("#moveToList").on("click",function(){
@@ -118,7 +118,7 @@
        if(confirm('글을 등록 하시겠습니까')==false) return;
        $.ajax({
           type: "POST",
-          url:"/ehr/BLUEOCEAN/doSave.do",
+          url:"/BlueOcean/doSave.do",
           asyn:"true",
           dataType:"html",
           data:{

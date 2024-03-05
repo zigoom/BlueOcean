@@ -136,24 +136,24 @@
 	<script>
 		let adminHeaderBtn = document.querySelectorAll(".admin-header-btn");
 		adminHeaderBtn[0].addEventListener("click", function() {
-			window.location.href = "${CP}/BLUEOCEAN/admin/user.do";
+			window.location.href = "${CP}/BlueOcean/admin/user.do";
 		})
 		adminHeaderBtn[1].addEventListener("click", function() {
-			window.location.href = "${CP}/BLUEOCEAN/admin/board.do";
+			window.location.href = "${CP}/BlueOcean/admin/board.do";
 		})
 		adminHeaderBtn[2].addEventListener("click", function() {
-			window.location.href = "${CP}/BLUEOCEAN/admin/reply.do";
+			window.location.href = "${CP}/BlueOcean/admin/reply.do";
 		})
 		adminHeaderBtn[3].addEventListener("click", function() {
-			window.location.href = "${CP}/BLUEOCEAN/admin/termsofuse.do";
+			window.location.href = "${CP}/BlueOcean/admin/termsofuse.do";
 		})
 		adminHeaderBtn[4].addEventListener("click", function() {
-			window.location.href = "${CP}/BLUEOCEAN/admin/log.do";
+			window.location.href = "${CP}/BlueOcean/admin/log.do";
 		})
 		
 		// 이용약관 페이지 이동 메소드
 		function moveTotermsofuse(){
-		    window.location.href= "${CP}/BLUEOCEAN/admin/termsofuse.do"
+		    window.location.href= "${CP}/BlueOcean/admin/termsofuse.do"
 		}
 		
 		// 목록 버튼 클릭 이벤트 설정
@@ -169,7 +169,7 @@
 			console.log("doEdit click");
 			$.ajax({
 				type : "POST",
-				url : "/ehr/BLUEOCEAN/admin/termsofuseUpdate.do",
+				url : "/BlueOcean/admin/termsofuseUpdate.do",
 				async : true,
 				dataType : "html",
 				data : {
@@ -202,7 +202,7 @@
 		    // 서버에 삭제 요청을 전달
 		    $.ajax({
 		        type: "POST", // HTTP 메소드를 설정합니다.
-		        url: "/ehr/BLUEOCEAN/admin/termsofuseDelete.do", // 요청을 전송할 URL을 설정합니다.
+		        url: "/BlueOcean/admin/termsofuseDelete.do", // 요청을 전송할 URL을 설정합니다.
 		        async : true,
 				dataType : "html",
 		        data: {

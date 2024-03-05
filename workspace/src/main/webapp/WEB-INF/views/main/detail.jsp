@@ -228,7 +228,7 @@ h2{
             function checkBookmark() {
                 $.ajax({
                     type: 'GET',
-                    url: '/ehr/BLUEOCEAN/checkBookmark.do',
+                    url: '/BlueOcean/checkBookmark.do',
                     async: true,
                     dataType: 'html',
                     data: {
@@ -261,7 +261,7 @@ h2{
                 let stockCode = $('#sc').val();
                 $.ajax({
                     type: 'GET',
-                    url: '/ehr/BLUEOCEAN/checkBookmark.do',
+                    url: '/BlueOcean/checkBookmark.do',
                     async: true,
                     dataType: 'html',
                     data: {
@@ -290,7 +290,7 @@ h2{
             function addBookmark(userId, stockName, stockCode) {
                 $.ajax({
                     type: 'GET',
-                    url: '/ehr/BLUEOCEAN/addBookmark.do',
+                    url: '/BlueOcean/addBookmark.do',
                     async: true,
                     dataType: 'html',
                     data: {
@@ -319,7 +319,7 @@ h2{
             function deleteBookmark(userId, stockName, stockCode) {
                 $.ajax({
                     type: 'GET',
-                    url: '/ehr/BLUEOCEAN/deleteBookmark.do',
+                    url: '/BlueOcean/deleteBookmark.do',
                     async: true,
                     dataType: 'html',
                     data: {
@@ -561,7 +561,7 @@ h2{
             // 네이버 뉴스 api 호출
             $.ajax({
                 type: 'GET',
-                url: '/ehr/BLUEOCEAN/doNaverSearch.do',
+                url: '/BlueOcean/doNaverSearch.do',
                 asyn: 'true',
                 dataType: 'html',
                 data: {

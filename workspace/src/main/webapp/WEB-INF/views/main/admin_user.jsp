@@ -107,7 +107,7 @@ input[type="date"],
 		<c:when test="${sessionScope.level != 0}">
 			<script>
 				alert("접근할 수 없습니다.")
-				window.location.href = "${CP}/BLUEOCEAN/main.do"
+				window.location.href = "${CP}/BlueOcean/main.do"
 			</script>
 		</c:when>
 		<c:otherwise>
@@ -184,19 +184,19 @@ input[type="date"],
 <script>
 	let adminHeaderBtn = document.querySelectorAll(".admin-header-btn");
 	adminHeaderBtn[0].addEventListener("click", function() {
-		window.location.href = "${CP}/BLUEOCEAN/admin/user.do";
+		window.location.href = "${CP}/BlueOcean/admin/user.do";
 	})
 	adminHeaderBtn[1].addEventListener("click", function() {
-		window.location.href = "${CP}/BLUEOCEAN/admin/board.do";
+		window.location.href = "${CP}/BlueOcean/admin/board.do";
 	})
 	adminHeaderBtn[2].addEventListener("click", function() {
-		window.location.href = "${CP}/BLUEOCEAN/admin/reply.do";
+		window.location.href = "${CP}/BlueOcean/admin/reply.do";
 	})
 	adminHeaderBtn[3].addEventListener("click", function() {
-		window.location.href = "${CP}/BLUEOCEAN/admin/termsofuse.do";
+		window.location.href = "${CP}/BlueOcean/admin/termsofuse.do";
 	})
 	adminHeaderBtn[4].addEventListener("click", function() {
-		window.location.href = "${CP}/BLUEOCEAN/admin/log.do";
+		window.location.href = "${CP}/BlueOcean/admin/log.do";
 	})
 
 	let totalData = null;
@@ -206,7 +206,7 @@ input[type="date"],
 	function allLoad() {
 		$.ajax({
 			type : "POST",
-			url : "/ehr/BLUEOCEAN/admin/loadMember.do",
+			url : "/BlueOcean/admin/loadMember.do",
 			async : true,
 			dataType : "json",
 			data : {},
@@ -271,7 +271,7 @@ input[type="date"],
 	function deleteOptionLoad() {
 		$.ajax({
 			type : "POST",
-			url : "/ehr/BLUEOCEAN/admin/loadMemberOption.do",
+			url : "/BlueOcean/admin/loadMemberOption.do",
 			async : true,
 			dataType : "json",
 			data : {
@@ -294,7 +294,7 @@ input[type="date"],
 	function notDeleteOptionLoad() {
 		$.ajax({
 			type : "POST",
-			url : "/ehr/BLUEOCEAN/admin/loadMemberOption.do",
+			url : "/BlueOcean/admin/loadMemberOption.do",
 			async : true,
 			dataType : "json",
 			data : {
@@ -372,7 +372,7 @@ input[type="date"],
 
 			$.ajax({
 				type : "POST",
-				url : "/ehr/BLUEOCEAN/admin/deleteMember.do",
+				url : "/BlueOcean/admin/deleteMember.do",
 				async : true,
 				dataType : "html",
 				data : {
@@ -424,7 +424,7 @@ input[type="date"],
 
 			$.ajax({
 				type : "POST",
-				url : "/ehr/BLUEOCEAN/admin/notDeleteMember.do",
+				url : "/BlueOcean/admin/notDeleteMember.do",
 				async : true,
 				dataType : "html",
 				data : {
@@ -454,7 +454,7 @@ input[type="date"],
 	$(".search-id-btn").on("click", function() {
 		$.ajax({
 			type : "POST",
-			url : "/ehr/BLUEOCEAN/admin/loadMemberFromId.do",
+			url : "/BlueOcean/admin/loadMemberFromId.do",
 			async : true,
 			dataType : "json",
 			data : {

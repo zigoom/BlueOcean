@@ -115,7 +115,7 @@
    --%>
 <script>
    function moveToListView(seq, userId){
-	   window.location.href = "${CP}/BLUEOCEAN/doSelectOne.do?seq=" + seq + "&userId=" + userId;
+	   window.location.href = "${CP}/BlueOcean/doSelectOne.do?seq=" + seq + "&userId=" + userId;
 
        //window.location.href="${CP}/BLUEOCEAN/boardView.do"
     	   //http://localhost:8080/ehr/BLUEOCEAN/doSelectOne.do?&seq=94&userId=asdf
@@ -179,7 +179,7 @@
 
 	        $.ajax({
 	            type: "POST",
-	            url: "${CP}/BLUEOCEAN/doUpdate.do",
+	            url: "${CP}/BlueOcean/doUpdate.do",
 	            data: {
 	            	seq: $("#seq").val(),
 	                title: $("#title").val(),
@@ -188,7 +188,7 @@
 	            },
 	            success: function(response) {
 	            	alert("게시글 수정 성공");
-	                window.location.href="${CP}/BLUEOCEAN/doSelectOne.do?&seq=" + seq + "&userId=" + userId;
+	                window.location.href="${CP}/BlueOcean/doSelectOne.do?&seq=" + seq + "&userId=" + userId;
 	            },
 	            error: function(xhr, status, error) {
 	            	console.error("Error:", error);

@@ -111,7 +111,7 @@ input[type="date"],
 		<c:when test="${sessionScope.level != 0}">
 			<script>
 				alert("접근할 수 없습니다.")
-				window.location.href = "${CP}/BLUEOCEAN/main.do"
+				window.location.href = "${CP}/BlueOcean/main.do"
 			</script>
 		</c:when>
 		<c:otherwise>
@@ -180,19 +180,19 @@ input[type="date"],
 <script>
 	let adminHeaderBtn = document.querySelectorAll(".admin-header-btn");
 	adminHeaderBtn[0].addEventListener("click", function() {
-		window.location.href = "${CP}/BLUEOCEAN/admin/user.do";
+		window.location.href = "${CP}/BlueOcean/admin/user.do";
 	})
 	adminHeaderBtn[1].addEventListener("click", function() {
-		window.location.href = "${CP}/BLUEOCEAN/admin/board.do";
+		window.location.href = "${CP}/BlueOcean/admin/board.do";
 	})
 	adminHeaderBtn[2].addEventListener("click", function() {
-		window.location.href = "${CP}/BLUEOCEAN/admin/reply.do";
+		window.location.href = "${CP}/BlueOcean/admin/reply.do";
 	})
 	adminHeaderBtn[3].addEventListener("click", function() {
-		window.location.href = "${CP}/BLUEOCEAN/admin/termsofuse.do";
+		window.location.href = "${CP}/BlueOcean/admin/termsofuse.do";
 	})
 	adminHeaderBtn[4].addEventListener("click", function() {
-		window.location.href = "${CP}/BLUEOCEAN/admin/log.do";
+		window.location.href = "${CP}/BlueOcean/admin/log.do";
 	})
 
 	let totalData = null;
@@ -203,7 +203,7 @@ input[type="date"],
 	function allLoad() {
 		$.ajax({
 			type : "POST",
-			url : "/ehr/BLUEOCEAN/admin/loadLog.do",
+			url : "/BlueOcean/admin/loadLog.do",
 			async : true,
 			dataType : "json",
 			data : {},
@@ -363,7 +363,7 @@ input[type="date"],
 								&& (dateInput[1].value == '')) {
 							$.ajax({
 								type : "POST",
-								url : "/ehr/BLUEOCEAN/admin/loadLogFromId.do",
+								url : "/BlueOcean/admin/loadLogFromId.do",
 								async : true,
 								dataType : "json",
 								data : {
@@ -388,7 +388,7 @@ input[type="date"],
 							
 							$.ajax({
 								type : "POST",
-								url : "/ehr/BLUEOCEAN/admin/loadLogOption.do",
+								url : "/BlueOcean/admin/loadLogOption.do",
 								async : true,
 								dataType : "json",
 								data : {
@@ -411,7 +411,7 @@ input[type="date"],
 							$
 									.ajax({
 										type : "POST",
-										url : "/ehr/BLUEOCEAN/admin/loadLogOptionFromId.do",
+										url : "/BlueOcean/admin/loadLogOptionFromId.do",
 										async : true,
 										dataType : "json",
 										data : {

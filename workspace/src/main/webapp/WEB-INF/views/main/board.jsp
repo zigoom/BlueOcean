@@ -114,26 +114,26 @@
 	        <ul class="pagination">
 	            <!-- 맨 처음 페이지로 이동 -->
 	            <li class="page-item">
-	                <a class="page-link" href="/ehr/BLUEOCEAN/boardView.do?pageNo=1" aria-label="First">
+	                <a class="page-link" href="/BlueOcean/boardView.do?pageNo=1" aria-label="First">
 	                    <span aria-hidden="true">&laquo;</span>
 	                </a>
 	            </li>
 	            <!-- 이전 페이지로 이동 -->
 	            <li class="page-item">
-	                <a class="page-link" href="/ehr/BLUEOCEAN/boardView.do?pageNo=<%= pageNo - 1 %>" aria-label="Previous">
+	                <a class="page-link" href="/BlueOcean/boardView.do?pageNo=<%= pageNo - 1 %>" aria-label="Previous">
 	                    <span aria-hidden="true">&lt;</span>
 	                </a>
 	            </li>
-	            <%=StringUtil.renderPaging(totalCnt, pageNo, pageSize, bottomCount, "/ehr/BLUEOCEAN/boardView.do", "do_Retrieve")%>
+	            <%=StringUtil.renderPaging(totalCnt, pageNo, pageSize, bottomCount, "/BlueOcean/boardView.do", "do_Retrieve")%>
 	            <!-- 다음 페이지로 이동 -->
 	            <li class="page-item">
-	                <a class="page-link" href="/ehr/BLUEOCEAN/boardView.do?pageNo=<%= pageNo + 1 %>" aria-label="Next">
+	                <a class="page-link" href="/BlueOcean/boardView.do?pageNo=<%= pageNo + 1 %>" aria-label="Next">
 	                    <span aria-hidden="true">&gt;</span>
 	                </a>
 	            </li>
 	            <!-- 맨 마지막 페이지로 이동 -->
 	            <li class="page-item">
-	                <a class="page-link" href="/ehr/BLUEOCEAN/boardView.do?pageNo=<%= (int) Math.ceil((double) totalCnt / pageSize) %>" aria-label="Last">
+	                <a class="page-link" href="/BlueOcean/boardView.do?pageNo=<%= (int) Math.ceil((double) totalCnt / pageSize) %>" aria-label="Last">
 	                    <span aria-hidden="true">&raquo;</span>
 	                </a>
 	            </li>
@@ -142,7 +142,7 @@
 	</div>
     <!--// paging --------------------------------------------------------------->
 	<!-- 검색 form -->
-	 <form class="d-flex justify-content-center" action="${CP}/BLUEOCEAN/boardView.do" method="get" name="boardFrm">
+	 <form class="d-flex justify-content-center" action="${CP}/BlueOcean/boardView.do" method="get" name="boardFrm">
 	   <input type="hidden" name="pageNo" id="pageNo">
 	   <input type="hidden" name="div"    id="div" value='${inVO.getDiv()}'>
 	    <div class="row g-1 d-flex justify-content-end">
@@ -189,7 +189,7 @@
      console.log('seq:'+seq);
      if(confirm("상세 조회 하시겠어요?") == false ) return;
 		//div, seq
-     window.location.href = "${CP}/BLUEOCEAN/doSelectOne.do?&seq=" + seq + "&userId=" + userId;
+     window.location.href = "${CP}/BlueOcean/doSelectOne.do?&seq=" + seq + "&userId=" + userId;
    });   
    
    
@@ -200,7 +200,7 @@
      console.log("frm.div.value"+frm.div.value);
      //frm.div.value = pageNo; //javascript
      frm.pageNo.value = 1;
-     frm.action = "${CP}/BLUEOCEAN/doMoveToReg.do";
+     frm.action = "${CP}/BlueOcean/doMoveToReg.do";
      frm.submit(); //controller call
 	 }
    
@@ -232,7 +232,7 @@
      //$("pageNo").val(1); //jquery
      //frm.div.value=pageNo; //javascript
      frm.pageNo.value=1;
-     frm.action = "${CP}/BLUEOCEAN/doMoveToReg.do"
+     frm.action = "${CP}/BlueOcean/doMoveToReg.do"
      frm.submit(); //controller call
    });
     

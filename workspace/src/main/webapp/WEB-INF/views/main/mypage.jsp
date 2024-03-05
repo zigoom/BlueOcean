@@ -129,7 +129,7 @@ pageEncoding="UTF-8"%>
 	
 		                     $.ajax({
 		                         type: 'POST', // POST 메서드 사용
-		                         url: "/ehr/BLUEOCEAN/userUpdate.do",
+		                         url: "/BlueOcean/userUpdate.do",
 		                         dataType: 'json', // 예상 응답 데이터 타입
 		                         contentType: 'application/json; charset=utf-8',
 		                         data: JSON.stringify(updateData),
@@ -154,7 +154,7 @@ pageEncoding="UTF-8"%>
 							
 							        // 취소 버튼 클릭 시 메인 페이지로 이동
 							        $("#cancelButton").click(function() {
-							            location.href = "${CP}/BLUEOCEAN/main.do"; // 메인 페이지의 URL로 이동
+							            location.href = "${CP}/BlueOcean/main.do"; // 메인 페이지의 URL로 이동
 							        });
 							
 							          // 탈퇴 버튼 클릭 시 처리
@@ -171,13 +171,13 @@ pageEncoding="UTF-8"%>
 							                // 탈퇴 버튼 클릭 이벤트 코드
 							                $.ajax({
 							                    type: 'POST',
-							                    url: "/ehr/BLUEOCEAN/withdraw.do",
+							                    url: "/BlueOcean/withdraw.do",
 							                    contentType: 'application/json; charset=utf-8',
 							                    data: JSON.stringify(withdrawData),
 							                    success: function(response) {
 							                        if (response.result === "success") {
 							                            alert("탈퇴가 정상적으로 처리되었습니다.");
-							                            location.href = "${CP}/BLUEOCEAN/main.do";
+							                            location.href = "${CP}/BlueOcean/main.do";
 							                        } else {
 							                            alert("탈퇴 처리에 실패했습니다.");
 							                        }

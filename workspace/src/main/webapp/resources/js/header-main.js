@@ -146,9 +146,6 @@ function classListRepair(btn) {
 }
 
 $(document).ready(function () {
-	
-
-    console.log('테스트중');
     signIn.classList.remove("btn-light");
     signIn.classList.add("btn-secondary");
     classListRepair(signUp);
@@ -182,7 +179,7 @@ $(document).ready(function () {
         }
         else {
             $.ajax({
-                url: '/ehr/BLUEOCEAN/sendOTP.do',
+                url: '/BlueOcean/sendOTP.do',
                 type: 'POST',
                 data: {
                     userId: $('#findpw_id').val(),
@@ -215,7 +212,7 @@ $(document).ready(function () {
         }
         else {
             $.ajax({
-                url: '/ehr/BLUEOCEAN/checkOtp.do',
+                url: '/BlueOcean/checkOtp.do',
                 type: 'POST',
                 data: {
                     otp: $('#otp_number').val(),
@@ -279,7 +276,7 @@ $(document).ready(function () {
             let id = $('#signUp_id').val();
             // 코드
             $.ajax({
-                url: '/ehr/BLUEOCEAN/idCheck.do',
+                url: '/BlueOcean/idCheck.do',
                 type: 'POST',
                 data: {
                     id: id,
@@ -372,7 +369,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: 'POST',
-            url: '/ehr/BLUEOCEAN/siginUp.do',
+            url: '/BlueOcean/siginUp.do',
             asyn: 'true',
             dataType: 'html',
             data: {
@@ -423,7 +420,7 @@ $(document).ready(function () {
             console.log($("#findid_email").val());
             $.ajax({
                 type: "POST",
-                url: "/ehr/BLUEOCEAN/findId.do",
+                url: "/BlueOcean/findId.do",
                 asyn: "true",
                 dataType: "html",
                 data: {
@@ -477,7 +474,7 @@ $(document).ready(function () {
         console.log("pw" + $('#login_pw').val());
         $.ajax({
             type: 'POST',
-            url: '/ehr/BLUEOCEAN/Login.do',
+            url: '/BlueOcean/Login.do',
             asyn: 'true',
             dataType: 'html',
             data: {
@@ -521,7 +518,7 @@ $(document).ready(function () {
         else{
         $.ajax({
             type: 'POST',
-            url: '/ehr/BLUEOCEAN/resetpasswd.do',
+            url: '/BlueOcean/resetpasswd.do',
             asyn: 'true',
             dataType: 'json',
             data: {
@@ -716,14 +713,14 @@ $('#signUp').click(function () {
     agreehtml = '';
     $.ajax({
         type: 'POST',
-        url: '/ehr/BLUEOCEAN/Termsofuse.do',
+        url: '/BlueOcean/Termsofuse.do',
         asyn: 'true',
         dataType: 'json',
         success: function (data) {
             // 통신성공
             $.ajax({
                 type: 'POST',
-                url: '/ehr/BLUEOCEAN/Termsofuse.do',
+                url: '/BlueOcean/Termsofuse.do',
                 async: true,
                 dataType: 'json',
                 success: function (data) {

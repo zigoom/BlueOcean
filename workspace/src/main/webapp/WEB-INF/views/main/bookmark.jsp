@@ -82,7 +82,7 @@
 						<c:forEach var="item" items="${bookmarkList}" varStatus="loop">
 							<div style="margin: 10px auto; width: 80%;">
 								<div class="list-container">
-									<form method="get" action="/ehr/BLUEOCEAN/detail.do" class="detail-form">
+									<form method="get" action="/BlueOcean/detail.do" class="detail-form">
 										<!-- 주식종목코드 값 담아두는 인풋 -->
 										<div class="bookmark-container">
 											<div id="chart-container${loop.index+1}" style="width: 500px; height: 250px;"></div>
@@ -144,7 +144,7 @@
 			let stockCode = $('.sc').eq(i - 1).val();
 			$.ajax({
 				type : 'GET',
-				url : '/ehr/BLUEOCEAN/checkBookmark.do',
+				url : '/BlueOcean/checkBookmark.do',
 				async : true,
 				dataType : 'html',
 				data : {
@@ -176,7 +176,7 @@
 			let stockCode = $('.sc').eq(i - 1).val();
 			$.ajax({
 				type : 'GET',
-				url : '/ehr/BLUEOCEAN/checkBookmark.do',
+				url : '/BlueOcean/checkBookmark.do',
 				async : true,
 				dataType : 'html',
 				data : {
@@ -204,7 +204,7 @@
 		function addBookmark(userId, stockName, stockCode) {
 			$.ajax({
 				type : 'GET',
-				url : '/ehr/BLUEOCEAN/addBookmark.do',
+				url : '/BlueOcean/addBookmark.do',
 				async : true,
 				dataType : 'html',
 				data : {
@@ -233,7 +233,7 @@
 		function deleteBookmark(userId, stockName, stockCode) {
 			$.ajax({
 				type : 'GET',
-				url : '/ehr/BLUEOCEAN/deleteBookmark.do',
+				url : '/BlueOcean/deleteBookmark.do',
 				async : true,
 				dataType : 'html',
 				data : {
